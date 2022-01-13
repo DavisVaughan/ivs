@@ -67,3 +67,9 @@ import_from <- function(name, package) {
 
   get(name, mode = "function", envir = ns, inherits = FALSE)
 }
+
+vec_paste0 <- function(...) {
+  # Use tidyverse recycling rules to avoid size zero recycling bugs
+  args <- vec_recycle_common(...)
+  exec(paste0, !!!args)
+}
