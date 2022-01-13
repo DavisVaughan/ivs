@@ -1,25 +1,22 @@
 Package: iv
 Title: Interval Types and Tools
 Version: 0.0.0.9000
-Authors@R: 
-    c(person(given = "Davis",
-             family = "Vaughan",
-             role = c("aut", "cre"),
-             email = "davis@rstudio.com"),
-      person(given = "RStudio",
-             role = c("cph", "fnd")))
+Authors@R: c(
+    person("Davis", "Vaughan", , "davis@rstudio.com", role = c("aut", "cre")),
+    person("RStudio", role = c("cph", "fnd"))
+  )
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
 URL: https://github.com/DavisVaughan/iv
 BugReports: https://github.com/DavisVaughan/iv/issues
-Suggests: 
-    covr
 Imports: 
     rlang (>= 0.99.0.9003),
     vctrs (>= 0.3.8.9001)
+Suggests: 
+    covr
 Remotes:
-    r-lib/rlang,
-    DavisVaughan/vctrs@feature/vec-locate-disjoint
+    DavisVaughan/vctrs@feature/vec-locate-disjoint,
+    r-lib/rlang
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
