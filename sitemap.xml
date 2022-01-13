@@ -19,6 +19,24 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
+    <loc>/reference/is_iv.html</loc>
+  </url>
+  <url>
+    <loc>/reference/iv-accessors.html</loc>
+  </url>
+  <url>
+    <loc>/reference/iv-genericity.html</loc>
+  </url>
+  <url>
     <loc>/reference/iv-package.html</loc>
+  </url>
+  <url>
+    <loc>/reference/iv.html</loc>
+  </url>
+  <url>
+    <loc>/reference/iv_complement.html</loc>
+  </url>
+  <url>
+    <loc>/reference/new_iv.html</loc>
   </url>
 </urlset>
