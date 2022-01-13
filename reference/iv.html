@@ -158,7 +158,7 @@ type.</p></dd>
 <span class="r-in"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">x</span>, iv <span class="op">=</span> <span class="fu">iv</span><span class="op">(</span><span class="va">start</span>, <span class="va">end</span><span class="op">)</span>, .keep <span class="op">=</span> <span class="st">"unused"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 1</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                         iv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;iv&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;iv&lt;date&gt;&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> [2019-01-02, 2019-01-05)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> [2019-01-03, 2019-01-06)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> [2019-01-04, 2019-01-14)</span>
@@ -167,7 +167,7 @@ type.</p></dd>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># `iv_pairs()` is useful for generating interval vectors interactively</span></span>
 <span class="r-in"><span class="fu">iv_pairs</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;iv[3]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;iv&lt;double&gt;[3]&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] [1, 5)  [2, 3)  [6, 10)</span>
 </code></pre></div>
     </div>

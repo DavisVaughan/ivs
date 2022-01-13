@@ -81,21 +81,21 @@ often useful to expand the universe to, say, <code>-Inf</code> to <code>Inf</cod
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="new_iv.html">new_iv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">0</span>, <span class="fl">3</span>, <span class="op">-</span><span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="op">-</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">x</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;iv[4]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;iv&lt;double&gt;[4]&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] [10, 12) [0, 5)   [3, 6)   [-5, -2)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Complement contains any values from `[-5, 12)` that aren't represented</span></span>
 <span class="r-in"><span class="co"># in these intervals</span></span>
 <span class="r-in"><span class="fu">iv_complement</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;iv[2]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;iv&lt;double&gt;[2]&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] [-2, 0) [6, 10)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Expand out the "universe" of possible values</span></span>
 <span class="r-in"><span class="fu">iv_complement</span><span class="op">(</span><span class="va">x</span>, lower <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;iv[3]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;iv&lt;double&gt;[3]&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] [-Inf, -5) [-2, 0)    [6, 10)   </span>
 <span class="r-in"><span class="fu">iv_complement</span><span class="op">(</span><span class="va">x</span>, lower <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span>, upper <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;iv[4]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;iv&lt;double&gt;[4]&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] [-Inf, -5) [-2, 0)    [6, 10)    [12, Inf) </span>
 </code></pre></div>
     </div>
