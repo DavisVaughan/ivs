@@ -10,6 +10,7 @@ License: MIT + file LICENSE
 URL: https://github.com/DavisVaughan/iv
 BugReports: https://github.com/DavisVaughan/iv/issues
 Imports: 
+    glue,
     rlang (>= 0.99.0.9003),
     vctrs (>= 0.3.8.9001)
 Suggests: 
