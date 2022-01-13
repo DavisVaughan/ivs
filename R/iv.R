@@ -25,7 +25,7 @@
 #' new_iv(1, 2)
 new_iv <- function(start, end, ..., class = character()) {
   fields <- list(start = start, end = end)
-  new_rcrd(fields, ..., class = c(class, "iv"))
+  structure(fields, ..., class = c(class, "iv", "vctrs_rcrd", "vctrs_vctr"))
 }
 
 # ------------------------------------------------------------------------------
