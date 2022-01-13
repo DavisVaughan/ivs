@@ -192,6 +192,32 @@ is_iv <- function(x) {
 
 # ------------------------------------------------------------------------------
 
+#' @export
+vec_ptype2.iv.iv <- function(x, y, ...) {
+  # If they are ivs, we can assume the structure is correct
+  x <- field_start(x)
+  y <- field_start(y)
+
+  ptype <- vec_ptype2(x, y, ...)
+
+  new_iv(ptype, ptype)
+}
+
+#' @export
+vec_cast.iv.iv <- function(x, to, ...) {
+  to <- field_start(to)
+
+  start <- field_start(x)
+  end <- field_end(x)
+
+  start <- vec_cast(start, to, ...)
+  end <- vec_cast(end, to, ...)
+
+  new_iv(start, end)
+}
+
+# ------------------------------------------------------------------------------
+
 #' Developer tools for extending iv
 #'
 #' @description
@@ -310,6 +336,22 @@ iv_restore.iv <- function(x, to, ...) {
 }
 
 # ------------------------------------------------------------------------------
+
+#' @export
+vec_ptype_abbr.iv <- function(x, ...) {
+  proxy <- iv_proxy(x)
+  start <- field_start(proxy)
+  inner <- vec_ptype_abbr(start)
+  vec_paste0("iv<", inner, ">")
+}
+
+#' @export
+vec_ptype_full.iv <- function(x, ...) {
+  proxy <- iv_proxy(x)
+  start <- field_start(proxy)
+  inner <- vec_ptype_full(start)
+  vec_paste0("iv<", inner, ">")
+}
 
 #' @export
 format.iv <- function(x, ...) {

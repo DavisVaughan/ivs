@@ -71,6 +71,50 @@
       Error in `stop_vctrs()`:
       ! Can't combine `..1` <character> and `..2` <double>.
 
+# ptype2 errors as needed
+
+    Code
+      vec_ptype2(iv("x", "y"), iv(1L, 2L))
+    Condition
+      Error in `stop_vctrs()`:
+      ! Can't combine <character> and <integer>.
+
+# cast errors as needed
+
+    Code
+      vec_cast(iv("x", "y"), iv(1L, 2L))
+    Condition
+      Error in `stop_vctrs()`:
+      ! Can't convert <character> to <integer>.
+
+# abbreviation is passed through to inner type
+
+    Code
+      vec_ptype_abbr(iv(1, 2))
+    Output
+      [1] "iv<dbl>"
+
+---
+
+    Code
+      vec_ptype_abbr(iv(data_frame(x = 1), data_frame(x = 2)))
+    Output
+      [1] "iv<df[,1]>"
+
+# full ptype is passed through to inner type
+
+    Code
+      vec_ptype_full(iv(1, 2))
+    Output
+      [1] "iv<double>"
+
+---
+
+    Code
+      vec_ptype_full(iv(data_frame(x = 1, y = 2), data_frame(x = 2, y = 3)))
+    Output
+      [1] "iv<data.frame<\n  x: double\n  y: double\n>>"
+
 # default proxy error works
 
     Code

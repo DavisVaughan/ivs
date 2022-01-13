@@ -83,6 +83,50 @@ test_that("can check if an object is an iv", {
 })
 
 # ------------------------------------------------------------------------------
+# vec_ptype2()
+
+test_that("ptype2 is computed right", {
+  expect_identical(
+    vec_ptype2(iv(1, 2), iv(1L, 2L)),
+    iv(double(), double())
+  )
+})
+
+test_that("ptype2 errors as needed", {
+  expect_snapshot(error = TRUE, vec_ptype2(iv("x", "y"), iv(1L, 2L)))
+})
+
+# ------------------------------------------------------------------------------
+# vec_cast()
+
+test_that("cast is computed right", {
+  expect_identical(
+    vec_cast(iv(1, 2), iv(integer(), integer())),
+    iv(1L, 2L)
+  )
+})
+
+test_that("cast errors as needed", {
+  expect_snapshot(error = TRUE, vec_cast(iv("x", "y"), iv(1L, 2L)))
+})
+
+# ------------------------------------------------------------------------------
+# vec_ptype_abbr()
+
+test_that("abbreviation is passed through to inner type", {
+  expect_snapshot(vec_ptype_abbr(iv(1, 2)))
+  expect_snapshot(vec_ptype_abbr(iv(data_frame(x = 1), data_frame(x = 2))))
+})
+
+# ------------------------------------------------------------------------------
+# vec_ptype_full()
+
+test_that("full ptype is passed through to inner type", {
+  expect_snapshot(vec_ptype_full(iv(1, 2)))
+  expect_snapshot(vec_ptype_full(iv(data_frame(x = 1, y = 2), data_frame(x = 2, y = 3))))
+})
+
+# ------------------------------------------------------------------------------
 # iv_proxy()
 
 test_that("proxy of an iv works", {
