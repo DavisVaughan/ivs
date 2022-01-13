@@ -15,6 +15,7 @@ Imports:
     vctrs (>= 0.3.8.9001)
 Suggests: 
     covr,
+    dplyr (>= 1.0.7),
     testthat (>= 3.0.0)
 Remotes:
     DavisVaughan/vctrs@feature/vec-locate-disjoint,

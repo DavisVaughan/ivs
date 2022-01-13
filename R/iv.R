@@ -30,6 +30,148 @@ new_iv <- function(start, end, ..., class = character()) {
 
 # ------------------------------------------------------------------------------
 
+#' Create an interval vector
+#'
+#' @description
+#' - `iv()` creates an interval vector from `start` and `end` vectors. This
+#'   is how you will typically create interval vectors, and is often used with
+#'   columns in a data frame.
+#'
+#' - `iv_pairs()` creates an interval vector from _pairs_. This is often useful
+#'   for interactive testing, as it provides a more intuitive interface for
+#'   creating small interval vectors. It should generally not be used on a large
+#'   scale because it can be slow.
+#'
+#' ## Intervals
+#'
+#' Interval vectors in iv are _right-open_, i.e. `[start, end)`. This means that
+#' `start < end` is a requirement to generate an interval vector. In particular,
+#' empty intervals with `start == end` are not allowed.
+#'
+#' Right-open intervals tend to be the most practically useful. For example,
+#' `[2019-01-01 00:00:00, 2019-01-02 00:00:00)` nicely encapsulates all times on
+#' `2019-01-01`. With closed intervals, you'd have to attempt to specify this as
+#' `2019-01-01 23:59:59`, which is inconvenient and inaccurate, as it doesn't
+#' capture fractional seconds.
+#'
+#' Right-open intervals also have the extremely nice technical property that
+#' they create a closed algebra. Concretely, the complement of a vector of
+#' right-open intervals and the union, intersection, or difference of two
+#' vectors of right-open intervals will always result in another vector of
+#' right-open intervals.
+#'
+#' ## Missing intervals
+#'
+#' When creating interval vectors with `iv()`, if either bound is
+#' [incomplete][vctrs::vec_detect_complete], then both bounds are set to
+#' their missing value.
+#'
+#' @param start,end `[vector]`
+#'
+#'   A pair of vectors to represent the bounds of the intervals.
+#'
+#'   To be a valid interval vector, `start` must be strictly less than `end`.
+#'
+#'   If either `start` or `end` are incomplete / missing, then both bounds will
+#'   be coerced to missing values.
+#'
+#'   `start` and `end` are recycled against each other and are cast to the same
+#'   type.
+#'
+#' @param ... `[vector pairs]`
+#'
+#'   Vectors of size 2 representing intervals to include in the result.
+#'
+#'   All inputs will be cast to the same type.
+#'
+#' @name iv
+#'
+#' @examples
+#' library(dplyr, warn.conflicts = FALSE)
+#'
+#' set.seed(123)
+#'
+#' x <- tibble(
+#'   start = as.Date("2019-01-01") + 1:5,
+#'   end = start + sample(1:10, length(start), replace = TRUE)
+#' )
+#'
+#' # Typically you'll use `iv()` with columns of a data frame
+#' mutate(x, iv = iv(start, end), .keep = "unused")
+#'
+#' # `iv_pairs()` is useful for generating interval vectors interactively
+#' iv_pairs(c(1, 5), c(2, 3), c(6, 10))
+NULL
+
+#' @rdname iv
+#' @export
+iv <- function(start, end) {
+  if (!vec_is(start)) {
+    abort("`start` must be a vector.")
+  }
+  if (!vec_is(end)) {
+    abort("`end` must be a vector.")
+  }
+
+  args <- list(start = start, end = end)
+  args <- vec_cast_common(!!!args)
+  args <- vec_recycle_common(!!!args)
+  start <- args$start
+  end <- args$end
+
+  compare <- vec_compare(start, end)
+
+  if (any(compare != -1L, na.rm = TRUE)) {
+    abort("`start` must be less than `end`.")
+  }
+
+  joint <- data_frame(start = start, end = end)
+  complete <- vec_detect_complete(joint)
+
+  if (!all(complete)) {
+    incomplete <- !complete
+    na <- vec_init(start)
+    start <- vec_assign(start, incomplete, na)
+    end <- vec_assign(end, incomplete, na)
+  }
+
+  new_iv(start, end)
+}
+
+#' @rdname iv
+#' @export
+iv_pairs <- function(...) {
+  args <- list2(...)
+  args <- unname(args)
+  n_args <- length(args)
+
+  if (n_args == 0L) {
+    abort("Must supply at least one input.")
+  }
+
+  sizes <- list_sizes(args)
+  not_pairs <- sizes != 2L
+  if (any(not_pairs)) {
+    loc <- which(not_pairs)[[1]]
+    size <- sizes[[loc]]
+
+    abort(c(
+      "All inputs must be in pairs of size 2.",
+      i = glue("Input {loc} is size {size}.")
+    ))
+  }
+
+  start <- map(args, vec_slice, i = 1L)
+  end <- map(args, vec_slice, i = 2L)
+
+  start <- vec_c(!!!start)
+  end <- vec_c(!!!end)
+
+  iv(start, end)
+}
+
+# ------------------------------------------------------------------------------
+
 #' Is `x` an iv?
 #'
 #' `is_iv()` tests if `x` is an iv object.
