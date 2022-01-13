@@ -4,6 +4,10 @@
 # iv
 
 <!-- badges: start -->
+
+[![Codecov test
+coverage](https://codecov.io/gh/DavisVaughan/iv/branch/main/graph/badge.svg)](https://app.codecov.io/gh/DavisVaughan/iv?branch=main)
+[![R-CMD-check](https://github.com/DavisVaughan/iv/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DavisVaughan/iv/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of iv is to provide tools for working with intervals in a
