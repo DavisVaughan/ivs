@@ -22,6 +22,9 @@ Additional named attributes to attach to the result.}
 
 The name of the subclass to create.}
 }
+\value{
+A new iv object.
+}
 \description{
 \code{new_iv()} is a developer focused function for creating a new interval
 vector. It does minimal checks on the inputs, for performance.
