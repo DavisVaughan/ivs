@@ -2,8 +2,8 @@
 % Please edit documentation in R/iv-package.R
 \docType{package}
 \name{iv-package}
-\alias{iv}
 \alias{iv-package}
+\alias{_PACKAGE}
 \title{iv: Interval Types and Tools}
 \description{
 What the package does (one paragraph).
