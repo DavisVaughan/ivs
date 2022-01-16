@@ -1,6 +1,11 @@
 # An internal helper class used for testing,
 # but this lives here so we can register the S3 methods
 
+nested_integer_iv_pairs <- function(...) {
+  out <- iv_pairs(...)
+  new_nested_integer_iv(out)
+}
+
 new_nested_integer_iv <- function(iv, ..., class = character()) {
   if (!is_iv(iv)) {
     abort("`iv` must be an <iv>.")
