@@ -1,6 +1,6 @@
 #' Complement
 #'
-#' `iv_complement()` computes the set theoretical complement of an interval
+#' `iv_set_complement()` computes the set theoretical complement of an interval
 #' vector. The "universe" to compute the complement over is considered to be
 #' the minimal and maximal values of `x`, but this can be adjusted with `lower`
 #' and `upper`.
@@ -26,12 +26,12 @@
 #'
 #' # Complement contains any values from `[-5, 12)` that aren't represented
 #' # in these intervals
-#' iv_complement(x)
+#' iv_set_complement(x)
 #'
 #' # Expand out the "universe" of possible values
-#' iv_complement(x, lower = -Inf)
-#' iv_complement(x, lower = -Inf, upper = Inf)
-iv_complement <- function(x, ..., lower = NULL, upper = NULL) {
+#' iv_set_complement(x, lower = -Inf)
+#' iv_set_complement(x, lower = -Inf, upper = Inf)
+iv_set_complement <- function(x, ..., lower = NULL, upper = NULL) {
   proxy <- iv_proxy(x)
 
   start <- field_start(proxy)

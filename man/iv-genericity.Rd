@@ -86,5 +86,5 @@ iv_start(x)
 
 # Proxies, computes the complement to generate an iv,
 # then restores to the original type
-iv_complement(x)
+iv_set_complement(x)
 }
