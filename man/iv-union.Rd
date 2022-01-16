@@ -8,13 +8,13 @@
 \alias{iv_locate_union_groups}
 \title{Union}
 \usage{
-iv_union(x, ..., keep_abutting = FALSE, keep_missing = FALSE)
+iv_union(x, ..., keep_abutting = FALSE)
 
 iv_replace_union(x, ..., keep_abutting = FALSE)
 
-iv_locate_union(x, ..., keep_abutting = FALSE, keep_missing = FALSE)
+iv_locate_union(x, ..., keep_abutting = FALSE)
 
-iv_locate_union_groups(x, ..., keep_abutting = FALSE, keep_missing = FALSE)
+iv_locate_union_groups(x, ..., keep_abutting = FALSE)
 }
 \arguments{
 \item{x}{\verb{[iv]}
@@ -30,17 +30,6 @@ Should abutting intervals be kept separate?
 If \code{FALSE}, \verb{[a, b)} and \verb{[b, c)} will join as \verb{[a, c)}. If \code{TRUE}, they
 will be kept separate. To be a minimal interval vector, all abutting
 intervals must be merged.}
-
-\item{keep_missing}{\verb{[logical(1)]}
-
-Should missing intervals be kept?
-
-If \code{FALSE}, missing intervals will not be represented in the result. If
-\code{TRUE}, they will be represented.
-
-Minimal interval vectors don't contain missing intervals, but retaining
-them is often useful to ensure that each element of the input maps to
-a location in the output.}
 }
 \description{
 This family of functions revolves around taking the union of intervals
@@ -56,21 +45,22 @@ This is particularly useful alongside \code{\link[dplyr:group_by]{dplyr::group_b
 each element of \code{x} to its union interval.
 }
 
-Optionally, you can choose to retain missing intervals with \code{keep_missing},
-which is useful if you want to guarantee that every value in \code{x} has a union
-to map to. You can also choose to keep abutting intervals separate with
-\code{keep_abutting}, which can be useful if you'd like to retain boundaries.
+Optionally, you can choose to keep abutting intervals separate with
+\code{keep_abutting}, which can be useful if you'd like to retain those
+boundaries.
 \subsection{Minimal interval vectors}{
 
 \code{iv_union()} is particularly useful because it can generate a \emph{minimal}
-interval vector, which covers a range in the most compact form possible. In
-particular, a minimal interval vector:
+interval vector, which covers the range of an interval vector in the most
+compact form possible. In particular, a minimal interval vector:
 \itemize{
 \item Has no overlapping intervals
 \item Has no abutting intervals
-\item Has no missing intervals
 \item Is ordered on both \code{start} and \code{end}
 }
+
+A minimal interval vector is allowed to have a single missing interval,
+which is located at the end of the vector.
 }
 }
 \examples{
@@ -88,15 +78,13 @@ x <- iv_pairs(
 x
 
 # The union removes all redundancy while still covering the full range
-# of values that were originally represented
+# of values that were originally represented. If any missing intervals
+# are present, a single one is retained.
 iv_union(x)
 
 # Abutting intervals can be kept separate if you want to
 # retain those boundaries
 iv_union(x, keep_abutting = TRUE)
-
-# You can also choose to represent missing intervals in the union
-iv_union(x, keep_missing = TRUE)
 
 # `iv_replace_union()` is useful alongside `group_by()` and `summarize()`
 df <- tibble(x = x)

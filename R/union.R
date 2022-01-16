@@ -16,21 +16,22 @@
 #'   `iv_locate_union()` along with a list-column of group locations that maps
 #'   each element of `x` to its union interval.
 #'
-#' Optionally, you can choose to retain missing intervals with `keep_missing`,
-#' which is useful if you want to guarantee that every value in `x` has a union
-#' to map to. You can also choose to keep abutting intervals separate with
-#' `keep_abutting`, which can be useful if you'd like to retain boundaries.
+#' Optionally, you can choose to keep abutting intervals separate with
+#' `keep_abutting`, which can be useful if you'd like to retain those
+#' boundaries.
 #'
 #' ## Minimal interval vectors
 #'
 #' `iv_union()` is particularly useful because it can generate a _minimal_
-#' interval vector, which covers a range in the most compact form possible. In
-#' particular, a minimal interval vector:
+#' interval vector, which covers the range of an interval vector in the most
+#' compact form possible. In particular, a minimal interval vector:
 #'
 #' - Has no overlapping intervals
 #' - Has no abutting intervals
-#' - Has no missing intervals
 #' - Is ordered on both `start` and `end`
+#'
+#' A minimal interval vector is allowed to have a single missing interval,
+#' which is located at the end of the vector.
 #'
 #' @inheritParams rlang::args_dots_empty
 #'
@@ -45,17 +46,6 @@
 #'   If `FALSE`, `[a, b)` and `[b, c)` will join as `[a, c)`. If `TRUE`, they
 #'   will be kept separate. To be a minimal interval vector, all abutting
 #'   intervals must be merged.
-#'
-#' @param keep_missing `[logical(1)]`
-#'
-#'   Should missing intervals be kept?
-#'
-#'   If `FALSE`, missing intervals will not be represented in the result. If
-#'   `TRUE`, they will be represented.
-#'
-#'   Minimal interval vectors don't contain missing intervals, but retaining
-#'   them is often useful to ensure that each element of the input maps to
-#'   a location in the output.
 #'
 #' @name iv-union
 #'
@@ -74,15 +64,13 @@
 #' x
 #'
 #' # The union removes all redundancy while still covering the full range
-#' # of values that were originally represented
+#' # of values that were originally represented. If any missing intervals
+#' # are present, a single one is retained.
 #' iv_union(x)
 #'
 #' # Abutting intervals can be kept separate if you want to
 #' # retain those boundaries
 #' iv_union(x, keep_abutting = TRUE)
-#'
-#' # You can also choose to represent missing intervals in the union
-#' iv_union(x, keep_missing = TRUE)
 #'
 #' # `iv_replace_union()` is useful alongside `group_by()` and `summarize()`
 #' df <- tibble(x = x)
@@ -101,10 +89,7 @@ NULL
 
 #' @rdname iv-union
 #' @export
-iv_union <- function(x,
-                     ...,
-                     keep_abutting = FALSE,
-                     keep_missing = FALSE) {
+iv_union <- function(x, ..., keep_abutting = FALSE) {
   check_dots_empty0(...)
 
   proxy <- iv_proxy(x)
@@ -116,7 +101,7 @@ iv_union <- function(x,
     start = start,
     end = end,
     keep_abutting = keep_abutting,
-    keep_missing = keep_missing
+    keep_missing = TRUE
   )
 
   start <- vec_slice(start, loc$start)
@@ -130,9 +115,7 @@ iv_union <- function(x,
 
 #' @rdname iv-union
 #' @export
-iv_replace_union <- function(x,
-                             ...,
-                             keep_abutting = FALSE) {
+iv_replace_union <- function(x, ..., keep_abutting = FALSE) {
   check_dots_empty0(...)
 
   proxy <- iv_proxy(x)
@@ -167,10 +150,7 @@ iv_replace_union <- function(x,
 
 #' @rdname iv-union
 #' @export
-iv_locate_union <- function(x,
-                            ...,
-                            keep_abutting = FALSE,
-                            keep_missing = FALSE) {
+iv_locate_union <- function(x, ..., keep_abutting = FALSE) {
   check_dots_empty0(...)
 
   proxy <- iv_proxy(x)
@@ -182,16 +162,13 @@ iv_locate_union <- function(x,
     start = start,
     end = end,
     keep_abutting = keep_abutting,
-    keep_missing = keep_missing
+    keep_missing = TRUE
   )
 }
 
 #' @rdname iv-union
 #' @export
-iv_locate_union_groups <- function(x,
-                                   ...,
-                                   keep_abutting = FALSE,
-                                   keep_missing = FALSE) {
+iv_locate_union_groups <- function(x, ..., keep_abutting = FALSE) {
   check_dots_empty0(...)
 
   proxy <- iv_proxy(x)
@@ -203,6 +180,6 @@ iv_locate_union_groups <- function(x,
     start = start,
     end = end,
     keep_abutting = keep_abutting,
-    keep_missing = keep_missing
+    keep_missing = TRUE
   )
 }

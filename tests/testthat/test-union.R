@@ -15,8 +15,7 @@ test_that("can keep abutting intervals separate", {
 
 test_that("can retain missing", {
   x <- iv_pairs(c(1, 3), c(NA, NA))
-  expect_identical(iv_union(x), x[1])
-  expect_identical(iv_union(x, keep_missing = TRUE), x)
+  expect_identical(iv_union(x), x)
 })
 
 test_that("union is generic", {
@@ -75,8 +74,7 @@ test_that("can keep abutting intervals separate", {
 
 test_that("can retain missing", {
   x <- iv_pairs(c(1, 3), c(NA, NA))
-  expect_identical(iv_locate_union(x), data_frame(start = 1L, end = 1L))
-  expect_identical(iv_locate_union(x, keep_missing = TRUE), data_frame(start = c(1L, NA), end = c(1L, NA)))
+  expect_identical(iv_locate_union(x), data_frame(start = c(1L, NA), end = c(1L, NA)))
 })
 
 # ------------------------------------------------------------------------------
@@ -100,7 +98,7 @@ test_that("can keep abutting intervals separate", {
 
 test_that("can retain missing", {
   x <- iv_pairs(c(1, 3), c(NA, NA))
-  out <- iv_locate_union_groups(x, keep_missing = TRUE)
+  out <- iv_locate_union_groups(x)
   expect_identical(out$key, data_frame(start = c(1L, NA), end = c(1L, NA)))
   expect_identical(out$loc, list(1L, 2L))
 })
