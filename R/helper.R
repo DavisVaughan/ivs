@@ -2,7 +2,7 @@
 # but this lives here so we can register the S3 methods
 
 nested_integer_iv_pairs <- function(...) {
-  out <- iv_pairs(...)
+  out <- iv_pairs(..., ptype = integer())
   new_nested_integer_iv(out)
 }
 

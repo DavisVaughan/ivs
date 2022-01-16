@@ -20,11 +20,11 @@ test_that("can retain missing", {
 })
 
 test_that("union is generic", {
-  x <- nested_integer_iv_pairs(c(1L, 5L), c(3L, 7L))
+  x <- nested_integer_iv_pairs(c(1, 5), c(3, 7))
 
   expect_identical(
     iv_union(x),
-    nested_integer_iv_pairs(c(1L, 7L))
+    nested_integer_iv_pairs(c(1, 7))
   )
 })
 
@@ -50,11 +50,11 @@ test_that("computes the order on the group locations to map back to original loc
 })
 
 test_that("replace union is generic", {
-  x <- nested_integer_iv_pairs(c(1L, 5L), c(3L, 7L))
+  x <- nested_integer_iv_pairs(c(1, 5), c(3, 7))
 
   expect_identical(
     iv_replace_union(x),
-    nested_integer_iv_pairs(c(1L, 7L), c(1L, 7L))
+    nested_integer_iv_pairs(c(1, 7), c(1, 7))
   )
 })
 
