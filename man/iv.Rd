@@ -5,9 +5,9 @@
 \alias{iv_pairs}
 \title{Create an interval vector}
 \usage{
-iv(start, end)
+iv(start, end, ..., ptype = NULL, size = NULL)
 
-iv_pairs(...)
+iv_pairs(..., ptype = NULL)
 }
 \arguments{
 \item{start, end}{\verb{[vector]}
@@ -22,11 +22,27 @@ be coerced to missing values.
 \code{start} and \code{end} are recycled against each other and are cast to the same
 type.}
 
-\item{...}{\verb{[vector pairs]}
+\item{...}{For \code{iv_pairs()}:
+
+\verb{[vector pairs]}
 
 Vectors of size 2 representing intervals to include in the result.
 
-All inputs will be cast to the same type.}
+All inputs will be cast to the same type.
+
+For \code{iv()}:
+
+These dots are for future extensions and must be empty.}
+
+\item{ptype}{\verb{[vector(0) / NULL]}
+
+A prototype to force for the inner type of the resulting iv. If \code{NULL},
+this defaults to the common type of the inputs.}
+
+\item{size}{\verb{[integer(1) / NULL]}
+
+A size to force for the resulting iv. If \code{NULL}, this defaults to the
+common size of the inputs.}
 }
 \description{
 \itemize{

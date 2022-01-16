@@ -78,11 +78,29 @@ new_iv <- function(start, end, ..., class = character()) {
 #'   `start` and `end` are recycled against each other and are cast to the same
 #'   type.
 #'
-#' @param ... `[vector pairs]`
+#' @param ptype `[vector(0) / NULL]`
+#'
+#'   A prototype to force for the inner type of the resulting iv. If `NULL`,
+#'   this defaults to the common type of the inputs.
+#'
+#' @param size `[integer(1) / NULL]`
+#'
+#'   A size to force for the resulting iv. If `NULL`, this defaults to the
+#'   common size of the inputs.
+#'
+#' @param ...
+#'
+#'   For `iv_pairs()`:
+#'
+#'   `[vector pairs]`
 #'
 #'   Vectors of size 2 representing intervals to include in the result.
 #'
 #'   All inputs will be cast to the same type.
+#'
+#'   For `iv()`:
+#'
+#'   These dots are for future extensions and must be empty.
 #'
 #' @name iv
 #'
@@ -105,7 +123,7 @@ NULL
 
 #' @rdname iv
 #' @export
-iv <- function(start, end) {
+iv <- function(start, end, ..., ptype = NULL, size = NULL) {
   if (!vec_is(start)) {
     abort("`start` must be a vector.")
   }
@@ -114,8 +132,8 @@ iv <- function(start, end) {
   }
 
   args <- list(start = start, end = end)
-  args <- vec_cast_common(!!!args)
-  args <- vec_recycle_common(!!!args)
+  args <- vec_cast_common(!!!args, .to = ptype)
+  args <- vec_recycle_common(!!!args, .size = size)
   start <- args$start
   end <- args$end
 
@@ -140,7 +158,7 @@ iv <- function(start, end) {
 
 #' @rdname iv
 #' @export
-iv_pairs <- function(...) {
+iv_pairs <- function(..., ptype = NULL) {
   args <- list2(...)
   args <- unname(args)
   n_args <- length(args)
@@ -167,7 +185,7 @@ iv_pairs <- function(...) {
   start <- vec_c(!!!start)
   end <- vec_c(!!!end)
 
-  iv(start, end)
+  iv(start, end, ptype = ptype)
 }
 
 # ------------------------------------------------------------------------------

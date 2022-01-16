@@ -37,6 +37,14 @@ test_that("incomplete values are propagated", {
   expect_identical(iv(x, y), iv(expect, expect))
 })
 
+test_that("can force a ptype", {
+  expect_identical(iv(1, 2, ptype = integer()), iv(1L, 2L))
+})
+
+test_that("can force a size", {
+  expect_identical(iv(1, 2, size = 5), iv(rep(1, 5), rep(2, 5)))
+})
+
 test_that("`start` must be less than `end`", {
   expect_snapshot(error = TRUE, iv(2, 2))
   expect_snapshot(error = TRUE, iv(3, 2))
