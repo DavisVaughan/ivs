@@ -122,9 +122,9 @@ their missing value.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">iv</span><span class="op">(</span><span class="va">start</span>, <span class="va">end</span><span class="op">)</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">iv</span><span class="op">(</span><span class="va">start</span>, <span class="va">end</span>, <span class="va">...</span>, ptype <span class="op">=</span> <span class="cn">NULL</span>, size <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
 
-<span class="fu">iv_pairs</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu">iv_pairs</span><span class="op">(</span><span class="va">...</span>, ptype <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -138,9 +138,20 @@ be coerced to missing values.</p>
 <p><code>start</code> and <code>end</code> are recycled against each other and are cast to the same
 type.</p></dd>
 <dt>...</dt>
-<dd><p><code>[vector pairs]</code></p>
+<dd><p>For <code>iv_pairs()</code>:</p>
+<p><code>[vector pairs]</code></p>
 <p>Vectors of size 2 representing intervals to include in the result.</p>
-<p>All inputs will be cast to the same type.</p></dd>
+<p>All inputs will be cast to the same type.</p>
+<p>For <code>iv()</code>:</p>
+<p>These dots are for future extensions and must be empty.</p></dd>
+<dt>ptype</dt>
+<dd><p><code>[vector(0) / NULL]</code></p>
+<p>A prototype to force for the inner type of the resulting iv. If <code>NULL</code>,
+this defaults to the common type of the inputs.</p></dd>
+<dt>size</dt>
+<dd><p><code>[integer(1) / NULL]</code></p>
+<p>A size to force for the resulting iv. If <code>NULL</code>, this defaults to the
+common size of the inputs.</p></dd>
 </dl></div>
 
     <div id="ref-examples">
