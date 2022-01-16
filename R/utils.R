@@ -1,7 +1,7 @@
 vec_interval_locate_minimal <- function(start,
                                         end,
                                         ...,
-                                        merge_abutting = TRUE,
+                                        keep_abutting = FALSE,
                                         keep_empty = FALSE,
                                         keep_missing = FALSE) {
   name <- "vec_interval_locate_minimal"
@@ -11,7 +11,7 @@ vec_interval_locate_minimal <- function(start,
     start = start,
     end = end,
     ...,
-    merge_abutting = merge_abutting,
+    keep_abutting = keep_abutting,
     keep_empty = keep_empty,
     keep_missing = keep_missing
   )
@@ -20,7 +20,7 @@ vec_interval_locate_minimal <- function(start,
 vec_interval_locate_minimal_groups <- function(start,
                                                end,
                                                ...,
-                                               merge_abutting = TRUE,
+                                               keep_abutting = FALSE,
                                                keep_empty = FALSE,
                                                keep_missing = FALSE) {
   name <- "vec_interval_locate_minimal_groups"
@@ -30,7 +30,7 @@ vec_interval_locate_minimal_groups <- function(start,
     start = start,
     end = end,
     ...,
-    merge_abutting = merge_abutting,
+    keep_abutting = keep_abutting,
     keep_empty = keep_empty,
     keep_missing = keep_missing
   )
