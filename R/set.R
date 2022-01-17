@@ -19,6 +19,9 @@
 #' - `iv_set_difference()` answers the question, "Which intervals are in `x`
 #'   but not `y`?" Note that this is an asymmetrical difference.
 #'
+#' - `iv_set_symmetric_difference()` answers the question, "Which intervals
+#'   are in `x` or `y` but not both?"
+#'
 #' @inheritParams rlang::args_dots_empty
 #'
 #' @param x `[iv]`
@@ -85,6 +88,13 @@
 #'
 #' # Missing intervals in x are kept if there aren't missing intervals in y
 #' iv_set_difference(x, iv(1, 2))
+#'
+#' # Which intervals are in x or y but not both?
+#' iv_set_symmetric_difference(x, y)
+#'
+#' # Missing intervals will be kept if they only appear on one side
+#' iv_set_symmetric_difference(x, iv(1, 2))
+#' iv_set_symmetric_difference(iv(1, 2), x)
 NULL
 
 #' @rdname iv-sets
@@ -223,6 +233,67 @@ iv_set_difference <- function(x, y) {
   out <- iv_set_complement(u, lower = lower, upper = upper)
 
   if (any_x_missing && !any_y_missing) {
+    out <- vec_c(out, vec_init(out))
+  }
+
+  out <- iv_restore(out, x)
+
+  out
+}
+
+#' @rdname iv-sets
+#' @export
+iv_set_symmetric_difference <- function(x, y) {
+  args <- vec_cast_common(x = x, y = y)
+  x <- args[[1]]
+  y <- args[[2]]
+
+  x_missing <- vec_equal_na(x)
+  y_missing <- vec_equal_na(y)
+
+  any_x_missing <- any(x_missing)
+  any_y_missing <- any(y_missing)
+
+  if (any_x_missing) {
+    x <- vec_slice(x, !x_missing)
+  }
+  if (any_y_missing) {
+    y <- vec_slice(y, !y_missing)
+  }
+
+  if (vec_size(x) == 0L || vec_size(y) == 0L) {
+    out <- iv_set_union(x, y)
+
+    if (xor(any_x_missing, any_y_missing)) {
+      out <- vec_c(out, vec_init(out))
+    }
+
+    return(out)
+  }
+
+  x_proxy <- iv_proxy(x)
+  y_proxy <- iv_proxy(y)
+
+  lower <- min(
+    min(field_start(x_proxy)),
+    min(field_start(y_proxy))
+  )
+  upper <- max(
+    max(field_end(x_proxy)),
+    max(field_end(y_proxy))
+  )
+
+  x_c <- iv_set_complement(x_proxy, lower = lower, upper = upper)
+  x_c_union_y <- iv_set_union(x_c, y_proxy)
+  x_setdiff_y <- iv_set_complement(x_c_union_y, lower = lower, upper = upper)
+
+  y_c <- iv_set_complement(y_proxy, lower = lower, upper = upper)
+  y_c_union_x <- iv_set_union(y_c, x_proxy)
+  y_setdiff_x <- iv_set_complement(y_c_union_x, lower = lower, upper = upper)
+
+  out <- iv_set_union(x_setdiff_y, y_setdiff_x)
+
+  if (xor(any_x_missing, any_y_missing)) {
     out <- vec_c(out, vec_init(out))
   }
 

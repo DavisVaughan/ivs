@@ -262,3 +262,95 @@ test_that("difference is generic over container", {
   y <- nested_integer_iv_pairs(c(2, 3))
   expect_identical(iv_set_difference(x, y), nested_integer_iv_pairs(c(1, 2)))
 })
+
+# ------------------------------------------------------------------------------
+# iv_set_symmetric_difference()
+
+test_that("symmetric difference works with size zero inputs", {
+  x <- iv(start = integer(), end = integer())
+  expect_identical(iv_set_symmetric_difference(x, x), x)
+
+  y <- iv(start = 1L, end = 2L)
+  expect_identical(iv_set_symmetric_difference(x, y), y)
+  expect_identical(iv_set_symmetric_difference(y, x), y)
+})
+
+test_that("minimizes on early exits", {
+  x <- iv(integer(), integer())
+  y <- iv(c(1L, 3L), c(3L, 4L))
+
+  expect_identical(iv_set_symmetric_difference(x, y), iv(1L, 4L))
+  expect_identical(iv_set_symmetric_difference(y, x), iv(1L, 4L))
+
+  z <- iv(NA_integer_, NA_integer_)
+
+  expect_identical(iv_set_symmetric_difference(z, y), iv_pairs(c(1L, 4L), c(NA, NA)))
+  expect_identical(iv_set_symmetric_difference(y, z), iv_pairs(c(1L, 4L), c(NA, NA)))
+})
+
+test_that("symmetric difference performs xor", {
+  x <- iv(c(3, 0, 7), c(8, 2, 10))
+  y <- iv(c(1, 8), c(5, 12))
+
+  expect_identical(
+    iv_set_symmetric_difference(x, y),
+    iv(c(0, 2, 5, 10), c(1, 3, 8, 12))
+  )
+})
+
+test_that("symmetric difference keeps a single missing interval when applicable", {
+  x <- iv(c(NA, 0, NA), c(NA, 2, NA))
+  y <- iv(c(1, NA), c(4, NA))
+  z <- iv(1, 4)
+
+  expect_identical(
+    iv_set_symmetric_difference(x, y),
+    iv_pairs(c(0, 1), c(2, 4))
+  )
+  expect_identical(
+    iv_set_symmetric_difference(x, y),
+    iv_set_symmetric_difference(y, x)
+  )
+
+  expect_identical(
+    iv_set_symmetric_difference(x, z),
+    iv_pairs(c(0, 1), c(2, 4), c(NA, NA))
+  )
+  expect_identical(
+    iv_set_symmetric_difference(x, z),
+    iv_set_symmetric_difference(z, x)
+  )
+})
+
+test_that("symmetric difference works when all of one input is missing", {
+  x <- iv(c(NA, NA), c(NA, NA))
+  y <- iv(c(NA, 0, NA), c(NA, 2, NA))
+  z <- iv(0, 2)
+
+  expect_identical(
+    iv_set_symmetric_difference(x, y),
+    iv(0, 2)
+  )
+  expect_identical(
+    iv_set_symmetric_difference(x, y),
+    iv_set_symmetric_difference(y, x)
+  )
+
+  expect_identical(
+    iv_set_symmetric_difference(x, z),
+    iv_pairs(c(0, 2), c(NA, NA))
+  )
+  expect_identical(
+    iv_set_symmetric_difference(x, z),
+    iv_set_symmetric_difference(z, x)
+  )
+})
+
+test_that("symmetric difference is generic over container", {
+  x <- nested_integer_iv_pairs(c(1, 3))
+  y <- nested_integer_iv_pairs(c(2, 5))
+  expect_identical(
+    iv_set_symmetric_difference(x, y),
+    nested_integer_iv_pairs(c(1, 2), c(3, 5))
+  )
+})

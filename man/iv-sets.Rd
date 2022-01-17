@@ -6,6 +6,7 @@
 \alias{iv_set_union}
 \alias{iv_set_intersect}
 \alias{iv_set_difference}
+\alias{iv_set_symmetric_difference}
 \title{Set theoretical operations}
 \usage{
 iv_set_complement(x, ..., lower = NULL, upper = NULL)
@@ -15,6 +16,8 @@ iv_set_union(x, y)
 iv_set_intersect(x, y)
 
 iv_set_difference(x, y)
+
+iv_set_symmetric_difference(x, y)
 }
 \arguments{
 \item{x}{\verb{[iv]}
@@ -55,6 +58,8 @@ calling \code{iv_union()}.
 and \code{y}?"
 \item \code{iv_set_difference()} answers the question, "Which intervals are in \code{x}
 but not \code{y}?" Note that this is an asymmetrical difference.
+\item \code{iv_set_symmetric_difference()} answers the question, "Which intervals
+are in \code{x} or \code{y} but not both?"
 }
 }
 \examples{
@@ -98,4 +103,11 @@ iv_set_difference(y, x)
 
 # Missing intervals in x are kept if there aren't missing intervals in y
 iv_set_difference(x, iv(1, 2))
+
+# Which intervals are in x or y but not both?
+iv_set_symmetric_difference(x, y)
+
+# Missing intervals will be kept if they only appear on one side
+iv_set_symmetric_difference(x, iv(1, 2))
+iv_set_symmetric_difference(iv(1, 2), x)
 }
