@@ -9,10 +9,15 @@
 #'   the complement over, but this can be adjusted with `lower` and `upper`.
 #'   Missing intervals are always dropped in the complement.
 #'
-#' - `iv_set_union()` takes the union of two sets of intervals. It is equivalent
-#'   to combining the two vectors together and then calling `iv_union()`.
+#' - `iv_set_union()` answers the question, "Which intervals are in `x` or
+#'   `y`?" It is equivalent to combining the two vectors together and then
+#'   calling `iv_union()`.
 #'
-#' - `iv_set_intersect()` takes the intersection of two sets of intervals.
+#' - `iv_set_intersect()` answers the question, "Which intervals are in `x`
+#'   and `y`?"
+#'
+#' - `iv_set_difference()` answers the question, "Which intervals are in `x`
+#'   but not `y`?" Note that this is an asymmetrical difference.
 #'
 #' @inheritParams rlang::args_dots_empty
 #'
@@ -66,12 +71,20 @@
 #' iv_set_complement(x, lower = -Inf)
 #' iv_set_complement(x, lower = -Inf, upper = Inf)
 #'
-#' # Union returns the minimal iv containing all of the information from
-#' # both interval vectors
+#' # Which intervals are in x or y?
 #' iv_set_union(x, y)
 #'
-#' # Minimal iv representing the set intersection
+#' # Which intervals are in x and y?
 #' iv_set_intersect(x, y)
+#'
+#' # Which intervals are in x but not y?
+#' iv_set_difference(x, y)
+#'
+#' # Which intervals are in y but not x?
+#' iv_set_difference(y, x)
+#'
+#' # Missing intervals in x are kept if there aren't missing intervals in y
+#' iv_set_difference(x, iv(1, 2))
 NULL
 
 #' @rdname iv-sets
@@ -110,41 +123,39 @@ iv_set_intersect <- function(x, y) {
   x <- args[[1]]
   y <- args[[2]]
 
+  x_missing <- vec_equal_na(x)
+  y_missing <- vec_equal_na(y)
+
+  any_x_missing <- any(x_missing)
+  any_y_missing <- any(y_missing)
+
+  if (any_x_missing) {
+    x <- vec_slice(x, !x_missing)
+  }
+  if (any_y_missing) {
+    y <- vec_slice(y, !y_missing)
+  }
+
+  if (vec_size(x) == 0L || vec_size(y) == 0L) {
+    out <- vec_ptype(x)
+
+    if (any_x_missing && any_y_missing) {
+      out <- vec_c(out, vec_init(out))
+    }
+
+    return(out)
+  }
+
   x_proxy <- iv_proxy(x)
   y_proxy <- iv_proxy(y)
 
-  if (vec_size(x_proxy) == 0L) {
-    return(vec_ptype(x))
-  }
-  if (vec_size(y_proxy) == 0L) {
-    return(vec_ptype(x))
-  }
-
-  x_missing <- vec_equal_na(x_proxy)
-  y_missing <- vec_equal_na(y_proxy)
-
-  if (all(x_missing)) {
-    if (any(y_missing)) {
-      return(vec_init(x))
-    } else {
-      return(vec_ptype(x))
-    }
-  }
-  if (all(y_missing)) {
-    if (any(x_missing)) {
-      return(vec_init(x))
-    } else {
-      return(vec_ptype(x))
-    }
-  }
-
   lower <- min(
-    min(field_start(x_proxy), na.rm = TRUE),
-    min(field_start(y_proxy), na.rm = TRUE)
+    min(field_start(x_proxy)),
+    min(field_start(y_proxy))
   )
   upper <- max(
-    max(field_end(x_proxy), na.rm = TRUE),
-    max(field_end(y_proxy), na.rm = TRUE)
+    max(field_end(x_proxy)),
+    max(field_end(y_proxy))
   )
 
   x_c <- iv_set_complement(x_proxy, lower = lower, upper = upper)
@@ -154,7 +165,64 @@ iv_set_intersect <- function(x, y) {
 
   out <- iv_set_complement(u, lower = lower, upper = upper)
 
-  if (any(x_missing) && any(y_missing)) {
+  if (any_x_missing && any_y_missing) {
+    out <- vec_c(out, vec_init(out))
+  }
+
+  out <- iv_restore(out, x)
+
+  out
+}
+
+#' @rdname iv-sets
+#' @export
+iv_set_difference <- function(x, y) {
+  args <- vec_cast_common(x = x, y = y)
+  x <- args[[1]]
+  y <- args[[2]]
+
+  x_missing <- vec_equal_na(x)
+  y_missing <- vec_equal_na(y)
+
+  any_x_missing <- any(x_missing)
+  any_y_missing <- any(y_missing)
+
+  if (any_x_missing) {
+    x <- vec_slice(x, !x_missing)
+  }
+  if (any_y_missing) {
+    y <- vec_slice(y, !y_missing)
+  }
+
+  if (vec_size(x) == 0L || vec_size(y) == 0L) {
+    out <- iv_union(x)
+
+    if (any_x_missing && !any_y_missing) {
+      out <- vec_c(out, vec_init(out))
+    }
+
+    return(out)
+  }
+
+  x_proxy <- iv_proxy(x)
+  y_proxy <- iv_proxy(y)
+
+  lower <- min(
+    min(field_start(x_proxy)),
+    min(field_start(y_proxy))
+  )
+  upper <- max(
+    max(field_end(x_proxy)),
+    max(field_end(y_proxy))
+  )
+
+  x_c <- iv_set_complement(x_proxy, lower = lower, upper = upper)
+
+  u <- iv_set_union(x_c, y_proxy)
+
+  out <- iv_set_complement(u, lower = lower, upper = upper)
+
+  if (any_x_missing && !any_y_missing) {
     out <- vec_c(out, vec_init(out))
   }
 

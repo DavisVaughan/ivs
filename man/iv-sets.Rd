@@ -5,6 +5,7 @@
 \alias{iv_set_complement}
 \alias{iv_set_union}
 \alias{iv_set_intersect}
+\alias{iv_set_difference}
 \title{Set theoretical operations}
 \usage{
 iv_set_complement(x, ..., lower = NULL, upper = NULL)
@@ -12,6 +13,8 @@ iv_set_complement(x, ..., lower = NULL, upper = NULL)
 iv_set_union(x, y)
 
 iv_set_intersect(x, y)
+
+iv_set_difference(x, y)
 }
 \arguments{
 \item{x}{\verb{[iv]}
@@ -45,9 +48,13 @@ the \link[=iv_union]{minimal} iv of each input and return a minimal iv.
 default, the minimum and maximum of the inputs define the bounds to take
 the complement over, but this can be adjusted with \code{lower} and \code{upper}.
 Missing intervals are always dropped in the complement.
-\item \code{iv_set_union()} takes the union of two sets of intervals. It is equivalent
-to combining the two vectors together and then calling \code{iv_union()}.
-\item \code{iv_set_intersect()} takes the intersection of two sets of intervals.
+\item \code{iv_set_union()} answers the question, "Which intervals are in \code{x} or
+\code{y}?" It is equivalent to combining the two vectors together and then
+calling \code{iv_union()}.
+\item \code{iv_set_intersect()} answers the question, "Which intervals are in \code{x}
+and \code{y}?"
+\item \code{iv_set_difference()} answers the question, "Which intervals are in \code{x}
+but not \code{y}?" Note that this is an asymmetrical difference.
 }
 }
 \examples{
@@ -77,10 +84,18 @@ iv_set_complement(x)
 iv_set_complement(x, lower = -Inf)
 iv_set_complement(x, lower = -Inf, upper = Inf)
 
-# Union returns the minimal iv containing all of the information from
-# both interval vectors
+# Which intervals are in x or y?
 iv_set_union(x, y)
 
-# Minimal iv representing the set intersection
+# Which intervals are in x and y?
 iv_set_intersect(x, y)
+
+# Which intervals are in x but not y?
+iv_set_difference(x, y)
+
+# Which intervals are in y but not x?
+iv_set_difference(y, x)
+
+# Missing intervals in x are kept if there aren't missing intervals in y
+iv_set_difference(x, iv(1, 2))
 }
