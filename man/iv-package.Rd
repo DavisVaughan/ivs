@@ -4,7 +4,7 @@
 \name{iv-package}
 \alias{iv-package}
 \alias{_PACKAGE}
-\title{iv: Interval Types and Tools}
+\title{iv: Interval Vectors}
 \description{
 What the package does (one paragraph).
 }
