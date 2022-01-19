@@ -7,7 +7,7 @@
 \alias{iv_intersect}
 \alias{iv_difference}
 \alias{iv_symmetric_difference}
-\title{Set theoretical operations}
+\title{Set operations}
 \usage{
 iv_complement(x, ..., lower = NULL, upper = NULL)
 
@@ -110,4 +110,8 @@ iv_symmetric_difference(x, y)
 # Missing intervals will be kept if they only appear on one side
 iv_symmetric_difference(x, iv(1, 2))
 iv_symmetric_difference(iv(1, 2), x)
+}
+\seealso{
+The \emph{parallel} versions of these functions, such as
+\code{\link[=iv_parallel_union]{iv_parallel_union()}}.
 }
