@@ -31,6 +31,18 @@ If \code{FALSE}, \verb{[a, b)} and \verb{[b, c)} will join as \verb{[a, c)}. If 
 will be kept separate. To be a minimal interval vector, all abutting
 intervals must be merged.}
 }
+\value{
+For \code{iv_union()}, a new iv with the same type as \code{x} containing the union.
+
+For \code{iv_replace_union()}, a new iv with the same type and size as \code{x}.
+
+For \code{iv_locate_union()}, a two column data frame containing locations to
+slice the start and end of \code{x} to produce the union.
+
+For \code{iv_locate_union_groups()}, a two column data frame with a \code{key} that
+contains the locations from \code{iv_locate_union()} and a \code{loc} that contains
+a list-column of integer vectors.
+}
 \description{
 This family of functions revolves around taking the union of intervals
 within a single interval vector.

@@ -47,6 +47,18 @@
 #'   will be kept separate. To be a minimal interval vector, all abutting
 #'   intervals must be merged.
 #'
+#' @return
+#' For `iv_union()`, a new iv with the same type as `x` containing the union.
+#'
+#' For `iv_replace_union()`, a new iv with the same type and size as `x`.
+#'
+#' For `iv_locate_union()`, a two column data frame containing locations to
+#' slice the start and end of `x` to produce the union.
+#'
+#' For `iv_locate_union_groups()`, a two column data frame with a `key` that
+#' contains the locations from `iv_locate_union()` and a `loc` that contains
+#' a list-column of integer vectors.
+#'
 #' @name iv-union
 #'
 #' @examples
