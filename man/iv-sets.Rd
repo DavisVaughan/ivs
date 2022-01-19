@@ -45,7 +45,7 @@ For all other set operations, a vector of the same type as the common type of
 }
 \description{
 This family of functions treats ivs as sets. They always compute
-the \link[=iv_union]{minimal} iv of each input and return a minimal iv.
+the \link[=iv_merge]{minimal} iv of each input and return a minimal iv.
 \itemize{
 \item \code{iv_set_complement()} takes the complement of a set of intervals. By
 default, the minimum and maximum of the inputs define the bounds to take
@@ -53,7 +53,7 @@ the complement over, but this can be adjusted with \code{lower} and \code{upper}
 Missing intervals are always dropped in the complement.
 \item \code{iv_set_union()} answers the question, "Which intervals are in \code{x} or
 \code{y}?" It is equivalent to combining the two vectors together and then
-calling \code{iv_union()}.
+calling \code{iv_merge()}.
 \item \code{iv_set_intersect()} answers the question, "Which intervals are in \code{x}
 and \code{y}?"
 \item \code{iv_set_difference()} answers the question, "Which intervals are in \code{x}

@@ -2,7 +2,7 @@
 #'
 #' @description
 #' This family of functions treats ivs as sets. They always compute
-#' the [minimal][iv_union()] iv of each input and return a minimal iv.
+#' the [minimal][iv_merge()] iv of each input and return a minimal iv.
 #'
 #' - `iv_set_complement()` takes the complement of a set of intervals. By
 #'   default, the minimum and maximum of the inputs define the bounds to take
@@ -11,7 +11,7 @@
 #'
 #' - `iv_set_union()` answers the question, "Which intervals are in `x` or
 #'   `y`?" It is equivalent to combining the two vectors together and then
-#'   calling `iv_union()`.
+#'   calling `iv_merge()`.
 #'
 #' - `iv_set_intersect()` answers the question, "Which intervals are in `x`
 #'   and `y`?"
@@ -123,7 +123,7 @@ iv_set_complement <- function(x, ..., lower = NULL, upper = NULL) {
 #' @export
 iv_set_union <- function(x, y) {
   out <- vec_c(x, y)
-  iv_union(out)
+  iv_merge(out)
 }
 
 #' @rdname iv-sets
@@ -205,7 +205,7 @@ iv_set_difference <- function(x, y) {
   }
 
   if (vec_size(x) == 0L || vec_size(y) == 0L) {
-    out <- iv_union(x)
+    out <- iv_merge(x)
 
     if (any_x_missing && !any_y_missing) {
       out <- vec_c(out, vec_init(out))

@@ -1,9 +1,9 @@
-vec_interval_locate_minimal <- function(start,
-                                        end,
-                                        ...,
-                                        keep_abutting = FALSE,
-                                        keep_empty = FALSE,
-                                        keep_missing = FALSE) {
+vec_interval_locate_merge_bounds <- function(start,
+                                             end,
+                                             ...,
+                                             abutting = TRUE,
+                                             keep_empty = TRUE,
+                                             keep_missing = TRUE) {
   name <- "vec_interval_locate_minimal"
   fn <- import_vctrs(name)
 
@@ -11,18 +11,18 @@ vec_interval_locate_minimal <- function(start,
     start = start,
     end = end,
     ...,
-    keep_abutting = keep_abutting,
+    keep_abutting = !abutting,
     keep_empty = keep_empty,
     keep_missing = keep_missing
   )
 }
 
-vec_interval_locate_minimal_groups <- function(start,
-                                               end,
-                                               ...,
-                                               keep_abutting = FALSE,
-                                               keep_empty = FALSE,
-                                               keep_missing = FALSE) {
+vec_interval_locate_merge_groups <- function(start,
+                                             end,
+                                             ...,
+                                             abutting = TRUE,
+                                             keep_empty = TRUE,
+                                             keep_missing = TRUE) {
   name <- "vec_interval_locate_minimal_groups"
   fn <- import_vctrs(name)
 
@@ -30,7 +30,7 @@ vec_interval_locate_minimal_groups <- function(start,
     start = start,
     end = end,
     ...,
-    keep_abutting = keep_abutting,
+    keep_abutting = !abutting,
     keep_empty = keep_empty,
     keep_missing = keep_missing
   )
