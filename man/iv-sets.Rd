@@ -2,22 +2,22 @@
 % Please edit documentation in R/set.R
 \name{iv-sets}
 \alias{iv-sets}
-\alias{iv_set_complement}
-\alias{iv_set_union}
-\alias{iv_set_intersect}
-\alias{iv_set_difference}
-\alias{iv_set_symmetric_difference}
+\alias{iv_complement}
+\alias{iv_union}
+\alias{iv_intersect}
+\alias{iv_difference}
+\alias{iv_symmetric_difference}
 \title{Set theoretical operations}
 \usage{
-iv_set_complement(x, ..., lower = NULL, upper = NULL)
+iv_complement(x, ..., lower = NULL, upper = NULL)
 
-iv_set_union(x, y)
+iv_union(x, y)
 
-iv_set_intersect(x, y)
+iv_intersect(x, y)
 
-iv_set_difference(x, y)
+iv_difference(x, y)
 
-iv_set_symmetric_difference(x, y)
+iv_symmetric_difference(x, y)
 }
 \arguments{
 \item{x}{\verb{[iv]}
@@ -37,7 +37,7 @@ often useful to expand the universe to, say, \code{-Inf} to \code{Inf}.}
 An interval vector.}
 }
 \value{
-For \code{iv_set_complement()}, a vector of the same type as \code{x} containing the
+For \code{iv_complement()}, a vector of the same type as \code{x} containing the
 complement.
 
 For all other set operations, a vector of the same type as the common type of
@@ -47,19 +47,19 @@ For all other set operations, a vector of the same type as the common type of
 This family of functions treats ivs as sets. They always compute
 the \link[=iv_merge]{minimal} iv of each input and return a minimal iv.
 \itemize{
-\item \code{iv_set_complement()} takes the complement of a set of intervals. By
+\item \code{iv_complement()} takes the complement of the intervals in an iv. By
 default, the minimum and maximum of the inputs define the bounds to take
 the complement over, but this can be adjusted with \code{lower} and \code{upper}.
 Missing intervals are always dropped in the complement.
-\item \code{iv_set_union()} answers the question, "Which intervals are in \code{x} or
-\code{y}?" It is equivalent to combining the two vectors together and then
-calling \code{iv_merge()}.
-\item \code{iv_set_intersect()} answers the question, "Which intervals are in \code{x}
-and \code{y}?"
-\item \code{iv_set_difference()} answers the question, "Which intervals are in \code{x}
-but not \code{y}?" Note that this is an asymmetrical difference.
-\item \code{iv_set_symmetric_difference()} answers the question, "Which intervals
-are in \code{x} or \code{y} but not both?"
+\item \code{iv_union()} answers the question, "Which intervals are in \code{x} or \code{y}?" It
+is equivalent to combining the two vectors together and then calling
+\code{iv_merge()}.
+\item \code{iv_intersect()} answers the question, "Which intervals are in \code{x} and
+\code{y}?"
+\item \code{iv_difference()} answers the question, "Which intervals are in \code{x} but not
+\code{y}?" Note that this is an asymmetrical difference.
+\item \code{iv_symmetric_difference()} answers the question, "Which intervals are in
+\code{x} or \code{y} but not both?"
 }
 }
 \examples{
@@ -83,31 +83,31 @@ y
 
 # Complement contains any values from `[-5, 12)` that aren't represented
 # in these intervals. Missing intervals are dropped.
-iv_set_complement(x)
+iv_complement(x)
 
 # Expand out the "universe" of possible values
-iv_set_complement(x, lower = -Inf)
-iv_set_complement(x, lower = -Inf, upper = Inf)
+iv_complement(x, lower = -Inf)
+iv_complement(x, lower = -Inf, upper = Inf)
 
 # Which intervals are in x or y?
-iv_set_union(x, y)
+iv_union(x, y)
 
 # Which intervals are in x and y?
-iv_set_intersect(x, y)
+iv_intersect(x, y)
 
 # Which intervals are in x but not y?
-iv_set_difference(x, y)
+iv_difference(x, y)
 
 # Which intervals are in y but not x?
-iv_set_difference(y, x)
+iv_difference(y, x)
 
 # Missing intervals in x are kept if there aren't missing intervals in y
-iv_set_difference(x, iv(1, 2))
+iv_difference(x, iv(1, 2))
 
 # Which intervals are in x or y but not both?
-iv_set_symmetric_difference(x, y)
+iv_symmetric_difference(x, y)
 
 # Missing intervals will be kept if they only appear on one side
-iv_set_symmetric_difference(x, iv(1, 2))
-iv_set_symmetric_difference(iv(1, 2), x)
+iv_symmetric_difference(x, iv(1, 2))
+iv_symmetric_difference(iv(1, 2), x)
 }

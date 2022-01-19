@@ -4,23 +4,23 @@
 #' This family of functions treats ivs as sets. They always compute
 #' the [minimal][iv_merge()] iv of each input and return a minimal iv.
 #'
-#' - `iv_set_complement()` takes the complement of a set of intervals. By
+#' - `iv_complement()` takes the complement of the intervals in an iv. By
 #'   default, the minimum and maximum of the inputs define the bounds to take
 #'   the complement over, but this can be adjusted with `lower` and `upper`.
 #'   Missing intervals are always dropped in the complement.
 #'
-#' - `iv_set_union()` answers the question, "Which intervals are in `x` or
-#'   `y`?" It is equivalent to combining the two vectors together and then
-#'   calling `iv_merge()`.
+#' - `iv_union()` answers the question, "Which intervals are in `x` or `y`?" It
+#'   is equivalent to combining the two vectors together and then calling
+#'   `iv_merge()`.
 #'
-#' - `iv_set_intersect()` answers the question, "Which intervals are in `x`
-#'   and `y`?"
+#' - `iv_intersect()` answers the question, "Which intervals are in `x` and
+#'   `y`?"
 #'
-#' - `iv_set_difference()` answers the question, "Which intervals are in `x`
-#'   but not `y`?" Note that this is an asymmetrical difference.
+#' - `iv_difference()` answers the question, "Which intervals are in `x` but not
+#'   `y`?" Note that this is an asymmetrical difference.
 #'
-#' - `iv_set_symmetric_difference()` answers the question, "Which intervals
-#'   are in `x` or `y` but not both?"
+#' - `iv_symmetric_difference()` answers the question, "Which intervals are in
+#'   `x` or `y` but not both?"
 #'
 #' @inheritParams rlang::args_dots_empty
 #'
@@ -39,7 +39,7 @@
 #'   often useful to expand the universe to, say, `-Inf` to `Inf`.
 #'
 #' @return
-#' For `iv_set_complement()`, a vector of the same type as `x` containing the
+#' For `iv_complement()`, a vector of the same type as `x` containing the
 #' complement.
 #'
 #' For all other set operations, a vector of the same type as the common type of
@@ -68,38 +68,38 @@
 #'
 #' # Complement contains any values from `[-5, 12)` that aren't represented
 #' # in these intervals. Missing intervals are dropped.
-#' iv_set_complement(x)
+#' iv_complement(x)
 #'
 #' # Expand out the "universe" of possible values
-#' iv_set_complement(x, lower = -Inf)
-#' iv_set_complement(x, lower = -Inf, upper = Inf)
+#' iv_complement(x, lower = -Inf)
+#' iv_complement(x, lower = -Inf, upper = Inf)
 #'
 #' # Which intervals are in x or y?
-#' iv_set_union(x, y)
+#' iv_union(x, y)
 #'
 #' # Which intervals are in x and y?
-#' iv_set_intersect(x, y)
+#' iv_intersect(x, y)
 #'
 #' # Which intervals are in x but not y?
-#' iv_set_difference(x, y)
+#' iv_difference(x, y)
 #'
 #' # Which intervals are in y but not x?
-#' iv_set_difference(y, x)
+#' iv_difference(y, x)
 #'
 #' # Missing intervals in x are kept if there aren't missing intervals in y
-#' iv_set_difference(x, iv(1, 2))
+#' iv_difference(x, iv(1, 2))
 #'
 #' # Which intervals are in x or y but not both?
-#' iv_set_symmetric_difference(x, y)
+#' iv_symmetric_difference(x, y)
 #'
 #' # Missing intervals will be kept if they only appear on one side
-#' iv_set_symmetric_difference(x, iv(1, 2))
-#' iv_set_symmetric_difference(iv(1, 2), x)
+#' iv_symmetric_difference(x, iv(1, 2))
+#' iv_symmetric_difference(iv(1, 2), x)
 NULL
 
 #' @rdname iv-sets
 #' @export
-iv_set_complement <- function(x, ..., lower = NULL, upper = NULL) {
+iv_complement <- function(x, ..., lower = NULL, upper = NULL) {
   proxy <- iv_proxy(x)
 
   start <- field_start(proxy)
@@ -121,14 +121,14 @@ iv_set_complement <- function(x, ..., lower = NULL, upper = NULL) {
 
 #' @rdname iv-sets
 #' @export
-iv_set_union <- function(x, y) {
+iv_union <- function(x, y) {
   out <- vec_c(x, y)
   iv_merge(out)
 }
 
 #' @rdname iv-sets
 #' @export
-iv_set_intersect <- function(x, y) {
+iv_intersect <- function(x, y) {
   args <- vec_cast_common(x = x, y = y)
   x <- args[[1]]
   y <- args[[2]]
@@ -168,12 +168,12 @@ iv_set_intersect <- function(x, y) {
     max(field_end(y_proxy))
   )
 
-  x_c <- iv_set_complement(x_proxy, lower = lower, upper = upper)
-  y_c <- iv_set_complement(y_proxy, lower = lower, upper = upper)
+  x_c <- iv_complement(x_proxy, lower = lower, upper = upper)
+  y_c <- iv_complement(y_proxy, lower = lower, upper = upper)
 
-  u <- iv_set_union(x_c, y_c)
+  u <- iv_union(x_c, y_c)
 
-  out <- iv_set_complement(u, lower = lower, upper = upper)
+  out <- iv_complement(u, lower = lower, upper = upper)
 
   if (any_x_missing && any_y_missing) {
     out <- vec_c(out, vec_init(out))
@@ -186,7 +186,7 @@ iv_set_intersect <- function(x, y) {
 
 #' @rdname iv-sets
 #' @export
-iv_set_difference <- function(x, y) {
+iv_difference <- function(x, y) {
   args <- vec_cast_common(x = x, y = y)
   x <- args[[1]]
   y <- args[[2]]
@@ -226,11 +226,11 @@ iv_set_difference <- function(x, y) {
     max(field_end(y_proxy))
   )
 
-  x_c <- iv_set_complement(x_proxy, lower = lower, upper = upper)
+  x_c <- iv_complement(x_proxy, lower = lower, upper = upper)
 
-  u <- iv_set_union(x_c, y_proxy)
+  u <- iv_union(x_c, y_proxy)
 
-  out <- iv_set_complement(u, lower = lower, upper = upper)
+  out <- iv_complement(u, lower = lower, upper = upper)
 
   if (any_x_missing && !any_y_missing) {
     out <- vec_c(out, vec_init(out))
@@ -243,7 +243,7 @@ iv_set_difference <- function(x, y) {
 
 #' @rdname iv-sets
 #' @export
-iv_set_symmetric_difference <- function(x, y) {
+iv_symmetric_difference <- function(x, y) {
   args <- vec_cast_common(x = x, y = y)
   x <- args[[1]]
   y <- args[[2]]
@@ -262,7 +262,7 @@ iv_set_symmetric_difference <- function(x, y) {
   }
 
   if (vec_size(x) == 0L || vec_size(y) == 0L) {
-    out <- iv_set_union(x, y)
+    out <- iv_union(x, y)
 
     if (xor(any_x_missing, any_y_missing)) {
       out <- vec_c(out, vec_init(out))
@@ -283,15 +283,15 @@ iv_set_symmetric_difference <- function(x, y) {
     max(field_end(y_proxy))
   )
 
-  x_c <- iv_set_complement(x_proxy, lower = lower, upper = upper)
-  x_c_union_y <- iv_set_union(x_c, y_proxy)
-  x_setdiff_y <- iv_set_complement(x_c_union_y, lower = lower, upper = upper)
+  x_c <- iv_complement(x_proxy, lower = lower, upper = upper)
+  x_c_union_y <- iv_union(x_c, y_proxy)
+  x_setdiff_y <- iv_complement(x_c_union_y, lower = lower, upper = upper)
 
-  y_c <- iv_set_complement(y_proxy, lower = lower, upper = upper)
-  y_c_union_x <- iv_set_union(y_c, x_proxy)
-  y_setdiff_x <- iv_set_complement(y_c_union_x, lower = lower, upper = upper)
+  y_c <- iv_complement(y_proxy, lower = lower, upper = upper)
+  y_c_union_x <- iv_union(y_c, x_proxy)
+  y_setdiff_x <- iv_complement(y_c_union_x, lower = lower, upper = upper)
 
-  out <- iv_set_union(x_setdiff_y, y_setdiff_x)
+  out <- iv_union(x_setdiff_y, y_setdiff_x)
 
   if (xor(any_x_missing, any_y_missing)) {
     out <- vec_c(out, vec_init(out))

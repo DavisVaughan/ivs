@@ -313,7 +313,7 @@ vec_cast.iv.iv <- function(x, to, ...) {
 #'
 #' # Proxies, computes the complement to generate an iv,
 #' # then restores to the original type
-#' iv_set_complement(x)
+#' iv_complement(x)
 NULL
 
 #' @rdname iv-genericity
