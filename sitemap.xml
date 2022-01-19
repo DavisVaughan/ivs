@@ -28,13 +28,19 @@
     <loc>/reference/iv-genericity.html</loc>
   </url>
   <url>
+    <loc>/reference/iv-merge.html</loc>
+  </url>
+  <url>
     <loc>/reference/iv-package.html</loc>
+  </url>
+  <url>
+    <loc>/reference/iv-set-parallel.html</loc>
   </url>
   <url>
     <loc>/reference/iv-sets.html</loc>
   </url>
   <url>
-    <loc>/reference/iv-union.html</loc>
+    <loc>/reference/iv-split.html</loc>
   </url>
   <url>
     <loc>/reference/iv.html</loc>
