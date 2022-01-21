@@ -26,10 +26,29 @@ iv_classes <- c("iv", "vctrs_rcrd", "vctrs_vctr")
 #' @examples
 #' new_iv(1, 2)
 new_iv <- function(start, end, ..., class = character()) {
-  fields <- list(start = start, end = end)
-  structure(fields, ..., class = c(class, iv_classes))
+  out <- list(start = start, end = end)
+
+  if (length(class)) {
+    class <- c(class, iv_classes)
+  } else {
+    class <- iv_classes
+  }
+
+  n <- dots_n(...)
+
+  if (n != 0L) {
+    structure(out, ..., class = class)
+  } else {
+    class(out) <- class
+    out
+  }
 }
 
+new_bare_iv <- function(start, end) {
+  out <- list(start = start, end = end)
+  class(out) <- iv_classes
+  out
+}
 new_bare_iv_from_fields <- function(x) {
   # Clear all other attributes
   attributes(x) <- list(names = names(x), class = iv_classes)
@@ -220,26 +239,30 @@ is_iv <- function(x) {
 
 #' @export
 vec_ptype2.iv.iv <- function(x, y, ...) {
-  # If they are ivs, we can assume the structure is correct
-  x <- field_start(x)
-  y <- field_start(y)
+  # If they are ivs, we can assume the structure is correct.
+  # Going for absolute performance here.
+  x <- unclass(x)[[1L]]
+  y <- unclass(y)[[1L]]
 
   ptype <- vec_ptype2(x, y, ...)
 
-  new_iv(ptype, ptype)
+  new_bare_iv(ptype, ptype)
 }
 
 #' @export
 vec_cast.iv.iv <- function(x, to, ...) {
-  to <- field_start(to)
+  # If they are ivs, we can assume the structure is correct.
+  # Going for absolute performance here.
+  to <- unclass(to)[[1L]]
 
-  start <- field_start(x)
-  end <- field_end(x)
+  x <- unclass(x)
+  start <- x[[1L]]
+  end <- x[[2L]]
 
   start <- vec_cast(start, to, ...)
   end <- vec_cast(end, to, ...)
 
-  new_iv(start, end)
+  new_bare_iv(start, end)
 }
 
 #' @export
