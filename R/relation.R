@@ -1283,12 +1283,8 @@ iv_detect_parallel_impl <- function(x,
   y <- args[[2L]]
 
   args <- iv_prepare_impl(x, y, type)
-  x <- args$needles
-  y <- args$haystack
-  condition <- args$condition
-  fn <- map(condition, get_parallel_comparator)
-
-  args <- list(fn = fn, x = x, y = y)
+  # https://github.com/r-lib/rlang/issues/1346
+  args <- map(args, unname)
   args <- transpose(args)
   args <- map(args, apply_parallel_comparator)
 
@@ -1313,11 +1309,22 @@ check_detect_parallel_missing <- function(missing) {
   missing
 }
 
-get_parallel_comparator <- function(x) {
-  get(x, envir = baseenv(), mode = "function", inherits = FALSE)
-}
 apply_parallel_comparator <- function(elt) {
-  elt$fn(elt$x, elt$y)
+  x <- elt$needles
+  y <- elt$haystack
+  condition <- elt$condition
+
+  compare <- vec_compare(x, y)
+
+  switch(
+    condition,
+    ">=" = compare >= 0L,
+    ">" = compare == 1L,
+    "==" = compare == 0L,
+    "<" = compare == -1L,
+    "<=" = compare <= 0L,
+    abort("Unknown `condition`.", .internal = TRUE)
+  )
 }
 
 apply_detect_parallel_missing <- function(out,
