@@ -119,6 +119,118 @@ test_that("cast errors as needed", {
 })
 
 # ------------------------------------------------------------------------------
+# vec_proxy_equal()
+
+test_that("`vec_proxy_equal()` works", {
+  x <- iv(1, 2)
+
+  expect_identical(
+    vec_proxy_equal(x),
+    data_frame(start = 1, end = 2)
+  )
+})
+
+test_that("`vec_proxy_equal()` is recursive", {
+  x <- iv(new_rcrd(list(a = 1, b = 1)), new_rcrd(list(a = 2, b = 3)))
+
+  expect_identical(
+    vec_proxy_equal(x),
+    data_frame(a = 1, b = 1, a = 2, b = 3, .name_repair = "minimal")
+  )
+})
+
+test_that("can `vec_equal()`", {
+  x <- iv(1, 2)
+  y <- iv(1, 3)
+
+  expect_true(vec_equal(x, x))
+  expect_false(vec_equal(x, y))
+
+  na <- iv(NA, NA)
+
+  expect_identical(vec_equal(x, na), NA)
+  expect_identical(vec_equal(x, na, na_equal = TRUE), FALSE)
+
+  expect_identical(vec_equal(na, na), NA)
+  expect_identical(vec_equal(na, na, na_equal = TRUE), TRUE)
+})
+
+test_that("can `vec_equal_na()`", {
+  x <- iv_pairs(c(1, 2), c(NA, NA))
+  expect_identical(vec_equal_na(x), c(FALSE, TRUE))
+})
+
+# ------------------------------------------------------------------------------
+# vec_proxy_compare()
+
+test_that("`vec_proxy_compare()` works", {
+  x <- iv(1, 2)
+
+  expect_identical(
+    vec_proxy_compare(x),
+    data_frame(start = 1, end = 2)
+  )
+})
+
+test_that("`vec_proxy_compare()` is recursive", {
+  x <- iv(new_rcrd(list(a = 1, b = 1)), new_rcrd(list(a = 2, b = 3)))
+
+  expect_identical(
+    vec_proxy_compare(x),
+    data_frame(a = 1, b = 1, a = 2, b = 3, .name_repair = "minimal")
+  )
+})
+
+test_that("can `vec_compare()`", {
+  x <- iv(1, 2)
+  y <- iv(1, 3)
+  z <- iv(2, 3)
+
+  expect_identical(vec_compare(x, x), 0L)
+  expect_identical(vec_compare(x, y), -1L)
+  expect_identical(vec_compare(x, z), -1L)
+
+  na <- iv(NA, NA)
+
+  expect_identical(vec_compare(x, na), NA_integer_)
+  expect_identical(vec_compare(x, na, na_equal = TRUE), 1L)
+
+  expect_identical(vec_compare(na, na), NA_integer_)
+  expect_identical(vec_compare(na, na, na_equal = TRUE), 0L)
+})
+
+# ------------------------------------------------------------------------------
+# vec_proxy_order()
+
+test_that("`vec_proxy_order()` works", {
+  x <- iv(1, 2)
+
+  expect_identical(
+    vec_proxy_order(x),
+    data_frame(start = 1, end = 2)
+  )
+})
+
+test_that("`vec_proxy_order()` is recursive", {
+  x <- iv(new_rcrd(list(a = 1, b = 1)), new_rcrd(list(a = 2, b = 3)))
+
+  expect_identical(
+    vec_proxy_order(x),
+    data_frame(a = 1, b = 1, a = 2, b = 3, .name_repair = "minimal")
+  )
+})
+
+test_that("can `vec_order()`", {
+  x <- iv_pairs(c(1, 3), c(2, 3), c(1, 2))
+
+  expect_identical(vec_order(x), c(3L, 1L, 2L))
+
+  x <- iv_pairs(c(NA, NA), c(1, 2), c(NA, NA))
+
+  expect_identical(vec_order(x), c(2L, 1L, 3L))
+})
+
+# ------------------------------------------------------------------------------
 # vec_ptype_abbr()
 
 test_that("abbreviation is passed through to inner type", {
