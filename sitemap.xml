@@ -16,6 +16,15 @@
     <loc>/index.html</loc>
   </url>
   <url>
+    <loc>/reference/allen-relation-detect-parallel.html</loc>
+  </url>
+  <url>
+    <loc>/reference/allen-relation-detect.html</loc>
+  </url>
+  <url>
+    <loc>/reference/allen-relation-locate.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
@@ -47,5 +56,14 @@
   </url>
   <url>
     <loc>/reference/new_iv.html</loc>
+  </url>
+  <url>
+    <loc>/reference/relation-detect-parallel.html</loc>
+  </url>
+  <url>
+    <loc>/reference/relation-detect.html</loc>
+  </url>
+  <url>
+    <loc>/reference/relation-locate.html</loc>
   </url>
 </urlset>
