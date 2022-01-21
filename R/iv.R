@@ -1,3 +1,5 @@
+iv_classes <- c("iv", "vctrs_rcrd", "vctrs_vctr")
+
 #' Construct a new iv
 #'
 #' `new_iv()` is a developer focused function for creating a new interval
@@ -25,7 +27,13 @@
 #' new_iv(1, 2)
 new_iv <- function(start, end, ..., class = character()) {
   fields <- list(start = start, end = end)
-  structure(fields, ..., class = c(class, "iv", "vctrs_rcrd", "vctrs_vctr"))
+  structure(fields, ..., class = c(class, iv_classes))
+}
+
+new_bare_iv_from_fields <- function(x) {
+  # Clear all other attributes
+  attributes(x) <- list(names = names(x), class = iv_classes)
+  x
 }
 
 # ------------------------------------------------------------------------------
@@ -232,6 +240,16 @@ vec_cast.iv.iv <- function(x, to, ...) {
   end <- vec_cast(end, to, ...)
 
   new_iv(start, end)
+}
+
+#' @export
+vec_proxy.iv <- function(x, ...) {
+  new_data_frame(x)
+}
+
+#' @export
+vec_restore.iv <- function(x, to, ...) {
+  new_bare_iv_from_fields(x)
 }
 
 # ------------------------------------------------------------------------------
