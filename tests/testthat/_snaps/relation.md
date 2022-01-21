@@ -14,9 +14,9 @@
     Output
       <error/iv_error_relation_missing>
       Error in `iv_locate_overlaps()`:
-      ! Can't have missing intervals in `needles`.
-      i An interval at location 1 is missing.
-      i Use `missing` to control how missing intervals should be handled if they are expected.
+      ! Can't have missing values in `needles`.
+      i A value at location 1 is missing.
+      i Use `missing` to control how missing values should be handled if they are expected.
 
 ---
 
@@ -25,9 +25,9 @@
     Output
       <error/iv_error_relation_missing>
       Error in `iv_detect_overlaps()`:
-      ! Can't have missing intervals in `needles`.
-      i An interval at location 1 is missing.
-      i Use `missing` to control how missing intervals should be handled if they are expected.
+      ! Can't have missing values in `needles`.
+      i A value at location 1 is missing.
+      i Use `missing` to control how missing values should be handled if they are expected.
 
 ---
 
@@ -36,9 +36,9 @@
     Output
       <error/iv_error_relation_missing_parallel>
       Error in `iv_detect_parallel_overlaps()`:
-      ! Can't have missing intervals in `x` or `y`.
-      i An interval at location 1 is missing.
-      i Use `missing` to control how missing intervals should be handled if they are expected.
+      ! Can't have missing values in `x` or `y`.
+      i A value at location 1 is missing.
+      i Use `missing` to control how missing values should be handled if they are expected.
 
 ---
 
@@ -47,9 +47,9 @@
     Output
       <error/iv_error_relation_missing>
       Error in `iv_locate_positional()`:
-      ! Can't have missing intervals in `needles`.
-      i An interval at location 1 is missing.
-      i Use `missing` to control how missing intervals should be handled if they are expected.
+      ! Can't have missing values in `needles`.
+      i A value at location 1 is missing.
+      i Use `missing` to control how missing values should be handled if they are expected.
 
 ---
 
@@ -58,9 +58,9 @@
     Output
       <error/iv_error_relation_missing>
       Error in `iv_locate_positional()`:
-      ! Can't have missing intervals in `needles`.
-      i An interval at location 1 is missing.
-      i Use `missing` to control how missing intervals should be handled if they are expected.
+      ! Can't have missing values in `needles`.
+      i A value at location 1 is missing.
+      i Use `missing` to control how missing values should be handled if they are expected.
 
 ---
 
@@ -69,9 +69,9 @@
     Output
       <error/iv_error_relation_missing>
       Error in `iv_detect_positional()`:
-      ! Can't have missing intervals in `needles`.
-      i An interval at location 1 is missing.
-      i Use `missing` to control how missing intervals should be handled if they are expected.
+      ! Can't have missing values in `needles`.
+      i A value at location 1 is missing.
+      i Use `missing` to control how missing values should be handled if they are expected.
 
 ---
 
@@ -80,9 +80,9 @@
     Output
       <error/iv_error_relation_missing>
       Error in `iv_detect_positional()`:
-      ! Can't have missing intervals in `needles`.
-      i An interval at location 1 is missing.
-      i Use `missing` to control how missing intervals should be handled if they are expected.
+      ! Can't have missing values in `needles`.
+      i A value at location 1 is missing.
+      i Use `missing` to control how missing values should be handled if they are expected.
 
 ---
 
@@ -91,9 +91,9 @@
     Output
       <error/iv_error_relation_missing_parallel>
       Error in `iv_detect_parallel_positional()`:
-      ! Can't have missing intervals in `x` or `y`.
-      i An interval at location 1 is missing.
-      i Use `missing` to control how missing intervals should be handled if they are expected.
+      ! Can't have missing values in `x` or `y`.
+      i A value at location 1 is missing.
+      i Use `missing` to control how missing values should be handled if they are expected.
 
 ---
 
@@ -102,9 +102,9 @@
     Output
       <error/iv_error_relation_missing_parallel>
       Error in `iv_detect_parallel_positional()`:
-      ! Can't have missing intervals in `x` or `y`.
-      i An interval at location 1 is missing.
-      i Use `missing` to control how missing intervals should be handled if they are expected.
+      ! Can't have missing values in `x` or `y`.
+      i A value at location 1 is missing.
+      i Use `missing` to control how missing values should be handled if they are expected.
 
 ---
 
@@ -113,9 +113,9 @@
     Output
       <error/iv_error_relation_missing>
       Error in `iv_locate_relation()`:
-      ! Can't have missing intervals in `needles`.
-      i An interval at location 1 is missing.
-      i Use `missing` to control how missing intervals should be handled if they are expected.
+      ! Can't have missing values in `needles`.
+      i A value at location 1 is missing.
+      i Use `missing` to control how missing values should be handled if they are expected.
 
 ---
 
@@ -124,9 +124,9 @@
     Output
       <error/iv_error_relation_missing>
       Error in `iv_detect_relation()`:
-      ! Can't have missing intervals in `needles`.
-      i An interval at location 1 is missing.
-      i Use `missing` to control how missing intervals should be handled if they are expected.
+      ! Can't have missing values in `needles`.
+      i A value at location 1 is missing.
+      i Use `missing` to control how missing values should be handled if they are expected.
 
 ---
 
@@ -135,9 +135,9 @@
     Output
       <error/iv_error_relation_missing_parallel>
       Error in `iv_detect_parallel_relation()`:
-      ! Can't have missing intervals in `x` or `y`.
-      i An interval at location 1 is missing.
-      i Use `missing` to control how missing intervals should be handled if they are expected.
+      ! Can't have missing values in `x` or `y`.
+      i A value at location 1 is missing.
+      i Use `missing` to control how missing values should be handled if they are expected.
 
 # iv_locate_precedes - takes common type
 

@@ -1392,9 +1392,9 @@ stop_relation_missing <- function(i, ..., call = caller_env()) {
   check_dots_empty0(...)
 
   message <- c(
-    "Can't have missing intervals in `needles`.",
-    i = glue("An interval at location {i} is missing."),
-    i = "Use `missing` to control how missing intervals should be handled if they are expected."
+    "Can't have missing values in `needles`.",
+    i = glue("A value at location {i} is missing."),
+    i = "Use `missing` to control how missing values should be handled if they are expected."
   )
 
   stop_iv(
@@ -1409,9 +1409,9 @@ stop_relation_missing_parallel <- function(i, ..., call = caller_env()) {
   check_dots_empty0(...)
 
   message <- c(
-    "Can't have missing intervals in `x` or `y`.",
-    i = glue("An interval at location {i} is missing."),
-    i = "Use `missing` to control how missing intervals should be handled if they are expected."
+    "Can't have missing values in `x` or `y`.",
+    i = glue("A value at location {i} is missing."),
+    i = "Use `missing` to control how missing values should be handled if they are expected."
   )
 
   stop_iv(
