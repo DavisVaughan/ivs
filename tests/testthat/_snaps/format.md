@@ -161,6 +161,30 @@
       <iv<duration<secs>>[1]>
       [1] [NA secs, NA secs)
 
+# integer64 formatting
+
+    Code
+      start <- bit64::as.integer64(c(1, 100))
+      end <- bit64::as.integer64(200)
+      iv(start, end)
+    Output
+      <iv<integer64>[2]>
+      [1] [1, 200)   [100, 200)
+    Code
+      start <- bit64::as.integer64(100000000L)
+      end <- bit64::as.integer64(1000000000L)
+      iv(start, end)
+    Output
+      <iv<integer64>[1]>
+      [1] [100000000, 1000000000)
+    Code
+      start <- bit64::as.integer64(NA)
+      end <- bit64::as.integer64(NA)
+      iv(start, end)
+    Output
+      <iv<integer64>[1]>
+      [1] [NA, NA)
+
 # iv formatting
 
     Code

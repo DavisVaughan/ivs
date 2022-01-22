@@ -90,6 +90,13 @@ iv_format.difftime <- function(x) {
   format(x, trim = TRUE, scientific = FALSE)
 }
 
+#' @export
+iv_format.integer64 <- function(x) {
+  # We implement this for convenience, since it won't make it upstream.
+  # It goes through `format.character()`, so we use that method.
+  iv_format.character(x)
+}
+
 # ------------------------------------------------------------------------------
 
 #' @export

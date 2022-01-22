@@ -14,6 +14,7 @@ Imports:
     rlang (>= 0.99.0.9003),
     vctrs (>= 0.3.8.9001)
 Suggests: 
+    bit64 (>= 4.0.5),
     covr,
     dplyr (>= 1.0.7),
     testthat (>= 3.0.0),

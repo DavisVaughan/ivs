@@ -121,9 +121,30 @@ test_that("difftime formatting", {
   })
 })
 
+test_that("integer64 formatting", {
+  skip_if_not_installed("bit64")
+
+  expect_snapshot({
+    # With trimming
+    start <- bit64::as.integer64(c(1, 100))
+    end <- bit64::as.integer64(200)
+    iv(start, end)
+
+    # With no scientific format
+    start <- bit64::as.integer64(1e8L)
+    end <- bit64::as.integer64(1e9L)
+    iv(start, end)
+
+    # Missings
+    start <- bit64::as.integer64(NA)
+    end <- bit64::as.integer64(NA)
+    iv(start, end)
+  })
+})
+
 test_that("iv formatting", {
   expect_snapshot({
-    # Recursivly avoid trimming
+    # Recursively avoid trimming
     iv(iv(1:2, 5:6), iv(100, 200))
 
     # Missings
