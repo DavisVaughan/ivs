@@ -4,7 +4,7 @@
 \alias{iv-genericity}
 \alias{iv_proxy}
 \alias{iv_restore}
-\title{Developer tools for extending iv}
+\title{Proxy and restore}
 \usage{
 iv_proxy(x, ...)
 

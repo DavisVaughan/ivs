@@ -291,7 +291,7 @@ vec_proxy_compare.iv <- function(x, ...) {
 
 # ------------------------------------------------------------------------------
 
-#' Developer tools for extending iv
+#' Proxy and restore
 #'
 #' @description
 #' - `iv_proxy()` is an S3 generic which allows you to write S3 methods for
@@ -424,23 +424,6 @@ vec_ptype_full.iv <- function(x, ...) {
   start <- field_start(proxy)
   inner <- vec_ptype_full(start)
   vec_paste0("iv<", inner, ">")
-}
-
-#' @export
-format.iv <- function(x, ...) {
-  proxy <- iv_proxy(x)
-
-  start <- field_start(proxy)
-  end <- field_end(proxy)
-
-  # TODO: Improve on this somehow to represent odd objects like data frames.
-  # Maybe an S3 generic? `iv_format()`?
-  start <- as.character(start)
-  end <- as.character(end)
-
-  out <- vec_paste0("[", start, ", ", end, ")")
-
-  out
 }
 
 # ------------------------------------------------------------------------------
