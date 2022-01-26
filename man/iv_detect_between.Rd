@@ -4,7 +4,7 @@
 \alias{iv_detect_between}
 \title{Detect when a vector falls between an iv}
 \usage{
-iv_detect_between(needles, haystack, ..., missing = "error")
+iv_detect_between(needles, haystack, ..., missing = "equals")
 }
 \arguments{
 \item{needles}{\verb{[vector, iv]}
@@ -27,16 +27,16 @@ should have the same type as the start/end components of \code{haystack}.
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{missing}{\verb{[logical(1) / "match" / "error"]}
+\item{missing}{\verb{[logical(1) / "equals" / "error"]}
 
 Handling of missing values in \code{needles}.
 \itemize{
-\item \code{"match"} matches missing values in \code{needles} to missing values in
-\code{haystack}. Missing values will be matched exactly, regardless of the
-\code{type}. Matching missing values result in a \code{TRUE} value in the
-result, and unmatched missing values result in a \code{FALSE}.
+\item \code{"equals"} considers missing values in \code{needles} as exactly equal
+to missing intervals in \code{haystack} when determining if there is a
+matching relationship between them. Matched missing values in
+\code{needles} result in a \code{TRUE} value in the result, and unmatched missing
+values result in a \code{FALSE} value.
 \item \code{"error"} throws an error if any values in \code{needles} are missing.
-This is the default.
 \item If a single logical value is provided, this represents the value returned
 in the result for values in \code{needles} that are missing. You can force
 missing values to be unmatched by setting this to \code{FALSE}, and you
@@ -54,17 +54,6 @@ bounds of \code{haystack}, an iv. It works similar to \link[base:match]{base::\%
 This function returns a logical vector the same size as \code{needles} containing
 \code{TRUE} if the value in \code{needles} is between any interval in \code{haystack} and
 \code{FALSE} otherwise.
-\subsection{Missing values}{
-
-Unlike \code{\%in\%}, missing values in \code{needles} force an error to be thrown by
-default. \code{\%in\%} detects matches using equality, so it is typically clear that
-you also want missing values to match exactly. The relationships implemented
-here match using inequalities, and it is much less clear what the desired
-result is for missing values. If you have missing values that you'd like to
-match exactly, set \code{missing = "match"}. If you'd like missing values to be
-unmatched, set \code{missing = FALSE}. If you'd like missing values to be
-propagated, set \code{missing = NA}.
-}
 }
 \examples{
 x <- as.Date(c("2019-01-05", "2019-01-10", "2019-01-07", "2019-01-20"))
@@ -88,18 +77,17 @@ iv_detect_between(x, y)
 a <- c(1, NA)
 b <- iv(c(NA, NA), c(NA, NA))
 
-# Missing values error by default
-try(iv_detect_between(a, b))
+# By default, missing values in `needles` are treated as being exactly
+# equal to missing intervals in `haystack`, so the missing value in `a` is
+# considered between the missing interval in `b`.
+iv_detect_between(a, b)
 
-# If you'd like missing values to match exactly, set `missing = "match"`
-iv_detect_between(a, b, missing = "match")
+# If you'd like to propagate missing values, set `missing = NA`
+iv_detect_between(a, b, missing = NA)
 
 # If you'd like missing values to be treated as unmatched, set
 # `missing = FALSE`
 iv_detect_between(a, b, missing = FALSE)
-
-# If you'd like to propagate missing values, set `missing = NA`
-iv_detect_between(a, b, missing = NA)
 }
 \seealso{
 \link[=relation-locate]{Locating relationships}

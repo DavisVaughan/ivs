@@ -7,93 +7,36 @@
       Error in `stop_vctrs()`:
       ! Can't combine `needles` <double> and `haystack` <character>.
 
-# errors on missing by default
+# can error on missing needles
 
     Code
-      (expect_error(iv_locate_overlaps(x, y)))
+      (expect_error(iv_locate_overlaps(iv(NA, NA), iv(1, 2), missing = "error")))
     Output
       <error/iv_error_relation_missing>
       Error in `iv_locate_overlaps()`:
       ! Can't have missing values in `needles`.
       i A value at location 1 is missing.
-      i Use `missing` to control how missing values should be handled if they are expected.
 
 ---
 
     Code
-      (expect_error(iv_detect_overlaps(x, y)))
-    Output
-      <error/iv_error_relation_missing>
-      Error in `iv_detect_overlaps()`:
-      ! Can't have missing values in `needles`.
-      i A value at location 1 is missing.
-      i Use `missing` to control how missing values should be handled if they are expected.
-
----
-
-    Code
-      (expect_error(iv_locate_precedes(x, y)))
+      (expect_error(iv_locate_precedes(iv(NA, NA), iv(1, 2), missing = "error")))
     Output
       <error/iv_error_relation_missing>
       Error in `iv_locate_positional()`:
       ! Can't have missing values in `needles`.
       i A value at location 1 is missing.
-      i Use `missing` to control how missing values should be handled if they are expected.
 
 ---
 
     Code
-      (expect_error(iv_locate_follows(x, y)))
-    Output
-      <error/iv_error_relation_missing>
-      Error in `iv_locate_positional()`:
-      ! Can't have missing values in `needles`.
-      i A value at location 1 is missing.
-      i Use `missing` to control how missing values should be handled if they are expected.
-
----
-
-    Code
-      (expect_error(iv_detect_precedes(x, y)))
-    Output
-      <error/iv_error_relation_missing>
-      Error in `iv_detect_positional()`:
-      ! Can't have missing values in `needles`.
-      i A value at location 1 is missing.
-      i Use `missing` to control how missing values should be handled if they are expected.
-
----
-
-    Code
-      (expect_error(iv_detect_follows(x, y)))
-    Output
-      <error/iv_error_relation_missing>
-      Error in `iv_detect_positional()`:
-      ! Can't have missing values in `needles`.
-      i A value at location 1 is missing.
-      i Use `missing` to control how missing values should be handled if they are expected.
-
----
-
-    Code
-      (expect_error(iv_locate_relation(x, y, type = "equals")))
+      (expect_error(iv_locate_relation(iv(NA, NA), iv(1, 2), type = "equals",
+      missing = "error")))
     Output
       <error/iv_error_relation_missing>
       Error in `iv_locate_relation()`:
       ! Can't have missing values in `needles`.
       i A value at location 1 is missing.
-      i Use `missing` to control how missing values should be handled if they are expected.
-
----
-
-    Code
-      (expect_error(iv_detect_relation(x, y, type = "overlaps")))
-    Output
-      <error/iv_error_relation_missing>
-      Error in `iv_detect_relation()`:
-      ! Can't have missing values in `needles`.
-      i A value at location 1 is missing.
-      i Use `missing` to control how missing values should be handled if they are expected.
 
 # iv_locate_precedes - takes common type
 
@@ -138,19 +81,29 @@
     Output
       <error/rlang_error>
       Error in `check_detect_missing()`:
-      ! `missing` must be "match", "error", or a single logical value.
+      ! `missing` must be "equals", "error", or a single logical value.
     Code
       (expect_error(iv_detect_overlaps(iv(1, 2), iv(1, 2), missing = "x")))
     Output
       <error/rlang_error>
       Error in `check_detect_missing()`:
-      ! `missing` must be "match", "error", or a single logical value.
+      ! `missing` must be "equals", "error", or a single logical value.
     Code
       (expect_error(iv_detect_overlaps(iv(1, 2), iv(1, 2), missing = c(TRUE, FALSE))))
     Output
       <error/rlang_error>
       Error in `check_detect_missing()`:
-      ! `missing` must be "match", "error", or a single logical value.
+      ! `missing` must be "equals", "error", or a single logical value.
+
+# detect can error on missing needles
+
+    Code
+      (expect_error(iv_detect_overlaps(iv(NA, NA), iv(1, 2), missing = "error")))
+    Output
+      <error/iv_error_relation_missing>
+      Error in `iv_detect_overlaps()`:
+      ! Can't have missing values in `needles`.
+      i A value at location 1 is missing.
 
 # iv_detect_parallel_impl - recycles correctly
 

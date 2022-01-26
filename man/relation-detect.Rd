@@ -7,11 +7,11 @@
 \alias{iv_detect_follows}
 \title{Detect a relationship between two ivs}
 \usage{
-iv_detect_overlaps(needles, haystack, ..., type = "any", missing = "error")
+iv_detect_overlaps(needles, haystack, ..., type = "any", missing = "equals")
 
-iv_detect_precedes(needles, haystack, ..., missing = "error")
+iv_detect_precedes(needles, haystack, ..., missing = "equals")
 
-iv_detect_follows(needles, haystack, ..., missing = "error")
+iv_detect_follows(needles, haystack, ..., missing = "equals")
 }
 \arguments{
 \item{needles}{\verb{[iv]}
@@ -54,16 +54,16 @@ start of an interval in \code{haystack}.
 of an interval in \code{haystack}.
 }}
 
-\item{missing}{\verb{[logical(1) / "match" / "error"]}
+\item{missing}{\verb{[logical(1) / "equals" / "error"]}
 
 Handling of missing intervals in \code{needles}.
 \itemize{
-\item \code{"match"} matches missing intervals in \code{needles} to missing intervals in
-\code{haystack}. Missing intervals will be matched exactly, regardless of the
-\code{type}. Matching missing intervals result in a \code{TRUE} value in the
-result, and unmatched missing intervals result in a \code{FALSE}.
+\item \code{"equals"} considers missing intervals in \code{needles} as exactly equal
+to missing intervals in \code{haystack} when determining if there is a
+matching relationship between them. Matched missing intervals in
+\code{needles} result in a \code{TRUE} value in the result, and unmatched missing
+intervals result in a \code{FALSE} value.
 \item \code{"error"} throws an error if any intervals in \code{needles} are missing.
-This is the default.
 \item If a single logical value is provided, this represents the value returned
 in the result for intervals in \code{needles} that are missing. You can force
 missing intervals to be unmatched by setting this to \code{FALSE}, and you
@@ -89,17 +89,6 @@ after) any interval in \code{haystack}.
 These functions return a logical vector the same size as \code{needles} containing
 \code{TRUE} if the interval in \code{needles} has a matching relationship in
 \code{haystack} and \code{FALSE} otherwise.
-\subsection{Missing intervals}{
-
-Unlike \code{\%in\%}, missing intervals in \code{needles} force an error to be thrown by
-default. \code{\%in\%} detects matches using equality, so it is typically clear that
-you also want missing values to match exactly. The relationships implemented
-here match using inequalities, and it is much less clear what the desired
-result is for missing intervals. If you have missing intervals that you'd
-like to match exactly, set \code{missing = "match"}. If you'd like missing
-intervals to be unmatched, set \code{missing = FALSE}. If you'd like missing
-intervals to be propagated, set \code{missing = NA}.
-}
 }
 \examples{
 library(vctrs)
@@ -132,11 +121,9 @@ iv_detect_overlaps(y, x, type = "within")
 a <- iv(c(1, NA), c(2, NA))
 b <- iv(c(NA, NA), c(NA, NA))
 
-# Missing intervals error by default
-try(iv_detect_overlaps(a, b))
-
-# If you'd like missing intervals to match exactly, set `missing = "match"`
-iv_detect_overlaps(a, b, missing = "match")
+# Missing intervals are seen as exactly equal by default, so they are
+# considered to overlap
+iv_detect_overlaps(a, b)
 
 # If you'd like missing intervals to be treated as unmatched, set
 # `missing = FALSE`

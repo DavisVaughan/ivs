@@ -100,7 +100,8 @@ iv_split <- function(x) {
     haystack,
     condition = c("<", ">"),
     no_match = "drop",
-    multiple = "any"
+    multiple = "any",
+    incomplete = "match"
   )
 
   out <- vec_slice(needles, loc$needles)
@@ -164,7 +165,8 @@ iv_locate_split_groups <- function(x) {
     needles,
     haystack,
     condition = c("<", ">"),
-    no_match = "drop"
+    no_match = "drop",
+    incomplete = "match"
   )
   loc <- vec_split(loc$haystack, loc$needles)
 

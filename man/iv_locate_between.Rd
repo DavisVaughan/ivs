@@ -8,7 +8,7 @@ iv_locate_between(
   needles,
   haystack,
   ...,
-  missing = "error",
+  missing = "equals",
   no_match = NA_integer_,
   remaining = "drop",
   multiple = "all"
@@ -26,15 +26,15 @@ should have the same type as the start/end components of \code{haystack}.
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{missing}{\verb{[integer(1) / "match" / "drop" / "error"]}
+\item{missing}{\verb{[integer(1) / "equals" / "drop" / "error"]}
 
 Handling of missing values in \code{needles}.
 \itemize{
-\item \code{"match"} matches missing values in \code{needles} to missing intervals in
-\code{haystack}. Missing values will be matched exactly.
+\item \code{"equals"} considers missing values in \code{needles} as exactly equal
+to missing intervals in \code{haystack} when determining if there is a
+matching relationship between them.
 \item \code{"drop"} drops missing values in \code{needles} from the result.
 \item \code{"error"} throws an error if any values in \code{needles} are missing.
-This is the default.
 \item If a single integer is provided, this represents the value returned in
 the \code{haystack} column for values in \code{needles} that are missing.
 }}
@@ -86,16 +86,6 @@ matches are returned, rather than just the first.
 This function returns a two column data frame. The \code{needles} column is an
 integer vector pointing to locations in \code{needles}. The \code{haystack} column is
 an integer vector pointing to locations in \code{haystack} with a match.
-\subsection{Missing values}{
-
-Unlike \code{match()}, missing values in \code{needles} force an error to be thrown
-by default. \code{match()} matches using equality, so it is typically clear that
-you also want missing values to match exactly. The relationships implemented
-here match using inequalities, and it is much less clear what the desired
-result is for missing values. If you have missing values that you'd
-like to match exactly, set \code{missing = "match"}. If you have missing values
-that you'd like to force to be unmatched, set \code{missing = NA}.
-}
 }
 \examples{
 library(vctrs)
@@ -134,15 +124,13 @@ join(x, y, loc)
 
 # ---------------------------------------------------------------------------
 
-a <- c(NA, NA)
+a <- c(1, NA)
 b <- iv(c(NA, NA), c(NA, NA))
 
-# By default, missing values in `needles` force an error to be thrown
-try(iv_locate_between(a, b))
-
-# If you'd like missing values to match exactly, regardless of `type`,
-# use `missing = "match"`
-iv_locate_between(a, b, missing = "match")
+# By default, missing values in `needles` are treated as being exactly
+# equal to missing intervals in `haystack`, so the missing value in `a` is
+# considered between the missing interval in `b`.
+iv_locate_between(a, b)
 
 # If you'd like missing values in `needles` to always be considered
 # unmatched, set `missing = NA`

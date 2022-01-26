@@ -109,6 +109,10 @@ With this notation, the 13 relations are as follows:
 
 \code{(x_s == y_s) & (x_e == y_e)}
 }
+
+Note that when \code{missing = "equals"}, missing intervals will only match
+the \code{type = "equals"} relation. This ensures that the distinct property
+of the algebra is maintained.
 \subsection{Connection to other functions}{
 
 Note that some of the above relations are fairly restrictive. For example,

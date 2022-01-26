@@ -12,7 +12,7 @@ iv_locate_overlaps(
   haystack,
   ...,
   type = "any",
-  missing = "error",
+  missing = "equals",
   no_match = NA_integer_,
   remaining = "drop",
   multiple = "all"
@@ -23,7 +23,7 @@ iv_locate_precedes(
   haystack,
   ...,
   closest = FALSE,
-  missing = "error",
+  missing = "equals",
   no_match = NA_integer_,
   remaining = "drop",
   multiple = "all"
@@ -34,7 +34,7 @@ iv_locate_follows(
   haystack,
   ...,
   closest = FALSE,
-  missing = "error",
+  missing = "equals",
   no_match = NA_integer_,
   remaining = "drop",
   multiple = "all"
@@ -71,16 +71,15 @@ start of an interval in \code{haystack}.
 of an interval in \code{haystack}.
 }}
 
-\item{missing}{\verb{[integer(1) / "match" / "drop" / "error"]}
+\item{missing}{\verb{[integer(1) / "equals" / "drop" / "error"]}
 
 Handling of missing intervals in \code{needles}.
 \itemize{
-\item \code{"match"} matches missing intervals in \code{needles} to missing intervals in
-\code{haystack}. Missing intervals will be matched exactly, regardless of the
-\code{type}.
+\item \code{"equals"} considers missing intervals in \code{needles} as exactly equal
+to missing intervals in \code{haystack} when determining if there is a
+matching relationship between them.
 \item \code{"drop"} drops missing intervals in \code{needles} from the result.
 \item \code{"error"} throws an error if any intervals in \code{needles} are missing.
-This is the default.
 \item If a single integer is provided, this represents the value returned in
 the \code{haystack} column for intervals in \code{needles} that are missing.
 }}
@@ -150,16 +149,6 @@ These functions return a two column data frame. The \code{needles} column is an
 integer vector pointing to locations in \code{needles}. The \code{haystack} column is
 an integer vector pointing to locations in \code{haystack} with a matching
 relationship.
-\subsection{Missing intervals}{
-
-Unlike \code{match()}, missing intervals in \code{needles} force an error to be thrown
-by default. \code{match()} matches using equality, so it is typically clear that
-you also want missing values to match exactly. The relationships implemented
-here match using inequalities, and it is much less clear what the desired
-result is for missing intervals. If you have missing intervals that you'd
-like to match exactly, set \code{missing = "match"}. If you have missing intervals
-that you'd like to force to be unmatched, set \code{missing = NA}.
-}
 }
 \examples{
 library(vctrs)
@@ -231,12 +220,9 @@ join(x, y, loc)
 a <- iv(NA, NA)
 b <- iv(c(NA, NA), c(NA, NA))
 
-# By default, missing intervals in `needles` force an error to be thrown
-try(iv_locate_overlaps(a, b))
-
-# If you'd like missing intervals to match exactly, regardless of `type`,
-# use `missing = "match"`
-iv_locate_overlaps(a, b, missing = "match")
+# By default, missing intervals in `needles` are seen as exactly equal to
+# missing intervals in `haystack`, which means that they overlap
+iv_locate_overlaps(a, b)
 
 # If you'd like missing intervals in `needles` to always be considered
 # unmatched, set `missing = NA`

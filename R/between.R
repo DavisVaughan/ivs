@@ -10,16 +10,6 @@
 #' integer vector pointing to locations in `needles`. The `haystack` column is
 #' an integer vector pointing to locations in `haystack` with a match.
 #'
-#' ## Missing values
-#'
-#' Unlike `match()`, missing values in `needles` force an error to be thrown
-#' by default. `match()` matches using equality, so it is typically clear that
-#' you also want missing values to match exactly. The relationships implemented
-#' here match using inequalities, and it is much less clear what the desired
-#' result is for missing values. If you have missing values that you'd
-#' like to match exactly, set `missing = "match"`. If you have missing values
-#' that you'd like to force to be unmatched, set `missing = NA`.
-#'
 #' @inheritParams rlang::args_dots_empty
 #' @inheritParams vctrs::vec_locate_matches
 #'
@@ -32,17 +22,17 @@
 #'
 #'   * `haystack` represents the intervals to search in.
 #'
-#' @param missing `[integer(1) / "match" / "drop" / "error"]`
+#' @param missing `[integer(1) / "equals" / "drop" / "error"]`
 #'
 #'   Handling of missing values in `needles`.
 #'
-#'   - `"match"` matches missing values in `needles` to missing intervals in
-#'     `haystack`. Missing values will be matched exactly.
+#'   - `"equals"` considers missing values in `needles` as exactly equal
+#'     to missing intervals in `haystack` when determining if there is a
+#'     matching relationship between them.
 #'
 #'   - `"drop"` drops missing values in `needles` from the result.
 #'
 #'   - `"error"` throws an error if any values in `needles` are missing.
-#'     This is the default.
 #'
 #'   - If a single integer is provided, this represents the value returned in
 #'     the `haystack` column for values in `needles` that are missing.
@@ -95,15 +85,13 @@
 #'
 #' # ---------------------------------------------------------------------------
 #'
-#' a <- c(NA, NA)
+#' a <- c(1, NA)
 #' b <- iv(c(NA, NA), c(NA, NA))
 #'
-#' # By default, missing values in `needles` force an error to be thrown
-#' try(iv_locate_between(a, b))
-#'
-#' # If you'd like missing values to match exactly, regardless of `type`,
-#' # use `missing = "match"`
-#' iv_locate_between(a, b, missing = "match")
+#' # By default, missing values in `needles` are treated as being exactly
+#' # equal to missing intervals in `haystack`, so the missing value in `a` is
+#' # considered between the missing interval in `b`.
+#' iv_locate_between(a, b)
 #'
 #' # If you'd like missing values in `needles` to always be considered
 #' # unmatched, set `missing = NA`
@@ -111,7 +99,7 @@
 iv_locate_between <- function(needles,
                               haystack,
                               ...,
-                              missing = "error",
+                              missing = "equals",
                               no_match = NA_integer_,
                               remaining = "drop",
                               multiple = "all") {
@@ -138,6 +126,8 @@ iv_locate_between <- function(needles,
   haystack_start <- args[[2L]]
   haystack_end <- args[[3L]]
 
+  incomplete <- check_locate_missing(missing, "match")
+
   needles <- data_frame(a = needles, b = needles)
   haystack <- data_frame(a = haystack_start, b = haystack_end)
   condition <- c(">=", "<")
@@ -146,7 +136,7 @@ iv_locate_between <- function(needles,
     needles = needles,
     haystack = haystack,
     condition = condition,
-    incomplete = missing,
+    incomplete = incomplete,
     no_match = no_match,
     remaining = remaining,
     multiple = multiple
@@ -164,30 +154,19 @@ iv_locate_between <- function(needles,
 #' `TRUE` if the value in `needles` is between any interval in `haystack` and
 #' `FALSE` otherwise.
 #'
-#' ## Missing values
-#'
-#' Unlike `%in%`, missing values in `needles` force an error to be thrown by
-#' default. `%in%` detects matches using equality, so it is typically clear that
-#' you also want missing values to match exactly. The relationships implemented
-#' here match using inequalities, and it is much less clear what the desired
-#' result is for missing values. If you have missing values that you'd like to
-#' match exactly, set `missing = "match"`. If you'd like missing values to be
-#' unmatched, set `missing = FALSE`. If you'd like missing values to be
-#' propagated, set `missing = NA`.
-#'
 #' @inheritParams iv_locate_between
 #'
-#' @param missing `[logical(1) / "match" / "error"]`
+#' @param missing `[logical(1) / "equals" / "error"]`
 #'
 #'   Handling of missing values in `needles`.
 #'
-#'   - `"match"` matches missing values in `needles` to missing values in
-#'     `haystack`. Missing values will be matched exactly, regardless of the
-#'     `type`. Matching missing values result in a `TRUE` value in the
-#'     result, and unmatched missing values result in a `FALSE`.
+#'   - `"equals"` considers missing values in `needles` as exactly equal
+#'     to missing intervals in `haystack` when determining if there is a
+#'     matching relationship between them. Matched missing values in
+#'     `needles` result in a `TRUE` value in the result, and unmatched missing
+#'     values result in a `FALSE` value.
 #'
 #'   - `"error"` throws an error if any values in `needles` are missing.
-#'     This is the default.
 #'
 #'   - If a single logical value is provided, this represents the value returned
 #'     in the result for values in `needles` that are missing. You can force
@@ -226,22 +205,21 @@ iv_locate_between <- function(needles,
 #' a <- c(1, NA)
 #' b <- iv(c(NA, NA), c(NA, NA))
 #'
-#' # Missing values error by default
-#' try(iv_detect_between(a, b))
+#' # By default, missing values in `needles` are treated as being exactly
+#' # equal to missing intervals in `haystack`, so the missing value in `a` is
+#' # considered between the missing interval in `b`.
+#' iv_detect_between(a, b)
 #'
-#' # If you'd like missing values to match exactly, set `missing = "match"`
-#' iv_detect_between(a, b, missing = "match")
+#' # If you'd like to propagate missing values, set `missing = NA`
+#' iv_detect_between(a, b, missing = NA)
 #'
 #' # If you'd like missing values to be treated as unmatched, set
 #' # `missing = FALSE`
 #' iv_detect_between(a, b, missing = FALSE)
-#'
-#' # If you'd like to propagate missing values, set `missing = NA`
-#' iv_detect_between(a, b, missing = NA)
 iv_detect_between <- function(needles,
                               haystack,
                               ...,
-                              missing = "error") {
+                              missing = "equals") {
   check_dots_empty0(...)
 
   haystack <- iv_proxy(haystack)
@@ -269,7 +247,7 @@ iv_detect_between <- function(needles,
   haystack <- data_frame(a = haystack_start, b = haystack_end)
   condition <- c(">=", "<")
 
-  incomplete <- check_detect_missing(missing)
+  incomplete <- check_detect_missing(missing, "match")
 
   matches <- with_relation_errors(vec_locate_matches(
     needles = needles,

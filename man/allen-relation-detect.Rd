@@ -5,7 +5,7 @@
 \alias{iv_detect_relation}
 \title{Detect relations from Allen's Interval Algebra}
 \usage{
-iv_detect_relation(needles, haystack, ..., type, missing = "error")
+iv_detect_relation(needles, haystack, ..., type, missing = "equals")
 }
 \arguments{
 \item{needles}{\verb{[iv]}
@@ -50,16 +50,16 @@ for a complete description of each type. One of:
 \item \code{"equals"}
 }}
 
-\item{missing}{\verb{[logical(1) / "match" / "error"]}
+\item{missing}{\verb{[logical(1) / "equals" / "error"]}
 
 Handling of missing intervals in \code{needles}.
 \itemize{
-\item \code{"match"} matches missing intervals in \code{needles} to missing intervals in
-\code{haystack}. Missing intervals will be matched exactly, regardless of the
-\code{type}. Matching missing intervals result in a \code{TRUE} value in the
-result, and unmatched missing intervals result in a \code{FALSE}.
+\item \code{"equals"} considers missing intervals in \code{needles} as exactly equal
+to missing intervals in \code{haystack} when determining if there is a
+matching relationship between them. Matched missing intervals in
+\code{needles} result in a \code{TRUE} value in the result, and unmatched missing
+intervals result in a \code{FALSE} value.
 \item \code{"error"} throws an error if any intervals in \code{needles} are missing.
-This is the default.
 \item If a single logical value is provided, this represents the value returned
 in the result for intervals in \code{needles} that are missing. You can force
 missing intervals to be unmatched by setting this to \code{FALSE}, and you
@@ -133,6 +133,10 @@ With this notation, the 13 relations are as follows:
 
 \code{(x_s == y_s) & (x_e == y_e)}
 }
+
+Note that when \code{missing = "equals"}, missing intervals will only match
+the \code{type = "equals"} relation. This ensures that the distinct property
+of the algebra is maintained.
 \subsection{Connection to other functions}{
 
 Note that some of the above relations are fairly restrictive. For example,

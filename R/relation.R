@@ -20,16 +20,6 @@
 #' an integer vector pointing to locations in `haystack` with a matching
 #' relationship.
 #'
-#' ## Missing intervals
-#'
-#' Unlike `match()`, missing intervals in `needles` force an error to be thrown
-#' by default. `match()` matches using equality, so it is typically clear that
-#' you also want missing values to match exactly. The relationships implemented
-#' here match using inequalities, and it is much less clear what the desired
-#' result is for missing intervals. If you have missing intervals that you'd
-#' like to match exactly, set `missing = "match"`. If you have missing intervals
-#' that you'd like to force to be unmatched, set `missing = NA`.
-#'
 #' @inheritParams rlang::args_dots_empty
 #' @inheritParams vctrs::vec_locate_matches
 #'
@@ -65,18 +55,17 @@
 #'   - `"ends"`: Finds when the end of an interval in `needles` matches the end
 #'     of an interval in `haystack`.
 #'
-#' @param missing `[integer(1) / "match" / "drop" / "error"]`
+#' @param missing `[integer(1) / "equals" / "drop" / "error"]`
 #'
 #'   Handling of missing intervals in `needles`.
 #'
-#'   - `"match"` matches missing intervals in `needles` to missing intervals in
-#'     `haystack`. Missing intervals will be matched exactly, regardless of the
-#'     `type`.
+#'   - `"equals"` considers missing intervals in `needles` as exactly equal
+#'     to missing intervals in `haystack` when determining if there is a
+#'     matching relationship between them.
 #'
 #'   - `"drop"` drops missing intervals in `needles` from the result.
 #'
 #'   - `"error"` throws an error if any intervals in `needles` are missing.
-#'     This is the default.
 #'
 #'   - If a single integer is provided, this represents the value returned in
 #'     the `haystack` column for intervals in `needles` that are missing.
@@ -172,12 +161,9 @@
 #' a <- iv(NA, NA)
 #' b <- iv(c(NA, NA), c(NA, NA))
 #'
-#' # By default, missing intervals in `needles` force an error to be thrown
-#' try(iv_locate_overlaps(a, b))
-#'
-#' # If you'd like missing intervals to match exactly, regardless of `type`,
-#' # use `missing = "match"`
-#' iv_locate_overlaps(a, b, missing = "match")
+#' # By default, missing intervals in `needles` are seen as exactly equal to
+#' # missing intervals in `haystack`, which means that they overlap
+#' iv_locate_overlaps(a, b)
 #'
 #' # If you'd like missing intervals in `needles` to always be considered
 #' # unmatched, set `missing = NA`
@@ -205,30 +191,19 @@ NULL
 #' `TRUE` if the interval in `needles` has a matching relationship in
 #' `haystack` and `FALSE` otherwise.
 #'
-#' ## Missing intervals
-#'
-#' Unlike `%in%`, missing intervals in `needles` force an error to be thrown by
-#' default. `%in%` detects matches using equality, so it is typically clear that
-#' you also want missing values to match exactly. The relationships implemented
-#' here match using inequalities, and it is much less clear what the desired
-#' result is for missing intervals. If you have missing intervals that you'd
-#' like to match exactly, set `missing = "match"`. If you'd like missing
-#' intervals to be unmatched, set `missing = FALSE`. If you'd like missing
-#' intervals to be propagated, set `missing = NA`.
-#'
 #' @inheritParams iv_locate_overlaps
 #'
-#' @param missing `[logical(1) / "match" / "error"]`
+#' @param missing `[logical(1) / "equals" / "error"]`
 #'
 #'   Handling of missing intervals in `needles`.
 #'
-#'   - `"match"` matches missing intervals in `needles` to missing intervals in
-#'     `haystack`. Missing intervals will be matched exactly, regardless of the
-#'     `type`. Matching missing intervals result in a `TRUE` value in the
-#'     result, and unmatched missing intervals result in a `FALSE`.
+#'   - `"equals"` considers missing intervals in `needles` as exactly equal
+#'     to missing intervals in `haystack` when determining if there is a
+#'     matching relationship between them. Matched missing intervals in
+#'     `needles` result in a `TRUE` value in the result, and unmatched missing
+#'     intervals result in a `FALSE` value.
 #'
 #'   - `"error"` throws an error if any intervals in `needles` are missing.
-#'     This is the default.
 #'
 #'   - If a single logical value is provided, this represents the value returned
 #'     in the result for intervals in `needles` that are missing. You can force
@@ -277,11 +252,9 @@ NULL
 #' a <- iv(c(1, NA), c(2, NA))
 #' b <- iv(c(NA, NA), c(NA, NA))
 #'
-#' # Missing intervals error by default
-#' try(iv_detect_overlaps(a, b))
-#'
-#' # If you'd like missing intervals to match exactly, set `missing = "match"`
-#' iv_detect_overlaps(a, b, missing = "match")
+#' # Missing intervals are seen as exactly equal by default, so they are
+#' # considered to overlap
+#' iv_detect_overlaps(a, b)
 #'
 #' # If you'd like missing intervals to be treated as unmatched, set
 #' # `missing = FALSE`
@@ -373,7 +346,7 @@ iv_locate_overlaps <- function(needles,
                                haystack,
                                ...,
                                type = "any",
-                               missing = "error",
+                               missing = "equals",
                                no_match = NA_integer_,
                                remaining = "drop",
                                multiple = "all") {
@@ -388,11 +361,13 @@ iv_locate_overlaps <- function(needles,
   haystack <- args$haystack
   condition <- args$condition
 
+  incomplete <- check_locate_missing(missing, "match")
+
   with_relation_errors(vec_locate_matches(
     needles = needles,
     haystack = haystack,
     condition = condition,
-    incomplete = missing,
+    incomplete = incomplete,
     no_match = no_match,
     remaining = remaining,
     multiple = multiple
@@ -405,9 +380,10 @@ iv_detect_overlaps <- function(needles,
                                haystack,
                                ...,
                                type = "any",
-                               missing = "error") {
+                               missing = "equals") {
   check_dots_empty0(...)
-  iv_detect_impl(needles, haystack, type, missing, iv_prepare_overlaps)
+  incomplete <- check_detect_missing(missing, "match")
+  iv_detect_impl(needles, haystack, type, incomplete, iv_prepare_overlaps)
 }
 
 #' @rdname relation-detect-parallel
@@ -479,7 +455,7 @@ iv_locate_precedes <- function(needles,
                                haystack,
                                ...,
                                closest = FALSE,
-                               missing = "error",
+                               missing = "equals",
                                no_match = NA_integer_,
                                remaining = "drop",
                                multiple = "all") {
@@ -503,7 +479,7 @@ iv_locate_follows <- function(needles,
                               haystack,
                               ...,
                               closest = FALSE,
-                              missing = "error",
+                              missing = "equals",
                               no_match = NA_integer_,
                               remaining = "drop",
                               multiple = "all") {
@@ -541,6 +517,10 @@ iv_locate_positional <- function(needles,
   haystack <- args$haystack
   condition <- args$condition
 
+  # In the case of `equals`, missing values will never match,
+  # so we just force the equivalent `no_match` value.
+  incomplete <- check_locate_missing(missing, no_match)
+
   if (!is_bool(closest)) {
     abort("`closest` must be a single `TRUE` or `FALSE`.")
   }
@@ -562,7 +542,7 @@ iv_locate_positional <- function(needles,
     haystack = haystack,
     filter = filter,
     condition = condition,
-    incomplete = missing,
+    incomplete = incomplete,
     no_match = no_match,
     remaining = remaining,
     multiple = multiple
@@ -574,7 +554,7 @@ iv_locate_positional <- function(needles,
 iv_detect_precedes <- function(needles,
                                haystack,
                                ...,
-                               missing = "error") {
+                               missing = "equals") {
   check_dots_empty0(...)
 
   iv_detect_positional(
@@ -590,7 +570,7 @@ iv_detect_precedes <- function(needles,
 iv_detect_follows <- function(needles,
                               haystack,
                               ...,
-                              missing = "error") {
+                              missing = "equals") {
   check_dots_empty0(...)
 
   iv_detect_positional(
@@ -605,7 +585,10 @@ iv_detect_positional <- function(needles,
                                  haystack,
                                  type,
                                  missing) {
-  iv_detect_impl(needles, haystack, type, missing, iv_prepare_positional)
+  # In the case of `equals`, missing values will never match,
+  # so we force a `0L` which results in `FALSE` for missings.
+  incomplete <- check_detect_missing(missing, 0L)
+  iv_detect_impl(needles, haystack, type, incomplete, iv_prepare_positional)
 }
 
 #' @rdname relation-detect-parallel
@@ -657,7 +640,11 @@ iv_prepare_positional <- function(needles, haystack, type) {
     condition <- ">="
   }
 
-  list(needles = needles, haystack = haystack, condition = condition)
+  list(
+    needles = needles,
+    haystack = haystack,
+    condition = condition
+  )
 }
 
 # ------------------------------------------------------------------------------
@@ -739,6 +726,10 @@ iv_prepare_positional <- function(needles, haystack, type) {
 #' - _Equals_:
 #'
 #'   `(x_s == y_s) & (x_e == y_e)`
+#'
+#' Note that when `missing = "equals"`, missing intervals will only match
+#' the `type = "equals"` relation. This ensures that the distinct property
+#' of the algebra is maintained.
 #'
 #' ## Connection to other functions
 #'
@@ -884,7 +875,7 @@ iv_locate_relation <- function(needles,
                                haystack,
                                ...,
                                type,
-                               missing = "error",
+                               missing = "equals",
                                no_match = NA_integer_,
                                remaining = "drop",
                                multiple = "all") {
@@ -899,11 +890,14 @@ iv_locate_relation <- function(needles,
   haystack <- args$haystack
   condition <- args$condition
 
+  equals <- compute_relation_equals(type, no_match)
+  incomplete <- check_locate_missing(missing, equals)
+
   with_relation_errors(vec_locate_matches(
     needles = needles,
     haystack = haystack,
     condition = condition,
-    incomplete = missing,
+    incomplete = incomplete,
     no_match = no_match,
     remaining = remaining,
     multiple = multiple
@@ -973,9 +967,13 @@ iv_detect_relation <- function(needles,
                                haystack,
                                ...,
                                type,
-                               missing = "error") {
+                               missing = "equals") {
   check_dots_empty0(...)
-  iv_detect_impl(needles, haystack, type, missing, iv_prepare_relation)
+
+  equals <- compute_relation_equals(type, 0L)
+  incomplete <- check_detect_missing(missing, equals)
+
+  iv_detect_impl(needles, haystack, type, incomplete, iv_prepare_relation)
 }
 
 #' Detect relations from Allen's Interval Algebra in parallel
@@ -1151,18 +1149,41 @@ iv_prepare_relation <- function(needles, haystack, type) {
   list(needles = needles, haystack = haystack, condition = condition)
 }
 
+compute_relation_equals <- function(type, no_match) {
+  # If `missing = "equals"`, then we only want the `"equals"` relation type
+  # to match missing values (to ensure disjoint relations). All others must
+  # use the `no_match` value. In particular, we don't want to match during
+  # `type = "meets"` or `"met-at"`.
+  if (type == "equals") {
+    "match"
+  } else {
+    no_match
+  }
+}
+
+# ------------------------------------------------------------------------------
+
+# Returns an `incomplete` value
+check_locate_missing <- function(missing, equals) {
+  if (identical(missing, "equals")) {
+    # Map `equals` to the correct `incomplete` value for this usage of `missing`
+    equals
+  } else {
+    # Let `vec_locate_matches()` handle it
+    missing
+  }
+}
+
 # ------------------------------------------------------------------------------
 
 iv_detect_impl <- function(needles,
                            haystack,
                            type,
-                           missing,
+                           incomplete,
                            iv_prepare_impl,
                            ...,
                            call = caller_env()) {
   check_dots_empty0(...)
-
-  incomplete <- check_detect_missing(missing)
 
   args <- vec_cast_common(needles = needles, haystack = haystack)
   needles <- args[[1L]]
@@ -1191,9 +1212,9 @@ iv_detect_impl <- function(needles,
 }
 
 # Returns an `incomplete` argument value
-check_detect_missing <- function(missing) {
-  if (identical(missing, "match")) {
-    "match"
+check_detect_missing <- function(missing, equals) {
+  if (identical(missing, "equals")) {
+    equals
   } else if (identical(missing, "error")) {
     "error"
   } else if (identical(missing, TRUE)) {
@@ -1203,7 +1224,7 @@ check_detect_missing <- function(missing) {
   } else if (identical(missing, NA)) {
     NA_integer_
   } else {
-    abort('`missing` must be "match", "error", or a single logical value.')
+    abort('`missing` must be "equals", "error", or a single logical value.')
   }
 }
 
@@ -1272,8 +1293,7 @@ stop_relation_missing <- function(i, ..., call = caller_env()) {
 
   message <- c(
     "Can't have missing values in `needles`.",
-    i = glue("A value at location {i} is missing."),
-    i = "Use `missing` to control how missing values should be handled if they are expected."
+    i = glue("A value at location {i} is missing.")
   )
 
   stop_iv(

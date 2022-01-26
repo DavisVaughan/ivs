@@ -16,12 +16,12 @@ test_that("can control missing value results", {
   y <- iv_pairs(c(NA, NA))
 
   expect_identical(
-    iv_locate_between(x, y, missing = NA_integer_),
-    data_frame(needles = c(1L, 2L), haystack = c(NA_integer_, NA_integer_))
+    iv_locate_between(x, y),
+    data_frame(needles = c(1L, 2L), haystack = c(1L, NA_integer_))
   )
   expect_identical(
-    iv_locate_between(x, y, missing = "match"),
-    data_frame(needles = c(1L, 2L), haystack = c(1L, NA_integer_))
+    iv_locate_between(x, y, missing = NA_integer_),
+    data_frame(needles = c(1L, 2L), haystack = c(NA_integer_, NA_integer_))
   )
   expect_identical(
     iv_locate_between(x, y, missing = "drop"),
@@ -34,7 +34,7 @@ test_that("`NaN` values look like `NA_real_`", {
   y <- iv_pairs(c(NA, NA))
 
   expect_identical(
-    iv_locate_between(x, y, missing = "match"),
+    iv_locate_between(x, y, missing = "equals"),
     data_frame(needles = 1L, haystack = 1L)
   )
 })
@@ -45,9 +45,9 @@ test_that("between takes the common type", {
   )
 })
 
-test_that("missing values error by default", {
+test_that("between can error on missing needles", {
   expect_snapshot(
-    (expect_error(iv_locate_between(NA_character_, iv("a", "b"))))
+    (expect_error(iv_locate_between(NA, iv(1, 2), missing = "error")))
   )
 })
 
@@ -69,16 +69,16 @@ test_that("can control missing value results", {
   y <- iv_pairs(c(NA, NA))
 
   expect_identical(
+    iv_detect_between(x, y),
+    c(TRUE, FALSE)
+  )
+  expect_identical(
     iv_detect_between(x, y, missing = NA),
     c(NA, FALSE)
   )
   expect_identical(
     iv_detect_between(x, y, missing = FALSE),
     c(FALSE, FALSE)
-  )
-  expect_identical(
-    iv_detect_between(x, y, missing = "match"),
-    c(TRUE, FALSE)
   )
 })
 
@@ -87,7 +87,7 @@ test_that("`NaN` values look like `NA_real_`", {
   y <- iv_pairs(c(NA, NA))
 
   expect_identical(
-    iv_detect_between(x, y, missing = "match"),
+    iv_detect_between(x, y, missing = "equals"),
     TRUE
   )
 })
@@ -98,9 +98,9 @@ test_that("detect between takes the common type", {
   )
 })
 
-test_that("detect between has missing values error by default", {
+test_that("detect between can error on missing needles", {
   expect_snapshot(
-    (expect_error(iv_detect_between(NA_character_, iv("a", "b"))))
+    (expect_error(iv_detect_between(NA, iv(1, 2), missing = "error")))
   )
 })
 
