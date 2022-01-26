@@ -2,10 +2,10 @@
 % Please edit documentation in R/relation.R
 \name{allen-relation-detect}
 \alias{allen-relation-detect}
-\alias{iv_detect_relation}
+\alias{iv_relates}
 \title{Detect relations from Allen's Interval Algebra}
 \usage{
-iv_detect_relation(needles, haystack, ..., type, missing = "equals")
+iv_relates(needles, haystack, ..., type, missing = "equals")
 }
 \arguments{
 \item{needles}{\verb{[iv]}
@@ -70,7 +70,7 @@ can force them to be propagated by setting this to \code{NA}.
 A logical vector the same size as \code{needles}.
 }
 \description{
-\code{iv_detect_relation()} is similar to \code{\link[=iv_detect_overlaps]{iv_detect_overlaps()}}, but it detects a
+\code{iv_relates()} is similar to \code{\link[=iv_overlaps]{iv_overlaps()}}, but it detects a
 specific set of relations developed by James Allen in the paper:
 \href{http://cse.unl.edu/~choueiry/Documents/Allen-CACM1983.pdf}{Maintaining Knowledge about Temporal Intervals}.
 }
@@ -189,10 +189,10 @@ x <- iv(1, 3)
 y <- iv(3, 4)
 
 # `"precedes"` is strict, and doesn't let the endpoints match
-iv_detect_relation(x, y, type = "precedes")
+iv_relates(x, y, type = "precedes")
 
 # Since that is what `"meets"` represents
-iv_detect_relation(x, y, type = "meets")
+iv_relates(x, y, type = "meets")
 
 # `"overlaps"` is a very specific type of overlap where an interval in
 # `needles` straddles the start of an interval in `haystack`
@@ -201,12 +201,12 @@ y <- iv(1, 4)
 
 # It doesn't match equality, or when the starts match, or when the end
 # of the interval in `haystack` is straddled instead
-iv_detect_relation(x, y, type = "overlaps")
+iv_relates(x, y, type = "overlaps")
 }
 \seealso{
 \link[=relation-locate]{Locating relationships}
 
 \link[=allen-relation-locate]{Locating relations from Allen's Interval Algebra}
 
-\link[=allen-relation-detect-parallel]{Detecting relations from Allen's Interval Algebra in parallel}
+\link[=allen-relation-detect-pairwise]{Detecting relations from Allen's Interval Algebra pairwise}
 }

@@ -253,5 +253,5 @@ intervals". Communications of the ACM. 26 (11): 832–843.
 
 \link[=allen-relation-detect]{Detecting relations from Allen's Interval Algebra}
 
-\link[=allen-relation-detect-parallel]{Detecting relations from Allen's Interval Algebra in parallel}
+\link[=allen-relation-detect-pairwise]{Detecting relations from Allen's Interval Algebra pairwise}
 }
