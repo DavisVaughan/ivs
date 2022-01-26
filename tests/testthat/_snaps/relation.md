@@ -30,11 +30,11 @@
 ---
 
     Code
-      (expect_error(iv_locate_relation(iv(NA, NA), iv(1, 2), type = "equals",
-      missing = "error")))
+      (expect_error(iv_locate_relates(iv(NA, NA), iv(1, 2), type = "equals", missing = "error"))
+      )
     Output
       <error/iv_error_relation_missing>
-      Error in `iv_locate_relation()`:
+      Error in `iv_locate_relates()`:
       ! Can't have missing values in `needles`.
       i A value at location 1 is missing.
 
@@ -56,10 +56,10 @@
       Error in `iv_locate_positional()`:
       ! `closest` must be a single `TRUE` or `FALSE`.
 
-# iv_locate_relation - takes common type
+# iv_locate_relates - takes common type
 
     Code
-      (expect_error(iv_locate_relation(iv(1, 2), iv("a", "b"))))
+      (expect_error(iv_locate_relates(iv(1, 2), iv("a", "b"))))
     Output
       <error/vctrs_error_incompatible_type>
       Error in `stop_vctrs()`:

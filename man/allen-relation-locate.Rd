@@ -2,10 +2,10 @@
 % Please edit documentation in R/relation.R
 \name{allen-relation-locate}
 \alias{allen-relation-locate}
-\alias{iv_locate_relation}
+\alias{iv_locate_relates}
 \title{Locate relations from Allen's Interval Algebra}
 \usage{
-iv_locate_relation(
+iv_locate_relates(
   needles,
   haystack,
   ...,
@@ -111,7 +111,7 @@ otherwise falls back to \code{"all"}.
 A data frame containing two integer columns named \code{needles} and \code{haystack}.
 }
 \description{
-\code{iv_locate_relation()} is similar to \code{\link[=iv_locate_overlaps]{iv_locate_overlaps()}}, but it locates a
+\code{iv_locate_relates()} is similar to \code{\link[=iv_locate_overlaps]{iv_locate_overlaps()}}, but it locates a
 specific set of relations developed by James Allen in the paper:
 \href{http://cse.unl.edu/~choueiry/Documents/Allen-CACM1983.pdf}{Maintaining Knowledge about Temporal Intervals}.
 }
@@ -230,10 +230,10 @@ x <- iv(1, 3)
 y <- iv(3, 4)
 
 # `"precedes"` is strict, and doesn't let the endpoints match
-iv_locate_relation(x, y, type = "precedes")
+iv_locate_relates(x, y, type = "precedes")
 
 # Since that is what `"meets"` represents
-iv_locate_relation(x, y, type = "meets")
+iv_locate_relates(x, y, type = "meets")
 
 # `"overlaps"` is a very specific type of overlap where an interval in
 # `needles` straddles the start of an interval in `haystack`
@@ -242,7 +242,7 @@ y <- iv(1, 4)
 
 # It doesn't match equality, or when the starts match, or when the end
 # of the interval in `haystack` is straddled instead
-iv_locate_relation(x, y, type = "overlaps")
+iv_locate_relates(x, y, type = "overlaps")
 }
 \references{
 Allen, James F. (26 November 1983). "Maintaining knowledge about temporal

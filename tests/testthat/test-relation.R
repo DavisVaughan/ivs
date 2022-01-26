@@ -382,42 +382,42 @@ test_that("'follows'", {
 })
 
 # ------------------------------------------------------------------------------
-# iv_locate_relation()
+# iv_locate_relates()
 
 test_that("can locate relation", {
   x <- iv_pairs(c(1, 5), c(10 ,12))
   y <- iv_pairs(c(3, 6), c(0, 2), c(6, 7))
 
   expect_identical(
-    iv_locate_relation(x, y, type = "overlaps"),
+    iv_locate_relates(x, y, type = "overlaps"),
     data_frame(needles = c(1L, 2L), haystack = c(1L, NA))
   )
   expect_identical(
-    iv_locate_relation(x, y, type = "precedes"),
+    iv_locate_relates(x, y, type = "precedes"),
     data_frame(needles = c(1L, 2L), haystack = c(3L, NA))
   )
 })
 
-test_that("iv_locate_relation - takes common type", {
-  expect_snapshot((expect_error(iv_locate_relation(iv(1, 2), iv("a", "b")))))
+test_that("iv_locate_relates - takes common type", {
+  expect_snapshot((expect_error(iv_locate_relates(iv(1, 2), iv("a", "b")))))
 })
 
 test_that("treats missings as equal by default", {
   x <- iv(NA, NA)
 
   expect_identical(
-    iv_locate_relation(x, x, type = "overlaps"),
+    iv_locate_relates(x, x, type = "overlaps"),
     data_frame(needles = 1L, haystack = NA_integer_)
   )
   expect_identical(
-    iv_locate_relation(x, x, type = "equals"),
+    iv_locate_relates(x, x, type = "equals"),
     data_frame(needles = 1L, haystack = 1L)
   )
 })
 
 test_that("can error on missing needles", {
   expect_snapshot(
-    (expect_error(iv_locate_relation(iv(NA, NA), iv(1, 2), type = "equals", missing = "error")))
+    (expect_error(iv_locate_relates(iv(NA, NA), iv(1, 2), type = "equals", missing = "error")))
   )
 })
 

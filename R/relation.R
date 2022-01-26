@@ -651,7 +651,7 @@ iv_prepare_positional <- function(needles, haystack, type) {
 #' Locate relations from Allen's Interval Algebra
 #'
 #' @description
-#' `iv_locate_relation()` is similar to [iv_locate_overlaps()], but it locates a
+#' `iv_locate_relates()` is similar to [iv_locate_overlaps()], but it locates a
 #' specific set of relations developed by James Allen in the paper:
 #' [Maintaining Knowledge about Temporal Intervals](http://cse.unl.edu/~choueiry/Documents/Allen-CACM1983.pdf).
 #'
@@ -857,10 +857,10 @@ iv_prepare_positional <- function(needles, haystack, type) {
 #' y <- iv(3, 4)
 #'
 #' # `"precedes"` is strict, and doesn't let the endpoints match
-#' iv_locate_relation(x, y, type = "precedes")
+#' iv_locate_relates(x, y, type = "precedes")
 #'
 #' # Since that is what `"meets"` represents
-#' iv_locate_relation(x, y, type = "meets")
+#' iv_locate_relates(x, y, type = "meets")
 #'
 #' # `"overlaps"` is a very specific type of overlap where an interval in
 #' # `needles` straddles the start of an interval in `haystack`
@@ -869,15 +869,15 @@ iv_prepare_positional <- function(needles, haystack, type) {
 #'
 #' # It doesn't match equality, or when the starts match, or when the end
 #' # of the interval in `haystack` is straddled instead
-#' iv_locate_relation(x, y, type = "overlaps")
-iv_locate_relation <- function(needles,
-                               haystack,
-                               ...,
-                               type,
-                               missing = "equals",
-                               no_match = NA_integer_,
-                               remaining = "drop",
-                               multiple = "all") {
+#' iv_locate_relates(x, y, type = "overlaps")
+iv_locate_relates <- function(needles,
+                              haystack,
+                              ...,
+                              type,
+                              missing = "equals",
+                              no_match = NA_integer_,
+                              remaining = "drop",
+                              multiple = "all") {
   check_dots_empty0(...)
 
   args <- vec_cast_common(needles = needles, haystack = haystack)
