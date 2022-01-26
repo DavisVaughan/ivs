@@ -1,38 +1,38 @@
-vec_interval_locate_merge_bounds <- function(start,
+vec_locate_interval_merge_bounds <- function(start,
                                              end,
                                              ...,
                                              abutting = TRUE,
-                                             keep_empty = TRUE,
-                                             keep_missing = TRUE) {
-  name <- "vec_interval_locate_minimal"
+                                             empty = "overlap",
+                                             missing = "overlap") {
+  name <- "vec_locate_interval_merge_bounds"
   fn <- import_vctrs(name)
 
   fn(
     start = start,
     end = end,
     ...,
-    keep_abutting = !abutting,
-    keep_empty = keep_empty,
-    keep_missing = keep_missing
+    abutting = abutting,
+    empty = empty,
+    missing = missing
   )
 }
 
-vec_interval_locate_merge_groups <- function(start,
+vec_locate_interval_merge_groups <- function(start,
                                              end,
                                              ...,
                                              abutting = TRUE,
-                                             keep_empty = TRUE,
-                                             keep_missing = TRUE) {
-  name <- "vec_interval_locate_minimal_groups"
+                                             empty = "overlap",
+                                             missing = "overlap") {
+  name <- "vec_locate_interval_merge_groups"
   fn <- import_vctrs(name)
 
   fn(
     start = start,
     end = end,
     ...,
-    keep_abutting = !abutting,
-    keep_empty = keep_empty,
-    keep_missing = keep_missing
+    abutting = abutting,
+    empty = empty,
+    missing = missing
   )
 }
 
