@@ -139,7 +139,7 @@ iv_locate_between(a, b, missing = NA)
 \seealso{
 \link[=relation-locate]{Locating relationships}
 
-\link[=iv_detect_between]{Detect when a vector falls between an iv}
+\link[=iv_between]{Detect when a vector falls between an iv}
 
-\link[=iv_detect_parallel_between]{Detecting when a vector falls between an iv in parallel}
+\link[=iv_pairwise_between]{Pairwise detect when a vector falls between an iv}
 }

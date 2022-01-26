@@ -45,8 +45,8 @@
 #' For all other set operations, a vector of the same type as the common type of
 #' `x` and `y` containing the result.
 #'
-#' @seealso The _parallel_ versions of these functions, such as
-#' [iv_parallel_union()].
+#' @seealso The _pairwise_ versions of these functions, such as
+#' [iv_pairwise_union()].
 #'
 #' @name iv-sets
 #'

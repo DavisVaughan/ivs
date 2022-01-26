@@ -231,7 +231,7 @@ iv_locate_overlaps(a, b, missing = NA)
 \seealso{
 \link[=relation-detect]{Detecting relationships}
 
-\link[=relation-detect-parallel]{Detecting relationships in parallel}
+\link[=relation-detect-pairwise]{Detecting relationships pairwise}
 
 \link[=allen-relation-locate]{Locating relations from Allen's Interval Algebra}
 }

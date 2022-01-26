@@ -2,16 +2,16 @@
 % Please edit documentation in R/relation.R
 \name{relation-detect}
 \alias{relation-detect}
-\alias{iv_detect_overlaps}
-\alias{iv_detect_precedes}
-\alias{iv_detect_follows}
+\alias{iv_overlaps}
+\alias{iv_precedes}
+\alias{iv_follows}
 \title{Detect a relationship between two ivs}
 \usage{
-iv_detect_overlaps(needles, haystack, ..., type = "any", missing = "equals")
+iv_overlaps(needles, haystack, ..., type = "any", missing = "equals")
 
-iv_detect_precedes(needles, haystack, ..., missing = "equals")
+iv_precedes(needles, haystack, ..., missing = "equals")
 
-iv_detect_follows(needles, haystack, ..., missing = "equals")
+iv_follows(needles, haystack, ..., missing = "equals")
 }
 \arguments{
 \item{needles}{\verb{[iv]}
@@ -78,12 +78,11 @@ This family of functions detects different types of relationships between
 two ivs. It works similar to \link[base:match]{base::\%in\%}, where \code{needles[i]} checks for
 a relationship in all of \code{haystack}.
 \itemize{
-\item \code{iv_detect_overlaps()} detects a specific \code{type} of overlap between the two
-ivs.
-\item \code{iv_detect_precedes()} detects if \code{needles[i]} precedes (i.e. comes
-before) any interval in \code{haystack}.
-\item \code{iv_detect_follows()} detects if \code{needles[i]} follows (i.e. comes
-after) any interval in \code{haystack}.
+\item \code{iv_overlaps()} detects a specific \code{type} of overlap between the two ivs.
+\item \code{iv_precedes()} detects if \code{needles[i]} precedes (i.e. comes before) any
+interval in \code{haystack}.
+\item \code{iv_follows()} detects if \code{needles[i]} follows (i.e. comes after) any
+interval in \code{haystack}.
 }
 
 These functions return a logical vector the same size as \code{needles} containing
@@ -111,10 +110,10 @@ x
 y
 
 # Does each interval of `x` overlap `y` at all?
-iv_detect_overlaps(x, y)
+iv_overlaps(x, y)
 
 # Which intervals of `y` are within an interval in `x`?
-iv_detect_overlaps(y, x, type = "within")
+iv_overlaps(y, x, type = "within")
 
 # ---------------------------------------------------------------------------
 
@@ -123,19 +122,19 @@ b <- iv(c(NA, NA), c(NA, NA))
 
 # Missing intervals are seen as exactly equal by default, so they are
 # considered to overlap
-iv_detect_overlaps(a, b)
+iv_overlaps(a, b)
 
 # If you'd like missing intervals to be treated as unmatched, set
 # `missing = FALSE`
-iv_detect_overlaps(a, b, missing = FALSE)
+iv_overlaps(a, b, missing = FALSE)
 
 # If you'd like to propagate missing intervals, set `missing = NA`
-iv_detect_overlaps(a, b, missing = NA)
+iv_overlaps(a, b, missing = NA)
 }
 \seealso{
 \link[=relation-locate]{Locating relationships}
 
-\link[=relation-detect-parallel]{Detecting relationships in parallel}
+\link[=relation-detect-pairwise]{Detecting relationships pairwise}
 
 \link[=allen-relation-locate]{Locating relations from Allen's Interval Algebra}
 }

@@ -85,7 +85,7 @@
 #' @seealso
 #' [Detecting relationships][relation-detect]
 #'
-#' [Detecting relationships in parallel][relation-detect-parallel]
+#' [Detecting relationships pairwise][relation-detect-pairwise]
 #'
 #' [Locating relations from Allen's Interval Algebra][allen-relation-locate]
 #'
@@ -178,14 +178,13 @@ NULL
 #' two ivs. It works similar to [base::%in%], where `needles[i]` checks for
 #' a relationship in all of `haystack`.
 #'
-#' - `iv_detect_overlaps()` detects a specific `type` of overlap between the two
-#'   ivs.
+#' - `iv_overlaps()` detects a specific `type` of overlap between the two ivs.
 #'
-#' - `iv_detect_precedes()` detects if `needles[i]` precedes (i.e. comes
-#'   before) any interval in `haystack`.
+#' - `iv_precedes()` detects if `needles[i]` precedes (i.e. comes before) any
+#'   interval in `haystack`.
 #'
-#' - `iv_detect_follows()` detects if `needles[i]` follows (i.e. comes
-#'   after) any interval in `haystack`.
+#' - `iv_follows()` detects if `needles[i]` follows (i.e. comes after) any
+#'   interval in `haystack`.
 #'
 #' These functions return a logical vector the same size as `needles` containing
 #' `TRUE` if the interval in `needles` has a matching relationship in
@@ -215,7 +214,7 @@ NULL
 #' @seealso
 #' [Locating relationships][relation-locate]
 #'
-#' [Detecting relationships in parallel][relation-detect-parallel]
+#' [Detecting relationships pairwise][relation-detect-pairwise]
 #'
 #' [Locating relations from Allen's Interval Algebra][allen-relation-locate]
 #'
@@ -242,10 +241,10 @@ NULL
 #' y
 #'
 #' # Does each interval of `x` overlap `y` at all?
-#' iv_detect_overlaps(x, y)
+#' iv_overlaps(x, y)
 #'
 #' # Which intervals of `y` are within an interval in `x`?
-#' iv_detect_overlaps(y, x, type = "within")
+#' iv_overlaps(y, x, type = "within")
 #'
 #' # ---------------------------------------------------------------------------
 #'
@@ -254,32 +253,32 @@ NULL
 #'
 #' # Missing intervals are seen as exactly equal by default, so they are
 #' # considered to overlap
-#' iv_detect_overlaps(a, b)
+#' iv_overlaps(a, b)
 #'
 #' # If you'd like missing intervals to be treated as unmatched, set
 #' # `missing = FALSE`
-#' iv_detect_overlaps(a, b, missing = FALSE)
+#' iv_overlaps(a, b, missing = FALSE)
 #'
 #' # If you'd like to propagate missing intervals, set `missing = NA`
-#' iv_detect_overlaps(a, b, missing = NA)
+#' iv_overlaps(a, b, missing = NA)
 NULL
 
 
-#' Detect a relationship in parallel between two ivs
+#' Pairwise detect a relationship between two ivs
 #'
 #' @description
 #' This family of functions detects different types of relationships between
-#' two ivs _in parallel_, where parallel means that the i-th interval of
+#' two ivs _pairwise_, where pairwise means that the i-th interval of
 #' `x` is compared against the i-th interval of `y`. This is in contrast to
-#' [iv_detect_overlaps()], which works more like [base::%in%].
+#' [iv_overlaps()], which works more like [base::%in%].
 #'
-#' - `iv_detect_parallel_overlaps()` detects a specific `type` of overlap
+#' - `iv_pairwise_overlaps()` detects a specific `type` of overlap
 #'   between the i-th interval of `x` and the i-th interval of `y`.
 #'
-#' - `iv_detect_parallel_precedes()` detects if the i-th interval of `x`
+#' - `iv_pairwise_precedes()` detects if the i-th interval of `x`
 #'   precedes (i.e. comes before) the i-th interval of `y`.
 #'
-#' - `iv_detect_parallel_follows()` detects if the i-th interval of `x`
+#' - `iv_pairwise_follows()` detects if the i-th interval of `x`
 #'   follows (i.e. comes after) the i-th interval of `y`.
 #'
 #' These functions return a logical vector the same size as the common size of
@@ -302,7 +301,7 @@ NULL
 #'
 #' [Locating relations from Allen's Interval Algebra][allen-relation-locate]
 #'
-#' @name relation-detect-parallel
+#' @name relation-detect-pairwise
 #'
 #' @examples
 #' library(vctrs)
@@ -323,19 +322,19 @@ NULL
 #' y
 #'
 #' # Does the i-th interval of `x` overlap the i-th interval of `y`?
-#' iv_detect_parallel_overlaps(x, y)
+#' iv_pairwise_overlaps(x, y)
 #'
 #' # Does the i-th interval of `x` contain the i-th interval of `y`?
-#' iv_detect_parallel_overlaps(x, y, type = "contains")
+#' iv_pairwise_overlaps(x, y, type = "contains")
 #'
 #' # Does the i-th interval of `x` follow the i-th interval of `y`?
-#' iv_detect_parallel_follows(x, y)
+#' iv_pairwise_follows(x, y)
 #'
 #' a <- iv_pairs(c(1, 2), c(NA, NA), c(NA, NA))
 #' b <- iv_pairs(c(NA, NA), c(3, 4), c(NA, NA))
 #'
 #' # Missing intervals always propagate
-#' iv_detect_parallel_overlaps(a, b)
+#' iv_pairwise_overlaps(a, b)
 NULL
 
 # ------------------------------------------------------------------------------
@@ -376,24 +375,24 @@ iv_locate_overlaps <- function(needles,
 
 #' @rdname relation-detect
 #' @export
-iv_detect_overlaps <- function(needles,
-                               haystack,
-                               ...,
-                               type = "any",
-                               missing = "equals") {
+iv_overlaps <- function(needles,
+                        haystack,
+                        ...,
+                        type = "any",
+                        missing = "equals") {
   check_dots_empty0(...)
   incomplete <- check_detect_missing(missing, "match")
   iv_detect_impl(needles, haystack, type, incomplete, iv_prepare_overlaps)
 }
 
-#' @rdname relation-detect-parallel
+#' @rdname relation-detect-pairwise
 #' @export
-iv_detect_parallel_overlaps <- function(x,
-                                        y,
-                                        ...,
-                                        type = "any") {
+iv_pairwise_overlaps <- function(x,
+                                 y,
+                                 ...,
+                                 type = "any") {
   check_dots_empty0(...)
-  iv_detect_parallel_impl(x, y, type, iv_prepare_overlaps)
+  iv_detect_pairwise_impl(x, y, type, iv_prepare_overlaps)
 }
 
 iv_prepare_overlaps <- function(needles, haystack, type) {
@@ -551,10 +550,10 @@ iv_locate_positional <- function(needles,
 
 #' @rdname relation-detect
 #' @export
-iv_detect_precedes <- function(needles,
-                               haystack,
-                               ...,
-                               missing = "equals") {
+iv_precedes <- function(needles,
+                        haystack,
+                        ...,
+                        missing = "equals") {
   check_dots_empty0(...)
 
   iv_detect_positional(
@@ -567,10 +566,10 @@ iv_detect_precedes <- function(needles,
 
 #' @rdname relation-detect
 #' @export
-iv_detect_follows <- function(needles,
-                              haystack,
-                              ...,
-                              missing = "equals") {
+iv_follows <- function(needles,
+                       haystack,
+                       ...,
+                       missing = "equals") {
   check_dots_empty0(...)
 
   iv_detect_positional(
@@ -591,30 +590,30 @@ iv_detect_positional <- function(needles,
   iv_detect_impl(needles, haystack, type, incomplete, iv_prepare_positional)
 }
 
-#' @rdname relation-detect-parallel
+#' @rdname relation-detect-pairwise
 #' @export
-iv_detect_parallel_precedes <- function(x, y) {
-  iv_detect_parallel_positional(
+iv_pairwise_precedes <- function(x, y) {
+  iv_detect_pairwise_positional(
     x = x,
     y = y,
     type = "precedes"
   )
 }
 
-#' @rdname relation-detect-parallel
+#' @rdname relation-detect-pairwise
 #' @export
-iv_detect_parallel_follows <- function(x, y) {
-  iv_detect_parallel_positional(
+iv_pairwise_follows <- function(x, y) {
+  iv_detect_pairwise_positional(
     x = x,
     y = y,
     type = "follows"
   )
 }
 
-iv_detect_parallel_positional <- function(x,
+iv_detect_pairwise_positional <- function(x,
                                           y,
                                           type) {
-  iv_detect_parallel_impl(x, y, type, iv_prepare_positional)
+  iv_detect_pairwise_impl(x, y, type, iv_prepare_positional)
 }
 
 
@@ -652,7 +651,7 @@ iv_prepare_positional <- function(needles, haystack, type) {
 #' Locate relations from Allen's Interval Algebra
 #'
 #' @description
-#' `iv_locate_relation()` is similar to [iv_locate_overlaps()], but it locates a
+#' `iv_locate_relates()` is similar to [iv_locate_overlaps()], but it locates a
 #' specific set of relations developed by James Allen in the paper:
 #' [Maintaining Knowledge about Temporal Intervals](http://cse.unl.edu/~choueiry/Documents/Allen-CACM1983.pdf).
 #'
@@ -845,7 +844,7 @@ iv_prepare_positional <- function(needles, haystack, type) {
 #'
 #' [Detecting relations from Allen's Interval Algebra][allen-relation-detect]
 #'
-#' [Detecting relations from Allen's Interval Algebra in parallel][allen-relation-detect-parallel]
+#' [Detecting relations from Allen's Interval Algebra pairwise][allen-relation-detect-pairwise]
 #'
 #' @references
 #' Allen, James F. (26 November 1983). "Maintaining knowledge about temporal
@@ -858,10 +857,10 @@ iv_prepare_positional <- function(needles, haystack, type) {
 #' y <- iv(3, 4)
 #'
 #' # `"precedes"` is strict, and doesn't let the endpoints match
-#' iv_locate_relation(x, y, type = "precedes")
+#' iv_locate_relates(x, y, type = "precedes")
 #'
 #' # Since that is what `"meets"` represents
-#' iv_locate_relation(x, y, type = "meets")
+#' iv_locate_relates(x, y, type = "meets")
 #'
 #' # `"overlaps"` is a very specific type of overlap where an interval in
 #' # `needles` straddles the start of an interval in `haystack`
@@ -870,15 +869,15 @@ iv_prepare_positional <- function(needles, haystack, type) {
 #'
 #' # It doesn't match equality, or when the starts match, or when the end
 #' # of the interval in `haystack` is straddled instead
-#' iv_locate_relation(x, y, type = "overlaps")
-iv_locate_relation <- function(needles,
-                               haystack,
-                               ...,
-                               type,
-                               missing = "equals",
-                               no_match = NA_integer_,
-                               remaining = "drop",
-                               multiple = "all") {
+#' iv_locate_relates(x, y, type = "overlaps")
+iv_locate_relates <- function(needles,
+                              haystack,
+                              ...,
+                              type,
+                              missing = "equals",
+                              no_match = NA_integer_,
+                              remaining = "drop",
+                              multiple = "all") {
   check_dots_empty0(...)
 
   args <- vec_cast_common(needles = needles, haystack = haystack)
@@ -907,13 +906,13 @@ iv_locate_relation <- function(needles,
 #' Detect relations from Allen's Interval Algebra
 #'
 #' @description
-#' `iv_detect_relation()` is similar to [iv_detect_overlaps()], but it detects a
+#' `iv_relates()` is similar to [iv_overlaps()], but it detects a
 #' specific set of relations developed by James Allen in the paper:
 #' [Maintaining Knowledge about Temporal Intervals](http://cse.unl.edu/~choueiry/Documents/Allen-CACM1983.pdf).
 #'
 #' @inheritSection allen-relation-locate Allen's Interval Algebra
 #'
-#' @inheritParams iv_detect_overlaps
+#' @inheritParams iv_overlaps
 #'
 #' @param type `[character(1)]`
 #'
@@ -934,14 +933,14 @@ iv_locate_relation <- function(needles,
 #'   - `"finished-by"`
 #'   - `"equals"`
 #'
-#' @inherit iv_detect_overlaps return
+#' @inherit iv_overlaps return
 #'
 #' @seealso
 #' [Locating relationships][relation-locate]
 #'
 #' [Locating relations from Allen's Interval Algebra][allen-relation-locate]
 #'
-#' [Detecting relations from Allen's Interval Algebra in parallel][allen-relation-detect-parallel]
+#' [Detecting relations from Allen's Interval Algebra pairwise][allen-relation-detect-pairwise]
 #'
 #' @name allen-relation-detect
 #' @export
@@ -950,10 +949,10 @@ iv_locate_relation <- function(needles,
 #' y <- iv(3, 4)
 #'
 #' # `"precedes"` is strict, and doesn't let the endpoints match
-#' iv_detect_relation(x, y, type = "precedes")
+#' iv_relates(x, y, type = "precedes")
 #'
 #' # Since that is what `"meets"` represents
-#' iv_detect_relation(x, y, type = "meets")
+#' iv_relates(x, y, type = "meets")
 #'
 #' # `"overlaps"` is a very specific type of overlap where an interval in
 #' # `needles` straddles the start of an interval in `haystack`
@@ -962,12 +961,12 @@ iv_locate_relation <- function(needles,
 #'
 #' # It doesn't match equality, or when the starts match, or when the end
 #' # of the interval in `haystack` is straddled instead
-#' iv_detect_relation(x, y, type = "overlaps")
-iv_detect_relation <- function(needles,
-                               haystack,
-                               ...,
-                               type,
-                               missing = "equals") {
+#' iv_relates(x, y, type = "overlaps")
+iv_relates <- function(needles,
+                       haystack,
+                       ...,
+                       type,
+                       missing = "equals") {
   check_dots_empty0(...)
 
   equals <- compute_relation_equals(type, 0L)
@@ -976,17 +975,17 @@ iv_detect_relation <- function(needles,
   iv_detect_impl(needles, haystack, type, incomplete, iv_prepare_relation)
 }
 
-#' Detect relations from Allen's Interval Algebra in parallel
+#' Pairwise detect relations from Allen's Interval Algebra
 #'
 #' @description
-#' `iv_detect_parallel_relation()` is similar to
-#' [iv_detect_parallel_overlaps()], but it detects a specific set of relations
+#' `iv_pairwise_relates()` is similar to
+#' [iv_pairwise_overlaps()], but it detects a specific set of relations
 #' developed by James Allen in the paper: [Maintaining Knowledge about Temporal
 #' Intervals](http://cse.unl.edu/~choueiry/Documents/Allen-CACM1983.pdf).
 #'
 #' @inheritSection allen-relation-locate Allen's Interval Algebra
 #'
-#' @inheritParams iv_detect_parallel_overlaps
+#' @inheritParams iv_pairwise_overlaps
 #'
 #' @param type `[character(1)]`
 #'
@@ -1007,7 +1006,7 @@ iv_detect_relation <- function(needles,
 #'   - `"finished-by"`
 #'   - `"equals"`
 #'
-#' @inherit iv_detect_parallel_overlaps return
+#' @inherit iv_pairwise_overlaps return
 #'
 #' @seealso
 #' [Locating relationships][relation-locate]
@@ -1016,27 +1015,27 @@ iv_detect_relation <- function(needles,
 #'
 #' [Detecting relations from Allen's Interval Algebra][allen-relation-detect]
 #'
-#' @name allen-relation-detect-parallel
+#' @name allen-relation-detect-pairwise
 #' @export
 #' @examples
 #' x <- iv_pairs(c(1, 3), c(3, 5))
 #' y <- iv_pairs(c(3, 4), c(6, 7))
 #'
 #' # `"precedes"` is strict, and doesn't let the endpoints match
-#' iv_detect_parallel_relation(x, y, type = "precedes")
+#' iv_pairwise_relates(x, y, type = "precedes")
 #'
 #' # Since that is what `"meets"` represents
-#' iv_detect_parallel_relation(x, y, type = "meets")
+#' iv_pairwise_relates(x, y, type = "meets")
 #'
 #' # `"during"` only matches when `x` is completely contained in `y`, and
 #' # doesn't allow any endpoints to match
 #' x <- iv_pairs(c(1, 3), c(4, 5), c(8, 9))
 #' y <- iv_pairs(c(1, 4), c(3, 8), c(8, 9))
 #'
-#' iv_detect_parallel_relation(x, y, type = "during")
-iv_detect_parallel_relation <- function(x, y, ..., type) {
+#' iv_pairwise_relates(x, y, type = "during")
+iv_pairwise_relates <- function(x, y, ..., type) {
   check_dots_empty0(...)
-  iv_detect_parallel_impl(x, y, type, iv_prepare_relation)
+  iv_detect_pairwise_impl(x, y, type, iv_prepare_relation)
 }
 
 iv_prepare_relation <- function(needles, haystack, type) {
@@ -1230,7 +1229,7 @@ check_detect_missing <- function(missing, equals) {
 
 # ------------------------------------------------------------------------------
 
-iv_detect_parallel_impl <- function(x,
+iv_detect_pairwise_impl <- function(x,
                                     y,
                                     type,
                                     iv_prepare_impl,
@@ -1248,14 +1247,14 @@ iv_detect_parallel_impl <- function(x,
   # https://github.com/r-lib/rlang/issues/1346
   args <- map(args, unname)
   args <- transpose(args)
-  args <- map(args, apply_parallel_comparator)
+  args <- map(args, apply_pairwise_comparator)
 
   out <- reduce(args, `&`)
 
   out
 }
 
-apply_parallel_comparator <- function(elt) {
+apply_pairwise_comparator <- function(elt) {
   x <- elt$needles
   y <- elt$haystack
   condition <- elt$condition
