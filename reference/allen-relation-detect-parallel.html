@@ -54,7 +54,7 @@ developed by James Allen in the paper: <a href="http://cse.unl.edu/~choueiry/Doc
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">iv_detect_parallel_relation</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span>, <span class="va">type</span>, missing <span class="op">=</span> <span class="st">"error"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">iv_detect_parallel_relation</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span>, <span class="va">type</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -85,19 +85,6 @@ for a complete description of each type. One of:</p><ul><li><p><code>"precedes"<
 <li><p><code>"finishes"</code></p></li>
 <li><p><code>"finished-by"</code></p></li>
 <li><p><code>"equals"</code></p></li>
-</ul></dd>
-<dt>missing</dt>
-<dd><p><code>[logical(1) / "match" / "error"]</code></p>
-<p>Handling of missing intervals in <code>x</code> or <code>y</code>.</p><ul><li><p><code>"match"</code> matches missing intervals in <code>x</code> to missing intervals in
-<code>y</code>. Regardless of <code>type</code>, if both intervals are missing, then this
-results in <code>TRUE</code>, otherwise it results in <code>FALSE</code>.</p></li>
-<li><p><code>"error"</code> throws an error if any intervals are missing.
-This is the default.</p></li>
-<li><p>If a single logical value is provided, this represents the value returned
-in the i-th element of the result if missing intervals are present in the
-i-th interval of <code>x</code> or <code>y</code>. You can force missing intervals to be
-unmatched by setting this to <code>FALSE</code>, and you can force them to be
-propagated by setting this to <code>NA</code>.</p></li>
 </ul></dd>
 </dl></div>
     <div id="value">

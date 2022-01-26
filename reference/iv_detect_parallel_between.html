@@ -4,18 +4,7 @@ bounds of y, an iv, in parallel, where parallel means that the i-th value
 of x is compared against the i-th interval of y. This is in contrast to
 iv_detect_between(), which works more like base::%in%.
 These functions return a logical vector the same size as the common size of
-x and y.
-Missing values
-
-
-Missing values in x or y force an error to be thrown by default, as it is
-unclear what the desired result is when missing values are involved. This is
-consistent with iv_detect_between(). If you'd like to match missing values
-exactly, set missing = &quot;match&quot;. If you'd like missing values to be
-unmatched, set missing = FALSE. If you'd like missing values to be
-propagated, set missing = NA.
-
-"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+x and y."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -67,22 +56,11 @@ bounds of <code>y</code>, an iv, <em>in parallel</em>, where parallel means that
 of <code>x</code> is compared against the i-th interval of <code>y</code>. This is in contrast to
 <code><a href="iv_detect_between.html">iv_detect_between()</a></code>, which works more like <a href="https://rdrr.io/r/base/match.html" class="external-link">base::%in%</a>.</p>
 <p>These functions return a logical vector the same size as the common size of
-<code>x</code> and <code>y</code>.</p><div class="section">
-<h3 id="missing-values">Missing values<a class="anchor" aria-label="anchor" href="#missing-values"></a></h3>
-
-
-<p>Missing values in <code>x</code> or <code>y</code> force an error to be thrown by default, as it is
-unclear what the desired result is when missing values are involved. This is
-consistent with <code><a href="iv_detect_between.html">iv_detect_between()</a></code>. If you'd like to match missing values
-exactly, set <code>missing = "match"</code>. If you'd like missing values to be
-unmatched, set <code>missing = FALSE</code>. If you'd like missing values to be
-propagated, set <code>missing = NA</code>.</p>
-</div>
-
+<code>x</code> and <code>y</code>.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">iv_detect_parallel_between</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span>, missing <span class="op">=</span> <span class="st">"error"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">iv_detect_parallel_between</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -92,21 +70,6 @@ propagated, set <code>missing = NA</code>.</p>
 <p><code>x</code> should be a vector and <code>y</code> should be an iv. <code>x</code> should have the same
 type as the start/end components of <code>y</code>.</p>
 <p>These will be recycled against each other.</p></dd>
-<dt>...</dt>
-<dd><p>These dots are for future extensions and must be empty.</p></dd>
-<dt>missing</dt>
-<dd><p><code>[logical(1) / "match" / "error"]</code></p>
-<p>Handling of missing values in <code>x</code> or <code>y</code>.</p><ul><li><p><code>"match"</code> matches missing values in <code>x</code> to missing intervals in
-<code>y</code>. If both are missing, then this results in <code>TRUE</code>, otherwise it
-results in <code>FALSE</code>.</p></li>
-<li><p><code>"error"</code> throws an error if any values are missing.
-This is the default.</p></li>
-<li><p>If a single logical value is provided, this represents the value returned
-in the i-th element of the result if missing values are present in the
-i-th values of <code>x</code> or <code>y</code>. You can force missing values to be
-unmatched by setting this to <code>FALSE</code>, and you can force them to be
-propagated by setting this to <code>NA</code>.</p></li>
-</ul></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -139,30 +102,12 @@ propagated by setting this to <code>NA</code>.</p></li>
 <span class="r-in"><span class="fu">iv_detect_parallel_between</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  TRUE  TRUE FALSE</span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co"># ---------------------------------------------------------------------------</span></span>
+<span class="r-in"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="cn">NA</span>, <span class="cn">NA</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="iv.html">iv_pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NA</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="cn">NA</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="iv.html">iv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NA</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Missing values error by default</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu">iv_detect_parallel_between</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error in iv_detect_parallel_between(a, b) : </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Can't have missing values in `x` or `y`.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> A value at location 1 is missing.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> Use `missing` to control how missing values should be handled if they are expected.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># If you'd like missing values to match exactly, set `missing = "match"`</span></span>
-<span class="r-in"><span class="fu">iv_detect_parallel_between</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, missing <span class="op">=</span> <span class="st">"match"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE  TRUE</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># If you'd like missing values to be treated as unmatched, set</span></span>
-<span class="r-in"><span class="co"># `missing = FALSE`</span></span>
-<span class="r-in"><span class="fu">iv_detect_parallel_between</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, missing <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE FALSE</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># If you'd like to propagate missing values, set `missing = NA`</span></span>
-<span class="r-in"><span class="fu">iv_detect_parallel_between</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, missing <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA NA</span>
+<span class="r-in"><span class="co"># Missing intervals always propagate</span></span>
+<span class="r-in"><span class="fu">iv_detect_parallel_between</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA NA NA</span>
 </code></pre></div>
     </div>
   </div>
