@@ -312,15 +312,6 @@ NULL
 #' These functions return a logical vector the same size as the common size of
 #' `x` and `y`.
 #'
-#' ## Missing intervals
-#'
-#' Missing intervals in `x` or `y` force an error to be thrown by default, as
-#' it is unclear what the desired result is when missing intervals are involved.
-#' This is consistent with [iv_detect_overlaps()]. If you'd like to match
-#' missing intervals exactly, set `missing = "match"`. If you'd like missing
-#' intervals to be unmatched, set `missing = FALSE`. If you'd like missing
-#' intervals to be propagated, set `missing = NA`.
-#'
 #' @inheritParams iv_locate_overlaps
 #'
 #' @param x,y `[iv]`
@@ -328,23 +319,6 @@ NULL
 #'   A pair of interval vectors.
 #'
 #'   These will be recycled against each other and cast to the same type.
-#'
-#' @param missing `[logical(1) / "match" / "error"]`
-#'
-#'   Handling of missing intervals in `x` or `y`.
-#'
-#'   - `"match"` matches missing intervals in `x` to missing intervals in
-#'     `y`. Regardless of `type`, if both intervals are missing, then this
-#'     results in `TRUE`, otherwise it results in `FALSE`.
-#'
-#'   - `"error"` throws an error if any intervals are missing.
-#'     This is the default.
-#'
-#'   - If a single logical value is provided, this represents the value returned
-#'     in the i-th element of the result if missing intervals are present in the
-#'     i-th interval of `x` or `y`. You can force missing intervals to be
-#'     unmatched by setting this to `FALSE`, and you can force them to be
-#'     propagated by setting this to `NA`.
 #'
 #' @return A logical vector the same size as the common size of `x` and `y`.
 #'
@@ -384,23 +358,11 @@ NULL
 #' # Does the i-th interval of `x` follow the i-th interval of `y`?
 #' iv_detect_parallel_follows(x, y)
 #'
-#' # ---------------------------------------------------------------------------
+#' a <- iv_pairs(c(1, 2), c(NA, NA), c(NA, NA))
+#' b <- iv_pairs(c(NA, NA), c(3, 4), c(NA, NA))
 #'
-#' a <- iv(c(1, NA), c(2, NA))
-#' b <- iv(c(NA, NA), c(NA, NA))
-#'
-#' # Missing intervals error by default
-#' try(iv_detect_parallel_overlaps(a, b))
-#'
-#' # If you'd like missing intervals to match exactly, set `missing = "match"`
-#' iv_detect_parallel_overlaps(a, b, missing = "match")
-#'
-#' # If you'd like missing intervals to be treated as unmatched, set
-#' # `missing = FALSE`
-#' iv_detect_parallel_overlaps(a, b, missing = FALSE)
-#'
-#' # If you'd like to propagate missing intervals, set `missing = NA`
-#' iv_detect_parallel_overlaps(a, b, missing = NA)
+#' # Missing intervals always propagate
+#' iv_detect_parallel_overlaps(a, b)
 NULL
 
 # ------------------------------------------------------------------------------
@@ -453,10 +415,9 @@ iv_detect_overlaps <- function(needles,
 iv_detect_parallel_overlaps <- function(x,
                                         y,
                                         ...,
-                                        type = "any",
-                                        missing = "error") {
+                                        type = "any") {
   check_dots_empty0(...)
-  iv_detect_parallel_impl(x, y, type, missing, iv_prepare_overlaps)
+  iv_detect_parallel_impl(x, y, type, iv_prepare_overlaps)
 }
 
 iv_prepare_overlaps <- function(needles, haystack, type) {
@@ -649,41 +610,28 @@ iv_detect_positional <- function(needles,
 
 #' @rdname relation-detect-parallel
 #' @export
-iv_detect_parallel_precedes <- function(x,
-                                        y,
-                                        ...,
-                                        missing = "error") {
-  check_dots_empty0(...)
-
+iv_detect_parallel_precedes <- function(x, y) {
   iv_detect_parallel_positional(
     x = x,
     y = y,
-    type = "precedes",
-    missing = missing
+    type = "precedes"
   )
 }
 
 #' @rdname relation-detect-parallel
 #' @export
-iv_detect_parallel_follows <- function(x,
-                                       y,
-                                       ...,
-                                       missing = "error") {
-  check_dots_empty0(...)
-
+iv_detect_parallel_follows <- function(x, y) {
   iv_detect_parallel_positional(
     x = x,
     y = y,
-    type = "follows",
-    missing = missing
+    type = "follows"
   )
 }
 
 iv_detect_parallel_positional <- function(x,
                                           y,
-                                          type,
-                                          missing) {
-  iv_detect_parallel_impl(x, y, type, missing, iv_prepare_positional)
+                                          type) {
+  iv_detect_parallel_impl(x, y, type, iv_prepare_positional)
 }
 
 
@@ -1088,13 +1036,9 @@ iv_detect_relation <- function(needles,
 #' y <- iv_pairs(c(1, 4), c(3, 8), c(8, 9))
 #'
 #' iv_detect_parallel_relation(x, y, type = "during")
-iv_detect_parallel_relation <- function(x,
-                                        y,
-                                        ...,
-                                        type,
-                                        missing = "error") {
+iv_detect_parallel_relation <- function(x, y, ..., type) {
   check_dots_empty0(...)
-  iv_detect_parallel_impl(x, y, type, missing, iv_prepare_relation)
+  iv_detect_parallel_impl(x, y, type, iv_prepare_relation)
 }
 
 iv_prepare_relation <- function(needles, haystack, type) {
@@ -1268,13 +1212,10 @@ check_detect_missing <- function(missing) {
 iv_detect_parallel_impl <- function(x,
                                     y,
                                     type,
-                                    missing,
                                     iv_prepare_impl,
                                     ...,
                                     call = caller_env()) {
   check_dots_empty0(...)
-
-  missing <- check_detect_parallel_missing(missing)
 
   args <- list(x = x, y = y)
   args <- vec_cast_common(!!!args)
@@ -1289,24 +1230,8 @@ iv_detect_parallel_impl <- function(x,
   args <- map(args, apply_parallel_comparator)
 
   out <- reduce(args, `&`)
-  out <- apply_detect_parallel_missing(out, x, y, missing, call = call)
 
   out
-}
-
-check_detect_parallel_missing <- function(missing) {
-  ok <-
-    identical(missing, "match") ||
-    identical(missing, "error") ||
-    identical(missing, TRUE) ||
-    identical(missing, FALSE) ||
-    identical(missing, NA)
-
-  if (!ok) {
-    abort('`missing` must be "match", "error", or a single logical value.')
-  }
-
-  missing
 }
 
 apply_parallel_comparator <- function(elt) {
@@ -1325,52 +1250,6 @@ apply_parallel_comparator <- function(elt) {
     "<=" = compare <= 0L,
     abort("Unknown `condition`.", .internal = TRUE)
   )
-}
-
-apply_detect_parallel_missing <- function(out,
-                                          x,
-                                          y,
-                                          missing,
-                                          ...,
-                                          call = caller_env()) {
-  if (identical(missing, NA)) {
-    return(out)
-  }
-
-  are_missing <- vec_equal_na(out)
-
-  if (!any(are_missing)) {
-    return(out)
-  }
-
-  if (is_true(missing) || is_false(missing)) {
-    out <- vec_assign(out, are_missing, missing)
-    return(out)
-  }
-
-  if (identical(missing, "error")) {
-    loc <- which(are_missing)[[1]]
-    stop_relation_missing_parallel(loc, call = call)
-  }
-
-  if (identical(missing, "match")) {
-    x_missing <- vec_equal_na(x)
-    y_missing <- vec_equal_na(y)
-
-    x_and_y_missing <- x_missing & y_missing
-    x_or_y_but_not_both_missing <- xor(x_missing, y_missing)
-
-    if (any(x_and_y_missing)) {
-      out <- vec_assign(out, x_and_y_missing, TRUE)
-    }
-    if (any(x_or_y_but_not_both_missing)) {
-      out <- vec_assign(out, x_or_y_but_not_both_missing, FALSE)
-    }
-
-    return(out)
-  }
-
-  abort("`missing` should have been processed by now.", .internal = TRUE)
 }
 
 # ------------------------------------------------------------------------------
@@ -1401,23 +1280,6 @@ stop_relation_missing <- function(i, ..., call = caller_env()) {
     message = message,
     i = i,
     class = "iv_error_relation_missing",
-    call = call
-  )
-}
-
-stop_relation_missing_parallel <- function(i, ..., call = caller_env()) {
-  check_dots_empty0(...)
-
-  message <- c(
-    "Can't have missing values in `x` or `y`.",
-    i = glue("A value at location {i} is missing."),
-    i = "Use `missing` to control how missing values should be handled if they are expected."
-  )
-
-  stop_iv(
-    message = message,
-    i = i,
-    class = "iv_error_relation_missing_parallel",
     call = call
   )
 }

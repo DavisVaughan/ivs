@@ -299,41 +299,12 @@ iv_detect_between <- function(needles,
 #' These functions return a logical vector the same size as the common size of
 #' `x` and `y`.
 #'
-#' ## Missing values
-#'
-#' Missing values in `x` or `y` force an error to be thrown by default, as it is
-#' unclear what the desired result is when missing values are involved. This is
-#' consistent with [iv_detect_between()]. If you'd like to match missing values
-#' exactly, set `missing = "match"`. If you'd like missing values to be
-#' unmatched, set `missing = FALSE`. If you'd like missing values to be
-#' propagated, set `missing = NA`.
-#'
-#' @inheritParams rlang::args_dots_empty
-#' @inheritParams iv_detect_between
-#'
 #' @param x,y `[vector, iv]`
 #'
 #'   `x` should be a vector and `y` should be an iv. `x` should have the same
 #'   type as the start/end components of `y`.
 #'
 #'   These will be recycled against each other.
-#'
-#' @param missing `[logical(1) / "match" / "error"]`
-#'
-#'   Handling of missing values in `x` or `y`.
-#'
-#'   - `"match"` matches missing values in `x` to missing intervals in
-#'     `y`. If both are missing, then this results in `TRUE`, otherwise it
-#'     results in `FALSE`.
-#'
-#'   - `"error"` throws an error if any values are missing.
-#'     This is the default.
-#'
-#'   - If a single logical value is provided, this represents the value returned
-#'     in the i-th element of the result if missing values are present in the
-#'     i-th values of `x` or `y`. You can force missing values to be
-#'     unmatched by setting this to `FALSE`, and you can force them to be
-#'     propagated by setting this to `NA`.
 #'
 #' @return A logical vector the same size as the common size of `x` and `y`.
 #'
@@ -360,31 +331,12 @@ iv_detect_between <- function(needles,
 #' # Does the i-th value of `x` fall between the i-th interval of `y`?
 #' iv_detect_parallel_between(x, y)
 #'
-#' # ---------------------------------------------------------------------------
+#' a <- c(1, NA, NA)
+#' b <- iv_pairs(c(NA, NA), c(3, 4), c(NA, NA))
 #'
-#' a <- c(1, NA)
-#' b <- iv(c(NA, NA), c(NA, NA))
-#'
-#' # Missing values error by default
-#' try(iv_detect_parallel_between(a, b))
-#'
-#' # If you'd like missing values to match exactly, set `missing = "match"`
-#' iv_detect_parallel_between(a, b, missing = "match")
-#'
-#' # If you'd like missing values to be treated as unmatched, set
-#' # `missing = FALSE`
-#' iv_detect_parallel_between(a, b, missing = FALSE)
-#'
-#' # If you'd like to propagate missing values, set `missing = NA`
-#' iv_detect_parallel_between(a, b, missing = NA)
-iv_detect_parallel_between <- function(x,
-                                       y,
-                                       ...,
-                                       missing = "error") {
-  check_dots_empty0(...)
-
-  missing <- check_detect_parallel_missing(missing)
-
+#' # Missing intervals always propagate
+#' iv_detect_parallel_between(a, b)
+iv_detect_parallel_between <- function(x, y) {
   args <- vec_recycle_common(x = x, y = y)
   x <- args[[1L]]
   y <- args[[2L]]
@@ -414,7 +366,6 @@ iv_detect_parallel_between <- function(x,
   before_end <- vec_compare(x, y_end) < 0L
 
   out <- after_start & before_end
-  out <- apply_detect_parallel_missing(out, x, y, missing)
 
   out
 }

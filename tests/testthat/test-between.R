@@ -117,31 +117,28 @@ test_that("detect parallel between gets endpoints right", {
   )
 })
 
-test_that("can control missing value results", {
-  x <- c(NA, 3)
-  y <- iv_pairs(c(NA, NA))
-
+test_that("missing values always propagate", {
   expect_identical(
-    iv_detect_parallel_between(x, y, missing = NA),
-    c(NA, NA)
+    iv_detect_parallel_between(NA, iv(NA, NA)),
+    NA
   )
   expect_identical(
-    iv_detect_parallel_between(x, y, missing = FALSE),
-    c(FALSE, FALSE)
+    iv_detect_parallel_between(NA, iv(2, 3)),
+    NA
   )
   expect_identical(
-    iv_detect_parallel_between(x, y, missing = "match"),
-    c(TRUE, FALSE)
+    iv_detect_parallel_between(1, iv(NA, NA)),
+    NA
   )
 })
 
 test_that("`NaN` values look like `NA_real_`", {
   x <- NaN
-  y <- iv_pairs(c(NA, NA))
+  y <- iv_pairs(c(1, 2))
 
   expect_identical(
-    iv_detect_parallel_between(x, y, missing = "match"),
-    TRUE
+    iv_detect_parallel_between(x, y),
+    NA
   )
 })
 
@@ -149,11 +146,4 @@ test_that("detect parallel between takes the common type", {
   expect_snapshot(
     (expect_error(iv_detect_parallel_between(1, iv("a", "b"))))
   )
-})
-
-test_that("detect between has missing values error by default", {
-  expect_snapshot({
-    (expect_error(iv_detect_parallel_between(NA_character_, iv("a", "b"))))
-    (expect_error(iv_detect_parallel_between(1, iv(NA, NA))))
-  })
 })

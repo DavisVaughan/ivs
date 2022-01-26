@@ -32,17 +32,6 @@
 ---
 
     Code
-      (expect_error(iv_detect_parallel_overlaps(x, y)))
-    Output
-      <error/iv_error_relation_missing_parallel>
-      Error in `iv_detect_parallel_overlaps()`:
-      ! Can't have missing values in `x` or `y`.
-      i A value at location 1 is missing.
-      i Use `missing` to control how missing values should be handled if they are expected.
-
----
-
-    Code
       (expect_error(iv_locate_precedes(x, y)))
     Output
       <error/iv_error_relation_missing>
@@ -87,28 +76,6 @@
 ---
 
     Code
-      (expect_error(iv_detect_parallel_precedes(x, y)))
-    Output
-      <error/iv_error_relation_missing_parallel>
-      Error in `iv_detect_parallel_positional()`:
-      ! Can't have missing values in `x` or `y`.
-      i A value at location 1 is missing.
-      i Use `missing` to control how missing values should be handled if they are expected.
-
----
-
-    Code
-      (expect_error(iv_detect_parallel_follows(x, y)))
-    Output
-      <error/iv_error_relation_missing_parallel>
-      Error in `iv_detect_parallel_positional()`:
-      ! Can't have missing values in `x` or `y`.
-      i A value at location 1 is missing.
-      i Use `missing` to control how missing values should be handled if they are expected.
-
----
-
-    Code
       (expect_error(iv_locate_relation(x, y, type = "equals")))
     Output
       <error/iv_error_relation_missing>
@@ -125,17 +92,6 @@
       <error/iv_error_relation_missing>
       Error in `iv_detect_relation()`:
       ! Can't have missing values in `needles`.
-      i A value at location 1 is missing.
-      i Use `missing` to control how missing values should be handled if they are expected.
-
----
-
-    Code
-      (expect_error(iv_detect_parallel_relation(x, y, type = "equals")))
-    Output
-      <error/iv_error_relation_missing_parallel>
-      Error in `iv_detect_parallel_relation()`:
-      ! Can't have missing values in `x` or `y`.
       i A value at location 1 is missing.
       i Use `missing` to control how missing values should be handled if they are expected.
 
@@ -213,26 +169,4 @@
       <error/vctrs_error_incompatible_type>
       Error in `stop_vctrs()`:
       ! Can't combine `x` <double> and `y` <character>.
-
-# iv_detect_parallel_impl - validates 'missing'
-
-    Code
-      (expect_error(iv_detect_parallel_overlaps(iv(1, 2), iv(1, 2), missing = 1)))
-    Output
-      <error/rlang_error>
-      Error in `check_detect_parallel_missing()`:
-      ! `missing` must be "match", "error", or a single logical value.
-    Code
-      (expect_error(iv_detect_parallel_overlaps(iv(1, 2), iv(1, 2), missing = "x")))
-    Output
-      <error/rlang_error>
-      Error in `check_detect_parallel_missing()`:
-      ! `missing` must be "match", "error", or a single logical value.
-    Code
-      (expect_error(iv_detect_parallel_overlaps(iv(1, 2), iv(1, 2), missing = c(TRUE,
-        FALSE))))
-    Output
-      <error/rlang_error>
-      Error in `check_detect_parallel_missing()`:
-      ! `missing` must be "match", "error", or a single logical value.
 

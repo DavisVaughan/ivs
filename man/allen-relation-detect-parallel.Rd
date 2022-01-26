@@ -5,7 +5,7 @@
 \alias{iv_detect_parallel_relation}
 \title{Detect relations from Allen's Interval Algebra in parallel}
 \usage{
-iv_detect_parallel_relation(x, y, ..., type, missing = "error")
+iv_detect_parallel_relation(x, y, ..., type)
 }
 \arguments{
 \item{x}{\verb{[iv]}
@@ -40,22 +40,6 @@ for a complete description of each type. One of:
 \item \code{"finishes"}
 \item \code{"finished-by"}
 \item \code{"equals"}
-}}
-
-\item{missing}{\verb{[logical(1) / "match" / "error"]}
-
-Handling of missing intervals in \code{x} or \code{y}.
-\itemize{
-\item \code{"match"} matches missing intervals in \code{x} to missing intervals in
-\code{y}. Regardless of \code{type}, if both intervals are missing, then this
-results in \code{TRUE}, otherwise it results in \code{FALSE}.
-\item \code{"error"} throws an error if any intervals are missing.
-This is the default.
-\item If a single logical value is provided, this represents the value returned
-in the i-th element of the result if missing intervals are present in the
-i-th interval of \code{x} or \code{y}. You can force missing intervals to be
-unmatched by setting this to \code{FALSE}, and you can force them to be
-propagated by setting this to \code{NA}.
 }}
 }
 \value{

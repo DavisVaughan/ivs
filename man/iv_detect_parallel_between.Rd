@@ -4,7 +4,7 @@
 \alias{iv_detect_parallel_between}
 \title{Detect when a vector falls between an iv in parallel}
 \usage{
-iv_detect_parallel_between(x, y, ..., missing = "error")
+iv_detect_parallel_between(x, y)
 }
 \arguments{
 \item{x, y}{\verb{[vector, iv]}
@@ -13,24 +13,6 @@ iv_detect_parallel_between(x, y, ..., missing = "error")
 type as the start/end components of \code{y}.
 
 These will be recycled against each other.}
-
-\item{...}{These dots are for future extensions and must be empty.}
-
-\item{missing}{\verb{[logical(1) / "match" / "error"]}
-
-Handling of missing values in \code{x} or \code{y}.
-\itemize{
-\item \code{"match"} matches missing values in \code{x} to missing intervals in
-\code{y}. If both are missing, then this results in \code{TRUE}, otherwise it
-results in \code{FALSE}.
-\item \code{"error"} throws an error if any values are missing.
-This is the default.
-\item If a single logical value is provided, this represents the value returned
-in the i-th element of the result if missing values are present in the
-i-th values of \code{x} or \code{y}. You can force missing values to be
-unmatched by setting this to \code{FALSE}, and you can force them to be
-propagated by setting this to \code{NA}.
-}}
 }
 \value{
 A logical vector the same size as the common size of \code{x} and \code{y}.
@@ -43,15 +25,6 @@ of \code{x} is compared against the i-th interval of \code{y}. This is in contra
 
 These functions return a logical vector the same size as the common size of
 \code{x} and \code{y}.
-\subsection{Missing values}{
-
-Missing values in \code{x} or \code{y} force an error to be thrown by default, as it is
-unclear what the desired result is when missing values are involved. This is
-consistent with \code{\link[=iv_detect_between]{iv_detect_between()}}. If you'd like to match missing values
-exactly, set \code{missing = "match"}. If you'd like missing values to be
-unmatched, set \code{missing = FALSE}. If you'd like missing values to be
-propagated, set \code{missing = NA}.
-}
 }
 \examples{
 x <- as.Date(c("2019-01-01", "2019-01-08", "2019-01-21"))
@@ -68,23 +41,11 @@ y
 # Does the i-th value of `x` fall between the i-th interval of `y`?
 iv_detect_parallel_between(x, y)
 
-# ---------------------------------------------------------------------------
+a <- c(1, NA, NA)
+b <- iv_pairs(c(NA, NA), c(3, 4), c(NA, NA))
 
-a <- c(1, NA)
-b <- iv(c(NA, NA), c(NA, NA))
-
-# Missing values error by default
-try(iv_detect_parallel_between(a, b))
-
-# If you'd like missing values to match exactly, set `missing = "match"`
-iv_detect_parallel_between(a, b, missing = "match")
-
-# If you'd like missing values to be treated as unmatched, set
-# `missing = FALSE`
-iv_detect_parallel_between(a, b, missing = FALSE)
-
-# If you'd like to propagate missing values, set `missing = NA`
-iv_detect_parallel_between(a, b, missing = NA)
+# Missing intervals always propagate
+iv_detect_parallel_between(a, b)
 }
 \seealso{
 \link[=relation-locate]{Locating relationships}

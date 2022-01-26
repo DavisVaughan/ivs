@@ -60,13 +60,6 @@ test_that("can detect overlaps in parallel", {
   )
 })
 
-test_that("errors on missing by default", {
-  x <- iv(NA, NA)
-  y <- iv(1, 2)
-
-  expect_snapshot((expect_error(iv_detect_parallel_overlaps(x, y))))
-})
-
 # ------------------------------------------------------------------------------
 # iv_prepare_overlaps(), through iv_detect_overlaps() and iv_detect_parallel_overlaps()
 
@@ -288,13 +281,6 @@ test_that("can detect parallel precedes", {
   )
 })
 
-test_that("errors on missing by default", {
-  x <- iv(NA, NA)
-  y <- iv(1, 2)
-
-  expect_snapshot((expect_error(iv_detect_parallel_precedes(x, y))))
-})
-
 # ------------------------------------------------------------------------------
 # iv_detect_parallel_follows()
 
@@ -306,13 +292,6 @@ test_that("can detect parallel follows", {
     iv_detect_parallel_follows(x, y),
     c(FALSE, TRUE, FALSE)
   )
-})
-
-test_that("errors on missing by default", {
-  x <- iv(NA, NA)
-  y <- iv(1, 2)
-
-  expect_snapshot((expect_error(iv_detect_parallel_follows(x, y))))
 })
 
 # ------------------------------------------------------------------------------
@@ -407,13 +386,6 @@ test_that("can detect overlaps in parallel", {
     iv_detect_parallel_relation(x, y, type = "contains"),
     c(FALSE, FALSE, TRUE)
   )
-})
-
-test_that("errors on missing by default", {
-  x <- iv(NA, NA)
-  y <- iv(1, 2)
-
-  expect_snapshot((expect_error(iv_detect_parallel_relation(x, y, type = "equals"))))
 })
 
 # ------------------------------------------------------------------------------
@@ -681,15 +653,11 @@ test_that("iv_detect_impl - validates 'missing'", {
 # ------------------------------------------------------------------------------
 # iv_detect_parallel_impl(), through iv_detect_parallel_overlaps()
 
-test_that("gives correct results for various forms of 'missing'", {
-  x <- iv(NA, NA)
-  y <- iv(1, 2)
+test_that("missing intervals always propagate", {
+  x <- iv_pairs(c(1, 2), c(NA, NA), c(NA, NA))
+  y <- iv_pairs(c(NA, NA), c(3, 4), c(NA, NA))
 
-  expect_false(iv_detect_parallel_overlaps(x, y, missing = "match"))
-  expect_true(iv_detect_parallel_overlaps(x, x, missing = "match"))
-
-  expect_identical(iv_detect_parallel_overlaps(x, y, missing = NA), NA)
-  expect_identical(iv_detect_parallel_overlaps(x, y, missing = FALSE), FALSE)
+  expect_identical(iv_detect_parallel_overlaps(x, y), c(NA, NA, NA))
 })
 
 test_that("iv_detect_parallel_impl - recycles correctly", {
@@ -698,12 +666,4 @@ test_that("iv_detect_parallel_impl - recycles correctly", {
 
 test_that("iv_detect_parallel_impl - takes common type", {
   expect_snapshot((expect_error(iv_detect_parallel_overlaps(iv(1, 2), iv("a", "b")))))
-})
-
-test_that("iv_detect_parallel_impl - validates 'missing'", {
-  expect_snapshot({
-    (expect_error(iv_detect_parallel_overlaps(iv(1, 2), iv(1, 2), missing = 1)))
-    (expect_error(iv_detect_parallel_overlaps(iv(1, 2), iv(1, 2), missing = "x")))
-    (expect_error(iv_detect_parallel_overlaps(iv(1, 2), iv(1, 2), missing = c(TRUE, FALSE))))
-  })
 })

@@ -7,11 +7,11 @@
 \alias{iv_detect_parallel_follows}
 \title{Detect a relationship in parallel between two ivs}
 \usage{
-iv_detect_parallel_overlaps(x, y, ..., type = "any", missing = "error")
+iv_detect_parallel_overlaps(x, y, ..., type = "any")
 
-iv_detect_parallel_precedes(x, y, ..., missing = "error")
+iv_detect_parallel_precedes(x, y)
 
-iv_detect_parallel_follows(x, y, ..., missing = "error")
+iv_detect_parallel_follows(x, y)
 }
 \arguments{
 \item{x, y}{\verb{[iv]}
@@ -39,22 +39,6 @@ start of an interval in \code{haystack}.
 \item \code{"ends"}: Finds when the end of an interval in \code{needles} matches the end
 of an interval in \code{haystack}.
 }}
-
-\item{missing}{\verb{[logical(1) / "match" / "error"]}
-
-Handling of missing intervals in \code{x} or \code{y}.
-\itemize{
-\item \code{"match"} matches missing intervals in \code{x} to missing intervals in
-\code{y}. Regardless of \code{type}, if both intervals are missing, then this
-results in \code{TRUE}, otherwise it results in \code{FALSE}.
-\item \code{"error"} throws an error if any intervals are missing.
-This is the default.
-\item If a single logical value is provided, this represents the value returned
-in the i-th element of the result if missing intervals are present in the
-i-th interval of \code{x} or \code{y}. You can force missing intervals to be
-unmatched by setting this to \code{FALSE}, and you can force them to be
-propagated by setting this to \code{NA}.
-}}
 }
 \value{
 A logical vector the same size as the common size of \code{x} and \code{y}.
@@ -75,15 +59,6 @@ follows (i.e. comes after) the i-th interval of \code{y}.
 
 These functions return a logical vector the same size as the common size of
 \code{x} and \code{y}.
-\subsection{Missing intervals}{
-
-Missing intervals in \code{x} or \code{y} force an error to be thrown by default, as
-it is unclear what the desired result is when missing intervals are involved.
-This is consistent with \code{\link[=iv_detect_overlaps]{iv_detect_overlaps()}}. If you'd like to match
-missing intervals exactly, set \code{missing = "match"}. If you'd like missing
-intervals to be unmatched, set \code{missing = FALSE}. If you'd like missing
-intervals to be propagated, set \code{missing = NA}.
-}
 }
 \examples{
 library(vctrs)
@@ -112,23 +87,11 @@ iv_detect_parallel_overlaps(x, y, type = "contains")
 # Does the i-th interval of `x` follow the i-th interval of `y`?
 iv_detect_parallel_follows(x, y)
 
-# ---------------------------------------------------------------------------
+a <- iv_pairs(c(1, 2), c(NA, NA), c(NA, NA))
+b <- iv_pairs(c(NA, NA), c(3, 4), c(NA, NA))
 
-a <- iv(c(1, NA), c(2, NA))
-b <- iv(c(NA, NA), c(NA, NA))
-
-# Missing intervals error by default
-try(iv_detect_parallel_overlaps(a, b))
-
-# If you'd like missing intervals to match exactly, set `missing = "match"`
-iv_detect_parallel_overlaps(a, b, missing = "match")
-
-# If you'd like missing intervals to be treated as unmatched, set
-# `missing = FALSE`
-iv_detect_parallel_overlaps(a, b, missing = FALSE)
-
-# If you'd like to propagate missing intervals, set `missing = NA`
-iv_detect_parallel_overlaps(a, b, missing = NA)
+# Missing intervals always propagate
+iv_detect_parallel_overlaps(a, b)
 }
 \seealso{
 \link[=relation-locate]{Locating relationships}
