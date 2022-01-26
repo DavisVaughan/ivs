@@ -43,9 +43,9 @@
 #' @seealso
 #' [Locating relationships][relation-locate]
 #'
-#' [Detect when a vector falls between an iv][iv_detect_between]
+#' [Detect when a vector falls between an iv][iv_between]
 #'
-#' [Detecting when a vector falls between an iv in parallel][iv_detect_parallel_between]
+#' [Pairwise detect when a vector falls between an iv][iv_pairwise_between]
 #'
 #' @export
 #' @examples
@@ -146,7 +146,7 @@ iv_locate_between <- function(needles,
 #' Detect when a vector falls between an iv
 #'
 #' @description
-#' `iv_detect_between()` detects when `needles`, a vector, falls between the
+#' `iv_between()` detects when `needles`, a vector, falls between the
 #' bounds of `haystack`, an iv. It works similar to [base::%in%], where
 #' `needles[i]` checks for a match in all of `haystack`.
 #'
@@ -180,7 +180,7 @@ iv_locate_between <- function(needles,
 #'
 #' [Locating where a vector falls between an iv][iv_locate_between]
 #'
-#' [Detecting when a vector falls between an iv in parallel][iv_detect_parallel_between]
+#' [Pairwise detect when a vector falls between an iv][iv_pairwise_between]
 #'
 #' @export
 #' @examples
@@ -198,7 +198,7 @@ iv_locate_between <- function(needles,
 #' y
 #'
 #' # Detect if any location where `x` is between the intervals in `y`
-#' iv_detect_between(x, y)
+#' iv_between(x, y)
 #'
 #' # ---------------------------------------------------------------------------
 #'
@@ -208,18 +208,18 @@ iv_locate_between <- function(needles,
 #' # By default, missing values in `needles` are treated as being exactly
 #' # equal to missing intervals in `haystack`, so the missing value in `a` is
 #' # considered between the missing interval in `b`.
-#' iv_detect_between(a, b)
+#' iv_between(a, b)
 #'
 #' # If you'd like to propagate missing values, set `missing = NA`
-#' iv_detect_between(a, b, missing = NA)
+#' iv_between(a, b, missing = NA)
 #'
 #' # If you'd like missing values to be treated as unmatched, set
 #' # `missing = FALSE`
-#' iv_detect_between(a, b, missing = FALSE)
-iv_detect_between <- function(needles,
-                              haystack,
-                              ...,
-                              missing = "equals") {
+#' iv_between(a, b, missing = FALSE)
+iv_between <- function(needles,
+                       haystack,
+                       ...,
+                       missing = "equals") {
   check_dots_empty0(...)
 
   haystack <- iv_proxy(haystack)
@@ -266,13 +266,13 @@ iv_detect_between <- function(needles,
   out
 }
 
-#' Detect when a vector falls between an iv in parallel
+#' Pairwise detect when a vector falls between an iv
 #'
 #' @description
-#' `iv_detect_parallel_between()` detects when `x`, a vector, falls between the
-#' bounds of `y`, an iv, _in parallel_, where parallel means that the i-th value
+#' `iv_pairwise_between()` detects when `x`, a vector, falls between the
+#' bounds of `y`, an iv, _pairwise_, where pairwise means that the i-th value
 #' of `x` is compared against the i-th interval of `y`. This is in contrast to
-#' [iv_detect_between()], which works more like [base::%in%].
+#' [iv_between()], which works more like [base::%in%].
 #'
 #' These functions return a logical vector the same size as the common size of
 #' `x` and `y`.
@@ -291,7 +291,7 @@ iv_detect_between <- function(needles,
 #'
 #' [Locating where a vector falls between an iv][iv_locate_between]
 #'
-#' [Detecting when a vector falls between an iv][iv_detect_between]
+#' [Detecting when a vector falls between an iv][iv_between]
 #'
 #' @export
 #' @examples
@@ -307,14 +307,14 @@ iv_detect_between <- function(needles,
 #' y
 #'
 #' # Does the i-th value of `x` fall between the i-th interval of `y`?
-#' iv_detect_parallel_between(x, y)
+#' iv_pairwise_between(x, y)
 #'
 #' a <- c(1, NA, NA)
 #' b <- iv_pairs(c(NA, NA), c(3, 4), c(NA, NA))
 #'
 #' # Missing intervals always propagate
-#' iv_detect_parallel_between(a, b)
-iv_detect_parallel_between <- function(x, y) {
+#' iv_pairwise_between(a, b)
+iv_pairwise_between <- function(x, y) {
   args <- vec_recycle_common(x = x, y = y)
   x <- args[[1L]]
   y <- args[[2L]]
