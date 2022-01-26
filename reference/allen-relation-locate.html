@@ -59,7 +59,7 @@ specific set of relations developed by James Allen in the paper:
   <span class="va">haystack</span>,
   <span class="va">...</span>,
   <span class="va">type</span>,
-  missing <span class="op">=</span> <span class="st">"error"</span>,
+  missing <span class="op">=</span> <span class="st">"equals"</span>,
   no_match <span class="op">=</span> <span class="cn">NA_integer_</span>,
   remaining <span class="op">=</span> <span class="st">"drop"</span>,
   multiple <span class="op">=</span> <span class="st">"all"</span>
@@ -98,13 +98,12 @@ for a complete description of each type. One of:</p><ul><li><p><code>"precedes"<
 <li><p><code>"equals"</code></p></li>
 </ul></dd>
 <dt>missing</dt>
-<dd><p><code>[integer(1) / "match" / "drop" / "error"]</code></p>
-<p>Handling of missing intervals in <code>needles</code>.</p><ul><li><p><code>"match"</code> matches missing intervals in <code>needles</code> to missing intervals in
-<code>haystack</code>. Missing intervals will be matched exactly, regardless of the
-<code>type</code>.</p></li>
+<dd><p><code>[integer(1) / "equals" / "drop" / "error"]</code></p>
+<p>Handling of missing intervals in <code>needles</code>.</p><ul><li><p><code>"equals"</code> considers missing intervals in <code>needles</code> as exactly equal
+to missing intervals in <code>haystack</code> when determining if there is a
+matching relationship between them.</p></li>
 <li><p><code>"drop"</code> drops missing intervals in <code>needles</code> from the result.</p></li>
-<li><p><code>"error"</code> throws an error if any intervals in <code>needles</code> are missing.
-This is the default.</p></li>
+<li><p><code>"error"</code> throws an error if any intervals in <code>needles</code> are missing.</p></li>
 <li><p>If a single integer is provided, this represents the value returned in
 the <code>haystack</code> column for intervals in <code>needles</code> that are missing.</p></li>
 </ul></dd>
@@ -183,7 +182,9 @@ With this notation, the 13 relations are as follows:</p><ul><li><p><em>Precedes<
 <p><code>(x_s &lt; y_s) &amp; (x_e &gt; y_e)</code></p></li>
 <li><p><em>Equals</em>:</p>
 <p><code>(x_s == y_s) &amp; (x_e == y_e)</code></p></li>
-</ul><div class="section">
+</ul><p>Note that when <code>missing = "equals"</code>, missing intervals will only match
+the <code>type = "equals"</code> relation. This ensures that the distinct property
+of the algebra is maintained.</p><div class="section">
 <h3 id="connection-to-other-functions">Connection to other functions<a class="anchor" aria-label="anchor" href="#connection-to-other-functions"></a></h3>
 
 

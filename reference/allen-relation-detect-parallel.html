@@ -132,7 +132,9 @@ With this notation, the 13 relations are as follows:</p><ul><li><p><em>Precedes<
 <p><code>(x_s &lt; y_s) &amp; (x_e &gt; y_e)</code></p></li>
 <li><p><em>Equals</em>:</p>
 <p><code>(x_s == y_s) &amp; (x_e == y_e)</code></p></li>
-</ul><div class="section">
+</ul><p>Note that when <code>missing = "equals"</code>, missing intervals will only match
+the <code>type = "equals"</code> relation. This ensures that the distinct property
+of the algebra is maintained.</p><div class="section">
 <h3 id="connection-to-other-functions">Connection to other functions<a class="anchor" aria-label="anchor" href="#connection-to-other-functions"></a></h3>
 
 
