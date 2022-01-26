@@ -88,22 +88,22 @@
 # data frame formatting
 
     Code
-      iv(data.frame(x = 1:5), data.frame(x = 2:6))
+      iv(vctrs::data_frame(x = 1:5), vctrs::data_frame(x = 2:6))
     Output
       <iv<data.frame<x:integer>>[5]>
       [1] [df[,1]_row_1, df[,1]_row_1) [df[,1]_row_2, df[,1]_row_2)
       [3] [df[,1]_row_3, df[,1]_row_3) [df[,1]_row_4, df[,1]_row_4)
       [5] [df[,1]_row_5, df[,1]_row_5)
     Code
-      iv(data.frame(x = 1:5), data.frame(x = c(2, 3, NA, 5, NA)))
+      iv(vctrs::data_frame(x = 1:5), vctrs::data_frame(x = c(2, 3, NA, 5, NA)))
     Output
       <iv<data.frame<x:double>>[5]>
       [1] [df[,1]_row_1, df[,1]_row_1) [df[,1]_row_2, df[,1]_row_2)
       [3] [NA, NA)                     [df[,1]_row_4, df[,1]_row_4)
       [5] [NA, NA)                    
     Code
-      start <- data.frame(x = 1, y = "x", z = 4L)
-      end <- data.frame(x = 2, y = "z", z = 5L)
+      start <- vctrs::data_frame(x = 1, y = "x", z = 4L)
+      end <- vctrs::data_frame(x = 2, y = "z", z = 5L)
       iv(start, end)
     Output
       <iv<data.frame<

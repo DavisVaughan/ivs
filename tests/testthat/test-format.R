@@ -62,18 +62,18 @@ test_that("factor formatting", {
 
 test_that("data frame formatting", {
   expect_snapshot({
-    iv(data.frame(x = 1:5), data.frame(x = 2:6))
+    iv(vctrs::data_frame(x = 1:5), vctrs::data_frame(x = 2:6))
 
     # Missings
-    iv(data.frame(x = 1:5), data.frame(x = c(2, 3, NA, 5, NA)))
+    iv(vctrs::data_frame(x = 1:5), vctrs::data_frame(x = c(2, 3, NA, 5, NA)))
 
     # Complex frame
-    start <- data.frame(
+    start <- vctrs::data_frame(
       x = 1,
       y = "x",
       z = 4L
     )
-    end <- data.frame(
+    end <- vctrs::data_frame(
       x = 2,
       y = "z",
       z = 5L
