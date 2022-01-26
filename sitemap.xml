@@ -16,7 +16,7 @@
     <loc>/index.html</loc>
   </url>
   <url>
-    <loc>/reference/allen-relation-detect-parallel.html</loc>
+    <loc>/reference/allen-relation-detect-pairwise.html</loc>
   </url>
   <url>
     <loc>/reference/allen-relation-detect.html</loc>
@@ -43,7 +43,7 @@
     <loc>/reference/iv-package.html</loc>
   </url>
   <url>
-    <loc>/reference/iv-set-parallel.html</loc>
+    <loc>/reference/iv-set-pairwise.html</loc>
   </url>
   <url>
     <loc>/reference/iv-sets.html</loc>
@@ -55,10 +55,7 @@
     <loc>/reference/iv.html</loc>
   </url>
   <url>
-    <loc>/reference/iv_detect_between.html</loc>
-  </url>
-  <url>
-    <loc>/reference/iv_detect_parallel_between.html</loc>
+    <loc>/reference/iv_between.html</loc>
   </url>
   <url>
     <loc>/reference/iv_format.html</loc>
@@ -67,10 +64,13 @@
     <loc>/reference/iv_locate_between.html</loc>
   </url>
   <url>
+    <loc>/reference/iv_pairwise_between.html</loc>
+  </url>
+  <url>
     <loc>/reference/new_iv.html</loc>
   </url>
   <url>
-    <loc>/reference/relation-detect-parallel.html</loc>
+    <loc>/reference/relation-detect-pairwise.html</loc>
   </url>
   <url>
     <loc>/reference/relation-detect.html</loc>
