@@ -64,6 +64,10 @@ This package was inspired by many sources!
     that supports intervals. It supports integer/numeric intervals and
     allows for varying the endpoint bounds.
 
+-   [data.table](https://github.com/Rdatatable/data.table) contains a
+    function named `foverlaps()` for detecting overlaps (which was
+    inspired by `IRanges::findOverlaps()`).
+
 -   [Maintaining Knowledge about Temporal
     Intervals](https://cse.unl.edu/~choueiry/Documents/Allen-CACM1983.pdf)
     is a paper by James Allen that `iv_locate_relates()` is based on. It

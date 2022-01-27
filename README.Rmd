@@ -56,6 +56,8 @@ This package was inspired by many sources!
 
 - [intervals](https://github.com/edzer/intervals) is another R package that supports intervals. It supports integer/numeric intervals and allows for varying the endpoint bounds.
 
+- [data.table](https://github.com/Rdatatable/data.table) contains a function named `foverlaps()` for detecting overlaps (which was inspired by `IRanges::findOverlaps()`).
+
 - [Maintaining Knowledge about Temporal Intervals](https://cse.unl.edu/~choueiry/Documents/Allen-CACM1983.pdf) is a paper by James Allen that `iv_locate_relates()` is based on. It is a great primer on interval algebra.
 
 - [Why numbering should start at 0](https://www.cs.utexas.edu/users/EWD/transcriptions/EWD08xx/EWD831.html) is a small white paper that describes why right-open intervals are often the best choice.
