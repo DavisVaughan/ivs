@@ -41,6 +41,46 @@ test_that("split works with single missing interval", {
   expect_identical(iv_split(x), x)
 })
 
+test_that("split works with `on`", {
+  x <- iv(1, 5)
+
+  expect_identical(
+    iv_split(x, on = 2),
+    iv_pairs(c(1, 2), c(2, 5))
+  )
+
+  expect_identical(
+    iv_split(x, on = c(2, 4)),
+    iv_pairs(c(1, 2), c(2, 4), c(4, 5))
+  )
+})
+
+test_that("still splits on boundaries in `x` when `on` is also present", {
+  x <- iv_pairs(c(1, 5), c(4, 6))
+
+  expect_identical(
+    iv_split(x, on = 2),
+    iv_pairs(c(1, 2), c(2, 4), c(4, 5), c(5, 6))
+  )
+})
+
+test_that("split works if `on` is out of range", {
+  x <- iv(1, 5)
+
+  expect_identical(iv_split(x, on = 0), x)
+  expect_identical(iv_split(x, on = 6), x)
+})
+
+test_that("split works if `on` is a missing value", {
+  x <- iv(1, 5)
+
+  expect_identical(iv_split(x, on = NA), x)
+
+  x <- iv(NA, NA)
+
+  expect_identical(iv_split(x, on = NA), x)
+})
+
 test_that("split is generic over container", {
   x <- nested_integer_iv_pairs(c(1, 3), c(2, 4))
   expect_identical(
@@ -98,6 +138,18 @@ test_that("replace split works with single interval", {
 test_that("replace split works with single missing interval", {
   x <- iv(NA, NA)
   expect_identical(iv_replace_splits(x), list_of(x))
+})
+
+test_that("replace split works with `on`", {
+  x <- iv_pairs(c(1, 5), c(4, 6))
+
+  expect_identical(
+    iv_replace_splits(x, on = 2),
+    list_of(
+      iv_pairs(c(1, 2), c(2, 4), c(4, 5)),
+      iv_pairs(c(4, 5), c(5, 6))
+    )
+  )
 })
 
 test_that("replace split is generic over container", {
@@ -161,4 +213,53 @@ test_that("locate split groups works with single missing interval", {
 
   expect_identical(out$key, iv(NA, NA))
   expect_identical(out$loc, list(1L))
+})
+
+test_that("locate split groups works with `on`", {
+  x <- iv_pairs(c(1, 5), c(4, 6))
+
+  out <- iv_locate_split_groups(x, on = 2)
+
+  expect_identical(out$key, iv_split(x, on = 2))
+  expect_identical(out$loc, list(1L, 1L, c(1L, 2L), 2L))
+})
+
+# ------------------------------------------------------------------------------
+# iv_split_candidates()
+
+test_that("works with a single value", {
+  expect_identical(
+    iv_split_candidates(1, 2),
+    list(start = 1, end = 2)
+  )
+})
+
+test_that("works with a single missing value", {
+  expect_identical(
+    iv_split_candidates(NA, NA),
+    list(start = NA, end = NA)
+  )
+})
+
+test_that("works with a single `on` value", {
+  expect_identical(
+    iv_split_candidates(integer(), integer(), on = 1L),
+    list(start = integer(), end = integer())
+  )
+})
+
+test_that("works with a missing `on` value", {
+  expect_identical(
+    iv_split_candidates(NA_integer_, NA_integer_, on = NA_integer_),
+    list(start = NA_integer_, end = NA_integer_)
+  )
+  expect_identical(
+    iv_split_candidates(integer(), integer(), on = NA_integer_),
+    list(start = NA_integer_, end = NA_integer_)
+  )
+})
+
+test_that("casts `on` to type of `x` bounds", {
+  x <- iv(1, 2)
+  expect_snapshot((expect_error(iv_split(x, on = "x"))))
 })

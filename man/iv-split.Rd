@@ -7,16 +7,24 @@
 \alias{iv_locate_split_groups}
 \title{Splits}
 \usage{
-iv_split(x)
+iv_split(x, ..., on = NULL)
 
-iv_replace_splits(x)
+iv_replace_splits(x, ..., on = NULL)
 
-iv_locate_split_groups(x)
+iv_locate_split_groups(x, ..., on = NULL)
 }
 \arguments{
 \item{x}{\verb{[iv]}
 
 An interval vector.}
+
+\item{...}{These dots are for future extensions and must be empty.}
+
+\item{on}{\verb{[vector / NULL]}
+
+An optional vector of additional values to split on.
+
+This should have the same type as \code{iv_start(x)}.}
 }
 \value{
 For \code{iv_split()}, an iv with the same type as \code{x}.
@@ -88,4 +96,12 @@ guests
 guests \%>\%
   group_by(splits) \%>\%
   summarise(n = n(), who = list(name))
+
+# ---------------------------------------------------------------------------
+
+x <- iv_pairs(c(1, 5), c(4, 9), c(12, 15))
+x
+
+# You can provide additional singular values to split on with `on`
+iv_split(x, on = c(2, 13))
 }

@@ -16,9 +16,17 @@
 #'   containing integer vectors that map each element of `x` to the disjoint
 #'   intervals that it falls in.
 #'
+#' @inheritParams rlang::args_dots_empty
+#'
 #' @param x `[iv]`
 #'
 #'   An interval vector.
+#'
+#' @param on `[vector / NULL]`
+#'
+#'   An optional vector of additional values to split on.
+#'
+#'   This should have the same type as `iv_start(x)`.
 #'
 #' @return
 #' For `iv_split()`, an iv with the same type as `x`.
@@ -77,17 +85,27 @@
 #' guests %>%
 #'   group_by(splits) %>%
 #'   summarise(n = n(), who = list(name))
+#'
+#' # ---------------------------------------------------------------------------
+#'
+#' x <- iv_pairs(c(1, 5), c(4, 9), c(12, 15))
+#' x
+#'
+#' # You can provide additional singular values to split on with `on`
+#' iv_split(x, on = c(2, 13))
 NULL
 
 #' @rdname iv-split
 #' @export
-iv_split <- function(x) {
+iv_split <- function(x, ..., on = NULL) {
+  check_dots_empty0(...)
+
   proxy <- iv_proxy(x)
 
   start <- field_start(proxy)
   end <- field_end(proxy)
 
-  args <- iv_split_candidates(start, end)
+  args <- iv_split_candidates(start, end, on = on)
   candidate_start <- args$start
   candidate_end <- args$end
 
@@ -114,13 +132,15 @@ iv_split <- function(x) {
 
 #' @rdname iv-split
 #' @export
-iv_replace_splits <- function(x) {
+iv_replace_splits <- function(x, ..., on = NULL) {
+  check_dots_empty0(...)
+
   proxy <- iv_proxy(x)
 
   start <- field_start(proxy)
   end <- field_end(proxy)
 
-  args <- iv_split_candidates(start, end)
+  args <- iv_split_candidates(start, end, on = on)
   candidate_start <- args$start
   candidate_end <- args$end
 
@@ -147,13 +167,15 @@ iv_replace_splits <- function(x) {
 
 #' @rdname iv-split
 #' @export
-iv_locate_split_groups <- function(x) {
+iv_locate_split_groups <- function(x, ..., on = NULL) {
+  check_dots_empty0(...)
+
   proxy <- iv_proxy(x)
 
   start <- field_start(proxy)
   end <- field_end(proxy)
 
-  args <- iv_split_candidates(start, end)
+  args <- iv_split_candidates(start, end, on = on)
   candidate_start <- args$start
   candidate_end <- args$end
 
@@ -181,14 +203,21 @@ iv_locate_split_groups <- function(x) {
   out
 }
 
-iv_split_candidates <- function(start, end) {
+iv_split_candidates <- function(start, end, ..., on = NULL) {
+  check_dots_empty0(...)
+
+  on <- vec_cast(on, start, x_arg = "on", to_arg = "iv_start(x)")
+
   # Candidates are built from all sorted unique values
-  points <- vec_sort(vec_unique(vec_c(start, end)))
+  points <- vec_sort(vec_unique(vec_c(start, end, on)))
   size_points <- vec_size(points)
 
-  # If any missing intervals are present, they will show up at the end.
-  # We remove them ahead of time because having only a single missing interval
-  # is a way to result in 1 unique point, which confuses the computation below.
+  # If a missing interval is present, it is at the very end.
+  # We remove it before proceeding, because this "candidates" computation
+  # revolves around computing `start` and `end` locations, where `start < end`
+  # is a requirement. In the case of a single missing interval, we end up with
+  # 1 unique point (an `NA`), but we still want to keep `[NA, NA)` as an
+  # interval candidate so we remove it now and add it back at the end.
   last <- vec_slice(points, size_points)
   any_missing <- any(vec_equal_na(last))
   if (any_missing) {
