@@ -71,11 +71,11 @@ intervals that it falls in.</p></li>
 </ul></div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">iv_split</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">iv_split</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, on <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
 
-<span class="fu">iv_replace_splits</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+<span class="fu">iv_replace_splits</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, on <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
 
-<span class="fu">iv_locate_split_groups</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
+<span class="fu">iv_locate_split_groups</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, on <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -83,6 +83,12 @@ intervals that it falls in.</p></li>
     <dl><dt>x</dt>
 <dd><p><code>[iv]</code></p>
 <p>An interval vector.</p></dd>
+<dt>...</dt>
+<dd><p>These dots are for future extensions and must be empty.</p></dd>
+<dt>on</dt>
+<dd><p><code>[vector / NULL]</code></p>
+<p>An optional vector of additional values to split on.</p>
+<p>This should have the same type as <code>iv_start(x)</code>.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -188,6 +194,18 @@ of the same type as <code>x</code> and <code>loc</code> list-column containing i
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> [2008-05-20 22:15:00, 2008-05-20 23:00:00)     5 <span style="color: #949494;">&lt;chr [5]&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> [2008-05-20 23:00:00, 2008-05-21 00:00:00)     3 <span style="color: #949494;">&lt;chr [3]&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> [2008-05-21 00:00:00, 2008-05-21 00:30:00)     1 <span style="color: #949494;">&lt;chr [1]&gt;</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># ---------------------------------------------------------------------------</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="iv.html">iv_pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">9</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">x</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;iv&lt;double&gt;[3]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] [1, 5)   [4, 9)   [12, 15)</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># You can provide additional singular values to split on with `on`</span></span>
+<span class="r-in"><span class="fu">iv_split</span><span class="op">(</span><span class="va">x</span>, on <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">13</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;iv&lt;double&gt;[6]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] [1, 2)   [2, 4)   [4, 5)   [5, 9)   [12, 13) [13, 15)</span>
 </code></pre></div>
     </div>
   </div>
