@@ -67,14 +67,41 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of iv is to provide tools for working with intervals in a generic way.</p>
+<p>iv is a package dedicated to working with intervals in a generic way. It introduces a new type, the <strong>i</strong>nterval <strong>v</strong>ector, which is generally referred to as an <strong>iv</strong>. An iv is created from two parallel vectors representing the starts (inclusive) and ends (exclusive) of the intervals, like this:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/DavisVaughan/iv" class="external-link">iv</a></span><span class="op">)</span>
+
+<span class="co"># Interval vector of integers</span>
+<span class="fu"><a href="reference/iv.html">iv</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">:</span><span class="fl">11</span><span class="op">)</span>
+<span class="co">#&gt; &lt;iv&lt;integer&gt;[5]&gt;</span>
+<span class="co">#&gt; [1] [1, 7)  [2, 8)  [3, 9)  [4, 10) [5, 11)</span>
+
+<span class="co"># Interval vector of dates</span>
+<span class="va">starts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2019-01-01"</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0</span><span class="op">:</span><span class="fl">2</span>
+<span class="va">ends</span> <span class="op">&lt;-</span> <span class="va">starts</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span>
+
+<span class="fu"><a href="reference/iv.html">iv</a></span><span class="op">(</span><span class="va">starts</span>, <span class="va">ends</span><span class="op">)</span>
+<span class="co">#&gt; &lt;iv&lt;date&gt;[3]&gt;</span>
+<span class="co">#&gt; [1] [2019-01-01, 2019-01-03) [2019-01-02, 2019-01-07) [2019-01-03, 2019-01-13)</span></code></pre></div>
+<p>Interval vectors are completely generic, meaning that you can create them from any comparable type that is supported by <a href="https://vctrs.r-lib.org" class="external-link">vctrs</a>. This means that user defined S3 types work automatically, like <code>hms::hms()</code>, <code><a href="https://rdrr.io/pkg/bit64/man/bit64-package.html" class="external-link">bit64::integer64()</a></code>, and <code>clock::year_month_day()</code>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install the development version of iv from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"DavisVaughan/iv"</span><span class="op">)</span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="inspiration">Inspiration<a class="anchor" aria-label="anchor" href="#inspiration"></a>
+</h2>
+<p>This package was inspired by many sources!</p>
+<ul>
+<li><p><a href="https://github.com/Bioconductor/IRanges" class="external-link">IRanges</a> is the closest equivalent, and inspired many of the function names seen here. It is mainly focused on integer intervals, and always uses closed intervals. It is also based on S4, and unfortunately that currently means it can’t be used as a column in a tibble with the current limitations in vctrs.</p></li>
+<li><p><a href="https://github.com/edzer/intervals" class="external-link">intervals</a> is another R package that supports intervals. It supports integer/numeric intervals and allows for varying the endpoint bounds.</p></li>
+<li><p><a href="https://cse.unl.edu/~choueiry/Documents/Allen-CACM1983.pdf" class="external-link">Maintaining Knowledge about Temporal Intervals</a> is a paper by James Allen that <code><a href="reference/allen-relation-locate.html">iv_locate_relates()</a></code> is based on. It is a great primer on interval algebra.</p></li>
+<li><p><a href="https://www.cs.utexas.edu/users/EWD/transcriptions/EWD08xx/EWD831.html" class="external-link">Why numbering should start at 0</a> is a small white paper that describes why right-open intervals are often the best choice.</p></li>
+</ul>
 </div>
 </div>
   </div>
