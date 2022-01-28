@@ -254,15 +254,13 @@ be resolved using <code>multiple</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6       3       NA</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">loc</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                          x                        y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;iv&lt;date&gt;&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;iv&lt;date&gt;&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> [2019-01-05, 2019-01-10) [2019-01-04, 2019-01-08)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> [2019-01-05, 2019-01-10) [2019-01-07, 2019-01-09)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> [2019-01-07, 2019-01-15) [2019-01-04, 2019-01-08)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> [2019-01-07, 2019-01-15) [2019-01-07, 2019-01-09)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> [2019-01-07, 2019-01-15) [2019-01-10, 2019-01-20)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> [2019-01-20, 2019-01-31)                 [NA, NA)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 [2019-01-05, 2019-01-10) [2019-01-04, 2019-01-08)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 [2019-01-05, 2019-01-10) [2019-01-07, 2019-01-09)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 [2019-01-07, 2019-01-15) [2019-01-04, 2019-01-08)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 [2019-01-07, 2019-01-15) [2019-01-07, 2019-01-09)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 [2019-01-07, 2019-01-15) [2019-01-10, 2019-01-20)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 [2019-01-20, 2019-01-31)                 [NA, NA)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Find where `x` contains `y` and drop results when there isn't a match</span></span>
 <span class="r-in"><span class="va">loc</span> <span class="op">&lt;-</span> <span class="fu">iv_locate_overlaps</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, type <span class="op">=</span> <span class="st">"contains"</span>, no_match <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span>
@@ -272,11 +270,9 @@ be resolved using <code>multiple</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2       2        3</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">loc</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                          x                        y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;iv&lt;date&gt;&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;iv&lt;date&gt;&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> [2019-01-05, 2019-01-10) [2019-01-07, 2019-01-09)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> [2019-01-07, 2019-01-15) [2019-01-07, 2019-01-09)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 [2019-01-05, 2019-01-10) [2019-01-07, 2019-01-09)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 [2019-01-07, 2019-01-15) [2019-01-07, 2019-01-09)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Find where `x` precedes `y`</span></span>
 <span class="r-in"><span class="va">loc</span> <span class="op">&lt;-</span> <span class="fu">iv_locate_precedes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
@@ -288,25 +284,21 @@ be resolved using <code>multiple</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4       3       NA</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">loc</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                          x                        y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;iv&lt;date&gt;&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;iv&lt;date&gt;&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> [2019-01-05, 2019-01-10) [2019-01-10, 2019-01-20)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> [2019-01-05, 2019-01-10) [2019-01-15, 2019-01-20)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> [2019-01-07, 2019-01-15) [2019-01-15, 2019-01-20)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> [2019-01-20, 2019-01-31)                 [NA, NA)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 [2019-01-05, 2019-01-10) [2019-01-10, 2019-01-20)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 [2019-01-05, 2019-01-10) [2019-01-15, 2019-01-20)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 [2019-01-07, 2019-01-15) [2019-01-15, 2019-01-20)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 [2019-01-20, 2019-01-31)                 [NA, NA)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Filter down to find only the closest interval in `y` of all the intervals</span></span>
 <span class="r-in"><span class="co"># where `x` preceded it</span></span>
 <span class="r-in"><span class="va">loc</span> <span class="op">&lt;-</span> <span class="fu">iv_locate_precedes</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, closest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">loc</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                          x                        y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;iv&lt;date&gt;&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;iv&lt;date&gt;&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> [2019-01-05, 2019-01-10) [2019-01-10, 2019-01-20)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> [2019-01-07, 2019-01-15) [2019-01-15, 2019-01-20)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> [2019-01-20, 2019-01-31)                 [NA, NA)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 [2019-01-05, 2019-01-10) [2019-01-10, 2019-01-20)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 [2019-01-07, 2019-01-15) [2019-01-15, 2019-01-20)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 [2019-01-20, 2019-01-31)                 [NA, NA)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Note that `closest` can result in duplicates if there is a tie.</span></span>
 <span class="r-in"><span class="co"># `2019-01-20` appears as an end date twice in `haystack`.</span></span>
@@ -319,13 +311,11 @@ be resolved using <code>multiple</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4       3        5</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">loc</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                          x                        y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;iv&lt;date&gt;&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;iv&lt;date&gt;&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> [2019-01-05, 2019-01-10) [2019-01-01, 2019-01-03)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> [2019-01-07, 2019-01-15) [2019-01-01, 2019-01-03)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> [2019-01-20, 2019-01-31) [2019-01-10, 2019-01-20)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> [2019-01-20, 2019-01-31) [2019-01-15, 2019-01-20)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 [2019-01-05, 2019-01-10) [2019-01-01, 2019-01-03)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 [2019-01-07, 2019-01-15) [2019-01-01, 2019-01-03)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 [2019-01-20, 2019-01-31) [2019-01-10, 2019-01-20)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 [2019-01-20, 2019-01-31) [2019-01-15, 2019-01-20)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Force just one of the ties to be returned by using `multiple`.</span></span>
 <span class="r-in"><span class="co"># Here we just request any of the ties, with no guarantee on which one.</span></span>
@@ -337,12 +327,10 @@ be resolved using <code>multiple</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3       3        4</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">loc</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                          x                        y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;iv&lt;date&gt;&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;iv&lt;date&gt;&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> [2019-01-05, 2019-01-10) [2019-01-01, 2019-01-03)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> [2019-01-07, 2019-01-15) [2019-01-01, 2019-01-03)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> [2019-01-20, 2019-01-31) [2019-01-10, 2019-01-20)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 [2019-01-05, 2019-01-10) [2019-01-01, 2019-01-03)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 [2019-01-07, 2019-01-15) [2019-01-01, 2019-01-03)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 [2019-01-20, 2019-01-31) [2019-01-10, 2019-01-20)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># ---------------------------------------------------------------------------</span></span>
 <span class="r-in"></span>

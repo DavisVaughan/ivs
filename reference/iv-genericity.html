@@ -145,7 +145,13 @@ some cases, it may be required to fall back to returning an iv object.</p></li>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://vctrs.r-lib.org/" class="external-link">vctrs</a></span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="co"># Registering S3 methods outside of a package doesn't always work quite</span></span>
+<span class="r-in"><span class="co"># right (like on the pkgdown site), so this code should only be run by a</span></span>
+<span class="r-in"><span class="co"># user reading the manual. If that is you, fear not! It should run just fine</span></span>
+<span class="r-in"><span class="co"># in your console.</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://vctrs.r-lib.org/" class="external-link">vctrs</a></span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">new_nested_iv</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">iv</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in">  <span class="va">fields</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>iv <span class="op">=</span> <span class="va">iv</span><span class="op">)</span></span>
@@ -168,17 +174,15 @@ some cases, it may be required to fall back to returning an iv object.</p></li>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">new_nested_iv</span><span class="op">(</span><span class="va">iv</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">x</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;nested_iv[2]&gt;</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in stop_vctrs("vctrs_error_unimplemented", message = msg, x = x,     method = method):</span> `format.nested_iv()` not implemented.</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Proxies, then accesses the `start` field</span></span>
 <span class="r-in"><span class="fu"><a href="iv-accessors.html">iv_start</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in iv_proxy(x):</span> Object `x`, with type &lt;nested_iv&gt;, is not an &lt;iv&gt; and does not implement an `iv_proxy()` method.</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Proxies, computes the complement to generate an iv,</span></span>
 <span class="r-in"><span class="co"># then restores to the original type</span></span>
 <span class="r-in"><span class="fu"><a href="iv-sets.html">iv_complement</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in iv_proxy(x):</span> Object `x`, with type &lt;nested_iv&gt;, is not an &lt;iv&gt; and does not implement an `iv_proxy()` method.</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
