@@ -162,6 +162,8 @@ iv_intersect <- function(x, y) {
   x_proxy <- iv_proxy(x)
   y_proxy <- iv_proxy(y)
 
+  # TODO: `vec_min()` and `vec_max()`
+  # https://github.com/r-lib/vctrs/issues/86
   lower <- min(
     min(field_start(x_proxy)),
     min(field_start(y_proxy))
@@ -220,6 +222,8 @@ iv_difference <- function(x, y) {
   x_proxy <- iv_proxy(x)
   y_proxy <- iv_proxy(y)
 
+  # TODO: `vec_min()` and `vec_max()`
+  # https://github.com/r-lib/vctrs/issues/86
   lower <- min(
     min(field_start(x_proxy)),
     min(field_start(y_proxy))
@@ -277,6 +281,8 @@ iv_symmetric_difference <- function(x, y) {
   x_proxy <- iv_proxy(x)
   y_proxy <- iv_proxy(y)
 
+  # TODO: `vec_min()` and `vec_max()`
+  # https://github.com/r-lib/vctrs/issues/86
   lower <- min(
     min(field_start(x_proxy)),
     min(field_start(y_proxy))
