@@ -12,6 +12,7 @@ What the package does (one paragraph).
 Useful links:
 \itemize{
   \item \url{https://github.com/DavisVaughan/iv}
+  \item \url{https://davisvaughan.github.io/iv/}
   \item Report bugs at \url{https://github.com/DavisVaughan/iv/issues}
 }
 

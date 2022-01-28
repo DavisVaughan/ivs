@@ -7,7 +7,8 @@ Authors@R: c(
   )
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
-URL: https://github.com/DavisVaughan/iv
+URL: https://github.com/DavisVaughan/iv,
+    https://davisvaughan.github.io/iv/
 BugReports: https://github.com/DavisVaughan/iv/issues
 Imports: 
     glue,
