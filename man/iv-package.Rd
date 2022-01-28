@@ -6,7 +6,7 @@
 \alias{_PACKAGE}
 \title{iv: Interval Vectors}
 \description{
-What the package does (one paragraph).
+Provides a library for generic interval manipulations using a new interval vector class. Capabilities include: locating various kinds of relationships between two interval vectors, merging overlaps within a single interval vector, splitting an interval vector on its overlapping endpoints, and applying set theoretical operations on interval vectors. Many of the operations in this package were inspired by James Allen's paper, Maintaining Knowledge about Temporal Intervals <https://cse.unl.edu/~choueiry/Documents/Allen-CACM1983.pdf>.
 }
 \seealso{
 Useful links:
