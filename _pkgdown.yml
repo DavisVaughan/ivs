@@ -3,3 +3,44 @@ url: https://davisvaughan.github.io/iv/
 template:
   bootstrap: 5
 
+reference:
+  - title: Interval Vectors
+    contents:
+    - iv
+    - iv_start
+
+  - title: Merging and Splitting
+    contents:
+    - iv_merge
+    - iv_split
+
+  - title: Relationships
+    contents:
+    - iv_overlaps
+    - iv_locate_overlaps
+    - iv_pairwise_overlaps
+    - iv_align
+
+  - title: Between
+    contents:
+    - iv_between
+    - iv_locate_between
+    - iv_pairwise_between
+
+  - title: Set Operations
+    contents:
+    - iv_complement
+    - iv_pairwise_complement
+
+  - title: Allen's Interval Algebra
+    contents:
+    - iv_relates
+    - iv_locate_relates
+    - iv_pairwise_relates
+
+  - title: Developer Tools
+    contents:
+    - new_iv
+    - is_iv
+    - iv_proxy
+    - iv_format
