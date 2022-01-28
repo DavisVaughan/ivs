@@ -44,7 +44,7 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
+      <h2 id="interval-vectors">Interval Vectors<a class="anchor" aria-label="anchor" href="#interval-vectors"></a></h2>
       
       
 
@@ -56,10 +56,125 @@
 
       <dl><dt>
           
-          <code><a href="allen-relation-detect-pairwise.html">iv_pairwise_relates()</a></code> 
+          <code><a href="iv.html">iv()</a></code> <code><a href="iv.html">iv_pairs()</a></code> 
         </dt>
-        <dd>Pairwise detect relations from Allen's Interval Algebra</dd>
+        <dd>Create an interval vector</dd>
       </dl><dl><dt>
+          
+          <code><a href="iv-accessors.html">iv_start()</a></code> <code><a href="iv-accessors.html">iv_end()</a></code> 
+        </dt>
+        <dd>Access the start or end of an interval vector</dd>
+      </dl></div><div class="section level2">
+      <h2 id="merging-and-splitting">Merging and Splitting<a class="anchor" aria-label="anchor" href="#merging-and-splitting"></a></h2>
+      
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="iv-merge.html">iv_merge()</a></code> <code><a href="iv-merge.html">iv_replace_merged()</a></code> <code><a href="iv-merge.html">iv_locate_merge_bounds()</a></code> <code><a href="iv-merge.html">iv_locate_merge_groups()</a></code> 
+        </dt>
+        <dd>Merge</dd>
+      </dl><dl><dt>
+          
+          <code><a href="iv-split.html">iv_split()</a></code> <code><a href="iv-split.html">iv_replace_splits()</a></code> <code><a href="iv-split.html">iv_locate_split_groups()</a></code> 
+        </dt>
+        <dd>Splits</dd>
+      </dl></div><div class="section level2">
+      <h2 id="relationships">Relationships<a class="anchor" aria-label="anchor" href="#relationships"></a></h2>
+      
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="relation-detect.html">iv_overlaps()</a></code> <code><a href="relation-detect.html">iv_precedes()</a></code> <code><a href="relation-detect.html">iv_follows()</a></code> 
+        </dt>
+        <dd>Detect a relationship between two ivs</dd>
+      </dl><dl><dt>
+          
+          <code><a href="relation-locate.html">iv_locate_overlaps()</a></code> <code><a href="relation-locate.html">iv_locate_precedes()</a></code> <code><a href="relation-locate.html">iv_locate_follows()</a></code> 
+        </dt>
+        <dd>Locate relationships between two ivs</dd>
+      </dl><dl><dt>
+          
+          <code><a href="relation-detect-pairwise.html">iv_pairwise_overlaps()</a></code> <code><a href="relation-detect-pairwise.html">iv_pairwise_precedes()</a></code> <code><a href="relation-detect-pairwise.html">iv_pairwise_follows()</a></code> 
+        </dt>
+        <dd>Pairwise detect a relationship between two ivs</dd>
+      </dl><dl><dt>
+          
+          <code><a href="iv_align.html">iv_align()</a></code> 
+        </dt>
+        <dd>Align after locating relationships</dd>
+      </dl></div><div class="section level2">
+      <h2 id="between">Between<a class="anchor" aria-label="anchor" href="#between"></a></h2>
+      
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="iv_between.html">iv_between()</a></code> 
+        </dt>
+        <dd>Detect when a vector falls between an iv</dd>
+      </dl><dl><dt>
+          
+          <code><a href="iv_locate_between.html">iv_locate_between()</a></code> 
+        </dt>
+        <dd>Locate where a vector falls between an iv</dd>
+      </dl><dl><dt>
+          
+          <code><a href="iv_pairwise_between.html">iv_pairwise_between()</a></code> 
+        </dt>
+        <dd>Pairwise detect when a vector falls between an iv</dd>
+      </dl></div><div class="section level2">
+      <h2 id="set-operations">Set Operations<a class="anchor" aria-label="anchor" href="#set-operations"></a></h2>
+      
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="iv-sets.html">iv_complement()</a></code> <code><a href="iv-sets.html">iv_union()</a></code> <code><a href="iv-sets.html">iv_intersect()</a></code> <code><a href="iv-sets.html">iv_difference()</a></code> <code><a href="iv-sets.html">iv_symmetric_difference()</a></code> 
+        </dt>
+        <dd>Set operations</dd>
+      </dl><dl><dt>
+          
+          <code><a href="iv-set-pairwise.html">iv_pairwise_complement()</a></code> <code><a href="iv-set-pairwise.html">iv_pairwise_union()</a></code> <code><a href="iv-set-pairwise.html">iv_pairwise_span()</a></code> <code><a href="iv-set-pairwise.html">iv_pairwise_intersect()</a></code> <code><a href="iv-set-pairwise.html">iv_pairwise_difference()</a></code> <code><a href="iv-set-pairwise.html">iv_pairwise_symmetric_difference()</a></code> 
+        </dt>
+        <dd>Pairwise set operations</dd>
+      </dl></div><div class="section level2">
+      <h2 id="allen-s-interval-algebra">Allen's Interval Algebra<a class="anchor" aria-label="anchor" href="#allen-s-interval-algebra"></a></h2>
+      
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
           
           <code><a href="allen-relation-detect.html">iv_relates()</a></code> 
         </dt>
@@ -71,14 +186,30 @@
         <dd>Locate relations from Allen's Interval Algebra</dd>
       </dl><dl><dt>
           
+          <code><a href="allen-relation-detect-pairwise.html">iv_pairwise_relates()</a></code> 
+        </dt>
+        <dd>Pairwise detect relations from Allen's Interval Algebra</dd>
+      </dl></div><div class="section level2">
+      <h2 id="developer-tools">Developer Tools<a class="anchor" aria-label="anchor" href="#developer-tools"></a></h2>
+      
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="new_iv.html">new_iv()</a></code> 
+        </dt>
+        <dd>Construct a new iv</dd>
+      </dl><dl><dt>
+          
           <code><a href="is_iv.html">is_iv()</a></code> 
         </dt>
         <dd>Is <code>x</code> an iv?</dd>
-      </dl><dl><dt>
-          
-          <code><a href="iv-accessors.html">iv_start()</a></code> <code><a href="iv-accessors.html">iv_end()</a></code> 
-        </dt>
-        <dd>Access the start or end of an interval vector</dd>
       </dl><dl><dt>
           
           <code><a href="iv-genericity.html">iv_proxy()</a></code> <code><a href="iv-genericity.html">iv_restore()</a></code> 
@@ -86,76 +217,12 @@
         <dd>Proxy and restore</dd>
       </dl><dl><dt>
           
-          <code><a href="iv-merge.html">iv_merge()</a></code> <code><a href="iv-merge.html">iv_replace_merged()</a></code> <code><a href="iv-merge.html">iv_locate_merge_bounds()</a></code> <code><a href="iv-merge.html">iv_locate_merge_groups()</a></code> 
-        </dt>
-        <dd>Merge</dd>
-      </dl><dl><dt>
-          
-          <code><a href="iv-set-pairwise.html">iv_pairwise_complement()</a></code> <code><a href="iv-set-pairwise.html">iv_pairwise_union()</a></code> <code><a href="iv-set-pairwise.html">iv_pairwise_span()</a></code> <code><a href="iv-set-pairwise.html">iv_pairwise_intersect()</a></code> <code><a href="iv-set-pairwise.html">iv_pairwise_difference()</a></code> <code><a href="iv-set-pairwise.html">iv_pairwise_symmetric_difference()</a></code> 
-        </dt>
-        <dd>Pairwise set operations</dd>
-      </dl><dl><dt>
-          
-          <code><a href="iv-sets.html">iv_complement()</a></code> <code><a href="iv-sets.html">iv_union()</a></code> <code><a href="iv-sets.html">iv_intersect()</a></code> <code><a href="iv-sets.html">iv_difference()</a></code> <code><a href="iv-sets.html">iv_symmetric_difference()</a></code> 
-        </dt>
-        <dd>Set operations</dd>
-      </dl><dl><dt>
-          
-          <code><a href="iv-split.html">iv_split()</a></code> <code><a href="iv-split.html">iv_replace_splits()</a></code> <code><a href="iv-split.html">iv_locate_split_groups()</a></code> 
-        </dt>
-        <dd>Splits</dd>
-      </dl><dl><dt>
-          
-          <code><a href="iv.html">iv()</a></code> <code><a href="iv.html">iv_pairs()</a></code> 
-        </dt>
-        <dd>Create an interval vector</dd>
-      </dl><dl><dt>
-          
-          <code><a href="iv_align.html">iv_align()</a></code> 
-        </dt>
-        <dd>Align after locating relationships</dd>
-      </dl><dl><dt>
-          
-          <code><a href="iv_between.html">iv_between()</a></code> 
-        </dt>
-        <dd>Detect when a vector falls between an iv</dd>
-      </dl><dl><dt>
-          
           <code><a href="iv_format.html">iv_format()</a></code> 
         </dt>
         <dd>Formatting</dd>
-      </dl><dl><dt>
-          
-          <code><a href="iv_locate_between.html">iv_locate_between()</a></code> 
-        </dt>
-        <dd>Locate where a vector falls between an iv</dd>
-      </dl><dl><dt>
-          
-          <code><a href="iv_pairwise_between.html">iv_pairwise_between()</a></code> 
-        </dt>
-        <dd>Pairwise detect when a vector falls between an iv</dd>
-      </dl><dl><dt>
-          
-          <code><a href="new_iv.html">new_iv()</a></code> 
-        </dt>
-        <dd>Construct a new iv</dd>
-      </dl><dl><dt>
-          
-          <code><a href="relation-detect-pairwise.html">iv_pairwise_overlaps()</a></code> <code><a href="relation-detect-pairwise.html">iv_pairwise_precedes()</a></code> <code><a href="relation-detect-pairwise.html">iv_pairwise_follows()</a></code> 
-        </dt>
-        <dd>Pairwise detect a relationship between two ivs</dd>
-      </dl><dl><dt>
-          
-          <code><a href="relation-detect.html">iv_overlaps()</a></code> <code><a href="relation-detect.html">iv_precedes()</a></code> <code><a href="relation-detect.html">iv_follows()</a></code> 
-        </dt>
-        <dd>Detect a relationship between two ivs</dd>
-      </dl><dl><dt>
-          
-          <code><a href="relation-locate.html">iv_locate_overlaps()</a></code> <code><a href="relation-locate.html">iv_locate_precedes()</a></code> <code><a href="relation-locate.html">iv_locate_follows()</a></code> 
-        </dt>
-        <dd>Locate relationships between two ivs</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
