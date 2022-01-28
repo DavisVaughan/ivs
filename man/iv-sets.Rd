@@ -37,11 +37,12 @@ often useful to expand the universe to, say, \code{-Inf} to \code{Inf}.}
 An interval vector.}
 }
 \value{
-For \code{iv_complement()}, a vector of the same type as \code{x} containing the
+\itemize{
+\item For \code{iv_complement()}, a vector of the same type as \code{x} containing the
 complement.
-
-For all other set operations, a vector of the same type as the common type of
-\code{x} and \code{y} containing the result.
+\item For all other set operations, a vector of the same type as the common type
+of \code{x} and \code{y} containing the result.
+}
 }
 \description{
 This family of functions treats ivs as sets. They always compute

@@ -50,14 +50,14 @@
 #'   intervals must be merged.
 #'
 #' @return
-#' For `iv_merge()`, an iv with the same type as `x`.
+#' - For `iv_merge()`, an iv with the same type as `x`.
 #'
-#' For `iv_replace_merged()`, an iv with the same type and size as `x`.
+#' - For `iv_replace_merged()`, an iv with the same type and size as `x`.
 #'
-#' For `iv_locate_merge_bounds()`, a two column data frame with `start` and
+#' - For `iv_locate_merge_bounds()`, a two column data frame with `start` and
 #' `end` integer columns.
 #'
-#' For `iv_locate_merge_groups()`, a two column data frame with a `key` column
+#' - For `iv_locate_merge_groups()`, a two column data frame with a `key` column
 #' containing the result of `iv_locate_merge_bounds()` and a `loc` list-column
 #' containing integer vectors.
 #'

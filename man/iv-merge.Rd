@@ -32,16 +32,15 @@ will be kept separate. To be a minimal interval vector, all abutting
 intervals must be merged.}
 }
 \value{
-For \code{iv_merge()}, an iv with the same type as \code{x}.
-
-For \code{iv_replace_merged()}, an iv with the same type and size as \code{x}.
-
-For \code{iv_locate_merge_bounds()}, a two column data frame with \code{start} and
+\itemize{
+\item For \code{iv_merge()}, an iv with the same type as \code{x}.
+\item For \code{iv_replace_merged()}, an iv with the same type and size as \code{x}.
+\item For \code{iv_locate_merge_bounds()}, a two column data frame with \code{start} and
 \code{end} integer columns.
-
-For \code{iv_locate_merge_groups()}, a two column data frame with a \code{key} column
+\item For \code{iv_locate_merge_groups()}, a two column data frame with a \code{key} column
 containing the result of \code{iv_locate_merge_bounds()} and a \code{loc} list-column
 containing integer vectors.
+}
 }
 \description{
 This family of functions revolves around merging the intervals within a

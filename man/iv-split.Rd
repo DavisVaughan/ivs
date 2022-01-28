@@ -27,13 +27,13 @@ An optional vector of additional values to split on.
 This should have the same type as \code{iv_start(x)}.}
 }
 \value{
-For \code{iv_split()}, an iv with the same type as \code{x}.
-
-For \code{iv_replace_splits()}, a list-of containing ivs with the same size as
+\itemize{
+\item For \code{iv_split()}, an iv with the same type as \code{x}.
+\item For \code{iv_replace_splits()}, a list-of containing ivs with the same size as
 \code{x}.
-
-For \code{iv_locate_split_groups()}, a two column data frame with a \code{key} column
+\item For \code{iv_locate_split_groups()}, a two column data frame with a \code{key} column
 of the same type as \code{x} and \code{loc} list-column containing integer vectors.
+}
 }
 \description{
 This family of functions revolves around splitting an iv on its endpoints,

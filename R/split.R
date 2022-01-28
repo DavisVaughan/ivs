@@ -29,12 +29,12 @@
 #'   This should have the same type as `iv_start(x)`.
 #'
 #' @return
-#' For `iv_split()`, an iv with the same type as `x`.
+#' - For `iv_split()`, an iv with the same type as `x`.
 #'
-#' For `iv_replace_splits()`, a list-of containing ivs with the same size as
+#' - For `iv_replace_splits()`, a list-of containing ivs with the same size as
 #' `x`.
 #'
-#' For `iv_locate_split_groups()`, a two column data frame with a `key` column
+#' - For `iv_locate_split_groups()`, a two column data frame with a `key` column
 #' of the same type as `x` and `loc` list-column containing integer vectors.
 #'
 #' @name iv-split

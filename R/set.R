@@ -39,11 +39,11 @@
 #'   often useful to expand the universe to, say, `-Inf` to `Inf`.
 #'
 #' @return
-#' For `iv_complement()`, a vector of the same type as `x` containing the
+#' - For `iv_complement()`, a vector of the same type as `x` containing the
 #' complement.
 #'
-#' For all other set operations, a vector of the same type as the common type of
-#' `x` and `y` containing the result.
+#' - For all other set operations, a vector of the same type as the common type
+#' of `x` and `y` containing the result.
 #'
 #' @seealso The _pairwise_ versions of these functions, such as
 #' [iv_pairwise_union()].
