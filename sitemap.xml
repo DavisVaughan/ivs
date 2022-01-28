@@ -1,81 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://davisvaughan.github.io/iv/404.html</loc>
   </url>
   <url>
-    <loc>/LICENSE-text.html</loc>
+    <loc>https://davisvaughan.github.io/iv/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
+    <loc>https://davisvaughan.github.io/iv/LICENSE.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://davisvaughan.github.io/iv/articles/index.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://davisvaughan.github.io/iv/articles/iv.html</loc>
   </url>
   <url>
-    <loc>/reference/allen-relation-detect-pairwise.html</loc>
+    <loc>https://davisvaughan.github.io/iv/authors.html</loc>
   </url>
   <url>
-    <loc>/reference/allen-relation-detect.html</loc>
+    <loc>https://davisvaughan.github.io/iv/index.html</loc>
   </url>
   <url>
-    <loc>/reference/allen-relation-locate.html</loc>
+    <loc>https://davisvaughan.github.io/iv/reference/allen-relation-detect-pairwise.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://davisvaughan.github.io/iv/reference/allen-relation-detect.html</loc>
   </url>
   <url>
-    <loc>/reference/is_iv.html</loc>
+    <loc>https://davisvaughan.github.io/iv/reference/allen-relation-locate.html</loc>
   </url>
   <url>
-    <loc>/reference/iv-accessors.html</loc>
+    <loc>https://davisvaughan.github.io/iv/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/iv-genericity.html</loc>
+    <loc>https://davisvaughan.github.io/iv/reference/is_iv.html</loc>
   </url>
   <url>
-    <loc>/reference/iv-merge.html</loc>
+    <loc>https://davisvaughan.github.io/iv/reference/iv-accessors.html</loc>
   </url>
   <url>
-    <loc>/reference/iv-package.html</loc>
+    <loc>https://davisvaughan.github.io/iv/reference/iv-genericity.html</loc>
   </url>
   <url>
-    <loc>/reference/iv-set-pairwise.html</loc>
+    <loc>https://davisvaughan.github.io/iv/reference/iv-merge.html</loc>
   </url>
   <url>
-    <loc>/reference/iv-sets.html</loc>
+    <loc>https://davisvaughan.github.io/iv/reference/iv-package.html</loc>
   </url>
   <url>
-    <loc>/reference/iv-split.html</loc>
+    <loc>https://davisvaughan.github.io/iv/reference/iv-set-pairwise.html</loc>
   </url>
   <url>
-    <loc>/reference/iv.html</loc>
+    <loc>https://davisvaughan.github.io/iv/reference/iv-sets.html</loc>
   </url>
   <url>
-    <loc>/reference/iv_between.html</loc>
+    <loc>https://davisvaughan.github.io/iv/reference/iv-split.html</loc>
   </url>
   <url>
-    <loc>/reference/iv_format.html</loc>
+    <loc>https://davisvaughan.github.io/iv/reference/iv.html</loc>
   </url>
   <url>
-    <loc>/reference/iv_locate_between.html</loc>
+    <loc>https://davisvaughan.github.io/iv/reference/iv_align.html</loc>
   </url>
   <url>
-    <loc>/reference/iv_pairwise_between.html</loc>
+    <loc>https://davisvaughan.github.io/iv/reference/iv_between.html</loc>
   </url>
   <url>
-    <loc>/reference/new_iv.html</loc>
+    <loc>https://davisvaughan.github.io/iv/reference/iv_format.html</loc>
   </url>
   <url>
-    <loc>/reference/relation-detect-pairwise.html</loc>
+    <loc>https://davisvaughan.github.io/iv/reference/iv_locate_between.html</loc>
   </url>
   <url>
-    <loc>/reference/relation-detect.html</loc>
+    <loc>https://davisvaughan.github.io/iv/reference/iv_pairwise_between.html</loc>
   </url>
   <url>
-    <loc>/reference/relation-locate.html</loc>
+    <loc>https://davisvaughan.github.io/iv/reference/new_iv.html</loc>
+  </url>
+  <url>
+    <loc>https://davisvaughan.github.io/iv/reference/relation-detect-pairwise.html</loc>
+  </url>
+  <url>
+    <loc>https://davisvaughan.github.io/iv/reference/relation-detect.html</loc>
+  </url>
+  <url>
+    <loc>https://davisvaughan.github.io/iv/reference/relation-locate.html</loc>
   </url>
 </urlset>
