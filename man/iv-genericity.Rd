@@ -57,6 +57,12 @@ This system allows you to use any \verb{iv_*()} function on your iv extension
 object without having to define S3 methods for all of them.
 }
 \examples{
+if (FALSE) {
+# Registering S3 methods outside of a package doesn't always work quite
+# right (like on the pkgdown site), so this code should only be run by a
+# user reading the manual. If that is you, fear not! It should run just fine
+# in your console.
+
 library(vctrs)
 
 new_nested_iv <- function(iv) {
@@ -87,4 +93,6 @@ iv_start(x)
 # Proxies, computes the complement to generate an iv,
 # then restores to the original type
 iv_complement(x)
+
+}
 }
