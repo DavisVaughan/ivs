@@ -63,9 +63,9 @@ iv_format.factor <- function(x) {
 iv_format.data.frame <- function(x) {
   # Printing data would be too complicated,
   # just print a type summary and the row number
-  abbr <- vec_ptype_abbr(x)
+  abbr <- vec_ptype_abbr(x, suffix_shape = FALSE)
 
-  out <- vec_paste0(abbr, "_row_", vec_seq_along(x))
+  out <- vec_paste0(abbr, "[", vec_seq_along(x), ",]")
 
   missing <- vec_equal_na(x)
   if (any(missing)) {
