@@ -1,0 +1,520 @@
+---
+title: "Introduction to iv"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to iv}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(iv)
+library(dplyr, warn.conflicts = FALSE)
+library(tidyr, warn.conflicts = FALSE)
+```
+
+## Introduction
+
+iv is a package dedicated to working with intervals in a generic way. It introduces a new type, the **i**nterval **v**ector, which is generally referred to as an **iv**. An iv is generally created from two parallel vectors representing the starts and ends of the intervals, like this:
+
+```{r}
+# Interval vector of integers
+iv(1:5, 7:11)
+
+# Interval vector of dates
+starts <- as.Date("2019-01-01") + 0:2
+ends <- starts + c(2, 5, 10)
+
+iv(starts, ends)
+```
+
+The neat thing about interval vectors is that they are generic, so you can create them from any comparable type that is supported by vctrs. For example, the integer64 type from the bit64 package:
+
+```{r}
+start <- bit64::as.integer64("900000000000")
+end <- start + 1234
+
+iv(start, end)
+```
+
+The rest of this vignette explores some of the useful things that you can do with ivs.
+
+## Structure
+
+As mentioned above, ivs are created from two parallel vectors representing the starts and ends of the intervals.
+
+```{r}
+x <- iv(1:3, 4:6)
+x
+```
+
+You can access the starts with `iv_start()` and the ends with `iv_end()`:
+
+```{r}
+iv_start(x)
+iv_end(x)
+```
+
+You can use an iv as a column in a data frame or tibble and it'll work just fine!
+
+```{r}
+tibble(x = x)
+```
+
+### Right-open intervals
+
+The only interval type that is supported by iv is a *right-open* interval, i.e. `[a, b)`. While this might seem restrictive, it rarely ends up being a problem in practice, and often it aligns with the easiest way to express a particular interval. For example, consider an interval that spans the entire day of `2019-01-02`. If you wanted to represent this interval with second precision with a right-open interval, you'd do `[2019-01-02 00:00:00, 2019-01-03 00:00:00)`. This nicely captures the exclusive "end" of the interval as the start of the next day. This also means it exactly aligns with the start of the *next* day's interval, `[2019-01-03 00:00:00, 2019-01-04 00:00:00)`.
+
+If you wanted to represent this with a closed interval, you might do `[2019-01-02 00:00:00, 2019-01-02 23:59:59)`. Not only is this a bit awkward, it can also cause issues if the precision changes! Say you wanted to up the precision on this interval from second level precision to millisecond precision. The right-open interval wouldn't have to change at all since the end of that interval is set to `2019-01-03 00:00:00` and anything before that is fair game. But the closed interval can't be naively changed from `2019-01-02 23:59:59` to `2019-01-02 23:59:59.000`, as you'd lose the 999 milliseconds in that last second. Extra care would have to be taken to set the milliseconds to `2019-01-02 23:59:59.999`.
+
+If you still aren't convinced, I'd encourage you to take a look at these resources that also advocate for right-open intervals:
+
+-   [Why numbering should start at 0](https://www.cs.utexas.edu/users/EWD/transcriptions/EWD08xx/EWD831.html)
+
+-   These two Stack Overflow posts ([1](https://stackoverflow.com/questions/9795391/is-there-a-standard-for-inclusive-exclusive-ends-of-time-intervals), [2](https://stackoverflow.com/questions/8441749/representing-intervals-or-ranges)) that expand on the above paper
+
+-   [Time intervals and other ranges should be half-open](http://wrschneider.github.io/2014/01/07/time-intervals-and-other-ranges-should.html)
+
+### Empty intervals
+
+In iv, it is required that `start < end` when generating an interval vector. This means that intervals like `[5, 2)` are invalid, but it also means that an "empty" interval of `[5, 5)` is also invalid. Practically, I've found that attempting to allow these ends up resulting in more implementation headaches than anything else, and they don't end up having very many uses.
+
+## Finding overlaps
+
+One of the most compelling reasons to use iv is that it tries to make finding overlapping intervals as easy as possible. `iv_locate_overlaps()` takes two ivs and returns a data frame containing information about where they overlap. It works somewhat like `base::match()` in that for each element of `needles`, it looks for a match in *all* of `haystack`. Unlike `match()`, it actually returns all of the overlaps rather than just the first.
+
+```{r}
+# iv_pairs() is a useful way to create small ivs from individual intervals
+needles <- iv_pairs(c(1, 5), c(3, 7), c(10, 12))
+needles
+
+haystack <- iv_pairs(c(0, 6), c(13, 15), c(0, 2), c(7, 8), c(4, 5))
+haystack
+
+locations <- iv_locate_overlaps(needles, haystack)
+locations
+```
+
+The `$needles` column of the result is an integer vector showing where to slice `needles` to generate the intervals that overlap the intervals in `haystack` described by the `$haystack` column. When a needle doesn't overlap with any intervals in the haystack, an `NA` location is returned. An easy way to align both `needles` and `haystack` using this information is to pass everything to `iv_align()`, which will automatically perform the slicing and store the results in another data frame:
+
+```{r}
+iv_align(needles, haystack, locations = locations)
+```
+
+If you just wanted to know if an interval in `needles` overlapped *any* interval in `haystack`, then you can use `iv_overlaps()`, which returns a logical vector.
+
+```{r}
+iv_overlaps(needles, haystack)
+```
+
+By default, `iv_locate_overlaps()` will detect if there is any kind of overlap between the two inputs, but there are various other `type`s of overlaps that you can detect. For example, you can check if `needles` "contains" `haystack`:
+
+```{r}
+locations <- iv_locate_overlaps(
+  needles, 
+  haystack, 
+  type = "contains", 
+  no_match = "drop"
+)
+
+iv_align(needles, haystack, locations = locations)
+```
+
+I've also used `no_match = "drop"` to drop all of the `needles` that don't have any matching overlaps.
+
+You can also check for the reverse, i.e. if `needles` is "within" the `haystack`:
+
+```{r}
+locations <- iv_locate_overlaps(
+  needles, 
+  haystack, 
+  type = "within", 
+  no_match = "drop"
+)
+
+iv_align(needles, haystack, locations = locations)
+```
+
+### Precedes / Follows
+
+Two other functions that are related to `iv_locate_overlaps()` are `iv_locate_precedes()` and `iv_locate_follows()`.
+
+```{r}
+# Where does `needles` precede `haystack`?
+locations <- iv_locate_precedes(needles, haystack)
+locations
+```
+
+This returns a data frame of the same structure as `iv_locate_overlaps()`, so you can use it with `iv_align()`.
+
+```{r}
+iv_align(needles, haystack, locations = locations)
+```
+
+```{r}
+# Where does `needles` follow `haystack`?
+locations <- iv_locate_follows(needles, haystack)
+
+iv_align(needles, haystack, locations = locations)
+```
+
+If you are only interested in the closest interval in `haystack` that the needle precedes or follows, set `closest = TRUE`.
+
+```{r}
+locations <- iv_locate_follows(
+  needles = needles, 
+  haystack = haystack, 
+  closest = TRUE,
+  no_match = "drop"
+)
+
+iv_align(needles, haystack, locations = locations)
+```
+
+### Allen's Interval Algebra
+
+[Maintaining Knowledge about Temporal Intervals](https://cse.unl.edu/~choueiry/Documents/Allen-CACM1983.pdf) is a great paper by James Allen that outlines an interval algebra that completely describes how any two intervals are related to each other (i.e. if one interval precedes, overlaps, or is met-by another interval). The paper describes 13 relations that make up this algebra, which are faithfully implemented in `iv_locate_relates()` and `iv_relates()`. These relations are extremely useful because they are *distinct* (i.e. two intervals can only be related by exactly 1 of the 13 relations), but they are a bit too restrictive to be practically useful. `iv_locate_overlaps()`, `iv_locate_precedes()`, and `iv_locate_follows()` combine multiple of the individual relations into three broad ideas that I find most useful. If you want to learn more about this, I'd encourage you to read the help documentation for `iv_locate_relates()`.
+
+### Between-ness
+
+Often you just want to know if a vector of values falls between the bounds of an interval. This is particularly common with dates, where you might want to know if a sale you made corresponded to an interval range when any commercial was being run.
+
+```{r}
+sales <- as.Date(c("2019-01-01", "2020-05-10", "2020-06-10"))
+
+commercial_starts <- as.Date(c(
+  "2019-10-12", "2020-04-01", "2020-06-01", "2021-05-10"
+))
+commercial_ends <- commercial_starts + 90
+
+commercials <- iv(commercial_starts, commercial_ends)
+
+sales
+commercials
+```
+
+You can check if a sale was made while any commercial was being run with `iv_between()`, which works like `%in%` and is similar to `iv_overlaps()`:
+
+```{r}
+tibble(sales = sales) %>%
+  mutate(commercial_running = iv_between(sales, commercials))
+```
+
+You can find the commercials that were airing when the sale was made with `iv_locate_between()` and `iv_align()`:
+
+```{r}
+iv_align(sales, commercials, locations = iv_locate_between(sales, commercials))
+```
+
+If you aren't looking for the `%in%`-like behavior of `iv_between()`, and instead want to pairwise detect whether one value falls between an interval or not, you can use `iv_pairwise_between()`:
+
+```{r}
+x <- c(1, 5, 10, 12)
+x
+
+y <- iv_pairs(c(0, 6), c(7, 9), c(10, 12), c(10, 12))
+y
+
+iv_pairwise_between(x, y)
+```
+
+Keep in mind that the intervals are half-open, so `12` doesn't fall between the interval of `[10, 12)`! This is different from `dplyr::between()`.
+
+## Merging overlaps
+
+One common operation when working with interval vectors is merging all the overlapping intervals within a single interval vector. This removes all the redundant information, while still maintaining the full range covered by the iv. For this, you can use `iv_merge()`.
+
+```{r}
+x <- iv_pairs(c(1, 5), c(5, 7), c(9, 11), c(10, 13), c(12, 13))
+x
+
+iv_merge(x)
+```
+
+By default, this merged *abutting* intervals that aren't considered to overlap but also don't have any values between them. If you don't want this, use the `abutting` argument.
+
+```{r}
+iv_merge(x, abutting = FALSE)
+```
+
+### With `group_by()`
+
+Merging overlapping intervals is often a useful way to create a new variable to group on with `dplyr::group_by()`. For example, consider the following problem where you have multiple users racking up costs across multiple systems. The date ranges represent the range when the corresponding cost was accrued over, and the ranges don't overlap for a given `(user, system)` pair.
+
+```{r}
+costs <- tribble(
+  ~user, ~system, ~from, ~to, ~cost,
+  1L, "a", "2019-01-01", "2019-01-05", 200.5,
+  1L, "a", "2019-01-12", "2019-01-13", 15.6,
+  1L, "b", "2019-01-03", "2019-01-10", 500.3,
+  2L, "a", "2019-01-02", "2019-01-03", 25.6,
+  2L, "c", "2019-01-03", "2019-01-04", 30,
+  2L, "c", "2019-01-05", "2019-01-07", 66.2
+)
+
+costs <- costs %>%
+  mutate(
+    from = as.Date(from),
+    to = as.Date(to)
+  ) %>%
+  mutate(range = iv(from, to), .keep = "unused")
+
+costs
+```
+
+Now let's say you don't care about the `system` anymore, and instead want to sum up the costs for any overlapping date ranges for a particular `user`. `iv_merge()` can give us an idea of what the non-overlapping ranges would be for each user:
+
+```{r}
+costs %>%
+  group_by(user) %>%
+  summarise(range = iv_merge(range), .groups = "drop")
+```
+
+But how can we sum up the costs? For this, we need to turn to `iv_replace_merged()`, which allows us to replace each interval in the original `range` column with the merged interval that it maps to. This will give us something to group on so we can sum up the costs.
+
+```{r}
+costs2 <- costs %>%
+  group_by(user) %>%
+  mutate(range = iv_replace_merged(range))
+
+# `range` has been updated with the corresponding merged intervals
+costs2
+
+# So now we can group on that to summarise the cost
+costs2 %>%
+  group_by(range, .add = TRUE) %>%
+  summarise(cost = sum(cost), .groups = "drop")
+```
+
+### Minimal ivs
+
+`iv_merge()` is a critical function in this package because its defaults also produce what is known as a *minimal* iv. A minimal interval vector:
+
+-   Has no overlapping intervals
+
+-   Has no abutting intervals
+
+-   Is ordered on both `iv_start(x)` and `iv_end(x)`
+
+Minimal interval vectors are nice because they cover the range of an interval vector in the most compact form possible. They are also nice to know about because the set operations described in the set operations section below all return minimal interval vectors.
+
+## Splitting on endpoints
+
+While `iv_merge()` generates *less* intervals than you began with, it is sometimes useful to go the other way and generate *more* intervals by splitting on all the overlapping endpoints. This is what `iv_split()` does. Both operations end up generating a result that contains completely disjoint intervals, but they go about it in very different ways.
+
+Let's look back at our first `iv_merge()` example:
+
+```{r}
+x <- iv_pairs(c(1, 5), c(5, 7), c(9, 11), c(10, 13), c(12, 13))
+x
+```
+
+Notice that `[9, 11)` overlaps `[10, 13)` which in turn overlaps `[12, 13)`. If we looked at the sorted unique values of the endpoints (i.e. `c(9, 10, 11, 12, 13)`) and then paired these up like `[9, 10), [10, 11), [11, 12], [12, 13)`, then we will have nicely "split" on the endpoints, generating a disjoint set of intervals. This is essentially what `iv_split()` does.
+
+```{r}
+iv_split(x)
+```
+
+### With `group_by()`
+
+Splitting an iv into its disjoint pieces is another operation that works nicely with `group_by()`. Consider this data set containing details about a number of guests that arrived to your party. You've been meticulous, so you've got their arrival and departure times logged (don't ask me why, maybe it's for COVID-19 Contact Tracing purposes).
+
+```{r}
+guests <- tibble(
+  arrive = as.POSIXct(
+    c("2008-05-20 19:30:00", "2008-05-20 20:10:00", "2008-05-20 22:15:00"),
+    tz = "UTC"
+  ),
+  depart = as.POSIXct(
+    c("2008-05-20 23:00:00", "2008-05-21 00:00:00", "2008-05-21 00:30:00"),
+    tz = "UTC"
+  ),
+  name = list(
+    c("Mary", "Harry"),
+    c("Diana", "Susan"),
+    "Peter"
+  )
+)
+
+guests <- unnest(guests, name) %>%
+  mutate(iv = iv(arrive, depart), .keep = "unused")
+
+guests
+```
+
+Let's figure out who was at your party at any given point throughout the night. To do this, we'll need to break `iv` up into all possible disjoint intervals that mark either an arrival or departure. Like with `iv_merge()`, `iv_split()` can show us those disjoint intervals but this doesn't help us map them back to each guest.
+
+```{r}
+iv_split(guests$iv)
+```
+
+Instead, we'll need `iv_replace_splits()`, which replaces `iv` with a list-col of the same size, where the i-th element of the list-col corresponds to the disjoint intervals that originated from the i-th element of `iv`. That all sounds complex, but it's a little easier to understand if we just look at a single example:
+
+```{r}
+# Mary's arrival/departure times
+guests$iv[[1]]
+
+# The first start and last end correspond to Mary's original times,
+# but we've also broken her stay up by the departures/arrivals of
+# everyone else
+iv_replace_splits(guests$iv)[[1]]
+```
+
+Since this generates a list-column, we'll also immediately use `tidyr::unnest()` to expand it out.
+
+```{r}
+guests2 <- guests %>%
+  mutate(iv = iv_replace_splits(iv)) %>%
+  unnest(iv) %>%
+  arrange(iv)
+
+guests2
+```
+
+Now that we have the disjoint intervals for each guest, we can group by `iv` and summarize to figure out who was at the party at any point throughout the night.
+
+```{r}
+guests2 %>%
+  group_by(iv) %>%
+  summarise(n = n(), who = list(name), .groups = "drop")
+```
+
+## Set operations
+
+There are a number of set theoretical operations that you can use on ivs. These are:
+
+-   `iv_complement()`
+
+-   `iv_union()`
+
+-   `iv_intersect()`
+
+-   `iv_difference()`
+
+-   `iv_symmetric_difference()`
+
+`iv_complement()` works on a single iv, while all the others work on two intervals at a time. All of these functions return a *minimal* interval vector. The easiest way to think about these functions is to imagine `iv_merge()` being called on each of the inputs first before applying the operation.
+
+`iv_complement()` computes the set complement of the intervals in a single iv.
+
+```{r}
+x <- iv_pairs(c(1, 3), c(2, 5), c(10, 12), c(13, 15))
+x
+
+iv_complement(x)
+```
+
+By default, `iv_complement()` uses the smallest/largest values of its input as the bounds to compute the complement over, but you can supply bounds explicitly with `lower` and `upper`:
+
+```{r}
+iv_complement(x, lower = 0, upper = Inf)
+```
+
+`iv_union()` takes the union of two ivs. It is essentially a call to `vctrs::vec_c()` followed by `iv_merge()`. It answers the question, "Which intervals are in `x` or `y`?"
+
+```{r}
+y <- iv_pairs(c(-5, 0), c(1, 4), c(8, 10), c(15, 16))
+
+x
+y
+
+iv_union(x, y)
+```
+
+`iv_intersect()` takes the intersection of two ivs. It answers the question, "Which intervals are in `x` and `y`?"
+
+```{r}
+iv_intersect(x, y)
+```
+
+`iv_difference()` takes the asymmetrical difference of two ivs. It answers the question, "Which intervals are in `x` but not `y`?"
+
+```{r}
+iv_difference(x, y)
+```
+
+## Pairwise set operations
+
+The set operations described above all treat `x` and `y` as two complete "sets" of intervals and operate on the intervals as a group. Occasionally it is useful to have pairwise equivalents of these operations that, say, take the intersection of the i-th interval of `x` and the i-th interval of `y`.
+
+One case in particular comes from combining `iv_locate_overlaps()` with `iv_pairwise_intersect()`. Here you might want to know not only *where* two ivs overlaps, but also *what* that intersection was for each value in `x`.
+
+```{r}
+starts <- as.Date(c("2019-01-05", "2019-01-20", "2019-01-25", "2019-02-01"))
+ends <- starts + c(5, 10, 3, 5)
+x <- iv(starts, ends)
+
+starts <- as.Date(c("2019-01-02", "2019-01-23"))
+ends <- starts + c(5, 6)
+y <- iv(starts, ends)
+
+x
+y
+```
+
+`iv_intersect()` isn't very useful to answer this particular question, because it first merges all overlapping intervals in each input.
+
+```{r}
+iv_intersect(x, y)
+```
+
+Instead, we can find the overlaps and align them, and then pairwise intersect the results:
+
+```{r}
+locations <- iv_locate_overlaps(x, y, no_match = "drop")
+overlaps <- iv_align(x, y, locations = locations)
+
+overlaps %>%
+  mutate(intersect = iv_pairwise_intersect(needles, haystack))
+```
+
+Note that the pairwise set operations come with a number of restrictions that limit their usage in many cases. For example, `iv_pairwise_intersect()` requires that `x[i]` and `y[i]` overlap, otherwise they would result in an empty interval, which isn't allowed.
+
+```{r, error=TRUE}
+iv_pairwise_intersect(iv(1, 5), iv(6, 9))
+```
+
+See the documentation page of `iv_pairwise_intersect()` for a complete list of restrictions for all of the pairwise set operations.
+
+## Missing intervals
+
+Missing intervals are allowed in iv, you can generate them by supplying vectors to `iv()` or `iv_pairs()` that contain missing values in either input.
+
+```{r}
+x <- iv_pairs(c(1, 5), c(3, NA), c(NA, 3))
+x
+```
+
+The defaults of all functions in iv treat missing intervals in one of two ways:
+
+-   Set-like operations treat missing intervals as *overlapping* other missing intervals, but they won't overlap any other interval. These include `iv_locate_overlaps()`, `iv_intersect()`, and `iv_split()`.
+
+-   Pairwise operations treat missing intervals as *infectious*, meaning that if the i-th interval of `x` is missing and the i-th interval of `y` is not missing (or vice versa), then the result is forced to be a missing interval. These include any operations prefixed with `iv_pairwise_*()`.
+
+```{r}
+y <- iv_pairs(c(NA, NA), c(0, 2))
+y
+```
+
+```{r}
+# Set-like operations treat missing intervals as overlapping
+iv_locate_overlaps(x, y)
+
+iv_intersect(x, y)
+```
+
+```{r}
+# Pairwise operations treat missing intervals as infectious
+z <- iv_pairs(c(1, 2), c(1, 4))
+
+iv_pairwise_intersect(y, z)
+```

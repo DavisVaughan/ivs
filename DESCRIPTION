@@ -18,8 +18,12 @@ Suggests:
     bit64 (>= 4.0.5),
     covr,
     dplyr (>= 1.0.7),
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0),
     tidyr (>= 1.1.4)
+VignetteBuilder: 
+    knitr
 Remotes:
     DavisVaughan/vctrs@feature/vec-locate-disjoint-on-locate-matches,
     r-lib/rlang
