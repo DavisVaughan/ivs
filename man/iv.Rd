@@ -44,6 +44,9 @@ this defaults to the common type of the inputs.}
 A size to force for the resulting iv. If \code{NULL}, this defaults to the
 common size of the inputs.}
 }
+\value{
+An iv.
+}
 \description{
 \itemize{
 \item \code{iv()} creates an interval vector from \code{start} and \code{end} vectors. This

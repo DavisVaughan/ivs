@@ -129,6 +129,8 @@ new_bare_iv_from_fields <- function(x) {
 #'
 #'   These dots are for future extensions and must be empty.
 #'
+#' @return An iv.
+#'
 #' @name iv
 #'
 #' @examples
