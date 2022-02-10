@@ -114,9 +114,7 @@ iv_merge <- function(x, ..., abutting = TRUE) {
   loc <- vec_locate_interval_merge_bounds(
     start = start,
     end = end,
-    abutting = abutting,
-    empty = "error",
-    missing = "overlap"
+    abutting = abutting
   )
 
   start <- vec_slice(start, loc$start)
@@ -141,9 +139,7 @@ iv_replace_merged <- function(x, ..., abutting = TRUE) {
   groups <- vec_locate_interval_merge_groups(
     start = start,
     end = end,
-    abutting = abutting,
-    empty = "error",
-    missing = "overlap"
+    abutting = abutting
   )
 
   start <- vec_slice(start, groups$key$start)
@@ -177,9 +173,7 @@ iv_locate_merge_bounds <- function(x, ..., abutting = TRUE) {
   vec_locate_interval_merge_bounds(
     start = start,
     end = end,
-    abutting = abutting,
-    empty = "error",
-    missing = "overlap"
+    abutting = abutting
   )
 }
 
@@ -196,8 +190,6 @@ iv_locate_merge_groups <- function(x, ..., abutting = TRUE) {
   vec_locate_interval_merge_groups(
     start = start,
     end = end,
-    abutting = abutting,
-    empty = "error",
-    missing = "overlap"
+    abutting = abutting
   )
 }
