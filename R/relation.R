@@ -21,7 +21,6 @@
 #' relationship.
 #'
 #' @inheritParams rlang::args_dots_empty
-#' @inheritParams vctrs::vec_locate_matches
 #'
 #' @param needles,haystack `[iv]`
 #'
@@ -78,6 +77,35 @@
 #'   the current value of `needles` either precedes or follows. Note that
 #'   multiple intervals can still be returned if there are ties, which can
 #'   be resolved using `multiple`.
+#'
+#' @param no_match Handling of `needles` without a match.
+#'   - `"drop"` drops `needles` with zero matches from the result.
+#'   - `"error"` throws an error if any `needles` have zero matches.
+#'   - If a single integer is provided, this represents the value returned in
+#'     the `haystack` column for observations of `needles` that have zero
+#'     matches. The default represents an unmatched needle with `NA`.
+#'
+#' @param remaining Handling of `haystack` values that `needles` never matched.
+#'   - `"drop"` drops remaining `haystack` values from the result.
+#'     Typically, this is the desired behavior if you only care when `needles`
+#'     has a match.
+#'   - `"error"` throws an error if there are any remaining `haystack`
+#'     values.
+#'   - If a single integer is provided (often `NA`), this represents the value
+#'     returned in the `needles` column for the remaining `haystack` values
+#'     that `needles` never matched. Remaining `haystack` values are always
+#'     returned at the end of the result.
+#'
+#' @param multiple Handling of `needles` with multiple matches. For each needle:
+#'   - `"all"` returns all matches detected in `haystack`.
+#'   - `"any"` returns any match detected in `haystack` with no guarantees on
+#'     which match will be returned. It is often faster than `"first"` and
+#'     `"last"` if you just need to detect if there is at least one match.
+#'   - `"first"` returns the first match detected in `haystack`.
+#'   - `"last"` returns the last match detected in `haystack`.
+#'   - `"warning"` throws a warning if multiple matches are detected, but
+#'     otherwise falls back to `"all"`.
+#'   - `"error"` throws an error if multiple matches are detected.
 #'
 #' @return
 #' A data frame containing two integer columns named `needles` and `haystack`.
@@ -362,7 +390,7 @@ iv_locate_overlaps <- function(needles,
 
   incomplete <- check_locate_missing(missing, "match")
 
-  with_relation_errors(vec_locate_matches(
+  vec_locate_matches(
     needles = needles,
     haystack = haystack,
     condition = condition,
@@ -370,7 +398,7 @@ iv_locate_overlaps <- function(needles,
     no_match = no_match,
     remaining = remaining,
     multiple = multiple
-  ))
+  )
 }
 
 #' @rdname relation-detect
@@ -536,7 +564,7 @@ iv_locate_positional <- function(needles,
     }
   }
 
-  with_relation_errors(vec_locate_matches(
+  vec_locate_matches(
     needles = needles,
     haystack = haystack,
     filter = filter,
@@ -545,7 +573,7 @@ iv_locate_positional <- function(needles,
     no_match = no_match,
     remaining = remaining,
     multiple = multiple
-  ))
+  )
 }
 
 #' @rdname relation-detect
@@ -892,7 +920,7 @@ iv_locate_relates <- function(needles,
   equals <- compute_relation_equals(type, no_match)
   incomplete <- check_locate_missing(missing, equals)
 
-  with_relation_errors(vec_locate_matches(
+  vec_locate_matches(
     needles = needles,
     haystack = haystack,
     condition = condition,
@@ -900,7 +928,7 @@ iv_locate_relates <- function(needles,
     no_match = no_match,
     remaining = remaining,
     multiple = multiple
-  ))
+  )
 }
 
 #' Detect relations from Allen's Interval Algebra
@@ -1193,14 +1221,14 @@ iv_detect_impl <- function(needles,
   haystack <- args$haystack
   condition <- args$condition
 
-  matches <- with_relation_errors(vec_locate_matches(
+  matches <- vec_locate_matches(
     needles = needles,
     haystack = haystack,
     condition = condition,
     incomplete = incomplete,
     no_match = 0L,
     multiple = "any"
-  ), call = call)
+  )
 
   # 0L -> FALSE
   # NA_integer -> NA
@@ -1269,36 +1297,5 @@ apply_pairwise_comparator <- function(elt) {
     "<" = compare == -1L,
     "<=" = compare <= 0L,
     abort("Unknown `condition`.", .internal = TRUE)
-  )
-}
-
-# ------------------------------------------------------------------------------
-
-with_relation_errors <- function(expr, ..., call = caller_env()) {
-  check_dots_empty0(...)
-
-  try_fetch(
-    expr,
-    vctrs_error_matches_incomplete = function(cnd) rethrow_relation_missing(cnd, call)
-  )
-}
-
-rethrow_relation_missing <- function(cnd, call) {
-  stop_relation_missing(cnd$i, call = call)
-}
-
-stop_relation_missing <- function(i, ..., call = caller_env()) {
-  check_dots_empty0(...)
-
-  message <- c(
-    "Can't have missing values in `needles`.",
-    i = glue("A value at location {i} is missing.")
-  )
-
-  stop_iv(
-    message = message,
-    i = i,
-    class = "iv_error_relation_missing",
-    call = call
   )
 }

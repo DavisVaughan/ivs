@@ -74,7 +74,7 @@ test_that("can choose not to merge abutting intervals", {
 
 test_that("can retain missing", {
   x <- iv_pairs(c(1, 3), c(NA, NA))
-  expect_identical(iv_locate_merge_bounds(x), data_frame(start = c(1L, NA), end = c(1L, NA)))
+  expect_identical(iv_locate_merge_bounds(x), data_frame(start = c(1L, 2L), end = c(1L, 2L)))
 })
 
 # ------------------------------------------------------------------------------
@@ -99,6 +99,6 @@ test_that("can choose not to merge abutting intervals", {
 test_that("can retain missing", {
   x <- iv_pairs(c(1, 3), c(NA, NA))
   out <- iv_locate_merge_groups(x)
-  expect_identical(out$key, data_frame(start = c(1L, NA), end = c(1L, NA)))
+  expect_identical(out$key, data_frame(start = c(1L, 2L), end = c(1L, 2L)))
   expect_identical(out$loc, list(1L, 2L))
 })

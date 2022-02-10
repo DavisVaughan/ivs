@@ -10,8 +10,7 @@
 #' integer vector pointing to locations in `needles`. The `haystack` column is
 #' an integer vector pointing to locations in `haystack` with a match.
 #'
-#' @inheritParams rlang::args_dots_empty
-#' @inheritParams vctrs::vec_locate_matches
+#' @inheritParams iv_locate_overlaps
 #'
 #' @param needles,haystack `[vector, iv]`
 #'
@@ -132,7 +131,7 @@ iv_locate_between <- function(needles,
   haystack <- data_frame(a = haystack_start, b = haystack_end)
   condition <- c(">=", "<")
 
-  with_relation_errors(vec_locate_matches(
+  vec_locate_matches(
     needles = needles,
     haystack = haystack,
     condition = condition,
@@ -140,7 +139,7 @@ iv_locate_between <- function(needles,
     no_match = no_match,
     remaining = remaining,
     multiple = multiple
-  ))
+  )
 }
 
 #' Detect when a vector falls between an iv
@@ -249,14 +248,14 @@ iv_between <- function(needles,
 
   incomplete <- check_detect_missing(missing, "match")
 
-  matches <- with_relation_errors(vec_locate_matches(
+  matches <- vec_locate_matches(
     needles = needles,
     haystack = haystack,
     condition = condition,
     incomplete = incomplete,
     no_match = 0L,
     multiple = "any"
-  ))
+  )
 
   # 0L -> FALSE
   # NA_integer -> NA
