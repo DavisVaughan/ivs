@@ -19,7 +19,7 @@
     Code
       iv("x", 1)
     Condition
-      Error in `stop_vctrs()`:
+      Error:
       ! Can't combine `start` <character> and `end` <double>.
 
 # inputs must be size compatible
@@ -27,7 +27,7 @@
     Code
       iv(1:2, 1:3)
     Condition
-      Error in `stop_vctrs()`:
+      Error:
       ! Can't recycle `start` (size 2) to match `end` (size 3).
 
 # inputs must be vectors
@@ -68,7 +68,7 @@
     Code
       iv_pairs(c("a", "b"), c(1, 2))
     Condition
-      Error in `stop_vctrs()`:
+      Error:
       ! Can't combine `..1` <character> and `..2` <double>.
 
 # ptype2 errors as needed
@@ -76,7 +76,7 @@
     Code
       vec_ptype2(iv("x", "y"), iv(1L, 2L))
     Condition
-      Error in `stop_vctrs()`:
+      Error:
       ! Can't combine <character> and <integer>.
 
 # cast errors as needed
@@ -84,7 +84,7 @@
     Code
       vec_cast(iv("x", "y"), iv(1L, 2L))
     Condition
-      Error in `stop_vctrs()`:
+      Error:
       ! Can't convert <character> to <integer>.
 
 # abbreviation is passed through to inner type
