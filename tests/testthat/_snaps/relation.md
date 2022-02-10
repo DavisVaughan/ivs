@@ -12,20 +12,20 @@
     Code
       (expect_error(iv_locate_overlaps(iv(NA, NA), iv(1, 2), missing = "error")))
     Output
-      <error/iv_error_relation_missing>
-      Error in `iv_locate_overlaps()`:
-      ! Can't have missing values in `needles`.
-      i A value at location 1 is missing.
+      <error/vctrs_error_matches_incomplete>
+      Error in `stop_matches()`:
+      ! No element can contain missing values.
+      x The element at location 1 contains missing values.
 
 ---
 
     Code
       (expect_error(iv_locate_precedes(iv(NA, NA), iv(1, 2), missing = "error")))
     Output
-      <error/iv_error_relation_missing>
-      Error in `iv_locate_positional()`:
-      ! Can't have missing values in `needles`.
-      i A value at location 1 is missing.
+      <error/vctrs_error_matches_incomplete>
+      Error in `stop_matches()`:
+      ! No element can contain missing values.
+      x The element at location 1 contains missing values.
 
 ---
 
@@ -33,10 +33,10 @@
       (expect_error(iv_locate_relates(iv(NA, NA), iv(1, 2), type = "equals", missing = "error"))
       )
     Output
-      <error/iv_error_relation_missing>
-      Error in `iv_locate_relates()`:
-      ! Can't have missing values in `needles`.
-      i A value at location 1 is missing.
+      <error/vctrs_error_matches_incomplete>
+      Error in `stop_matches()`:
+      ! No element can contain missing values.
+      x The element at location 1 contains missing values.
 
 # iv_locate_precedes - takes common type
 
@@ -100,10 +100,10 @@
     Code
       (expect_error(iv_overlaps(iv(NA, NA), iv(1, 2), missing = "error")))
     Output
-      <error/iv_error_relation_missing>
-      Error in `iv_overlaps()`:
-      ! Can't have missing values in `needles`.
-      i A value at location 1 is missing.
+      <error/vctrs_error_matches_incomplete>
+      Error in `stop_matches()`:
+      ! No element can contain missing values.
+      x The element at location 1 contains missing values.
 
 # iv_detect_pairwise_impl - recycles correctly
 

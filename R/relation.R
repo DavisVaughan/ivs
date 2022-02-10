@@ -362,7 +362,7 @@ iv_locate_overlaps <- function(needles,
 
   incomplete <- check_locate_missing(missing, "match")
 
-  with_relation_errors(vec_locate_matches(
+  vec_locate_matches(
     needles = needles,
     haystack = haystack,
     condition = condition,
@@ -370,7 +370,7 @@ iv_locate_overlaps <- function(needles,
     no_match = no_match,
     remaining = remaining,
     multiple = multiple
-  ))
+  )
 }
 
 #' @rdname relation-detect
@@ -536,7 +536,7 @@ iv_locate_positional <- function(needles,
     }
   }
 
-  with_relation_errors(vec_locate_matches(
+  vec_locate_matches(
     needles = needles,
     haystack = haystack,
     filter = filter,
@@ -545,7 +545,7 @@ iv_locate_positional <- function(needles,
     no_match = no_match,
     remaining = remaining,
     multiple = multiple
-  ))
+  )
 }
 
 #' @rdname relation-detect
@@ -892,7 +892,7 @@ iv_locate_relates <- function(needles,
   equals <- compute_relation_equals(type, no_match)
   incomplete <- check_locate_missing(missing, equals)
 
-  with_relation_errors(vec_locate_matches(
+  vec_locate_matches(
     needles = needles,
     haystack = haystack,
     condition = condition,
@@ -900,7 +900,7 @@ iv_locate_relates <- function(needles,
     no_match = no_match,
     remaining = remaining,
     multiple = multiple
-  ))
+  )
 }
 
 #' Detect relations from Allen's Interval Algebra
@@ -1193,14 +1193,14 @@ iv_detect_impl <- function(needles,
   haystack <- args$haystack
   condition <- args$condition
 
-  matches <- with_relation_errors(vec_locate_matches(
+  matches <- vec_locate_matches(
     needles = needles,
     haystack = haystack,
     condition = condition,
     incomplete = incomplete,
     no_match = 0L,
     multiple = "any"
-  ), call = call)
+  )
 
   # 0L -> FALSE
   # NA_integer -> NA
@@ -1269,36 +1269,5 @@ apply_pairwise_comparator <- function(elt) {
     "<" = compare == -1L,
     "<=" = compare <= 0L,
     abort("Unknown `condition`.", .internal = TRUE)
-  )
-}
-
-# ------------------------------------------------------------------------------
-
-with_relation_errors <- function(expr, ..., call = caller_env()) {
-  check_dots_empty0(...)
-
-  try_fetch(
-    expr,
-    vctrs_error_matches_incomplete = function(cnd) rethrow_relation_missing(cnd, call)
-  )
-}
-
-rethrow_relation_missing <- function(cnd, call) {
-  stop_relation_missing(cnd$i, call = call)
-}
-
-stop_relation_missing <- function(i, ..., call = caller_env()) {
-  check_dots_empty0(...)
-
-  message <- c(
-    "Can't have missing values in `needles`.",
-    i = glue("A value at location {i} is missing.")
-  )
-
-  stop_iv(
-    message = message,
-    i = i,
-    class = "iv_error_relation_missing",
-    call = call
   )
 }
