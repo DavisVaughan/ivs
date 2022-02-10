@@ -203,10 +203,10 @@ iv_locate_split_groups <- function(x, ..., on = NULL) {
   out
 }
 
-iv_split_candidates <- function(start, end, ..., on = NULL) {
+iv_split_candidates <- function(start, end, ..., on = NULL, call = caller_env()) {
   check_dots_empty0(...)
 
-  on <- vec_cast(on, start, x_arg = "on", to_arg = "iv_start(x)")
+  on <- vec_cast(on, start, x_arg = "on", to_arg = "iv_start(x)", call = call)
 
   # Candidates are built from all sorted unique values
   points <- vec_sort(vec_unique(vec_c(start, end, on)))
