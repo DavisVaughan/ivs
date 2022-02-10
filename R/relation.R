@@ -21,7 +21,6 @@
 #' relationship.
 #'
 #' @inheritParams rlang::args_dots_empty
-#' @inheritParams vctrs::vec_locate_matches
 #'
 #' @param needles,haystack `[iv]`
 #'
@@ -78,6 +77,35 @@
 #'   the current value of `needles` either precedes or follows. Note that
 #'   multiple intervals can still be returned if there are ties, which can
 #'   be resolved using `multiple`.
+#'
+#' @param no_match Handling of `needles` without a match.
+#'   - `"drop"` drops `needles` with zero matches from the result.
+#'   - `"error"` throws an error if any `needles` have zero matches.
+#'   - If a single integer is provided, this represents the value returned in
+#'     the `haystack` column for observations of `needles` that have zero
+#'     matches. The default represents an unmatched needle with `NA`.
+#'
+#' @param remaining Handling of `haystack` values that `needles` never matched.
+#'   - `"drop"` drops remaining `haystack` values from the result.
+#'     Typically, this is the desired behavior if you only care when `needles`
+#'     has a match.
+#'   - `"error"` throws an error if there are any remaining `haystack`
+#'     values.
+#'   - If a single integer is provided (often `NA`), this represents the value
+#'     returned in the `needles` column for the remaining `haystack` values
+#'     that `needles` never matched. Remaining `haystack` values are always
+#'     returned at the end of the result.
+#'
+#' @param multiple Handling of `needles` with multiple matches. For each needle:
+#'   - `"all"` returns all matches detected in `haystack`.
+#'   - `"any"` returns any match detected in `haystack` with no guarantees on
+#'     which match will be returned. It is often faster than `"first"` and
+#'     `"last"` if you just need to detect if there is at least one match.
+#'   - `"first"` returns the first match detected in `haystack`.
+#'   - `"last"` returns the last match detected in `haystack`.
+#'   - `"warning"` throws a warning if multiple matches are detected, but
+#'     otherwise falls back to `"all"`.
+#'   - `"error"` throws an error if multiple matches are detected.
 #'
 #' @return
 #' A data frame containing two integer columns named `needles` and `haystack`.

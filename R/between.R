@@ -10,8 +10,7 @@
 #' integer vector pointing to locations in `needles`. The `haystack` column is
 #' an integer vector pointing to locations in `haystack` with a match.
 #'
-#' @inheritParams rlang::args_dots_empty
-#' @inheritParams vctrs::vec_locate_matches
+#' @inheritParams iv_locate_overlaps
 #'
 #' @param needles,haystack `[vector, iv]`
 #'
