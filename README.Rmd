@@ -39,6 +39,10 @@ iv(starts, ends)
 
 Interval vectors are completely generic, meaning that you can create them from any comparable type that is supported by [vctrs](https://vctrs.r-lib.org). This means that user defined S3 types work automatically, like `hms::hms()`, `bit64::integer64()`, and `clock::year_month_day()`.
 
+## Learning
+
+The best way to learn about iv is by reading the [Getting Started](https://davisvaughan.github.io/iv/articles/iv.html) vignette!
+
 ## Installation
 
 You can install the development version of iv from [GitHub](https://github.com/) with:

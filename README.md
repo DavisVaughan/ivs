@@ -39,6 +39,11 @@ them from any comparable type that is supported by
 work automatically, like `hms::hms()`, `bit64::integer64()`, and
 `clock::year_month_day()`.
 
+## Learning
+
+The best way to learn about iv is by reading the [Getting
+Started](https://davisvaughan.github.io/iv/articles/iv.html) vignette!
+
 ## Installation
 
 You can install the development version of iv from
