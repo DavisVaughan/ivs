@@ -630,7 +630,7 @@
 <p>Note that the pairwise set operations come with a number of restrictions that limit their usage in many cases. For example, <code><a href="../reference/iv-set-pairwise.html">iv_pairwise_intersect()</a></code> requires that <code>x[i]</code> and <code>y[i]</code> overlap, otherwise they would result in an empty interval, which isn’t allowed.</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/iv-set-pairwise.html">iv_pairwise_intersect</a></span><span class="op">(</span><span class="fu"><a href="../reference/iv.html">iv</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="../reference/iv.html">iv</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in </span><span style="color: #262626; background-color: #DADADA; font-weight: bold;">`iv_pairwise_intersect()`</span><span style="font-weight: bold;">:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `iv_pairwise_intersect()`:</span></span>
 <span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't take the intersection of non-overlapping intervals.</span>
 <span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> This would result in an empty interval.</span>
 <span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> Location 1 contains non-overlapping intervals.</span></code></pre></div>
