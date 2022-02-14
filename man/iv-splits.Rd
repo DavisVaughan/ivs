@@ -37,17 +37,17 @@ of the same type as \code{x} and \code{loc} list-column containing integer vecto
 }
 \description{
 This family of functions revolves around splitting an iv on its endpoints,
-which results in a new iv that is disjoint (i.e. non-overlapping).
+which results in a new iv that is entirely disjoint (i.e. non-overlapping).
+The intervals in the resulting iv are known as "splits".
 \itemize{
-\item \code{iv_splits()} splits \code{x} into a new iv that is completely disjoint.
-\item \code{iv_identify_splits()} replaces \code{x} with a list of the same size
-where each element of the list contains the disjoint iv resulting from
-splitting that element of \code{x}. This is particularly useful alongside
-\code{\link[tidyr:nest]{tidyr::unnest()}}.
-\item \code{iv_locate_splits()} returns a two column data frame with a \code{key}
-column containing the result of \code{iv_splits()} and a \code{loc} list-column
-containing integer vectors that map each element of \code{x} to the disjoint
-intervals that it falls in.
+\item \code{iv_splits()} computes the disjoint splits for \code{x}.
+\item \code{iv_identify_splits()} identifies the splits that correspond to each
+interval in \code{x}. It replaces \code{x} with a list of the same size where each
+element of the list contains the splits that the corresponding interval in
+\code{x} overlaps. This is particularly useful alongside \code{\link[tidyr:nest]{tidyr::unnest()}}.
+\item \code{iv_locate_splits()} returns a two column data frame with a \code{key} column
+containing the result of \code{iv_splits()} and a \code{loc} list-column containing
+integer vectors that map each interval in \code{x} to the splits that it overlaps.
 }
 }
 \examples{

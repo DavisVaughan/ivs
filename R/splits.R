@@ -2,19 +2,19 @@
 #'
 #' @description
 #' This family of functions revolves around splitting an iv on its endpoints,
-#' which results in a new iv that is disjoint (i.e. non-overlapping).
+#' which results in a new iv that is entirely disjoint (i.e. non-overlapping).
+#' The intervals in the resulting iv are known as "splits".
 #'
-#' - `iv_splits()` splits `x` into a new iv that is completely disjoint.
+#' - `iv_splits()` computes the disjoint splits for `x`.
 #'
-#' - `iv_identify_splits()` replaces `x` with a list of the same size
-#'   where each element of the list contains the disjoint iv resulting from
-#'   splitting that element of `x`. This is particularly useful alongside
-#'   [tidyr::unnest()].
+#' - `iv_identify_splits()` identifies the splits that correspond to each
+#' interval in `x`. It replaces `x` with a list of the same size where each
+#' element of the list contains the splits that the corresponding interval in
+#' `x` overlaps. This is particularly useful alongside [tidyr::unnest()].
 #'
-#' - `iv_locate_splits()` returns a two column data frame with a `key`
-#'   column containing the result of `iv_splits()` and a `loc` list-column
-#'   containing integer vectors that map each element of `x` to the disjoint
-#'   intervals that it falls in.
+#' - `iv_locate_splits()` returns a two column data frame with a `key` column
+#' containing the result of `iv_splits()` and a `loc` list-column containing
+#' integer vectors that map each interval in `x` to the splits that it overlaps.
 #'
 #' @inheritParams rlang::args_dots_empty
 #'
