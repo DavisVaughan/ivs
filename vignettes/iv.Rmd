@@ -357,7 +357,7 @@ Let's figure out who was at your party at any given point throughout the night. 
 iv_splits(guests$iv)
 ```
 
-Instead, we'll need `iv_replace_splits()`, which replaces `iv` with a list-col of the same size, where the i-th element of the list-col corresponds to the disjoint intervals that originated from the i-th element of `iv`. That all sounds complex, but it's a little easier to understand if we just look at a single example:
+Instead, we'll need `iv_identify_splits()`, which replaces `iv` with a list-col of the same size, where the i-th element of the list-col corresponds to the disjoint intervals that originated from the i-th element of `iv`. That all sounds complex, but it's a little easier to understand if we just look at a single example:
 
 ```{r}
 # Mary's arrival/departure times
@@ -366,14 +366,14 @@ guests$iv[[1]]
 # The first start and last end correspond to Mary's original times,
 # but we've also broken her stay up by the departures/arrivals of
 # everyone else
-iv_replace_splits(guests$iv)[[1]]
+iv_identify_splits(guests$iv)[[1]]
 ```
 
 Since this generates a list-column, we'll also immediately use `tidyr::unnest()` to expand it out.
 
 ```{r}
 guests2 <- guests %>%
-  mutate(iv = iv_replace_splits(iv)) %>%
+  mutate(iv = iv_identify_splits(iv)) %>%
   unnest(iv) %>%
   arrange(iv)
 

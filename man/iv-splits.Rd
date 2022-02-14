@@ -3,13 +3,13 @@
 \name{iv-splits}
 \alias{iv-splits}
 \alias{iv_splits}
-\alias{iv_replace_splits}
+\alias{iv_identify_splits}
 \alias{iv_locate_split_groups}
 \title{Splits}
 \usage{
 iv_splits(x, ..., on = NULL)
 
-iv_replace_splits(x, ..., on = NULL)
+iv_identify_splits(x, ..., on = NULL)
 
 iv_locate_split_groups(x, ..., on = NULL)
 }
@@ -29,7 +29,7 @@ This should have the same type as \code{iv_start(x)}.}
 \value{
 \itemize{
 \item For \code{iv_splits()}, an iv with the same type as \code{x}.
-\item For \code{iv_replace_splits()}, a list-of containing ivs with the same size as
+\item For \code{iv_identify_splits()}, a list-of containing ivs with the same size as
 \code{x}.
 \item For \code{iv_locate_split_groups()}, a two column data frame with a \code{key} column
 of the same type as \code{x} and \code{loc} list-column containing integer vectors.
@@ -40,7 +40,7 @@ This family of functions revolves around splitting an iv on its endpoints,
 which results in a new iv that is disjoint (i.e. non-overlapping).
 \itemize{
 \item \code{iv_splits()} splits \code{x} into a new iv that is completely disjoint.
-\item \code{iv_replace_splits()} replaces \code{x} with a list of the same size
+\item \code{iv_identify_splits()} replaces \code{x} with a list of the same size
 where each element of the list contains the disjoint iv resulting from
 splitting that element of \code{x}. This is particularly useful alongside
 \code{\link[tidyr:nest]{tidyr::unnest()}}.
@@ -82,7 +82,7 @@ iv_splits(guests$iv)
 
 # Say you'd like to determine who was at the party at any given time
 # throughout the night
-guests <- mutate(guests, splits = iv_replace_splits(iv))
+guests <- mutate(guests, splits = iv_identify_splits(iv))
 guests
 
 # Unnest the splits to generate disjoint intervals for each guest

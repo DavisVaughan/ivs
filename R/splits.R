@@ -6,7 +6,7 @@
 #'
 #' - `iv_splits()` splits `x` into a new iv that is completely disjoint.
 #'
-#' - `iv_replace_splits()` replaces `x` with a list of the same size
+#' - `iv_identify_splits()` replaces `x` with a list of the same size
 #'   where each element of the list contains the disjoint iv resulting from
 #'   splitting that element of `x`. This is particularly useful alongside
 #'   [tidyr::unnest()].
@@ -31,7 +31,7 @@
 #' @return
 #' - For `iv_splits()`, an iv with the same type as `x`.
 #'
-#' - For `iv_replace_splits()`, a list-of containing ivs with the same size as
+#' - For `iv_identify_splits()`, a list-of containing ivs with the same size as
 #' `x`.
 #'
 #' - For `iv_locate_split_groups()`, a two column data frame with a `key` column
@@ -71,7 +71,7 @@
 #'
 #' # Say you'd like to determine who was at the party at any given time
 #' # throughout the night
-#' guests <- mutate(guests, splits = iv_replace_splits(iv))
+#' guests <- mutate(guests, splits = iv_identify_splits(iv))
 #' guests
 #'
 #' # Unnest the splits to generate disjoint intervals for each guest
@@ -132,7 +132,7 @@ iv_splits <- function(x, ..., on = NULL) {
 
 #' @rdname iv-splits
 #' @export
-iv_replace_splits <- function(x, ..., on = NULL) {
+iv_identify_splits <- function(x, ..., on = NULL) {
   check_dots_empty0(...)
 
   proxy <- iv_proxy(x)

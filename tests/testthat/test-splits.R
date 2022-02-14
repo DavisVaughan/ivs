@@ -90,13 +90,13 @@ test_that("split is generic over container", {
 })
 
 # ------------------------------------------------------------------------------
-# iv_replace_splits()
+# iv_identify_splits()
 
-test_that("replace split works", {
+test_that("identify splits works", {
   x <- iv_pairs(c(1, 7), c(-1, 0), c(2, 3), c(6, 9), c(15, 16))
 
   expect_identical(
-    iv_replace_splits(x),
+    iv_identify_splits(x),
     list_of(
       iv_pairs(c(1, 2), c(2, 3), c(3, 6), c(6, 7)),
       iv_pairs(c(-1, 0)),
@@ -107,11 +107,11 @@ test_that("replace split works", {
   )
 })
 
-test_that("replace split retains missing intervals (and doesn't duplicate them!)", {
+test_that("identify splits retains missing intervals (and doesn't duplicate them!)", {
   x <- iv_pairs(c(1, 4), c(NA, NA), c(2, 6), c(NA, NA))
 
   expect_identical(
-    iv_replace_splits(x),
+    iv_identify_splits(x),
     list_of(
       iv_pairs(c(1, 2), c(2, 4)),
       iv_pairs(c(NA_real_, NA_real_)),
@@ -121,30 +121,30 @@ test_that("replace split retains missing intervals (and doesn't duplicate them!)
   )
 })
 
-test_that("replace split returns a list-of", {
-  expect_true(is_list_of(iv_replace_splits(iv(1, 2))))
+test_that("identify splits returns a list-of", {
+  expect_true(is_list_of(iv_identify_splits(iv(1, 2))))
 })
 
-test_that("replace split works with empty iv", {
+test_that("identify splits works with empty iv", {
   x <- iv(integer(), integer())
-  expect_identical(iv_replace_splits(x), list_of(.ptype = x))
+  expect_identical(iv_identify_splits(x), list_of(.ptype = x))
 })
 
-test_that("replace split works with single interval", {
+test_that("identify splits works with single interval", {
   x <- iv(1, 2)
-  expect_identical(iv_replace_splits(x), list_of(x))
+  expect_identical(iv_identify_splits(x), list_of(x))
 })
 
-test_that("replace split works with single missing interval", {
+test_that("identify splits works with single missing interval", {
   x <- iv(NA, NA)
-  expect_identical(iv_replace_splits(x), list_of(x))
+  expect_identical(iv_identify_splits(x), list_of(x))
 })
 
-test_that("replace split works with `on`", {
+test_that("identify splits works with `on`", {
   x <- iv_pairs(c(1, 5), c(4, 6))
 
   expect_identical(
-    iv_replace_splits(x, on = 2),
+    iv_identify_splits(x, on = 2),
     list_of(
       iv_pairs(c(1, 2), c(2, 4), c(4, 5)),
       iv_pairs(c(4, 5), c(5, 6))
@@ -152,11 +152,11 @@ test_that("replace split works with `on`", {
   )
 })
 
-test_that("replace split is generic over container", {
+test_that("identify splits is generic over container", {
   x <- nested_integer_iv_pairs(c(1, 3), c(2, 4))
 
   expect_identical(
-    iv_replace_splits(x),
+    iv_identify_splits(x),
     list_of(
       nested_integer_iv_pairs(c(1, 2), c(2, 3)),
       nested_integer_iv_pairs(c(2, 3), c(3, 4))
