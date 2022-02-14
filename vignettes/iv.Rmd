@@ -229,9 +229,9 @@ iv_pairwise_between(x, y)
 
 Keep in mind that the intervals are half-open, so `12` doesn't fall between the interval of `[10, 12)`! This is different from `dplyr::between()`.
 
-## Merging overlaps
+## Grouping by overlaps
 
-One common operation when working with interval vectors is merging all the overlapping intervals within a single interval vector. This removes all the redundant information, while still maintaining the full range covered by the iv. For this, you can use `iv_groups()`.
+One common operation when working with interval vectors is merging all the overlapping intervals within a single interval vector. This removes all the redundant information, while still maintaining the full range covered by the iv. For this, you can use `iv_groups()` which computes the minimal set of interval "groups" that contain all of the intervals in `x`.
 
 ```{r}
 x <- iv_pairs(c(1, 5), c(5, 7), c(9, 11), c(10, 13), c(12, 13))
@@ -240,7 +240,7 @@ x
 iv_groups(x)
 ```
 
-By default, this merged *abutting* intervals that aren't considered to overlap but also don't have any values between them. If you don't want this, use the `abutting` argument.
+By default, this grouped *abutting* intervals that aren't considered to overlap but also don't have any values between them. If you don't want this, use the `abutting` argument.
 
 ```{r}
 iv_groups(x, abutting = FALSE)
@@ -248,7 +248,7 @@ iv_groups(x, abutting = FALSE)
 
 ### With `group_by()`
 
-Merging overlapping intervals is often a useful way to create a new variable to group on with `dplyr::group_by()`. For example, consider the following problem where you have multiple users racking up costs across multiple systems. The date ranges represent the range when the corresponding cost was accrued over, and the ranges don't overlap for a given `(user, system)` pair.
+Grouping overlapping intervals is often a useful way to create a new variable to group on with `dplyr::group_by()`. For example, consider the following problem where you have multiple users racking up costs across multiple systems. The date ranges represent the range when the corresponding cost was accrued over, and the ranges don't overlap for a given `(user, system)` pair.
 
 ```{r}
 costs <- tribble(
@@ -279,14 +279,14 @@ costs %>%
   summarise(range = iv_groups(range), .groups = "drop")
 ```
 
-But how can we sum up the costs? For this, we need to turn to `iv_identify_group()`, which allows us to replace each interval in the original `range` column with the merged interval that it maps to. This will give us something to group on so we can sum up the costs.
+But how can we sum up the costs? For this, we need to turn to `iv_identify_group()` which allows us to identify the group that each `range` falls in. This will give us something to group on so we can sum up the costs.
 
 ```{r}
 costs2 <- costs %>%
   group_by(user) %>%
   mutate(range = iv_identify_group(range))
 
-# `range` has been updated with the corresponding merged intervals
+# `range` has been updated with the corresponding group
 costs2
 
 # So now we can group on that to summarise the cost
@@ -318,7 +318,7 @@ x <- iv_pairs(c(1, 5), c(5, 7), c(9, 11), c(10, 13), c(12, 13))
 x
 ```
 
-Notice that `[9, 11)` overlaps `[10, 13)` which in turn overlaps `[12, 13)`. If we looked at the sorted unique values of the endpoints (i.e. `c(9, 10, 11, 12, 13)`) and then paired these up like `[9, 10), [10, 11), [11, 12], [12, 13)`, then we will have nicely "split" on the endpoints, generating a disjoint set of intervals. This is essentially what `iv_splits()` does.
+Notice that `[9, 11)` overlaps `[10, 13)` which in turn overlaps `[12, 13)`. If we looked at the sorted unique values of the endpoints (i.e. `c(9, 10, 11, 12, 13)`) and then paired these up like `[9, 10), [10, 11), [11, 12], [12, 13)`, then we will have nicely split on the endpoints, generating a disjoint set of intervals that we refer to as "splits". `iv_splits()` returns these intervals.
 
 ```{r}
 iv_splits(x)
@@ -351,13 +351,13 @@ guests <- unnest(guests, name) %>%
 guests
 ```
 
-Let's figure out who was at your party at any given point throughout the night. To do this, we'll need to break `iv` up into all possible disjoint intervals that mark either an arrival or departure. Like with `iv_groups()`, `iv_splits()` can show us those disjoint intervals but this doesn't help us map them back to each guest.
+Let's figure out who was at your party at any given point throughout the night. To do this, we'll need to break `iv` up into all possible disjoint intervals that mark either an arrival or departure. Like with `iv_groups()`, `iv_splits()` can show us those disjoint intervals, but this doesn't help us map them back to each guest.
 
 ```{r}
 iv_splits(guests$iv)
 ```
 
-Instead, we'll need `iv_identify_splits()`, which replaces `iv` with a list-col of the same size, where the i-th element of the list-col corresponds to the disjoint intervals that originated from the i-th element of `iv`. That all sounds complex, but it's a little easier to understand if we just look at a single example:
+Instead, we'll need `iv_identify_splits()`, which identifies which of the splits overlap with each of the original intervals and returns a list of the results which works nicely as a list-column. This is a little easier to understand if we first look at a single guest:
 
 ```{r}
 # Mary's arrival/departure times
@@ -380,7 +380,7 @@ guests2 <- guests %>%
 guests2
 ```
 
-Now that we have the disjoint intervals for each guest, we can group by `iv` and summarize to figure out who was at the party at any point throughout the night.
+Now that we have the splits for each guest, we can group by `iv` and summarize to figure out who was at the party at any point throughout the night.
 
 ```{r}
 guests2 %>%
@@ -402,7 +402,7 @@ There are a number of set theoretical operations that you can use on ivs. These 
 
 -   `iv_symmetric_difference()`
 
-`iv_complement()` works on a single iv, while all the others work on two intervals at a time. All of these functions return a *minimal* interval vector. The easiest way to think about these functions is to imagine `iv_groups()` being called on each of the inputs first before applying the operation.
+`iv_complement()` works on a single iv, while all the others work on two intervals at a time. All of these functions return a *minimal* interval vector. The easiest way to think about these functions is to imagine `iv_groups()` being called on each of the inputs first (to reduce them down to their minimal form) before applying the operation.
 
 `iv_complement()` computes the set complement of the intervals in a single iv.
 
