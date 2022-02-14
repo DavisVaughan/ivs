@@ -1,28 +1,28 @@
 # ------------------------------------------------------------------------------
-# iv_merge()
+# iv_groups()
 
 # Most tests handled by vctrs
 
-test_that("computes the merge", {
+test_that("can compute groups", {
   x <- iv_pairs(c(1, 3), c(3, 5))
-  expect_identical(iv_merge(x), iv(1, 5))
+  expect_identical(iv_groups(x), iv(1, 5))
 })
 
-test_that("can choose not to merge abutting", {
+test_that("can choose not to group abutting", {
   x <- iv_pairs(c(1, 3), c(3, 5))
-  expect_identical(iv_merge(x, abutting = FALSE), x)
+  expect_identical(iv_groups(x, abutting = FALSE), x)
 })
 
 test_that("can retain missing", {
   x <- iv_pairs(c(1, 3), c(NA, NA))
-  expect_identical(iv_merge(x), x)
+  expect_identical(iv_groups(x), x)
 })
 
-test_that("merge is generic", {
+test_that("groups is generic", {
   x <- nested_integer_iv_pairs(c(1, 5), c(3, 7))
 
   expect_identical(
-    iv_merge(x),
+    iv_groups(x),
     nested_integer_iv_pairs(c(1, 7))
   )
 })

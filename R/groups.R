@@ -4,7 +4,7 @@
 #' This family of functions revolves around merging the intervals within a
 #' single iv.
 #'
-#' - `iv_merge()` merges overlapping or abutting intervals in `x`.
+#' - `iv_groups()` merges overlapping or abutting intervals in `x`.
 #'
 #' - `iv_replace_merged()` replaces each interval in `x` with the merged
 #'   interval that it maps to. This is particularly useful alongside
@@ -24,7 +24,7 @@
 #'
 #' ## Minimal interval vectors
 #'
-#' `iv_merge()` is particularly useful because it can generate a _minimal_
+#' `iv_groups()` is particularly useful because it can generate a _minimal_
 #' interval vector, which covers the range of an interval vector in the most
 #' compact form possible. In particular, a minimal interval vector:
 #'
@@ -50,7 +50,7 @@
 #'   intervals must be merged.
 #'
 #' @return
-#' - For `iv_merge()`, an iv with the same type as `x`.
+#' - For `iv_groups()`, an iv with the same type as `x`.
 #'
 #' - For `iv_replace_merged()`, an iv with the same type and size as `x`.
 #'
@@ -80,11 +80,11 @@
 #' # Merging removes all redundancy while still covering the full range
 #' # of values that were originally represented. If any missing intervals
 #' # are present, a single one is retained.
-#' iv_merge(x)
+#' iv_groups(x)
 #'
 #' # Abutting intervals are typically merged, but you can choose not to merge
 #' # them if you want to retain those boundaries
-#' iv_merge(x, abutting = FALSE)
+#' iv_groups(x, abutting = FALSE)
 #'
 #' # `iv_replace_merged()` is useful alongside `group_by()` and `summarize()`
 #' df <- tibble(x = x)
@@ -103,7 +103,7 @@ NULL
 
 #' @rdname iv-merge
 #' @export
-iv_merge <- function(x, ..., abutting = TRUE) {
+iv_groups <- function(x, ..., abutting = TRUE) {
   check_dots_empty0(...)
 
   proxy <- iv_proxy(x)
