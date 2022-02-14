@@ -10,11 +10,11 @@
 #'   interval that it maps to. This is particularly useful alongside
 #'   [dplyr::group_by()].
 #'
-#' - `iv_locate_merge_bounds()` returns locations for slicing the [iv_start()]
+#' - `iv_locate_group_bounds()` returns locations for slicing the [iv_start()]
 #'   and [iv_end()] of `x` to generate the merged result.
 #'
 #' - `iv_locate_merge_groups()` returns a two column data frame with a `key`
-#'   column containing the result of `iv_locate_merge_bounds()` and a `loc`
+#'   column containing the result of `iv_locate_group_bounds()` and a `loc`
 #'   list-column containing integer vectors that map each element of `x` to the
 #'   merged interval that it falls in.
 #'
@@ -54,11 +54,11 @@
 #'
 #' - For `iv_identify_group()`, an iv with the same type and size as `x`.
 #'
-#' - For `iv_locate_merge_bounds()`, a two column data frame with `start` and
+#' - For `iv_locate_group_bounds()`, a two column data frame with `start` and
 #' `end` integer columns.
 #'
 #' - For `iv_locate_merge_groups()`, a two column data frame with a `key` column
-#' containing the result of `iv_locate_merge_bounds()` and a `loc` list-column
+#' containing the result of `iv_locate_group_bounds()` and a `loc` list-column
 #' containing integer vectors.
 #'
 #' @name iv-groups
@@ -162,7 +162,7 @@ iv_identify_group <- function(x, ..., abutting = TRUE) {
 
 #' @rdname iv-groups
 #' @export
-iv_locate_merge_bounds <- function(x, ..., abutting = TRUE) {
+iv_locate_group_bounds <- function(x, ..., abutting = TRUE) {
   check_dots_empty0(...)
 
   proxy <- iv_proxy(x)

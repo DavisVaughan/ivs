@@ -58,23 +58,23 @@ test_that("identify group is generic", {
 })
 
 # ------------------------------------------------------------------------------
-# iv_locate_merge_bounds()
+# iv_locate_group_bounds()
 
 # Most tests handled by vctrs
 
-test_that("locates the merge bounds", {
+test_that("locates the group bounds", {
   x <- iv_pairs(c(1, 3), c(3, 5))
-  expect_identical(iv_locate_merge_bounds(x), data_frame(start = 1L, end = 2L))
+  expect_identical(iv_locate_group_bounds(x), data_frame(start = 1L, end = 2L))
 })
 
-test_that("can choose not to merge abutting intervals", {
+test_that("can choose not to group abutting intervals", {
   x <- iv_pairs(c(1, 3), c(3, 5))
-  expect_identical(iv_locate_merge_bounds(x, abutting = FALSE), data_frame(start = 1:2, end = 1:2))
+  expect_identical(iv_locate_group_bounds(x, abutting = FALSE), data_frame(start = 1:2, end = 1:2))
 })
 
 test_that("can retain missing", {
   x <- iv_pairs(c(1, 3), c(NA, NA))
-  expect_identical(iv_locate_merge_bounds(x), data_frame(start = c(1L, 2L), end = c(1L, 2L)))
+  expect_identical(iv_locate_group_bounds(x), data_frame(start = c(1L, 2L), end = c(1L, 2L)))
 })
 
 # ------------------------------------------------------------------------------
