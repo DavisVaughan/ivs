@@ -1,21 +1,22 @@
-#' Merge
+#' Group overlapping intervals
 #'
 #' @description
-#' This family of functions revolves around merging the intervals within a
-#' single iv.
+#' This family of functions revolves around grouping overlapping intervals
+#' within a single iv. When multiple overlapping intervals are grouped together
+#' they result in a wider interval containing the smallest [iv_start()] and the
+#' largest [iv_end()] of the overlaps.
 #'
-#' - `iv_groups()` merges overlapping or abutting intervals in `x`.
+#' - `iv_groups()` merges all overlapping intervals found within `x`. The
+#' resulting intervals are known as the "groups" of `x`.
 #'
-#' - `iv_identify_group()` replaces each interval in `x` with the merged
-#'   interval that it maps to. This is particularly useful alongside
-#'   [dplyr::group_by()].
+#' - `iv_identify_group()` identifies the group that the current interval of `x`
+#' falls in. This is particularly useful alongside [dplyr::group_by()].
 #'
-#' - `iv_locate_groups()` returns a two column data frame with a `key`
-#'   column containing the result of `iv_groups()` and a `loc`
-#'   list-column containing integer vectors that map each interval in `x` to the
-#'   group that it falls in.
+#' - `iv_locate_groups()` returns a two column data frame with a `key` column
+#' containing the result of `iv_groups()` and a `loc` list-column containing
+#' integer vectors that map each interval in `x` to the group that it falls in.
 #'
-#' Optionally, you can choose _not_ to merge abutting intervals with
+#' Optionally, you can choose _not_ to group abutting intervals together with
 #' `abutting = FALSE`, which can be useful if you'd like to retain those
 #' boundaries.
 #'
@@ -38,13 +39,13 @@
 #'
 #'   An interval vector.
 #'
-#' @param abutting `[logical(1)]`
+#' @param abutting `[TRUE / FALSE]`
 #'
-#'   Should abutting intervals be merged?
+#'   Should abutting intervals be grouped together?
 #'
 #'   If `TRUE`, `[a, b)` and `[b, c)` will merge as `[a, c)`. If `FALSE`, they
 #'   will be kept separate. To be a minimal interval vector, all abutting
-#'   intervals must be merged.
+#'   intervals must be grouped together.
 #'
 #' @return
 #' - For `iv_groups()`, an iv with the same type as `x`.
@@ -71,13 +72,13 @@
 #' )
 #' x
 #'
-#' # Merging removes all redundancy while still covering the full range
+#' # Grouping removes all redundancy while still covering the full range
 #' # of values that were originally represented. If any missing intervals
 #' # are present, a single one is retained.
 #' iv_groups(x)
 #'
-#' # Abutting intervals are typically merged, but you can choose not to merge
-#' # them if you want to retain those boundaries
+#' # Abutting intervals are typically grouped together, but you can choose not
+#' # to group them if you want to retain those boundaries
 #' iv_groups(x, abutting = FALSE)
 #'
 #' # `iv_identify_group()` is useful alongside `group_by()` and `summarize()`

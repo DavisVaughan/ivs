@@ -5,7 +5,7 @@
 \alias{iv_groups}
 \alias{iv_identify_group}
 \alias{iv_locate_groups}
-\title{Merge}
+\title{Group overlapping intervals}
 \usage{
 iv_groups(x, ..., abutting = TRUE)
 
@@ -20,13 +20,13 @@ An interval vector.}
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{abutting}{\verb{[logical(1)]}
+\item{abutting}{\verb{[TRUE / FALSE]}
 
-Should abutting intervals be merged?
+Should abutting intervals be grouped together?
 
 If \code{TRUE}, \verb{[a, b)} and \verb{[b, c)} will merge as \verb{[a, c)}. If \code{FALSE}, they
 will be kept separate. To be a minimal interval vector, all abutting
-intervals must be merged.}
+intervals must be grouped together.}
 }
 \value{
 \itemize{
@@ -38,20 +38,21 @@ integer vectors.
 }
 }
 \description{
-This family of functions revolves around merging the intervals within a
-single iv.
+This family of functions revolves around grouping overlapping intervals
+within a single iv. When multiple overlapping intervals are grouped together
+they result in a wider interval containing the smallest \code{\link[=iv_start]{iv_start()}} and the
+largest \code{\link[=iv_end]{iv_end()}} of the overlaps.
 \itemize{
-\item \code{iv_groups()} merges overlapping or abutting intervals in \code{x}.
-\item \code{iv_identify_group()} replaces each interval in \code{x} with the merged
-interval that it maps to. This is particularly useful alongside
-\code{\link[dplyr:group_by]{dplyr::group_by()}}.
-\item \code{iv_locate_groups()} returns a two column data frame with a \code{key}
-column containing the result of \code{iv_groups()} and a \code{loc}
-list-column containing integer vectors that map each interval in \code{x} to the
-group that it falls in.
+\item \code{iv_groups()} merges all overlapping intervals found within \code{x}. The
+resulting intervals are known as the "groups" of \code{x}.
+\item \code{iv_identify_group()} identifies the group that the current interval of \code{x}
+falls in. This is particularly useful alongside \code{\link[dplyr:group_by]{dplyr::group_by()}}.
+\item \code{iv_locate_groups()} returns a two column data frame with a \code{key} column
+containing the result of \code{iv_groups()} and a \code{loc} list-column containing
+integer vectors that map each interval in \code{x} to the group that it falls in.
 }
 
-Optionally, you can choose \emph{not} to merge abutting intervals with
+Optionally, you can choose \emph{not} to group abutting intervals together with
 \code{abutting = FALSE}, which can be useful if you'd like to retain those
 boundaries.
 \subsection{Minimal interval vectors}{
@@ -83,13 +84,13 @@ x <- iv_pairs(
 )
 x
 
-# Merging removes all redundancy while still covering the full range
+# Grouping removes all redundancy while still covering the full range
 # of values that were originally represented. If any missing intervals
 # are present, a single one is retained.
 iv_groups(x)
 
-# Abutting intervals are typically merged, but you can choose not to merge
-# them if you want to retain those boundaries
+# Abutting intervals are typically grouped together, but you can choose not
+# to group them if you want to retain those boundaries
 iv_groups(x, abutting = FALSE)
 
 # `iv_identify_group()` is useful alongside `group_by()` and `summarize()`
