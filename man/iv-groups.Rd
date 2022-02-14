@@ -5,7 +5,7 @@
 \alias{iv_groups}
 \alias{iv_identify_group}
 \alias{iv_locate_group_bounds}
-\alias{iv_locate_merge_groups}
+\alias{iv_locate_groups}
 \title{Merge}
 \usage{
 iv_groups(x, ..., abutting = TRUE)
@@ -14,7 +14,7 @@ iv_identify_group(x, ..., abutting = TRUE)
 
 iv_locate_group_bounds(x, ..., abutting = TRUE)
 
-iv_locate_merge_groups(x, ..., abutting = TRUE)
+iv_locate_groups(x, ..., abutting = TRUE)
 }
 \arguments{
 \item{x}{\verb{[iv]}
@@ -37,7 +37,7 @@ intervals must be merged.}
 \item For \code{iv_identify_group()}, an iv with the same type and size as \code{x}.
 \item For \code{iv_locate_group_bounds()}, a two column data frame with \code{start} and
 \code{end} integer columns.
-\item For \code{iv_locate_merge_groups()}, a two column data frame with a \code{key} column
+\item For \code{iv_locate_groups()}, a two column data frame with a \code{key} column
 containing the result of \code{iv_locate_group_bounds()} and a \code{loc} list-column
 containing integer vectors.
 }
@@ -52,7 +52,7 @@ interval that it maps to. This is particularly useful alongside
 \code{\link[dplyr:group_by]{dplyr::group_by()}}.
 \item \code{iv_locate_group_bounds()} returns locations for slicing the \code{\link[=iv_start]{iv_start()}}
 and \code{\link[=iv_end]{iv_end()}} of \code{x} to generate the merged result.
-\item \code{iv_locate_merge_groups()} returns a two column data frame with a \code{key}
+\item \code{iv_locate_groups()} returns a two column data frame with a \code{key}
 column containing the result of \code{iv_locate_group_bounds()} and a \code{loc}
 list-column containing integer vectors that map each element of \code{x} to the
 merged interval that it falls in.
@@ -108,8 +108,8 @@ df \%>\%
   group_by(u) \%>\%
   summarize(n = n())
 
-# The real workhorse here is `iv_locate_merge_groups()`, which returns
+# The real workhorse here is `iv_locate_groups()`, which returns
 # information on where to slice `x` to get the merged result, and which
 # observations of `x` belong to which merged interval
-iv_locate_merge_groups(x)
+iv_locate_groups(x)
 }
