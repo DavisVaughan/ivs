@@ -28,7 +28,7 @@ test_that("groups is generic", {
 })
 
 # ------------------------------------------------------------------------------
-# iv_replace_merged()
+# iv_identify_group()
 
 test_that("computes the order on the group locations to map back to original locations", {
   x <- iv_pairs(
@@ -45,14 +45,14 @@ test_that("computes the order on the group locations to map back to original loc
     c(9, 14)
   )
 
-  expect_identical(iv_replace_merged(x), expect)
+  expect_identical(iv_identify_group(x), expect)
 })
 
-test_that("replace merge is generic", {
+test_that("identify group is generic", {
   x <- nested_integer_iv_pairs(c(1, 5), c(3, 7))
 
   expect_identical(
-    iv_replace_merged(x),
+    iv_identify_group(x),
     nested_integer_iv_pairs(c(1, 7), c(1, 7))
   )
 })

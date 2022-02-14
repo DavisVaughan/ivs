@@ -279,12 +279,12 @@ costs %>%
   summarise(range = iv_groups(range), .groups = "drop")
 ```
 
-But how can we sum up the costs? For this, we need to turn to `iv_replace_merged()`, which allows us to replace each interval in the original `range` column with the merged interval that it maps to. This will give us something to group on so we can sum up the costs.
+But how can we sum up the costs? For this, we need to turn to `iv_identify_group()`, which allows us to replace each interval in the original `range` column with the merged interval that it maps to. This will give us something to group on so we can sum up the costs.
 
 ```{r}
 costs2 <- costs %>%
   group_by(user) %>%
-  mutate(range = iv_replace_merged(range))
+  mutate(range = iv_identify_group(range))
 
 # `range` has been updated with the corresponding merged intervals
 costs2

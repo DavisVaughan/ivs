@@ -3,14 +3,14 @@
 \name{iv-groups}
 \alias{iv-groups}
 \alias{iv_groups}
-\alias{iv_replace_merged}
+\alias{iv_identify_group}
 \alias{iv_locate_merge_bounds}
 \alias{iv_locate_merge_groups}
 \title{Merge}
 \usage{
 iv_groups(x, ..., abutting = TRUE)
 
-iv_replace_merged(x, ..., abutting = TRUE)
+iv_identify_group(x, ..., abutting = TRUE)
 
 iv_locate_merge_bounds(x, ..., abutting = TRUE)
 
@@ -34,7 +34,7 @@ intervals must be merged.}
 \value{
 \itemize{
 \item For \code{iv_groups()}, an iv with the same type as \code{x}.
-\item For \code{iv_replace_merged()}, an iv with the same type and size as \code{x}.
+\item For \code{iv_identify_group()}, an iv with the same type and size as \code{x}.
 \item For \code{iv_locate_merge_bounds()}, a two column data frame with \code{start} and
 \code{end} integer columns.
 \item For \code{iv_locate_merge_groups()}, a two column data frame with a \code{key} column
@@ -47,7 +47,7 @@ This family of functions revolves around merging the intervals within a
 single iv.
 \itemize{
 \item \code{iv_groups()} merges overlapping or abutting intervals in \code{x}.
-\item \code{iv_replace_merged()} replaces each interval in \code{x} with the merged
+\item \code{iv_identify_group()} replaces each interval in \code{x} with the merged
 interval that it maps to. This is particularly useful alongside
 \code{\link[dplyr:group_by]{dplyr::group_by()}}.
 \item \code{iv_locate_merge_bounds()} returns locations for slicing the \code{\link[=iv_start]{iv_start()}}
@@ -99,9 +99,9 @@ iv_groups(x)
 # them if you want to retain those boundaries
 iv_groups(x, abutting = FALSE)
 
-# `iv_replace_merged()` is useful alongside `group_by()` and `summarize()`
+# `iv_identify_group()` is useful alongside `group_by()` and `summarize()`
 df <- tibble(x = x)
-df <- mutate(df, u = iv_replace_merged(x))
+df <- mutate(df, u = iv_identify_group(x))
 df
 
 df \%>\%

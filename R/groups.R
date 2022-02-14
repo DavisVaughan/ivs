@@ -6,7 +6,7 @@
 #'
 #' - `iv_groups()` merges overlapping or abutting intervals in `x`.
 #'
-#' - `iv_replace_merged()` replaces each interval in `x` with the merged
+#' - `iv_identify_group()` replaces each interval in `x` with the merged
 #'   interval that it maps to. This is particularly useful alongside
 #'   [dplyr::group_by()].
 #'
@@ -52,7 +52,7 @@
 #' @return
 #' - For `iv_groups()`, an iv with the same type as `x`.
 #'
-#' - For `iv_replace_merged()`, an iv with the same type and size as `x`.
+#' - For `iv_identify_group()`, an iv with the same type and size as `x`.
 #'
 #' - For `iv_locate_merge_bounds()`, a two column data frame with `start` and
 #' `end` integer columns.
@@ -86,9 +86,9 @@
 #' # them if you want to retain those boundaries
 #' iv_groups(x, abutting = FALSE)
 #'
-#' # `iv_replace_merged()` is useful alongside `group_by()` and `summarize()`
+#' # `iv_identify_group()` is useful alongside `group_by()` and `summarize()`
 #' df <- tibble(x = x)
-#' df <- mutate(df, u = iv_replace_merged(x))
+#' df <- mutate(df, u = iv_identify_group(x))
 #' df
 #'
 #' df %>%
@@ -128,7 +128,7 @@ iv_groups <- function(x, ..., abutting = TRUE) {
 
 #' @rdname iv-groups
 #' @export
-iv_replace_merged <- function(x, ..., abutting = TRUE) {
+iv_identify_group <- function(x, ..., abutting = TRUE) {
   check_dots_empty0(...)
 
   proxy <- iv_proxy(x)
