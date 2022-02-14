@@ -61,7 +61,7 @@
 #' containing the result of `iv_locate_merge_bounds()` and a `loc` list-column
 #' containing integer vectors.
 #'
-#' @name iv-merge
+#' @name iv-groups
 #'
 #' @examples
 #' library(dplyr, warn.conflicts = FALSE)
@@ -101,7 +101,7 @@
 #' iv_locate_merge_groups(x)
 NULL
 
-#' @rdname iv-merge
+#' @rdname iv-groups
 #' @export
 iv_groups <- function(x, ..., abutting = TRUE) {
   check_dots_empty0(...)
@@ -126,7 +126,7 @@ iv_groups <- function(x, ..., abutting = TRUE) {
   out
 }
 
-#' @rdname iv-merge
+#' @rdname iv-groups
 #' @export
 iv_replace_merged <- function(x, ..., abutting = TRUE) {
   check_dots_empty0(...)
@@ -160,7 +160,7 @@ iv_replace_merged <- function(x, ..., abutting = TRUE) {
   out
 }
 
-#' @rdname iv-merge
+#' @rdname iv-groups
 #' @export
 iv_locate_merge_bounds <- function(x, ..., abutting = TRUE) {
   check_dots_empty0(...)
@@ -177,7 +177,7 @@ iv_locate_merge_bounds <- function(x, ..., abutting = TRUE) {
   )
 }
 
-#' @rdname iv-merge
+#' @rdname iv-groups
 #' @export
 iv_locate_merge_groups <- function(x, ..., abutting = TRUE) {
   check_dots_empty0(...)
