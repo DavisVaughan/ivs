@@ -11,7 +11,7 @@
 #'   splitting that element of `x`. This is particularly useful alongside
 #'   [tidyr::unnest()].
 #'
-#' - `iv_locate_split_groups()` returns a two column data frame with a `key`
+#' - `iv_locate_splits()` returns a two column data frame with a `key`
 #'   column containing the result of `iv_splits()` and a `loc` list-column
 #'   containing integer vectors that map each element of `x` to the disjoint
 #'   intervals that it falls in.
@@ -34,7 +34,7 @@
 #' - For `iv_identify_splits()`, a list-of containing ivs with the same size as
 #' `x`.
 #'
-#' - For `iv_locate_split_groups()`, a two column data frame with a `key` column
+#' - For `iv_locate_splits()`, a two column data frame with a `key` column
 #' of the same type as `x` and `loc` list-column containing integer vectors.
 #'
 #' @name iv-splits
@@ -167,7 +167,7 @@ iv_identify_splits <- function(x, ..., on = NULL) {
 
 #' @rdname iv-splits
 #' @export
-iv_locate_split_groups <- function(x, ..., on = NULL) {
+iv_locate_splits <- function(x, ..., on = NULL) {
   check_dots_empty0(...)
 
   proxy <- iv_proxy(x)

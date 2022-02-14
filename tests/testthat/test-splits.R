@@ -165,12 +165,12 @@ test_that("identify splits is generic over container", {
 })
 
 # ------------------------------------------------------------------------------
-# iv_locate_split_groups()
+# iv_locate_splits()
 
-test_that("locate split groups works", {
+test_that("locate splits works", {
   x <- iv_pairs(c(1, 7), c(-1, 0), c(2, 3), c(6, 9), c(15, 16))
 
-  out <- iv_locate_split_groups(x)
+  out <- iv_locate_splits(x)
 
   expect_identical(out$key, iv_splits(x))
 
@@ -188,37 +188,37 @@ test_that("locate split groups works", {
   )
 })
 
-test_that("locate split groups retains missing intervals", {
+test_that("locate splits retains missing intervals", {
   x <- iv_pairs(c(NA, NA), c(NA, NA))
 
-  out <- iv_locate_split_groups(x)
+  out <- iv_locate_splits(x)
 
   expect_identical(out$key, iv_pairs(c(NA, NA)))
   expect_identical(out$loc, list(c(1L, 2L)))
 })
 
-test_that("locate split groups works with empty iv", {
+test_that("locate splits works with empty iv", {
   x <- iv(integer(), integer())
 
-  out <- iv_locate_split_groups(x)
+  out <- iv_locate_splits(x)
 
   expect_identical(out$key, iv(integer(), integer()))
   expect_identical(out$loc, list())
 })
 
-test_that("locate split groups works with single missing interval", {
+test_that("locate splits works with single missing interval", {
   x <- iv(NA, NA)
 
-  out <- iv_locate_split_groups(x)
+  out <- iv_locate_splits(x)
 
   expect_identical(out$key, iv(NA, NA))
   expect_identical(out$loc, list(1L))
 })
 
-test_that("locate split groups works with `on`", {
+test_that("locate splits works with `on`", {
   x <- iv_pairs(c(1, 5), c(4, 6))
 
-  out <- iv_locate_split_groups(x, on = 2)
+  out <- iv_locate_splits(x, on = 2)
 
   expect_identical(out$key, iv_splits(x, on = 2))
   expect_identical(out$loc, list(1L, 1L, c(1L, 2L), 2L))

@@ -4,14 +4,14 @@
 \alias{iv-splits}
 \alias{iv_splits}
 \alias{iv_identify_splits}
-\alias{iv_locate_split_groups}
+\alias{iv_locate_splits}
 \title{Splits}
 \usage{
 iv_splits(x, ..., on = NULL)
 
 iv_identify_splits(x, ..., on = NULL)
 
-iv_locate_split_groups(x, ..., on = NULL)
+iv_locate_splits(x, ..., on = NULL)
 }
 \arguments{
 \item{x}{\verb{[iv]}
@@ -31,7 +31,7 @@ This should have the same type as \code{iv_start(x)}.}
 \item For \code{iv_splits()}, an iv with the same type as \code{x}.
 \item For \code{iv_identify_splits()}, a list-of containing ivs with the same size as
 \code{x}.
-\item For \code{iv_locate_split_groups()}, a two column data frame with a \code{key} column
+\item For \code{iv_locate_splits()}, a two column data frame with a \code{key} column
 of the same type as \code{x} and \code{loc} list-column containing integer vectors.
 }
 }
@@ -44,7 +44,7 @@ which results in a new iv that is disjoint (i.e. non-overlapping).
 where each element of the list contains the disjoint iv resulting from
 splitting that element of \code{x}. This is particularly useful alongside
 \code{\link[tidyr:nest]{tidyr::unnest()}}.
-\item \code{iv_locate_split_groups()} returns a two column data frame with a \code{key}
+\item \code{iv_locate_splits()} returns a two column data frame with a \code{key}
 column containing the result of \code{iv_splits()} and a \code{loc} list-column
 containing integer vectors that map each element of \code{x} to the disjoint
 intervals that it falls in.
