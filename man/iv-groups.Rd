@@ -38,8 +38,8 @@ intervals must be merged.}
 \item For \code{iv_locate_group_bounds()}, a two column data frame with \code{start} and
 \code{end} integer columns.
 \item For \code{iv_locate_groups()}, a two column data frame with a \code{key} column
-containing the result of \code{iv_locate_group_bounds()} and a \code{loc} list-column
-containing integer vectors.
+containing the result of \code{iv_groups()} and a \code{loc} list-column containing
+integer vectors.
 }
 }
 \description{
@@ -53,9 +53,9 @@ interval that it maps to. This is particularly useful alongside
 \item \code{iv_locate_group_bounds()} returns locations for slicing the \code{\link[=iv_start]{iv_start()}}
 and \code{\link[=iv_end]{iv_end()}} of \code{x} to generate the merged result.
 \item \code{iv_locate_groups()} returns a two column data frame with a \code{key}
-column containing the result of \code{iv_locate_group_bounds()} and a \code{loc}
-list-column containing integer vectors that map each element of \code{x} to the
-merged interval that it falls in.
+column containing the result of \code{iv_groups()} and a \code{loc}
+list-column containing integer vectors that map each interval in \code{x} to the
+group that it falls in.
 }
 
 Optionally, you can choose \emph{not} to merge abutting intervals with
@@ -109,7 +109,7 @@ df \%>\%
   summarize(n = n())
 
 # The real workhorse here is `iv_locate_groups()`, which returns
-# information on where to slice `x` to get the merged result, and which
-# observations of `x` belong to which merged interval
+# the groups and information on which observations in `x` fall in which
+# group
 iv_locate_groups(x)
 }

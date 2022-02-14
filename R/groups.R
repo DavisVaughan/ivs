@@ -14,9 +14,9 @@
 #'   and [iv_end()] of `x` to generate the merged result.
 #'
 #' - `iv_locate_groups()` returns a two column data frame with a `key`
-#'   column containing the result of `iv_locate_group_bounds()` and a `loc`
-#'   list-column containing integer vectors that map each element of `x` to the
-#'   merged interval that it falls in.
+#'   column containing the result of `iv_groups()` and a `loc`
+#'   list-column containing integer vectors that map each interval in `x` to the
+#'   group that it falls in.
 #'
 #' Optionally, you can choose _not_ to merge abutting intervals with
 #' `abutting = FALSE`, which can be useful if you'd like to retain those
@@ -58,8 +58,8 @@
 #' `end` integer columns.
 #'
 #' - For `iv_locate_groups()`, a two column data frame with a `key` column
-#' containing the result of `iv_locate_group_bounds()` and a `loc` list-column
-#' containing integer vectors.
+#' containing the result of `iv_groups()` and a `loc` list-column containing
+#' integer vectors.
 #'
 #' @name iv-groups
 #'
@@ -96,8 +96,8 @@
 #'   summarize(n = n())
 #'
 #' # The real workhorse here is `iv_locate_groups()`, which returns
-#' # information on where to slice `x` to get the merged result, and which
-#' # observations of `x` belong to which merged interval
+#' # the groups and information on which observations in `x` fall in which
+#' # group
 #' iv_locate_groups(x)
 NULL
 
@@ -187,9 +187,20 @@ iv_locate_groups <- function(x, ..., abutting = TRUE) {
   start <- field_start(proxy)
   end <- field_end(proxy)
 
-  vec_locate_interval_merge_groups(
+  # TODO: Update vctrs function to return `key` as sliced result
+  out <- vec_locate_interval_merge_groups(
     start = start,
     end = end,
     abutting = abutting
   )
+
+  start <- vec_slice(start, out$key$start)
+  end <- vec_slice(end, out$key$end)
+
+  key <- new_iv(start, end)
+  key <- iv_restore(key, x)
+
+  out$key <- key
+
+  out
 }

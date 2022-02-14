@@ -85,20 +85,20 @@ test_that("can retain missing", {
 test_that("locates the groups", {
   x <- iv_pairs(c(1, 3), c(3, 5))
   out <- iv_locate_groups(x)
-  expect_identical(out$key, data_frame(start = 1L, end = 2L))
+  expect_identical(out$key, iv(1, 5))
   expect_identical(out$loc, list(1:2))
 })
 
 test_that("can choose not to group abutting intervals", {
   x <- iv_pairs(c(1, 3), c(3, 5))
   out <- iv_locate_groups(x, abutting = FALSE)
-  expect_identical(out$key, data_frame(start = 1:2, end = 1:2))
+  expect_identical(out$key, x)
   expect_identical(out$loc, list(1L, 2L))
 })
 
 test_that("can retain missing", {
   x <- iv_pairs(c(1, 3), c(NA, NA))
   out <- iv_locate_groups(x)
-  expect_identical(out$key, data_frame(start = c(1L, 2L), end = c(1L, 2L)))
+  expect_identical(out$key, x)
   expect_identical(out$loc, list(1L, 2L))
 })
