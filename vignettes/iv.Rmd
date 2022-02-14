@@ -309,7 +309,7 @@ Minimal interval vectors are nice because they cover the range of an interval ve
 
 ## Splitting on endpoints
 
-While `iv_merge()` generates *less* intervals than you began with, it is sometimes useful to go the other way and generate *more* intervals by splitting on all the overlapping endpoints. This is what `iv_split()` does. Both operations end up generating a result that contains completely disjoint intervals, but they go about it in very different ways.
+While `iv_merge()` generates *less* intervals than you began with, it is sometimes useful to go the other way and generate *more* intervals by splitting on all the overlapping endpoints. This is what `iv_splits()` does. Both operations end up generating a result that contains completely disjoint intervals, but they go about it in very different ways.
 
 Let's look back at our first `iv_merge()` example:
 
@@ -318,10 +318,10 @@ x <- iv_pairs(c(1, 5), c(5, 7), c(9, 11), c(10, 13), c(12, 13))
 x
 ```
 
-Notice that `[9, 11)` overlaps `[10, 13)` which in turn overlaps `[12, 13)`. If we looked at the sorted unique values of the endpoints (i.e. `c(9, 10, 11, 12, 13)`) and then paired these up like `[9, 10), [10, 11), [11, 12], [12, 13)`, then we will have nicely "split" on the endpoints, generating a disjoint set of intervals. This is essentially what `iv_split()` does.
+Notice that `[9, 11)` overlaps `[10, 13)` which in turn overlaps `[12, 13)`. If we looked at the sorted unique values of the endpoints (i.e. `c(9, 10, 11, 12, 13)`) and then paired these up like `[9, 10), [10, 11), [11, 12], [12, 13)`, then we will have nicely "split" on the endpoints, generating a disjoint set of intervals. This is essentially what `iv_splits()` does.
 
 ```{r}
-iv_split(x)
+iv_splits(x)
 ```
 
 ### With `group_by()`
@@ -351,10 +351,10 @@ guests <- unnest(guests, name) %>%
 guests
 ```
 
-Let's figure out who was at your party at any given point throughout the night. To do this, we'll need to break `iv` up into all possible disjoint intervals that mark either an arrival or departure. Like with `iv_merge()`, `iv_split()` can show us those disjoint intervals but this doesn't help us map them back to each guest.
+Let's figure out who was at your party at any given point throughout the night. To do this, we'll need to break `iv` up into all possible disjoint intervals that mark either an arrival or departure. Like with `iv_merge()`, `iv_splits()` can show us those disjoint intervals but this doesn't help us map them back to each guest.
 
 ```{r}
-iv_split(guests$iv)
+iv_splits(guests$iv)
 ```
 
 Instead, we'll need `iv_replace_splits()`, which replaces `iv` with a list-col of the same size, where the i-th element of the list-col corresponds to the disjoint intervals that originated from the i-th element of `iv`. That all sounds complex, but it's a little easier to understand if we just look at a single example:
@@ -496,7 +496,7 @@ x
 
 The defaults of all functions in iv treat missing intervals in one of two ways:
 
--   Set-like operations treat missing intervals as *overlapping* other missing intervals, but they won't overlap any other interval. These include `iv_locate_overlaps()`, `iv_intersect()`, and `iv_split()`.
+-   Set-like operations treat missing intervals as *overlapping* other missing intervals, but they won't overlap any other interval. These include `iv_locate_overlaps()`, `iv_intersect()`, and `iv_splits()`.
 
 -   Pairwise operations treat missing intervals as *infectious*, meaning that if the i-th interval of `x` is missing and the i-th interval of `y` is not missing (or vice versa), then the result is forced to be a missing interval. These include any operations prefixed with `iv_pairwise_*()`.
 

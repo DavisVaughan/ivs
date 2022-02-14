@@ -1,11 +1,11 @@
 # ------------------------------------------------------------------------------
-# iv_split()
+# iv_splits()
 
 test_that("split works", {
   x <- iv_pairs(c(1, 7), c(-1, 0), c(2, 3), c(6, 9), c(15, 16))
 
   expect_identical(
-    iv_split(x),
+    iv_splits(x),
     iv_pairs(
       c(-1, 0),
       c(1, 2),
@@ -21,36 +21,36 @@ test_that("split works", {
 test_that("split retains a single missing interval", {
   x <- iv_pairs(c(1, 4), c(NA, NA), c(5, 6), c(NA, NA))
   expect_identical(
-    iv_split(x),
+    iv_splits(x),
     iv_pairs(c(1, 4), c(5, 6), c(NA, NA))
   )
 })
 
 test_that("split works with empty iv", {
   x <- iv(integer(), integer())
-  expect_identical(iv_split(x), x)
+  expect_identical(iv_splits(x), x)
 })
 
 test_that("split works with single interval", {
   x <- iv(1, 2)
-  expect_identical(iv_split(x), x)
+  expect_identical(iv_splits(x), x)
 })
 
 test_that("split works with single missing interval", {
   x <- iv(NA, NA)
-  expect_identical(iv_split(x), x)
+  expect_identical(iv_splits(x), x)
 })
 
 test_that("split works with `on`", {
   x <- iv(1, 5)
 
   expect_identical(
-    iv_split(x, on = 2),
+    iv_splits(x, on = 2),
     iv_pairs(c(1, 2), c(2, 5))
   )
 
   expect_identical(
-    iv_split(x, on = c(2, 4)),
+    iv_splits(x, on = c(2, 4)),
     iv_pairs(c(1, 2), c(2, 4), c(4, 5))
   )
 })
@@ -59,7 +59,7 @@ test_that("still splits on boundaries in `x` when `on` is also present", {
   x <- iv_pairs(c(1, 5), c(4, 6))
 
   expect_identical(
-    iv_split(x, on = 2),
+    iv_splits(x, on = 2),
     iv_pairs(c(1, 2), c(2, 4), c(4, 5), c(5, 6))
   )
 })
@@ -67,24 +67,24 @@ test_that("still splits on boundaries in `x` when `on` is also present", {
 test_that("split works if `on` is out of range", {
   x <- iv(1, 5)
 
-  expect_identical(iv_split(x, on = 0), x)
-  expect_identical(iv_split(x, on = 6), x)
+  expect_identical(iv_splits(x, on = 0), x)
+  expect_identical(iv_splits(x, on = 6), x)
 })
 
 test_that("split works if `on` is a missing value", {
   x <- iv(1, 5)
 
-  expect_identical(iv_split(x, on = NA), x)
+  expect_identical(iv_splits(x, on = NA), x)
 
   x <- iv(NA, NA)
 
-  expect_identical(iv_split(x, on = NA), x)
+  expect_identical(iv_splits(x, on = NA), x)
 })
 
 test_that("split is generic over container", {
   x <- nested_integer_iv_pairs(c(1, 3), c(2, 4))
   expect_identical(
-    iv_split(x),
+    iv_splits(x),
     nested_integer_iv_pairs(c(1, 2), c(2, 3), c(3, 4))
   )
 })
@@ -172,7 +172,7 @@ test_that("locate split groups works", {
 
   out <- iv_locate_split_groups(x)
 
-  expect_identical(out$key, iv_split(x))
+  expect_identical(out$key, iv_splits(x))
 
   expect_identical(
     out$loc,
@@ -220,7 +220,7 @@ test_that("locate split groups works with `on`", {
 
   out <- iv_locate_split_groups(x, on = 2)
 
-  expect_identical(out$key, iv_split(x, on = 2))
+  expect_identical(out$key, iv_splits(x, on = 2))
   expect_identical(out$loc, list(1L, 1L, c(1L, 2L), 2L))
 })
 
@@ -261,5 +261,5 @@ test_that("works with a missing `on` value", {
 
 test_that("casts `on` to type of `x` bounds", {
   x <- iv(1, 2)
-  expect_snapshot((expect_error(iv_split(x, on = "x"))))
+  expect_snapshot((expect_error(iv_splits(x, on = "x"))))
 })

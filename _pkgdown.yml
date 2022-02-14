@@ -12,7 +12,7 @@ reference:
   - title: Merging and Splitting
     contents:
     - iv_merge
-    - iv_split
+    - iv_splits
 
   - title: Relationships
     contents:

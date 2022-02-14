@@ -4,7 +4,7 @@
 #' This family of functions revolves around splitting an iv on its endpoints,
 #' which results in a new iv that is disjoint (i.e. non-overlapping).
 #'
-#' - `iv_split()` splits `x` into a new iv that is completely disjoint.
+#' - `iv_splits()` splits `x` into a new iv that is completely disjoint.
 #'
 #' - `iv_replace_splits()` replaces `x` with a list of the same size
 #'   where each element of the list contains the disjoint iv resulting from
@@ -12,7 +12,7 @@
 #'   [tidyr::unnest()].
 #'
 #' - `iv_locate_split_groups()` returns a two column data frame with a `key`
-#'   column containing the result of `iv_split()` and a `loc` list-column
+#'   column containing the result of `iv_splits()` and a `loc` list-column
 #'   containing integer vectors that map each element of `x` to the disjoint
 #'   intervals that it falls in.
 #'
@@ -29,7 +29,7 @@
 #'   This should have the same type as `iv_start(x)`.
 #'
 #' @return
-#' - For `iv_split()`, an iv with the same type as `x`.
+#' - For `iv_splits()`, an iv with the same type as `x`.
 #'
 #' - For `iv_replace_splits()`, a list-of containing ivs with the same size as
 #' `x`.
@@ -37,7 +37,7 @@
 #' - For `iv_locate_split_groups()`, a two column data frame with a `key` column
 #' of the same type as `x` and `loc` list-column containing integer vectors.
 #'
-#' @name iv-split
+#' @name iv-splits
 #'
 #' @examples
 #' library(tidyr)
@@ -66,8 +66,8 @@
 #' guests
 #'
 #' # You can determine the disjoint intervals at which people
-#' # arrived/departed with `iv_split()`
-#' iv_split(guests$iv)
+#' # arrived/departed with `iv_splits()`
+#' iv_splits(guests$iv)
 #'
 #' # Say you'd like to determine who was at the party at any given time
 #' # throughout the night
@@ -92,12 +92,12 @@
 #' x
 #'
 #' # You can provide additional singular values to split on with `on`
-#' iv_split(x, on = c(2, 13))
+#' iv_splits(x, on = c(2, 13))
 NULL
 
-#' @rdname iv-split
+#' @rdname iv-splits
 #' @export
-iv_split <- function(x, ..., on = NULL) {
+iv_splits <- function(x, ..., on = NULL) {
   check_dots_empty0(...)
 
   proxy <- iv_proxy(x)
@@ -130,7 +130,7 @@ iv_split <- function(x, ..., on = NULL) {
   out
 }
 
-#' @rdname iv-split
+#' @rdname iv-splits
 #' @export
 iv_replace_splits <- function(x, ..., on = NULL) {
   check_dots_empty0(...)
@@ -165,7 +165,7 @@ iv_replace_splits <- function(x, ..., on = NULL) {
   out
 }
 
-#' @rdname iv-split
+#' @rdname iv-splits
 #' @export
 iv_locate_split_groups <- function(x, ..., on = NULL) {
   check_dots_empty0(...)
