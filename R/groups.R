@@ -106,14 +106,14 @@ iv_groups <- function(x, ..., abutting = TRUE) {
   start <- field_start(proxy)
   end <- field_end(proxy)
 
-  loc <- vec_locate_interval_merge_bounds(
+  groups <- vec_interval_groups(
     start = start,
     end = end,
     abutting = abutting
   )
 
-  start <- vec_slice(start, loc$start)
-  end <- vec_slice(end, loc$end)
+  start <- groups$start
+  end <- groups$end
 
   out <- new_iv(start, end)
   out <- iv_restore(out, x)
@@ -131,19 +131,19 @@ iv_identify_group <- function(x, ..., abutting = TRUE) {
   start <- field_start(proxy)
   end <- field_end(proxy)
 
-  groups <- vec_locate_interval_merge_groups(
+  groups <- vec_interval_locate_groups(
     start = start,
     end = end,
     abutting = abutting
   )
 
-  start <- vec_slice(start, groups$key$start)
-  end <- vec_slice(end, groups$key$end)
-
   times <- list_sizes(groups$loc)
 
   loc <- vec_unchop(groups$loc, ptype = integer(), name_spec = zap())
   loc <- vec_order(loc)
+
+  start <- groups$key$start
+  end <- groups$key$end
 
   out <- new_iv(start, end)
 
@@ -165,20 +165,19 @@ iv_locate_groups <- function(x, ..., abutting = TRUE) {
   start <- field_start(proxy)
   end <- field_end(proxy)
 
-  # TODO: Update vctrs function to return `key` as sliced result
-  out <- vec_locate_interval_merge_groups(
+  out <- vec_interval_locate_groups(
     start = start,
     end = end,
     abutting = abutting
   )
 
-  start <- vec_slice(start, out$key$start)
-  end <- vec_slice(end, out$key$end)
+  start <- out$key$start
+  end <- out$key$end
 
   key <- new_iv(start, end)
   key <- iv_restore(key, x)
 
-  out$key <- key
+  out[["key"]] <- key
 
   out
 }

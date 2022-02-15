@@ -6,8 +6,8 @@
   env_bind(
     .env = ns,
     vec_locate_matches = import_vctrs("exp_vec_locate_matches"),
-    vec_locate_interval_merge_bounds = import_vctrs("exp_vec_locate_interval_merge_bounds"),
-    vec_locate_interval_merge_groups = import_vctrs("exp_vec_locate_interval_merge_groups"),
+    vec_interval_groups = import_vctrs("exp_vec_interval_groups"),
+    vec_interval_locate_groups = import_vctrs("exp_vec_interval_locate_groups"),
     vec_interval_complement = import_vctrs("exp_vec_interval_complement")
   )
 }
