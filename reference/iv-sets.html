@@ -7,7 +7,7 @@ the complement over, but this can be adjusted with lower and upper.
 Missing intervals are always dropped in the complement.
 iv_union() answers the question, "Which intervals are in x or y?" It
 is equivalent to combining the two vectors together and then calling
-iv_merge().
+iv_groups().
 iv_intersect() answers the question, "Which intervals are in x and
 y?"
 iv_difference() answers the question, "Which intervals are in x but not
@@ -23,7 +23,7 @@ the complement over, but this can be adjusted with lower and upper.
 Missing intervals are always dropped in the complement.
 iv_union() answers the question, "Which intervals are in x or y?" It
 is equivalent to combining the two vectors together and then calling
-iv_merge().
+iv_groups().
 iv_intersect() answers the question, "Which intervals are in x and
 y?"
 iv_difference() answers the question, "Which intervals are in x but not
@@ -79,13 +79,13 @@ x or y but not both?"
 
     <div class="ref-description section level2">
     <p>This family of functions treats ivs as sets. They always compute
-the <a href="iv-merge.html">minimal</a> iv of each input and return a minimal iv.</p><ul><li><p><code>iv_complement()</code> takes the complement of the intervals in an iv. By
+the <a href="iv-groups.html">minimal</a> iv of each input and return a minimal iv.</p><ul><li><p><code>iv_complement()</code> takes the complement of the intervals in an iv. By
 default, the minimum and maximum of the inputs define the bounds to take
 the complement over, but this can be adjusted with <code>lower</code> and <code>upper</code>.
 Missing intervals are always dropped in the complement.</p></li>
 <li><p><code>iv_union()</code> answers the question, "Which intervals are in <code>x</code> or <code>y</code>?" It
 is equivalent to combining the two vectors together and then calling
-<code><a href="iv-merge.html">iv_merge()</a></code>.</p></li>
+<code><a href="iv-groups.html">iv_groups()</a></code>.</p></li>
 <li><p><code>iv_intersect()</code> answers the question, "Which intervals are in <code>x</code> and
 <code>y</code>?"</p></li>
 <li><p><code>iv_difference()</code> answers the question, "Which intervals are in <code>x</code> but not
