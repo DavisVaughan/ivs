@@ -19,7 +19,7 @@
     Code
       iv("x", 1)
     Condition
-      Error:
+      Error in `iv()`:
       ! Can't combine `start` <character> and `end` <double>.
 
 # inputs must be size compatible

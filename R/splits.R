@@ -2,19 +2,19 @@
 #'
 #' @description
 #' This family of functions revolves around splitting an iv on its endpoints,
-#' which results in a new iv that is disjoint (i.e. non-overlapping).
+#' which results in a new iv that is entirely disjoint (i.e. non-overlapping).
+#' The intervals in the resulting iv are known as "splits".
 #'
-#' - `iv_split()` splits `x` into a new iv that is completely disjoint.
+#' - `iv_splits()` computes the disjoint splits for `x`.
 #'
-#' - `iv_replace_splits()` replaces `x` with a list of the same size
-#'   where each element of the list contains the disjoint iv resulting from
-#'   splitting that element of `x`. This is particularly useful alongside
-#'   [tidyr::unnest()].
+#' - `iv_identify_splits()` identifies the splits that correspond to each
+#' interval in `x`. It replaces `x` with a list of the same size where each
+#' element of the list contains the splits that the corresponding interval in
+#' `x` overlaps. This is particularly useful alongside [tidyr::unnest()].
 #'
-#' - `iv_locate_split_groups()` returns a two column data frame with a `key`
-#'   column containing the result of `iv_split()` and a `loc` list-column
-#'   containing integer vectors that map each element of `x` to the disjoint
-#'   intervals that it falls in.
+#' - `iv_locate_splits()` returns a two column data frame with a `key` column
+#' containing the result of `iv_splits()` and a `loc` list-column containing
+#' integer vectors that map each interval in `x` to the splits that it overlaps.
 #'
 #' @inheritParams rlang::args_dots_empty
 #'
@@ -29,15 +29,15 @@
 #'   This should have the same type as `iv_start(x)`.
 #'
 #' @return
-#' - For `iv_split()`, an iv with the same type as `x`.
+#' - For `iv_splits()`, an iv with the same type as `x`.
 #'
-#' - For `iv_replace_splits()`, a list-of containing ivs with the same size as
+#' - For `iv_identify_splits()`, a list-of containing ivs with the same size as
 #' `x`.
 #'
-#' - For `iv_locate_split_groups()`, a two column data frame with a `key` column
+#' - For `iv_locate_splits()`, a two column data frame with a `key` column
 #' of the same type as `x` and `loc` list-column containing integer vectors.
 #'
-#' @name iv-split
+#' @name iv-splits
 #'
 #' @examples
 #' library(tidyr)
@@ -66,12 +66,12 @@
 #' guests
 #'
 #' # You can determine the disjoint intervals at which people
-#' # arrived/departed with `iv_split()`
-#' iv_split(guests$iv)
+#' # arrived/departed with `iv_splits()`
+#' iv_splits(guests$iv)
 #'
 #' # Say you'd like to determine who was at the party at any given time
 #' # throughout the night
-#' guests <- mutate(guests, splits = iv_replace_splits(iv))
+#' guests <- mutate(guests, splits = iv_identify_splits(iv))
 #' guests
 #'
 #' # Unnest the splits to generate disjoint intervals for each guest
@@ -92,12 +92,12 @@
 #' x
 #'
 #' # You can provide additional singular values to split on with `on`
-#' iv_split(x, on = c(2, 13))
+#' iv_splits(x, on = c(2, 13))
 NULL
 
-#' @rdname iv-split
+#' @rdname iv-splits
 #' @export
-iv_split <- function(x, ..., on = NULL) {
+iv_splits <- function(x, ..., on = NULL) {
   check_dots_empty0(...)
 
   proxy <- iv_proxy(x)
@@ -130,9 +130,9 @@ iv_split <- function(x, ..., on = NULL) {
   out
 }
 
-#' @rdname iv-split
+#' @rdname iv-splits
 #' @export
-iv_replace_splits <- function(x, ..., on = NULL) {
+iv_identify_splits <- function(x, ..., on = NULL) {
   check_dots_empty0(...)
 
   proxy <- iv_proxy(x)
@@ -165,9 +165,9 @@ iv_replace_splits <- function(x, ..., on = NULL) {
   out
 }
 
-#' @rdname iv-split
+#' @rdname iv-splits
 #' @export
-iv_locate_split_groups <- function(x, ..., on = NULL) {
+iv_locate_splits <- function(x, ..., on = NULL) {
   check_dots_empty0(...)
 
   proxy <- iv_proxy(x)
