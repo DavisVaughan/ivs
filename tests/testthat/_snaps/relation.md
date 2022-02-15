@@ -4,7 +4,7 @@
       (expect_error(iv_locate_overlaps(iv(1, 2), iv("a", "b"))))
     Output
       <error/vctrs_error_incompatible_type>
-      Error:
+      Error in `iv_locate_overlaps()`:
       ! Can't combine `needles` <double> and `haystack` <character>.
 
 # can error on missing needles
@@ -44,7 +44,7 @@
       (expect_error(iv_locate_precedes(iv(1, 2), iv("a", "b"))))
     Output
       <error/vctrs_error_incompatible_type>
-      Error:
+      Error in `iv_locate_positional()`:
       ! Can't combine `needles` <double> and `haystack` <character>.
 
 # iv_locate_precedes - validates 'closest'
@@ -62,7 +62,7 @@
       (expect_error(iv_locate_relates(iv(1, 2), iv("a", "b"))))
     Output
       <error/vctrs_error_incompatible_type>
-      Error:
+      Error in `iv_locate_relates()`:
       ! Can't combine `needles` <double> and `haystack` <character>.
 
 # iv_detect_impl - takes common type
@@ -71,7 +71,7 @@
       (expect_error(iv_overlaps(iv(1, 2), iv("a", "b"))))
     Output
       <error/vctrs_error_incompatible_type>
-      Error:
+      Error in `iv_detect_impl()`:
       ! Can't combine `needles` <double> and `haystack` <character>.
 
 # iv_detect_impl - validates 'missing'
@@ -120,6 +120,6 @@
       (expect_error(iv_pairwise_overlaps(iv(1, 2), iv("a", "b"))))
     Output
       <error/vctrs_error_incompatible_type>
-      Error:
+      Error in `iv_detect_pairwise_impl()`:
       ! Can't combine `x` <double> and `y` <character>.
 
