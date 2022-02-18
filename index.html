@@ -95,6 +95,13 @@
 <span class="fu"><a href="reference/iv.html">iv</a></span><span class="op">(</span><span class="va">starts</span>, <span class="va">ends</span><span class="op">)</span>
 <span class="co">#&gt; &lt;iv&lt;date&gt;[3]&gt;</span>
 <span class="co">#&gt; [1] [2019-01-01, 2019-01-03) [2019-01-02, 2019-01-07) [2019-01-03, 2019-01-13)</span></code></pre></div>
+<p>There are a number of useful things you can do with these, including:</p>
+<ul>
+<li><p>Determining how two ivs are related (i.e. does one precede, follow, or overlap the other?) with <code><a href="reference/relation-locate.html">iv_locate_overlaps()</a></code>.</p></li>
+<li><p>Grouping / Merging overlapping intervals within a single iv with <code><a href="reference/iv-groups.html">iv_groups()</a></code>.</p></li>
+<li><p>Splitting an iv on its overlapping endpoints with <code>iv_split()</code>.</p></li>
+<li><p>Applying set theoretical operations on two ivs, such as <code><a href="reference/iv-sets.html">iv_intersect()</a></code>.</p></li>
+</ul>
 <p>Interval vectors are completely generic, meaning that you can create them from any comparable type that is supported by <a href="https://vctrs.r-lib.org" class="external-link">vctrs</a>. This means that user defined S3 types work automatically, like <code>hms::hms()</code>, <code><a href="https://rdrr.io/pkg/bit64/man/bit64-package.html" class="external-link">bit64::integer64()</a></code>, and <code>clock::year_month_day()</code>.</p>
 <div class="section level2">
 <h2 id="learning">Learning<a class="anchor" aria-label="anchor" href="#learning"></a>
