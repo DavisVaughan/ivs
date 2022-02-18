@@ -27,7 +27,7 @@
     Code
       iv(1:2, 1:3)
     Condition
-      Error:
+      Error in `iv()`:
       ! Can't recycle `start` (size 2) to match `end` (size 3).
 
 # inputs must be vectors
@@ -77,7 +77,7 @@
       vec_ptype2(iv("x", "y"), iv(1L, 2L))
     Condition
       Error:
-      ! Can't combine <character> and <integer>.
+      ! Can't combine `iv("x", "y")` <character> and `iv(1L, 2L)` <integer>.
 
 # cast errors as needed
 
@@ -85,7 +85,7 @@
       vec_cast(iv("x", "y"), iv(1L, 2L))
     Condition
       Error:
-      ! Can't convert <character> to <integer>.
+      ! Can't convert `iv("x", "y")` <character> to <integer>.
 
 # abbreviation is passed through to inner type
 
