@@ -1237,8 +1237,8 @@ iv_detect_pairwise_impl <- function(x,
   check_dots_empty0(...)
 
   args <- list(x = x, y = y)
-  args <- vec_cast_common(!!!args)
-  args <- vec_recycle_common(!!!args)
+  args <- vec_cast_common(!!!args, .call = call)
+  args <- vec_recycle_common(!!!args, .call = call)
   x <- args[[1L]]
   y <- args[[2L]]
 

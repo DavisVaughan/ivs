@@ -111,7 +111,7 @@
       (expect_error(iv_pairwise_overlaps(iv(1:2, 2:3), iv(1:3, 2:4))))
     Output
       <error/vctrs_error_incompatible_size>
-      Error:
+      Error in `iv_pairwise_overlaps()`:
       ! Can't recycle `x` (size 2) to match `y` (size 3).
 
 # iv_detect_pairwise_impl - takes common type
@@ -120,6 +120,6 @@
       (expect_error(iv_pairwise_overlaps(iv(1, 2), iv("a", "b"))))
     Output
       <error/vctrs_error_incompatible_type>
-      Error in `iv_detect_pairwise_impl()`:
+      Error in `iv_pairwise_overlaps()`:
       ! Can't combine `x` <double> and `y` <character>.
 
