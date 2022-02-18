@@ -268,27 +268,8 @@ vec_cast.iv.iv <- function(x, to, ...) {
 }
 
 #' @export
-vec_proxy.iv <- function(x, ...) {
-  new_data_frame(x)
-}
-
-#' @export
 vec_restore.iv <- function(x, to, ...) {
   new_bare_iv_from_fields(x)
-}
-
-#' @export
-vec_proxy_equal.iv <- function(x, ...) {
-  # Need this because `vec_proxy_equal.vctrs_rcrd` isn't recursive
-  # https://github.com/r-lib/vctrs/issues/1503
-  vec_proxy_equal(new_data_frame(x))
-}
-
-#' @export
-vec_proxy_compare.iv <- function(x, ...) {
-  # Need this because `vec_proxy_compare.vctrs_rcrd` intercepts us
-  # https://github.com/r-lib/vctrs/issues/1503
-  vec_proxy_compare(new_data_frame(x))
 }
 
 # ------------------------------------------------------------------------------
