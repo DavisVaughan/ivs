@@ -33,6 +33,19 @@ iv(starts, ends)
 #> [1] [2019-01-01, 2019-01-03) [2019-01-02, 2019-01-07) [2019-01-03, 2019-01-13)
 ```
 
+There are a number of useful things you can do with these, including:
+
+-   Determining how two ivs are related (i.e. does one precede, follow,
+    or overlap the other?) with `iv_locate_overlaps()`.
+
+-   Grouping / Merging overlapping intervals within a single iv with
+    `iv_groups()`.
+
+-   Splitting an iv on its overlapping endpoints with `iv_split()`.
+
+-   Applying set theoretical operations on two ivs, such as
+    `iv_intersect()`.
+
 Interval vectors are completely generic, meaning that you can create
 them from any comparable type that is supported by
 [vctrs](https://vctrs.r-lib.org). This means that user defined S3 types
