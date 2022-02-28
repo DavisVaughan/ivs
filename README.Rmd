@@ -43,7 +43,7 @@ There are a number of useful things you can do with these, including:
 
 - Grouping / Merging overlapping intervals within a single iv with `iv_groups()`.
 
-- Splitting an iv on its overlapping endpoints with `iv_split()`.
+- Splitting an iv on its overlapping endpoints with `iv_splits()`.
 
 - Applying set theoretical operations on two ivs, such as `iv_intersect()`.
 
