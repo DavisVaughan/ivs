@@ -33,6 +33,16 @@
 #' A minimal interval vector is allowed to have a single missing interval,
 #' which is located at the end of the vector.
 #'
+#' @section Graphical Representation:
+#'
+#' Graphically, generating groups looks like:
+#'
+#' ![](groups.png)
+#'
+#' With `abutting = FALSE`, intervals that touch aren't grouped:
+#'
+#' ![](groups-abutting-keep.png)
+#'
 #' @inheritParams rlang::args_dots_empty
 #'
 #' @param x `[iv]`

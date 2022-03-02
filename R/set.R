@@ -22,6 +22,21 @@
 #' - `iv_symmetric_difference()` answers the question, "Which intervals are in
 #'   `x` or `y` but not both?"
 #'
+#' @section Graphical Representation:
+#'
+#' Graphically, generating the complement looks like:
+#'
+#' ![](complement.png)
+#'
+#' If you were to set `upper = 20` with these intervals, then you'd get one more
+#' interval in the complement.
+#'
+#' ![](complement-upper.png)
+#'
+#' Generating the intersection between two ivs looks like:
+#'
+#' ![](intersect.png)
+#'
 #' @inheritParams rlang::args_dots_empty
 #'
 #' @param x `[iv]`

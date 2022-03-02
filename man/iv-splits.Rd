@@ -50,6 +50,14 @@ containing the result of \code{iv_splits()} and a \code{loc} list-column contain
 integer vectors that map each interval in \code{x} to the splits that it overlaps.
 }
 }
+\section{Graphical Representation}{
+
+
+Graphically, generating splits looks like:
+
+\figure{splits.png}
+}
+
 \examples{
 library(tidyr)
 library(dplyr)

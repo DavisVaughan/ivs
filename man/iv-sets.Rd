@@ -63,6 +63,23 @@ is equivalent to combining the two vectors together and then calling
 \code{x} or \code{y} but not both?"
 }
 }
+\section{Graphical Representation}{
+
+
+Graphically, generating the complement looks like:
+
+\figure{complement.png}
+
+If you were to set \code{upper = 20} with these intervals, then you'd get one more
+interval in the complement.
+
+\figure{complement-upper.png}
+
+Generating the intersection between two ivs looks like:
+
+\figure{intersect.png}
+}
+
 \examples{
 x <- iv_pairs(
   c(10, 12),

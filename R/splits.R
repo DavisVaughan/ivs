@@ -16,6 +16,12 @@
 #' containing the result of `iv_splits()` and a `loc` list-column containing
 #' integer vectors that map each interval in `x` to the splits that it overlaps.
 #'
+#' @section Graphical Representation:
+#'
+#' Graphically, generating splits looks like:
+#'
+#' ![](splits.png)
+#'
 #' @inheritParams rlang::args_dots_empty
 #'
 #' @param x `[iv]`

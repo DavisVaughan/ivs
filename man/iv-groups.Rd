@@ -70,6 +70,18 @@ A minimal interval vector is allowed to have a single missing interval,
 which is located at the end of the vector.
 }
 }
+\section{Graphical Representation}{
+
+
+Graphically, generating groups looks like:
+
+\figure{groups.png}
+
+With \code{abutting = FALSE}, intervals that touch aren't grouped:
+
+\figure{groups-abutting-keep.png}
+}
+
 \examples{
 library(dplyr, warn.conflicts = FALSE)
 
