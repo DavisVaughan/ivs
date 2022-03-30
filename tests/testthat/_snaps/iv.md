@@ -5,6 +5,7 @@
     Condition
       Error in `iv()`:
       ! `start` must be less than `end`.
+      i `start` is not less than `end` at locations: `c(1)`.
 
 ---
 
@@ -13,6 +14,16 @@
     Condition
       Error in `iv()`:
       ! `start` must be less than `end`.
+      i `start` is not less than `end` at locations: `c(1)`.
+
+---
+
+    Code
+      iv(x, y)
+    Condition
+      Error in `iv()`:
+      ! `start` must be less than `end`.
+      i `start` is not less than `end` at locations: `c(1, 2, 3, 4, 5)` and 15 more.
 
 # inputs must be type compatible
 

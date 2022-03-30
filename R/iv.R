@@ -167,9 +167,18 @@ iv <- function(start, end, ..., ptype = NULL, size = NULL) {
   end <- args$end
 
   compare <- vec_compare(start, end)
+  greater_or_equal <- compare != -1L
 
-  if (any(compare != -1L, na.rm = TRUE)) {
-    abort("`start` must be less than `end`.")
+  if (any(greater_or_equal, na.rm = TRUE)) {
+    greater_or_equal <- which(greater_or_equal)
+    greater_or_equal <- err_locs(greater_or_equal)
+    message <- c(
+      "`start` must be less than `end`.",
+      i = glue(
+        "`start` is not less than `end` at locations: {greater_or_equal}."
+      )
+    )
+    abort(message)
   }
 
   joint <- data_frame(start = start, end = end)

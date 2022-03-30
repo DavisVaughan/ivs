@@ -48,6 +48,10 @@ test_that("can force a size", {
 test_that("`start` must be less than `end`", {
   expect_snapshot(error = TRUE, iv(2, 2))
   expect_snapshot(error = TRUE, iv(3, 2))
+
+  x <- rep(3, 20)
+  y <- rep(2, 20)
+  expect_snapshot(error = TRUE, iv(x, y))
 })
 
 test_that("inputs must be type compatible", {
