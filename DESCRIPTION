@@ -17,6 +17,8 @@ License: MIT + file LICENSE
 URL: https://github.com/DavisVaughan/iv,
     https://davisvaughan.github.io/iv/
 BugReports: https://github.com/DavisVaughan/iv/issues
+Depends: 
+    R (>= 3.4)
 Imports: 
     glue,
     rlang (>= 1.0.2),
