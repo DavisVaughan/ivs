@@ -59,6 +59,13 @@ Started](https://davisvaughan.github.io/iv/articles/iv.html) vignette!
 
 ## Installation
 
+Install the released version from [CRAN](https://CRAN.R-project.org)
+with:
+
+``` r
+install.packages("iv")
+```
+
 You can install the development version of iv from
 [GitHub](https://github.com/) with:
 

@@ -55,6 +55,12 @@ The best way to learn about iv is by reading the [Getting Started](https://davis
 
 ## Installation
 
+Install the released version from [CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("iv")
+```
+
 You can install the development version of iv from [GitHub](https://github.com/) with:
 
 ``` r
