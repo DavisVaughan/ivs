@@ -18,6 +18,7 @@ reference:
     contents:
     - iv_overlaps
     - iv_locate_overlaps
+    - iv_count_overlaps
     - iv_pairwise_overlaps
     - iv_align
 
@@ -25,6 +26,7 @@ reference:
     contents:
     - iv_between
     - iv_locate_between
+    - iv_count_between
     - iv_pairwise_between
 
   - title: Set Operations
@@ -36,6 +38,7 @@ reference:
     contents:
     - iv_relates
     - iv_locate_relates
+    - iv_count_relates
     - iv_pairwise_relates
 
   - title: Developer Tools
