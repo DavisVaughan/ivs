@@ -31,6 +31,34 @@ test_that("can error on missing needles", {
 })
 
 # ------------------------------------------------------------------------------
+# iv_count_overlaps()
+
+test_that("can count overlaps", {
+  x <- iv_pairs(c(1, 5), c(10 ,12))
+  y <- iv_pairs(c(3, 6), c(0, 2))
+
+  expect_identical(
+    iv_count_overlaps(x, y),
+    c(2L, 0L)
+  )
+})
+
+test_that("treats missings as equal by default", {
+  x <- iv(NA, NA)
+
+  expect_identical(
+    iv_count_overlaps(x, x),
+    1L
+  )
+})
+
+test_that("iv_count_overlaps - can error on missing needles", {
+  expect_snapshot(
+    (expect_error(iv_count_overlaps(iv(NA, NA), iv(1, 2), missing = "error")))
+  )
+})
+
+# ------------------------------------------------------------------------------
 # iv_overlaps()
 
 test_that("can detect overlaps", {
@@ -268,9 +296,73 @@ test_that("`missing = 'equals'` forces `no_match` because missings will never ma
   )
 })
 
-test_that("can error on missing needles", {
+test_that("iv_locate_precedes - can error on missing needles", {
   expect_snapshot(
     (expect_error(iv_locate_precedes(iv(NA, NA), iv(1, 2), missing = "error")))
+  )
+})
+
+# ------------------------------------------------------------------------------
+# iv_count_precedes()
+
+test_that("can count precedes", {
+  x <- iv_pairs(c(1, 5), c(10 ,12))
+  y <- iv_pairs(c(3, 6), c(0, 2), c(6, 7))
+
+  expect_identical(
+    iv_count_precedes(x, y),
+    c(1L, 0L)
+  )
+})
+
+test_that("can locate the closest one it precedes", {
+  x <- iv_pairs(c(1, 5), c(10 ,12))
+  y <- iv_pairs(c(3, 6), c(0, 2), c(6, 7), c(6, 9), c(8, 10))
+
+  expect_identical(
+    iv_count_precedes(x, y, closest = TRUE),
+    c(2L, 0L)
+  )
+})
+
+test_that("treats missings as equal by default", {
+  x <- iv(NA, NA)
+
+  expect_identical(
+    iv_count_precedes(x, x),
+    0L
+  )
+})
+
+# ------------------------------------------------------------------------------
+# iv_count_follows()
+
+test_that("can count follows", {
+  x <- iv_pairs(c(1, 5), c(10 ,12))
+  y <- iv_pairs(c(3, 6), c(0, 2), c(6, 7))
+
+  expect_identical(
+    iv_count_follows(x, y),
+    c(0L, 3L)
+  )
+})
+
+test_that("can locate the closest one it follows", {
+  x <- iv_pairs(c(1, 5), c(10, 12))
+  y <- iv_pairs(c(3, 6), c(0, 2), c(6, 7), c(6, 9), c(8, 10))
+
+  expect_identical(
+    iv_count_follows(x, y, closest = TRUE),
+    c(0L, 1L)
+  )
+})
+
+test_that("treats missings as equal by default", {
+  x <- iv(NA, NA)
+
+  expect_identical(
+    iv_count_follows(x, x),
+    0L
   )
 })
 
@@ -415,9 +507,45 @@ test_that("treats missings as equal by default", {
   )
 })
 
-test_that("can error on missing needles", {
+test_that("iv_locate_relates - can error on missing needles", {
   expect_snapshot(
     (expect_error(iv_locate_relates(iv(NA, NA), iv(1, 2), type = "equals", missing = "error")))
+  )
+})
+
+# ------------------------------------------------------------------------------
+# iv_count_relates()
+
+test_that("can count relations", {
+  x <- iv_pairs(c(1, 5), c(10 ,12), c(1, 5))
+  y <- iv_pairs(c(3, 6), c(0, 2), c(6, 7), c(4, 6))
+
+  expect_identical(
+    iv_count_relates(x, y, type = "overlaps"),
+    c(2L, 0L, 2L)
+  )
+  expect_identical(
+    iv_count_relates(x, y, type = "precedes"),
+    c(1L, 0L, 1L)
+  )
+})
+
+test_that("treats missings as equal by default", {
+  x <- iv(NA, NA)
+
+  expect_identical(
+    iv_count_relates(x, x, type = "overlaps"),
+    0L
+  )
+  expect_identical(
+    iv_count_relates(x, x, type = "equals"),
+    1L
+  )
+})
+
+test_that("iv_count_relates - can error on missing needles", {
+  expect_snapshot(
+    (expect_error(iv_count_relates(iv(NA, NA), iv(1, 2), type = "equals", missing = "error")))
   )
 })
 
