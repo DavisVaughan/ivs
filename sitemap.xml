@@ -22,6 +22,9 @@
     <loc>https://davisvaughan.github.io/iv/index.html</loc>
   </url>
   <url>
+    <loc>https://davisvaughan.github.io/iv/reference/allen-relation-count.html</loc>
+  </url>
+  <url>
     <loc>https://davisvaughan.github.io/iv/reference/allen-relation-detect-pairwise.html</loc>
   </url>
   <url>
@@ -67,6 +70,9 @@
     <loc>https://davisvaughan.github.io/iv/reference/iv_between.html</loc>
   </url>
   <url>
+    <loc>https://davisvaughan.github.io/iv/reference/iv_count_between.html</loc>
+  </url>
+  <url>
     <loc>https://davisvaughan.github.io/iv/reference/iv_format.html</loc>
   </url>
   <url>
@@ -77,6 +83,9 @@
   </url>
   <url>
     <loc>https://davisvaughan.github.io/iv/reference/new_iv.html</loc>
+  </url>
+  <url>
+    <loc>https://davisvaughan.github.io/iv/reference/relation-count.html</loc>
   </url>
   <url>
     <loc>https://davisvaughan.github.io/iv/reference/relation-detect-pairwise.html</loc>
