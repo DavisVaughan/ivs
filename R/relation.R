@@ -169,6 +169,104 @@
 #' iv_locate_overlaps(a, b, missing = NA)
 NULL
 
+#' Count relationships between two ivs
+#'
+#' @description
+#' This family of functions counts different types of relationships between
+#' two ivs. It works similar to [base::match()], where `needles[i]` checks for
+#' a relationship in all of `haystack`.
+#'
+#' - `iv_count_overlaps()` counts instances of a specific `type` of overlap
+#'   between the two ivs.
+#'
+#' - `iv_count_precedes()` counts instances when `needles[i]` precedes (i.e.
+#'   comes before) any interval in `haystack`.
+#'
+#' - `iv_count_follows()` counts instances when `needles[i]` follows (i.e.
+#'   comes after) any interval in `haystack`.
+#'
+#' These functions return an integer vector the same size as `needles`
+#' containing a count of the times a particular relationship between the `i`-th
+#' interval of `needles` and any interval of `haystack` occurred.
+#'
+#' @inheritParams iv_locate_overlaps
+#'
+#' @param missing `[integer(1) / "equals" / "error"]`
+#'
+#'   Handling of missing intervals in `needles`.
+#'
+#'   - `"equals"` considers missing intervals in `needles` as exactly equal
+#'     to missing intervals in `haystack` when determining if there is a
+#'     matching relationship between them.
+#'
+#'   - `"error"` throws an error if any intervals in `needles` are missing.
+#'
+#'   - If a single integer value is provided, this represents the count returned
+#'     for a missing interval in `needles`. Use `0L` to force missing intervals
+#'     to never match.
+#'
+#' @param no_match `[integer(1) / "error"]`
+#'
+#'   Handling of `needles` without a match.
+#'
+#'   - `"error"` throws an error if any needles have zero matches.
+#'
+#'   - If a single integer is provided, this represents the count returned for
+#'     a needle with zero matches. The default value gives unmatched needles
+#'     a count of `0L`.
+#'
+#' @return An integer vector the same size as `needles`.
+#'
+#' @seealso
+#' [Locating relationships][relation-locate]
+#'
+#' @name relation-count
+#'
+#' @examples
+#' library(vctrs)
+#'
+#' x <- iv_pairs(
+#'   as.Date(c("2019-01-05", "2019-01-10")),
+#'   as.Date(c("2019-01-07", "2019-01-15")),
+#'   as.Date(c("2019-01-20", "2019-01-31"))
+#' )
+#'
+#' y <- iv_pairs(
+#'   as.Date(c("2019-01-01", "2019-01-03")),
+#'   as.Date(c("2019-01-04", "2019-01-08")),
+#'   as.Date(c("2019-01-07", "2019-01-09")),
+#'   as.Date(c("2019-01-10", "2019-01-20")),
+#'   as.Date(c("2019-01-15", "2019-01-20"))
+#' )
+#'
+#' x
+#' y
+#'
+#' # Count the number of times `x` overlaps `y` at all
+#' iv_count_overlaps(x, y)
+#'
+#' # Count the number of times `y` is within an interval in `x`
+#' iv_count_overlaps(y, x, type = "within")
+#'
+#' # Count the number of times `x` precedes `y`
+#' iv_count_precedes(x, y)
+#'
+#' # ---------------------------------------------------------------------------
+#'
+#' a <- iv(c(1, NA), c(2, NA))
+#' b <- iv(c(NA, NA), c(NA, NA))
+#'
+#' # Missing intervals are seen as exactly equal by default, so they are
+#' # considered to overlap
+#' iv_count_overlaps(a, b)
+#'
+#' # If you'd like missing intervals to be treated as unmatched, set
+#' # `missing = 0L`
+#' iv_count_overlaps(a, b, missing = 0L)
+#'
+#' # If you'd like to propagate missing intervals, set `missing = NA`
+#' iv_count_overlaps(a, b, missing = NA)
+NULL
 
 #' Detect a relationship between two ivs
 #'
@@ -372,6 +470,30 @@ iv_locate_overlaps <- function(needles,
   )
 }
 
+#' @rdname relation-count
+#' @export
+iv_count_overlaps <- function(needles,
+                              haystack,
+                              ...,
+                              type = "any",
+                              missing = "equals",
+                              no_match = 0L) {
+  check_dots_empty0(...)
+
+  missing <- check_count_missing(missing)
+  no_match <- check_count_no_match(no_match)
+
+  locations <- iv_locate_overlaps(
+    needles = needles,
+    haystack = haystack,
+    type = type,
+    missing = translate_count_missing(missing),
+    no_match = translate_count_no_match(no_match)
+  )
+
+  iv_count_locations(locations, missing, no_match)
+}
+
 #' @rdname relation-detect
 #' @export
 iv_overlaps <- function(needles,
@@ -545,6 +667,76 @@ iv_locate_positional <- function(needles,
     remaining = remaining,
     multiple = multiple
   )
+}
+
+#' @rdname relation-count
+#' @export
+iv_count_precedes <- function(needles,
+                              haystack,
+                              ...,
+                              closest = FALSE,
+                              missing = "equals",
+                              no_match = 0L) {
+  check_dots_empty0(...)
+
+  iv_count_positional(
+    needles = needles,
+    haystack = haystack,
+    type = "precedes",
+    closest = closest,
+    missing = missing,
+    no_match = no_match
+  )
+}
+
+#' @rdname relation-count
+#' @export
+iv_count_follows <- function(needles,
+                             haystack,
+                             ...,
+                             closest = FALSE,
+                             missing = "equals",
+                             no_match = 0L) {
+  check_dots_empty0(...)
+
+  iv_count_positional(
+    needles = needles,
+    haystack = haystack,
+    type = "follows",
+    closest = closest,
+    missing = missing,
+    no_match = no_match
+  )
+}
+
+iv_count_positional <- function(needles,
+                                haystack,
+                                type,
+                                closest,
+                                missing,
+                                no_match,
+                                ...,
+                                call = caller_env()) {
+  if (type == "precedes") {
+    iv_locate_fn <- iv_locate_precedes
+  } else if (type == "follows") {
+    iv_locate_fn <- iv_locate_follows
+  } else {
+    abort("Unknown `type`.", .internal = TRUE)
+  }
+
+  missing <- check_count_missing(missing, call = call)
+  no_match <- check_count_no_match(no_match, call = call)
+
+  locations <- iv_locate_fn(
+    needles = needles,
+    haystack = haystack,
+    closest = closest,
+    missing = translate_count_missing(missing),
+    no_match = translate_count_no_match(no_match)
+  )
+
+  iv_count_locations(locations, missing, no_match)
 }
 
 #' @rdname relation-detect
@@ -900,6 +1092,83 @@ iv_locate_relates <- function(needles,
     remaining = remaining,
     multiple = multiple
   )
+}
+
+#' Count relations from Allen's Interval Algebra
+#'
+#' @description
+#' `iv_count_relates()` is similar to [iv_count_overlaps()], but it counts a
+#' specific set of relations developed by James Allen in the paper:
+#' [Maintaining Knowledge about Temporal Intervals](http://cse.unl.edu/~choueiry/Documents/Allen-CACM1983.pdf).
+#'
+#' @inheritSection allen-relation-locate Allen's Interval Algebra
+#'
+#' @inheritParams iv_count_overlaps
+#'
+#' @param type `[character(1)]`
+#'
+#'   The type of relationship to find. See the Allen's Interval Algebra section
+#'   for a complete description of each type. One of:
+#'
+#'   - `"precedes"`
+#'   - `"preceded-by"`
+#'   - `"meets"`
+#'   - `"met-by"`
+#'   - `"overlaps"`
+#'   - `"overlapped-by"`
+#'   - `"starts"`
+#'   - `"started-by"`
+#'   - `"during"`
+#'   - `"contains"`
+#'   - `"finishes"`
+#'   - `"finished-by"`
+#'   - `"equals"`
+#'
+#' @inherit iv_count_overlaps return
+#'
+#' @seealso
+#' [Locating relations from Allen's Interval Algebra][allen-relation-locate]
+#'
+#' @name allen-relation-count
+#' @export
+#' @examples
+#' x <- iv(1, 3)
+#' y <- iv(3, 4)
+#'
+#' # `"precedes"` is strict, and doesn't let the endpoints match
+#' iv_count_relates(x, y, type = "precedes")
+#'
+#' # Since that is what `"meets"` represents
+#' iv_count_relates(x, y, type = "meets")
+#'
+#' # `"overlaps"` is a very specific type of overlap where an interval in
+#' # `needles` straddles the start of an interval in `haystack`
+#' x <- iv_pairs(c(1, 4), c(1, 3), c(0, 3), c(2, 5))
+#' y <- iv(1, 4)
+#'
+#' # It doesn't match equality, or when the starts match, or when the end
+#' # of the interval in `haystack` is straddled instead
+#' iv_count_relates(x, y, type = "overlaps")
+iv_count_relates <- function(needles,
+                             haystack,
+                             ...,
+                             type,
+                             missing = "equals",
+                             no_match = 0L) {
+  check_dots_empty0(...)
+
+  missing <- check_count_missing(missing)
+  no_match <- check_count_no_match(no_match)
+
+  locations <- iv_locate_relates(
+    needles = needles,
+    haystack = haystack,
+    type = type,
+    missing = translate_count_missing(missing),
+    no_match = translate_count_no_match(no_match)
+  )
+
+  iv_count_locations(locations, missing, no_match)
 }
 
 #' Detect relations from Allen's Interval Algebra

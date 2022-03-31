@@ -17,21 +17,10 @@
       ! No element can contain missing values.
       x The element at location 1 contains missing values.
 
----
+# iv_count_overlaps - can error on missing needles
 
     Code
-      (expect_error(iv_locate_precedes(iv(NA, NA), iv(1, 2), missing = "error")))
-    Output
-      <error/vctrs_error_matches_incomplete>
-      Error in `stop_matches()`:
-      ! No element can contain missing values.
-      x The element at location 1 contains missing values.
-
----
-
-    Code
-      (expect_error(iv_locate_relates(iv(NA, NA), iv(1, 2), type = "equals", missing = "error"))
-      )
+      (expect_error(iv_count_overlaps(iv(NA, NA), iv(1, 2), missing = "error")))
     Output
       <error/vctrs_error_matches_incomplete>
       Error in `stop_matches()`:
@@ -56,6 +45,16 @@
       Error in `iv_locate_positional()`:
       ! `closest` must be a single `TRUE` or `FALSE`.
 
+# iv_locate_precedes - can error on missing needles
+
+    Code
+      (expect_error(iv_locate_precedes(iv(NA, NA), iv(1, 2), missing = "error")))
+    Output
+      <error/vctrs_error_matches_incomplete>
+      Error in `stop_matches()`:
+      ! No element can contain missing values.
+      x The element at location 1 contains missing values.
+
 # iv_locate_relates - takes common type
 
     Code
@@ -64,6 +63,28 @@
       <error/vctrs_error_incompatible_type>
       Error in `iv_locate_relates()`:
       ! Can't combine `needles` <double> and `haystack` <character>.
+
+# iv_locate_relates - can error on missing needles
+
+    Code
+      (expect_error(iv_locate_relates(iv(NA, NA), iv(1, 2), type = "equals", missing = "error"))
+      )
+    Output
+      <error/vctrs_error_matches_incomplete>
+      Error in `stop_matches()`:
+      ! No element can contain missing values.
+      x The element at location 1 contains missing values.
+
+# iv_count_relates - can error on missing needles
+
+    Code
+      (expect_error(iv_count_relates(iv(NA, NA), iv(1, 2), type = "equals", missing = "error"))
+      )
+    Output
+      <error/vctrs_error_matches_incomplete>
+      Error in `stop_matches()`:
+      ! No element can contain missing values.
+      x The element at location 1 contains missing values.
 
 # iv_detect_impl - takes common type
 

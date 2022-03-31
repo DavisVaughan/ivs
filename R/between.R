@@ -142,6 +142,102 @@ iv_locate_between <- function(needles,
   )
 }
 
+#' Count when a vector falls between an iv
+#'
+#' @description
+#' `iv_count_between()` counts instances of when `needles`, a vector, falls
+#' between the bounds of `haystack`, an iv. It works similar to [base::match()],
+#' where `needles[i]` checks for a match in all of `haystack`.
+#'
+#' This function returns an integer vector the same size as `needles`
+#' containing a count of the times where the `i`-th value of `needles`
+#' fell between any interval of `haystack`.
+#'
+#' @inheritParams iv_locate_between
+#'
+#' @param missing `[integer(1) / "equals" / "error"]`
+#'
+#'   Handling of missing values in `needles`.
+#'
+#'   - `"equals"` considers missing values in `needles` as exactly equal
+#'     to missing intervals in `haystack` when determining if there is a
+#'     matching relationship between them.
+#'
+#'   - `"error"` throws an error if any values in `needles` are missing.
+#'
+#'   - If a single integer value is provided, this represents the count returned
+#'     for a missing value in `needles`. Use `0L` to force missing values
+#'     to never match.
+#'
+#' @param no_match `[integer(1) / "error"]`
+#'
+#'   Handling of `needles` without a match.
+#'
+#'   - `"error"` throws an error if any needles have zero matches.
+#'
+#'   - If a single integer is provided, this represents the count returned for
+#'     a needle with zero matches. The default value gives unmatched needles
+#'     a count of `0L`.
+#'
+#' @return An integer vector the same size as `needles`.
+#'
+#' @seealso
+#' [Locating where a vector falls between an iv][iv_locate_between]
+#'
+#' @export
+#' @examples
+#' x <- as.Date(c("2019-01-05", "2019-01-10", "2019-01-07", "2019-01-20"))
+#'
+#' y <- iv_pairs(
+#'   as.Date(c("2019-01-01", "2019-01-03")),
+#'   as.Date(c("2019-01-04", "2019-01-08")),
+#'   as.Date(c("2019-01-07", "2019-01-09")),
+#'   as.Date(c("2019-01-10", "2019-01-20")),
+#'   as.Date(c("2019-01-15", "2019-01-20"))
+#' )
+#'
+#' x
+#' y
+#'
+#' # Count the number of times `x` is between the intervals in `y`
+#' iv_count_between(x, y)
+#'
+#' # ---------------------------------------------------------------------------
+#'
+#' a <- c(1, NA)
+#' b <- iv(c(NA, NA), c(NA, NA))
+#'
+#' # By default, missing values in `needles` are treated as being exactly
+#' # equal to missing intervals in `haystack`, so the missing value in `a` is
+#' # considered between the missing interval in `b`.
+#' iv_count_between(a, b)
+#'
+#' # If you'd like to propagate missing values, set `missing = NA`
+#' iv_count_between(a, b, missing = NA)
+#'
+#' # If you'd like missing values to be treated as unmatched, set
+#' # `missing = 0L`
+#' iv_count_between(a, b, missing = 0L)
+iv_count_between <- function(needles,
+                             haystack,
+                             ...,
+                             missing = "equals",
+                             no_match = 0L) {
+  check_dots_empty0(...)
+
+  missing <- check_count_missing(missing)
+  no_match <- check_count_no_match(no_match)
+
+  locations <- iv_locate_between(
+    needles = needles,
+    haystack = haystack,
+    missing = translate_count_missing(missing),
+    no_match = translate_count_no_match(no_match)
+  )
+
+  iv_count_locations(locations, missing, no_match)
+}
+
 #' Detect when a vector falls between an iv
 #'
 #' @description

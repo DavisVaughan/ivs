@@ -52,6 +52,55 @@ test_that("between can error on missing needles", {
 })
 
 # ------------------------------------------------------------------------------
+# iv_count_between()
+
+test_that("count between gets endpoints right", {
+  x <- c(1, 3)
+  y <- iv_pairs(c(1, 5), c(0, 1))
+
+  expect_identical(
+    iv_count_between(x, y),
+    c(1L, 1L)
+  )
+})
+
+test_that("can control missing value results", {
+  x <- c(NA, 3)
+  y <- iv_pairs(c(NA, NA))
+
+  expect_identical(
+    iv_count_between(x, y),
+    c(1L, 0L)
+  )
+  expect_identical(
+    iv_count_between(x, y, missing = NA_integer_),
+    c(NA, 0L)
+  )
+})
+
+test_that("`NaN` values look like `NA_real_`", {
+  x <- NaN
+  y <- iv_pairs(c(NA, NA))
+
+  expect_identical(
+    iv_count_between(x, y, missing = "equals"),
+    1L
+  )
+})
+
+test_that("between can error on missing needles", {
+  expect_snapshot(
+    (expect_error(iv_count_between(NA, iv(1, 2), missing = "error")))
+  )
+})
+
+test_that("between can error on unmatched needles", {
+  expect_snapshot(
+    (expect_error(iv_count_between(3, iv(1, 2), no_match = "error")))
+  )
+})
+
+# ------------------------------------------------------------------------------
 # iv_between()
 
 test_that("detect between gets endpoints right", {
