@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(iv)
+library(clock)
 library(dplyr, warn.conflicts = FALSE)
 library(tidyr, warn.conflicts = FALSE)
 ```
@@ -45,6 +46,15 @@ For example, the integer64 type from the bit64 package:
 ```{r}
 start <- bit64::as.integer64("900000000000")
 end <- start + 1234
+
+iv(start, end)
+```
+
+Or the year-month type from clock:
+
+```{r}
+start <- year_month_day(c(2019, 2020), c(1, 3))
+end <- year_month_day(c(2020, 2020), c(2, 6))
 
 iv(start, end)
 ```
@@ -255,6 +265,79 @@ iv_pairwise_between(x, y)
 
 Keep in mind that the intervals are half-open, so `12` doesn't fall between the interval of `[10, 12)`!
 This is different from `dplyr::between()`.
+
+## Counting overlaps
+
+Sometimes you just need the counts of the number of overlaps rather than the actual locations of them.
+For example, say your business has a subscription service and you'd like to compute a rolling monthly count of the total number of subscriptions that are active (i.e. in January 2019, how many subscriptions were active?).
+Customers are only allowed to have one subscription active at once, but they may cancel it and reactivate it at any time.
+If a customer was active at any point during the month, then they are counted in that month.
+
+```{r}
+enrollments <- tribble(
+  ~name,      ~start,          ~end,
+  "Amy",      "1, Jan, 2017",  "30, Jul, 2018",
+  "Franklin", "1, Jan, 2017",  "19, Feb, 2017",
+  "Franklin", "5, Jun, 2017",  "4, Feb, 2018",
+  "Franklin", "21, Oct, 2018", "9, Mar, 2019",
+  "Samir",    "1, Jan, 2017",  "4, Feb, 2017",
+  "Samir",    "5, Apr, 2017",  "12, Jun, 2018"
+)
+
+# Parse these into "day" precision year-month-day objects
+enrollments <- enrollments %>%
+  mutate(
+    start = year_month_day_parse(start, format = "%d, %b, %Y"),
+    end = year_month_day_parse(end, format = "%d, %b, %Y"),
+  )
+
+enrollments
+```
+
+Even though we have day precision information, we only actually need month precision intervals to answer this question.
+We'll use `calendar_narrow()` from clock to convert our `"day"` precision dates to `"month"` precision ones.
+We'll also add 1 month to the `end` intervals to reflect the fact that the end month is open (remember, ivs are half-open).
+
+```{r}
+enrollments <- enrollments %>%
+  mutate(
+    start = calendar_narrow(start, "month"),
+    end = calendar_narrow(end, "month") + 1L
+  )
+
+enrollments
+
+enrollments <- enrollments %>%
+  mutate(active = iv(start, end), .keep = "unused")
+
+enrollments
+```
+
+To answer this question, we are going to need to create a sequential vector of months that span the entire range of intervals.
+This starts at the smallest `start` and goes to the largest `end`.
+Because the `end` is half-open, there won't be any hits for that month, so we won't include it.
+
+```{r}
+bounds <- range(enrollments$active)
+lower <- iv_start(bounds[[1]])
+upper <- iv_end(bounds[[2]]) - 1L
+
+months <- tibble(month = seq(lower, upper, by = 1))
+
+months
+```
+
+Now we need to add a column to `months` to represent the number of subscriptions that were active in that month.
+To do this we can use `iv_count_between()`.
+It works like `iv_between()` and `iv_locate_between()` but returns an integer vector corresponding to the number of times the `i`-th "needle" value fell between any of the values in the "haystack".
+
+```{r}
+months %>%
+  mutate(count = iv_count_between(month, enrollments$active)) %>%
+  print(n = Inf)
+```
+
+There are also `iv_count_overlaps()`, `iv_count_precedes()`, and `iv_count_follows()` for working with two ivs at once.
 
 ## Grouping by overlaps
 
