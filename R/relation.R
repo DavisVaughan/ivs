@@ -91,15 +91,6 @@
 #' @name relation-locate
 #'
 #' @examples
-#' library(vctrs)
-#'
-#' join <- function(x, y, loc) {
-#'   data_frame(
-#'     x = vec_slice(x, loc$needles),
-#'     y = vec_slice(y, loc$haystack)
-#'   )
-#' }
-#'
 #' x <- iv_pairs(
 #'   as.Date(c("2019-01-05", "2019-01-10")),
 #'   as.Date(c("2019-01-07", "2019-01-15")),
@@ -121,39 +112,39 @@
 #' loc <- iv_locate_overlaps(x, y)
 #' loc
 #'
-#' join(x, y, loc)
+#' iv_align(x, y, locations = loc)
 #'
 #' # Find where `x` contains `y` and drop results when there isn't a match
 #' loc <- iv_locate_overlaps(x, y, type = "contains", no_match = "drop")
 #' loc
 #'
-#' join(x, y, loc)
+#' iv_align(x, y, locations = loc)
 #'
 #' # Find where `x` precedes `y`
 #' loc <- iv_locate_precedes(x, y)
 #' loc
 #'
-#' join(x, y, loc)
+#' iv_align(x, y, locations = loc)
 #'
 #' # Filter down to find only the closest interval in `y` of all the intervals
 #' # where `x` preceded it
 #' loc <- iv_locate_precedes(x, y, closest = TRUE)
 #'
-#' join(x, y, loc)
+#' iv_align(x, y, locations = loc)
 #'
 #' # Note that `closest` can result in duplicates if there is a tie.
 #' # `2019-01-20` appears as an end date twice in `haystack`.
 #' loc <- iv_locate_follows(x, y, closest = TRUE)
 #' loc
 #'
-#' join(x, y, loc)
+#' iv_align(x, y, locations = loc)
 #'
 #' # Force just one of the ties to be returned by using `multiple`.
 #' # Here we just request any of the ties, with no guarantee on which one.
 #' loc <- iv_locate_follows(x, y, closest = TRUE, multiple = "any")
 #' loc
 #'
-#' join(x, y, loc)
+#' iv_align(x, y, locations = loc)
 #'
 #' # ---------------------------------------------------------------------------
 #'

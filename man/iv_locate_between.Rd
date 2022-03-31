@@ -88,15 +88,6 @@ integer vector pointing to locations in \code{needles}. The \code{haystack} colu
 an integer vector pointing to locations in \code{haystack} with a match.
 }
 \examples{
-library(vctrs)
-
-join <- function(x, y, loc) {
-  data_frame(
-    x = vec_slice(x, loc$needles),
-    y = vec_slice(y, loc$haystack)
-  )
-}
-
 x <- as.Date(c("2019-01-05", "2019-01-10", "2019-01-07", "2019-01-20"))
 
 y <- iv_pairs(
@@ -114,13 +105,13 @@ y
 loc <- iv_locate_between(x, y)
 loc
 
-join(x, y, loc)
+iv_align(x, y, locations = loc)
 
 # Drop values in `x` without a match
 loc <- iv_locate_between(x, y, no_match = "drop")
 loc
 
-join(x, y, loc)
+iv_align(x, y, locations = loc)
 
 # ---------------------------------------------------------------------------
 
