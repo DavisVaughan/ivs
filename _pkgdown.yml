@@ -3,6 +3,9 @@ url: https://davisvaughan.github.io/iv/
 template:
   bootstrap: 5
 
+development:
+  mode: auto
+
 reference:
   - title: Interval Vectors
     contents:
