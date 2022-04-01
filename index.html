@@ -13,7 +13,7 @@
     interval vectors. Many of the operations in this package were inspired
     by James Allen's interval algebra, Allen (1983)
     &lt;doi:10.1145/182.358434&gt;.">
-<title>Interval Vectors • iv</title>
+<title>Interval Vectors • ivs</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -38,7 +38,7 @@
 
     <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
     
-    <a class="navbar-brand me-2" href="index.html">iv</a>
+    <a class="navbar-brand me-2" href="index.html">ivs</a>
 
     <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9000</small>
 
@@ -50,7 +50,7 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item">
-  <a class="nav-link" href="articles/iv.html">Get started</a>
+  <a class="nav-link" href="articles/ivs.html">Get started</a>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="reference/index.html">Reference</a>
@@ -62,7 +62,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/DavisVaughan/iv/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/DavisVaughan/ivs/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -75,13 +75,13 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="iv">iv<a class="anchor" aria-label="anchor" href="#iv"></a>
+<div class="page-header"><h1 id="ivs">ivs<a class="anchor" aria-label="anchor" href="#ivs"></a>
 </h1></div>
 <!-- badges: start -->
 
-<p>iv is a package dedicated to working with intervals in a generic way. It introduces a new type, the <strong>i</strong>nterval <strong>v</strong>ector, which is generally referred to as an <strong>iv</strong>. An iv is created from two parallel vectors representing the starts (inclusive) and ends (exclusive) of the intervals, like this:</p>
+<p>ivs (said, “eye-vees”) is a package dedicated to working with intervals in a generic way. It introduces a new type, the <strong>i</strong>nterval <strong>v</strong>ector, which is generally referred to as an <strong>iv</strong>. An iv is created from two parallel vectors representing the starts (inclusive) and ends (exclusive) of the intervals, like this:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/DavisVaughan/iv" class="external-link">iv</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/DavisVaughan/ivs" class="external-link">ivs</a></span><span class="op">)</span>
 
 <span class="co"># Interval vector of integers</span>
 <span class="fu"><a href="reference/iv.html">iv</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">:</span><span class="fl">11</span><span class="op">)</span>
@@ -106,18 +106,18 @@
 <div class="section level2">
 <h2 id="learning">Learning<a class="anchor" aria-label="anchor" href="#learning"></a>
 </h2>
-<p>The best way to learn about iv is by reading the <a href="https://davisvaughan.github.io/iv/articles/iv.html">Getting Started</a> vignette!</p>
+<p>The best way to learn about ivs is by reading the <a href="https://davisvaughan.github.io/ivs/articles/ivs.html">Getting Started</a> vignette!</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>Install the released version from <a href="https://CRAN.R-project.org" class="external-link">CRAN</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"iv"</span><span class="op">)</span></code></pre></div>
-<p>You can install the development version of iv from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ivs"</span><span class="op">)</span></code></pre></div>
+<p>You can install the development version of ivs from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"DavisVaughan/iv"</span><span class="op">)</span></code></pre></div>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"DavisVaughan/ivs"</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="inspiration">Inspiration<a class="anchor" aria-label="anchor" href="#inspiration"></a>
@@ -135,9 +135,8 @@
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="https://cloud.r-project.org/package=iv" class="external-link">View on CRAN</a></li>
-<li><a href="https://github.com/DavisVaughan/iv/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/DavisVaughan/iv/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/DavisVaughan/ivs/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/DavisVaughan/ivs/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -159,7 +158,7 @@
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html#citation">Citing iv</a></li>
+<li><a href="authors.html#citation">Citing ivs</a></li>
 </ul>
 </div>
 
@@ -174,8 +173,8 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://app.codecov.io/gh/DavisVaughan/iv?branch=main" class="external-link"><img src="https://codecov.io/gh/DavisVaughan/iv/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://github.com/DavisVaughan/iv/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/DavisVaughan/iv/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/DavisVaughan/ivs?branch=main" class="external-link"><img src="https://codecov.io/gh/DavisVaughan/ivs/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/DavisVaughan/ivs/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/DavisVaughan/ivs/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
 
