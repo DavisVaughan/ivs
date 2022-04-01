@@ -1,6 +1,6 @@
 Package: ivs
 Title: Interval Vectors
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: c(
     person("Davis", "Vaughan", , "davis@rstudio.com", role = c("aut", "cre")),
     person("RStudio", role = c("cph", "fnd"))
