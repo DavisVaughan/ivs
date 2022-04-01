@@ -14,17 +14,7 @@ iv_precedes(needles, haystack, ..., missing = "equals")
 iv_follows(needles, haystack, ..., missing = "equals")
 }
 \arguments{
-\item{needles}{\verb{[iv]}
-
-Interval vectors used for relation matching.
-\itemize{
-\item Each element of \code{needles} represents the interval to search for.
-\item \code{haystack} represents the intervals to search in.
-}
-
-Prior to comparison, \code{needles} and \code{haystack} are coerced to the same type.}
-
-\item{haystack}{\verb{[iv]}
+\item{needles, haystack}{\verb{[iv]}
 
 Interval vectors used for relation matching.
 \itemize{
