@@ -59,7 +59,7 @@ scale because it can be slow.
 }
 \subsection{Intervals}{
 
-Interval vectors in iv are \emph{right-open}, i.e. \verb{[start, end)}. This means that
+Interval vectors are \emph{right-open}, i.e. \verb{[start, end)}. This means that
 \code{start < end} is a requirement to generate an interval vector. In particular,
 empty intervals with \code{start == end} are not allowed.
 

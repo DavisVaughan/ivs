@@ -1,4 +1,4 @@
 library(testthat)
-library(iv)
+library(ivs)
 
-test_check("iv")
+test_check("ivs")

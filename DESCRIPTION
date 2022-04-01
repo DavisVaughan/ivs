@@ -1,4 +1,4 @@
-Package: iv
+Package: ivs
 Title: Interval Vectors
 Version: 0.0.0.9000
 Authors@R: c(
@@ -14,9 +14,9 @@ Description: Provides a library for generic interval manipulations using a
     by James Allen's interval algebra, Allen (1983)
     <doi:10.1145/182.358434>.
 License: MIT + file LICENSE
-URL: https://github.com/DavisVaughan/iv,
-    https://davisvaughan.github.io/iv/
-BugReports: https://github.com/DavisVaughan/iv/issues
+URL: https://github.com/DavisVaughan/ivs,
+    https://davisvaughan.github.io/ivs/
+BugReports: https://github.com/DavisVaughan/ivs/issues
 Depends: 
     R (>= 3.4)
 Imports: 

@@ -1,5 +1,4 @@
 #' @keywords internal
-#' @aliases iv-package
 "_PACKAGE"
 
 ## usethis namespace: start
