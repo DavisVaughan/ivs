@@ -1,8 +1,8 @@
 ---
-title: "Introduction to iv"
+title: "Introduction to ivs"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to iv}
+  %\VignetteIndexEntry{Introduction to ivs}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(iv)
+library(ivs)
 library(clock)
 library(dplyr, warn.conflicts = FALSE)
 library(tidyr, warn.conflicts = FALSE)
@@ -25,7 +25,7 @@ library(tidyr, warn.conflicts = FALSE)
 
 ## Introduction
 
-iv is a package dedicated to working with intervals in a generic way.
+ivs (said, "eye-vees") is a package dedicated to working with intervals in a generic way.
 It introduces a new type, the **i**nterval **v**ector, which is generally referred to as an **iv**.
 An iv is generally created from two parallel vectors representing the starts and ends of the intervals, like this:
 
@@ -85,7 +85,7 @@ tibble(x = x)
 
 ### Right-open intervals
 
-The only interval type that is supported by iv is a *right-open* interval, i.e. `[a, b)`.
+The only interval type that is supported by ivs is a *right-open* interval, i.e. `[a, b)`.
 While this might seem restrictive, it rarely ends up being a problem in practice, and often it aligns with the easiest way to express a particular interval.
 For example, consider an interval that spans the entire day of `2019-01-02`.
 If you wanted to represent this interval with second precision with a right-open interval, you'd do `[2019-01-02 00:00:00, 2019-01-03 00:00:00)`.
@@ -109,13 +109,13 @@ If you still aren't convinced, I'd encourage you to take a look at these resourc
 
 ### Empty intervals
 
-In iv, it is required that `start < end` when generating an interval vector.
+In ivs, it is required that `start < end` when generating an interval vector.
 This means that intervals like `[5, 2)` are invalid, but it also means that an "empty" interval of `[5, 5)` is also invalid.
 Practically, I've found that attempting to allow these ends up resulting in more implementation headaches than anything else, and they don't end up having very many uses.
 
 ## Finding overlaps
 
-One of the most compelling reasons to use iv is that it tries to make finding overlapping intervals as easy as possible.
+One of the most compelling reasons to use this package is that it tries to make finding overlapping intervals as easy as possible.
 `iv_locate_overlaps()` takes two ivs and returns a data frame containing information about where they overlap.
 It works somewhat like `base::match()` in that for each element of `needles`, it looks for a match in *all* of `haystack`.
 Unlike `match()`, it actually returns all of the overlaps rather than just the first.
@@ -626,14 +626,14 @@ See the documentation page of `iv_pairwise_intersect()` for a complete list of r
 
 ## Missing intervals
 
-Missing intervals are allowed in iv, you can generate them by supplying vectors to `iv()` or `iv_pairs()` that contain missing values in either input.
+Missing intervals are allowed in ivs, you can generate them by supplying vectors to `iv()` or `iv_pairs()` that contain missing values in either input.
 
 ```{r}
 x <- iv_pairs(c(1, 5), c(3, NA), c(NA, 3))
 x
 ```
 
-The defaults of all functions in iv treat missing intervals in one of two ways:
+The defaults of all functions in ivs treat missing intervals in one of two ways:
 
 -   Set-like operations treat missing intervals as *overlapping* other missing intervals, but they won't overlap any other interval.
     These include `iv_locate_overlaps()`, `iv_intersect()`, and `iv_splits()`.

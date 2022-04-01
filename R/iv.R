@@ -71,7 +71,7 @@ new_bare_iv_from_fields <- function(x) {
 #'
 #' ## Intervals
 #'
-#' Interval vectors in iv are _right-open_, i.e. `[start, end)`. This means that
+#' Interval vectors are _right-open_, i.e. `[start, end)`. This means that
 #' `start < end` is a requirement to generate an interval vector. In particular,
 #' empty intervals with `start == end` are not allowed.
 #'

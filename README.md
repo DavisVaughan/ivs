@@ -1,23 +1,23 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# iv
+# ivs
 
 <!-- badges: start -->
 
 [![Codecov test
-coverage](https://codecov.io/gh/DavisVaughan/iv/branch/main/graph/badge.svg)](https://app.codecov.io/gh/DavisVaughan/iv?branch=main)
-[![R-CMD-check](https://github.com/DavisVaughan/iv/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DavisVaughan/iv/actions/workflows/R-CMD-check.yaml)
+coverage](https://codecov.io/gh/DavisVaughan/ivs/branch/main/graph/badge.svg)](https://app.codecov.io/gh/DavisVaughan/ivs?branch=main)
+[![R-CMD-check](https://github.com/DavisVaughan/ivs/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DavisVaughan/ivs/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-iv is a package dedicated to working with intervals in a generic way. It
-introduces a new type, the **i**nterval **v**ector, which is generally
-referred to as an **iv**. An iv is created from two parallel vectors
-representing the starts (inclusive) and ends (exclusive) of the
-intervals, like this:
+ivs (said, “eye-vees”) is a package dedicated to working with intervals
+in a generic way. It introduces a new type, the **i**nterval **v**ector,
+which is generally referred to as an **iv**. An iv is created from two
+parallel vectors representing the starts (inclusive) and ends
+(exclusive) of the intervals, like this:
 
 ``` r
-library(iv)
+library(ivs)
 
 # Interval vector of integers
 iv(1:5, 7:11)
@@ -54,8 +54,8 @@ work automatically, like `hms::hms()`, `bit64::integer64()`, and
 
 ## Learning
 
-The best way to learn about iv is by reading the [Getting
-Started](https://davisvaughan.github.io/iv/articles/iv.html) vignette!
+The best way to learn about ivs is by reading the [Getting
+Started](https://davisvaughan.github.io/ivs/articles/ivs.html) vignette!
 
 ## Installation
 
@@ -63,15 +63,15 @@ Install the released version from [CRAN](https://CRAN.R-project.org)
 with:
 
 ``` r
-install.packages("iv")
+install.packages("ivs")
 ```
 
-You can install the development version of iv from
+You can install the development version of ivs from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("DavisVaughan/iv")
+devtools::install_github("DavisVaughan/ivs")
 ```
 
 ## Inspiration
