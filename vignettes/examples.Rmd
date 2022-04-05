@@ -1,0 +1,39 @@
+---
+title: "Stack Overflow Examples"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Stack Overflow Examples}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette collects links to a number of Stack Overflow questions that use ivs to answer them. They are roughly grouped by the function used to solve the question.
+
+#### iv_groups()
+
+- [Flatten / Merge overlapping time periods by group](https://stackoverflow.com/questions/28938147/how-to-flatten-merge-overlapping-time-periods/71754454#71754454)
+
+- [Merge millisecond date-time periods](https://stackoverflow.com/questions/60322604/merge-overlapping-time-periods-with-milliseconds-in-r/71754233#71754233)
+
+- [Merge overlapping date-time intervals by group](https://stackoverflow.com/questions/53213418/collapse-and-merge-overlapping-time-intervals/71753991#71753991)
+
+#### iv_identify_group()
+
+- [Identify overlapping date ranges](https://stackoverflow.com/questions/57208770/identify-overlapping-date-ranges-by-id-r/71753203#71753203)
+
+- [Determine if a date interval overlaps other date intervals](https://stackoverflow.com/questions/58283935/r-determine-if-each-date-interval-overlaps-with-all-other-date-intervals-in-a-d/71753341#71753341)
+
+#### iv_identify_splits()
+
+- [Find overlaps and create new rows for each overlap](https://stackoverflow.com/questions/46151452/find-overlapping-dates-for-each-id-and-create-a-new-row-for-the-overlap/71753687#71753687)
+
+#### iv_count_between()
+
+- [Aggregate rolling enrollment by month](https://stackoverflow.com/questions/71621389/use-dplyr-to-aggregate-counts-by-month-from-start-stop-ranged-variables/71752959#71752959)
