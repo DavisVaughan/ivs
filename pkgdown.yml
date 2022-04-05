@@ -3,7 +3,7 @@ pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
   ivs: ivs.html
-last_built: 2022-04-05T13:07Z
+last_built: 2022-04-05T13:10Z
 urls:
   reference: https://davisvaughan.github.io/ivs/reference
   article: https://davisvaughan.github.io/ivs/articles
