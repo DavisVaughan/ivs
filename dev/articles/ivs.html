@@ -152,7 +152,7 @@
 <h3 id="right-open-intervals">Right-open intervals<a class="anchor" aria-label="anchor" href="#right-open-intervals"></a>
 </h3>
 <p>The only interval type that is supported by ivs is a <em>right-open</em> interval, i.e. <code>[a, b)</code>. While this might seem restrictive, it rarely ends up being a problem in practice, and often it aligns with the easiest way to express a particular interval. For example, consider an interval that spans the entire day of <code>2019-01-02</code>. If you wanted to represent this interval with second precision with a right-open interval, you’d do <code>[2019-01-02 00:00:00, 2019-01-03 00:00:00)</code>. This nicely captures the exclusive “end” of the interval as the start of the next day. This also means it exactly aligns with the start of the <em>next</em> day’s interval, <code>[2019-01-03 00:00:00, 2019-01-04 00:00:00)</code>.</p>
-<p>If you wanted to represent this with a closed interval, you might do <code>[2019-01-02 00:00:00, 2019-01-02 23:59:59)</code>. Not only is this a bit awkward, it can also cause issues if the precision changes! Say you wanted to up the precision on this interval from second level precision to millisecond precision. The right-open interval wouldn’t have to change at all since the end of that interval is set to <code>2019-01-03 00:00:00</code> and anything before that is fair game. But the closed interval can’t be naively changed from <code>2019-01-02 23:59:59</code> to <code>2019-01-02 23:59:59.000</code>, as you’d lose the 999 milliseconds in that last second. Extra care would have to be taken to set the milliseconds to <code>2019-01-02 23:59:59.999</code>.</p>
+<p>If you wanted to represent this with a closed interval, you might do <code>[2019-01-02 00:00:00, 2019-01-02 23:59:59]</code>. Not only is this a bit awkward, it can also cause issues if the precision changes! Say you wanted to up the precision on this interval from second level precision to millisecond precision. The right-open interval wouldn’t have to change at all since the end of that interval is set to <code>2019-01-03 00:00:00</code> and anything before that is fair game. But the closed interval can’t be naively changed from <code>2019-01-02 23:59:59</code> to <code>2019-01-02 23:59:59.000</code>, as you’d lose the 999 milliseconds in that last second. Extra care would have to be taken to set the milliseconds to <code>2019-01-02 23:59:59.999</code>.</p>
 <p>If you still aren’t convinced, I’d encourage you to take a look at these resources that also advocate for right-open intervals:</p>
 <ul>
 <li><p><a href="https://www.cs.utexas.edu/users/EWD/transcriptions/EWD08xx/EWD831.html" class="external-link">Why numbering should start at 0</a></p></li>
@@ -830,7 +830,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer>
