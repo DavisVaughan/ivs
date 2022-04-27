@@ -92,7 +92,7 @@ If you wanted to represent this interval with second precision with a right-open
 This nicely captures the exclusive "end" of the interval as the start of the next day.
 This also means it exactly aligns with the start of the *next* day's interval, `[2019-01-03 00:00:00, 2019-01-04 00:00:00)`.
 
-If you wanted to represent this with a closed interval, you might do `[2019-01-02 00:00:00, 2019-01-02 23:59:59)`.
+If you wanted to represent this with a closed interval, you might do `[2019-01-02 00:00:00, 2019-01-02 23:59:59]`.
 Not only is this a bit awkward, it can also cause issues if the precision changes!
 Say you wanted to up the precision on this interval from second level precision to millisecond precision.
 The right-open interval wouldn't have to change at all since the end of that interval is set to `2019-01-03 00:00:00` and anything before that is fair game.
