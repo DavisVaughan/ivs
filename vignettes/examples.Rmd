@@ -24,11 +24,15 @@ This vignette collects links to a number of Stack Overflow questions that use iv
 
 - [Merge overlapping date-time intervals by group](https://stackoverflow.com/questions/53213418/collapse-and-merge-overlapping-time-intervals/71753991#71753991)
 
+- [Group hospital patient stay dates](https://stackoverflow.com/questions/72188780/grouping-dates-in-r-to-create-patient-episodes/72189705#72189705)
+
 #### iv_identify_group()
 
 - [Identify overlapping date ranges](https://stackoverflow.com/questions/57208770/identify-overlapping-date-ranges-by-id-r/71753203#71753203)
 
 - [Determine if a date interval overlaps other date intervals](https://stackoverflow.com/questions/58283935/r-determine-if-each-date-interval-overlaps-with-all-other-date-intervals-in-a-d/71753341#71753341)
+
+- [Identify active maintanence types](https://stackoverflow.com/questions/72062736/generate-new-variable-based-on-start-and-stop-date-in-dplyr/72063499#72063499)
 
 #### iv_identify_splits()
 
