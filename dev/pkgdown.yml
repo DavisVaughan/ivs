@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   examples: examples.html
   ivs: ivs.html
-last_built: 2022-05-10T16:22Z
+last_built: 2022-06-09T18:25Z
 urls:
   reference: https://davisvaughan.github.io/ivs/reference
   article: https://davisvaughan.github.io/ivs/articles
