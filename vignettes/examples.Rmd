@@ -41,3 +41,7 @@ This vignette collects links to a number of Stack Overflow questions that use iv
 #### iv_count_between()
 
 - [Aggregate rolling enrollment by month](https://stackoverflow.com/questions/71621389/use-dplyr-to-aggregate-counts-by-month-from-start-stop-ranged-variables/71752959#71752959)
+
+#### iv_complement()
+
+- [Find ranges of dates where an apartment is empty](https://stackoverflow.com/questions/72536566/adding-rows-for-missing-intervals-between-existing-intervals-in-r/72547866#72547866)
