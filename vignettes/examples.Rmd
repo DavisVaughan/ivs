@@ -45,3 +45,7 @@ This vignette collects links to a number of Stack Overflow questions that use iv
 #### iv_complement()
 
 - [Find ranges of dates where an apartment is empty](https://stackoverflow.com/questions/72536566/adding-rows-for-missing-intervals-between-existing-intervals-in-r/72547866#72547866)
+
+#### iv_locate_overlaps()
+
+- [Locate self overlaps and compute a proportion within those overlaps](https://stackoverflow.com/questions/72987129/count-instances-of-value-within-overlapping-dates/73039209#73039209)
