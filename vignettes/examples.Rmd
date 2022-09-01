@@ -42,6 +42,8 @@ This vignette collects links to a number of Stack Overflow questions that use iv
 
 - [Aggregate rolling enrollment by month](https://stackoverflow.com/questions/71621389/use-dplyr-to-aggregate-counts-by-month-from-start-stop-ranged-variables/71752959#71752959)
 
+- [Another aggregate rolling enrollment by month](https://stackoverflow.com/questions/73561876/finding-how-many-records-are-open-in-a-month-in-a-dataset-containing-single-rec/73575090#73575090)
+
 #### iv_complement()
 
 - [Find ranges of dates where an apartment is empty](https://stackoverflow.com/questions/72536566/adding-rows-for-missing-intervals-between-existing-intervals-in-r/72547866#72547866)
