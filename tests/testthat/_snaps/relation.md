@@ -13,7 +13,7 @@
       (expect_error(iv_locate_overlaps(iv(NA, NA), iv(1, 2), missing = "error")))
     Output
       <error/vctrs_error_matches_incomplete>
-      Error in `stop_matches()`:
+      Error in `vec_locate_matches()`:
       ! No element can contain missing values.
       x The element at location 1 contains missing values.
 
@@ -23,7 +23,7 @@
       (expect_error(iv_count_overlaps(iv(NA, NA), iv(1, 2), missing = "error")))
     Output
       <error/vctrs_error_matches_incomplete>
-      Error in `stop_matches()`:
+      Error in `vec_locate_matches()`:
       ! No element can contain missing values.
       x The element at location 1 contains missing values.
 
@@ -51,7 +51,7 @@
       (expect_error(iv_locate_precedes(iv(NA, NA), iv(1, 2), missing = "error")))
     Output
       <error/vctrs_error_matches_incomplete>
-      Error in `stop_matches()`:
+      Error in `vec_locate_matches()`:
       ! No element can contain missing values.
       x The element at location 1 contains missing values.
 
@@ -71,7 +71,7 @@
       )
     Output
       <error/vctrs_error_matches_incomplete>
-      Error in `stop_matches()`:
+      Error in `vec_locate_matches()`:
       ! No element can contain missing values.
       x The element at location 1 contains missing values.
 
@@ -82,7 +82,7 @@
       )
     Output
       <error/vctrs_error_matches_incomplete>
-      Error in `stop_matches()`:
+      Error in `vec_locate_matches()`:
       ! No element can contain missing values.
       x The element at location 1 contains missing values.
 
@@ -122,7 +122,7 @@
       (expect_error(iv_overlaps(iv(NA, NA), iv(1, 2), missing = "error")))
     Output
       <error/vctrs_error_matches_incomplete>
-      Error in `stop_matches()`:
+      Error in `vec_locate_matches()`:
       ! No element can contain missing values.
       x The element at location 1 contains missing values.
 
