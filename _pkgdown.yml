@@ -7,15 +7,16 @@ development:
   mode: auto
 
 reference:
-  - title: Interval Vectors
+  - title: Interval vectors
     contents:
     - iv
     - iv_start
 
-  - title: Groups and Splits
+  - title: Single vector operations
     contents:
     - iv_groups
     - iv_splits
+    - iv_containers
 
   - title: Relationships
     contents:
@@ -32,7 +33,7 @@ reference:
     - iv_count_between
     - iv_pairwise_between
 
-  - title: Set Operations
+  - title: Set operations
     contents:
     - iv_complement
     - iv_pairwise_complement
@@ -44,7 +45,7 @@ reference:
     - iv_count_relates
     - iv_pairwise_relates
 
-  - title: Developer Tools
+  - title: Developer tools
     contents:
     - new_iv
     - is_iv
