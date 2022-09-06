@@ -13,7 +13,7 @@
       (expect_error(iv_locate_overlaps(iv(NA, NA), iv(1, 2), missing = "error")))
     Output
       <error/vctrs_error_matches_incomplete>
-      Error in `vec_locate_matches()`:
+      Error in `iv_locate_overlaps()`:
       ! No element can contain missing values.
       x The element at location 1 contains missing values.
 
@@ -23,7 +23,7 @@
       (expect_error(iv_count_overlaps(iv(NA, NA), iv(1, 2), missing = "error")))
     Output
       <error/vctrs_error_matches_incomplete>
-      Error in `vec_locate_matches()`:
+      Error in `iv_locate_overlaps()`:
       ! No element can contain missing values.
       x The element at location 1 contains missing values.
 
@@ -33,7 +33,7 @@
       (expect_error(iv_locate_precedes(iv(1, 2), iv("a", "b"))))
     Output
       <error/vctrs_error_incompatible_type>
-      Error in `iv_locate_positional()`:
+      Error in `iv_locate_precedes()`:
       ! Can't combine `needles` <double> and `haystack` <character>.
 
 # iv_locate_precedes - validates 'closest'
@@ -42,7 +42,7 @@
       (expect_error(iv_locate_precedes(iv(1, 2), iv(1, 2), closest = "x")))
     Output
       <error/rlang_error>
-      Error in `iv_locate_positional()`:
+      Error in `iv_locate_precedes()`:
       ! `closest` must be a single `TRUE` or `FALSE`.
 
 # iv_locate_precedes - can error on missing needles
@@ -51,7 +51,7 @@
       (expect_error(iv_locate_precedes(iv(NA, NA), iv(1, 2), missing = "error")))
     Output
       <error/vctrs_error_matches_incomplete>
-      Error in `vec_locate_matches()`:
+      Error in `iv_locate_precedes()`:
       ! No element can contain missing values.
       x The element at location 1 contains missing values.
 
@@ -71,7 +71,7 @@
       )
     Output
       <error/vctrs_error_matches_incomplete>
-      Error in `vec_locate_matches()`:
+      Error in `iv_locate_relates()`:
       ! No element can contain missing values.
       x The element at location 1 contains missing values.
 
@@ -82,7 +82,7 @@
       )
     Output
       <error/vctrs_error_matches_incomplete>
-      Error in `vec_locate_matches()`:
+      Error in `iv_locate_relates()`:
       ! No element can contain missing values.
       x The element at location 1 contains missing values.
 
@@ -92,7 +92,7 @@
       (expect_error(iv_overlaps(iv(1, 2), iv("a", "b"))))
     Output
       <error/vctrs_error_incompatible_type>
-      Error in `iv_detect_impl()`:
+      Error in `iv_overlaps()`:
       ! Can't combine `needles` <double> and `haystack` <character>.
 
 # iv_detect_impl - validates 'missing'
@@ -101,19 +101,19 @@
       (expect_error(iv_overlaps(iv(1, 2), iv(1, 2), missing = 1)))
     Output
       <error/rlang_error>
-      Error in `check_detect_missing()`:
+      Error in `iv_overlaps()`:
       ! `missing` must be "equals", "error", or a single logical value.
     Code
       (expect_error(iv_overlaps(iv(1, 2), iv(1, 2), missing = "x")))
     Output
       <error/rlang_error>
-      Error in `check_detect_missing()`:
+      Error in `iv_overlaps()`:
       ! `missing` must be "equals", "error", or a single logical value.
     Code
       (expect_error(iv_overlaps(iv(1, 2), iv(1, 2), missing = c(TRUE, FALSE))))
     Output
       <error/rlang_error>
-      Error in `check_detect_missing()`:
+      Error in `iv_overlaps()`:
       ! `missing` must be "equals", "error", or a single logical value.
 
 # detect can error on missing needles
@@ -122,7 +122,7 @@
       (expect_error(iv_overlaps(iv(NA, NA), iv(1, 2), missing = "error")))
     Output
       <error/vctrs_error_matches_incomplete>
-      Error in `vec_locate_matches()`:
+      Error in `iv_overlaps()`:
       ! No element can contain missing values.
       x The element at location 1 contains missing values.
 

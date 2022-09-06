@@ -457,7 +457,8 @@ iv_locate_overlaps <- function(needles,
     incomplete = incomplete,
     no_match = no_match,
     remaining = remaining,
-    multiple = multiple
+    multiple = multiple,
+    call = current_env()
   )
 }
 
@@ -615,8 +616,12 @@ iv_locate_positional <- function(needles,
                                  missing,
                                  no_match,
                                  remaining,
-                                 multiple) {
-  args <- vec_cast_common(needles = needles, haystack = haystack)
+                                 multiple,
+                                 ...,
+                                 call = caller_env()) {
+  check_dots_empty0(...)
+
+  args <- vec_cast_common(needles = needles, haystack = haystack, .call = call)
   needles <- args[[1L]]
   haystack <- args[[2L]]
 
@@ -633,7 +638,7 @@ iv_locate_positional <- function(needles,
   incomplete <- check_locate_missing(missing, no_match)
 
   if (!is_bool(closest)) {
-    abort("`closest` must be a single `TRUE` or `FALSE`.")
+    abort("`closest` must be a single `TRUE` or `FALSE`.", call = call)
   }
 
   filter <- "none"
@@ -656,7 +661,8 @@ iv_locate_positional <- function(needles,
     incomplete = incomplete,
     no_match = no_match,
     remaining = remaining,
-    multiple = multiple
+    multiple = multiple,
+    call = call
   )
 }
 
@@ -765,11 +771,23 @@ iv_follows <- function(needles,
 iv_detect_positional <- function(needles,
                                  haystack,
                                  type,
-                                 missing) {
+                                 missing,
+                                 ...,
+                                 call = caller_env()) {
+  check_dots_empty0(...)
+
   # In the case of `equals`, missing values will never match,
   # so we force a `0L` which results in `FALSE` for missings.
-  incomplete <- check_detect_missing(missing, 0L)
-  iv_detect_impl(needles, haystack, type, incomplete, iv_prepare_positional)
+  incomplete <- check_detect_missing(missing, 0L, call = call)
+
+  iv_detect_impl(
+    needles = needles,
+    haystack = haystack,
+    type = type,
+    incomplete = incomplete,
+    iv_prepare_impl = iv_prepare_positional,
+    call = call
+  )
 }
 
 #' @rdname relation-detect-pairwise
@@ -794,8 +812,18 @@ iv_pairwise_follows <- function(x, y) {
 
 iv_detect_pairwise_positional <- function(x,
                                           y,
-                                          type) {
-  iv_detect_pairwise_impl(x, y, type, iv_prepare_positional)
+                                          type,
+                                          ...,
+                                          call = caller_env()) {
+  check_dots_empty0(...)
+
+  iv_detect_pairwise_impl(
+    x = x,
+    y = y,
+    type = type,
+    iv_prepare_impl = iv_prepare_positional,
+    call = call
+  )
 }
 
 
@@ -1081,7 +1109,8 @@ iv_locate_relates <- function(needles,
     incomplete = incomplete,
     no_match = no_match,
     remaining = remaining,
-    multiple = multiple
+    multiple = multiple,
+    call = current_env()
   )
 }
 
@@ -1443,7 +1472,7 @@ iv_detect_impl <- function(needles,
                            call = caller_env()) {
   check_dots_empty0(...)
 
-  args <- vec_cast_common(needles = needles, haystack = haystack)
+  args <- vec_cast_common(needles = needles, haystack = haystack, .call = call)
   needles <- args[[1L]]
   haystack <- args[[2L]]
 
@@ -1458,7 +1487,8 @@ iv_detect_impl <- function(needles,
     condition = condition,
     incomplete = incomplete,
     no_match = 0L,
-    multiple = "any"
+    multiple = "any",
+    call = call
   )
 
   # 0L -> FALSE
@@ -1470,7 +1500,12 @@ iv_detect_impl <- function(needles,
 }
 
 # Returns an `incomplete` argument value
-check_detect_missing <- function(missing, equals) {
+check_detect_missing <- function(missing,
+                                 equals,
+                                 ...,
+                                 call = caller_env()) {
+  check_dots_empty0(...)
+
   if (identical(missing, "equals")) {
     equals
   } else if (identical(missing, "error")) {
@@ -1482,7 +1517,7 @@ check_detect_missing <- function(missing, equals) {
   } else if (identical(missing, NA)) {
     NA_integer_
   } else {
-    abort('`missing` must be "equals", "error", or a single logical value.')
+    abort('`missing` must be "equals", "error", or a single logical value.', call = call)
   }
 }
 

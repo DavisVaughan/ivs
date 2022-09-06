@@ -1,5 +1,7 @@
 # ivs 0.1.0.9000
 
+* Improved on the call reported by errors thrown in ivs (#23).
+
 * New family of functions for identifying interval _containers_, which are
   intervals that aren't contained within any other interval. These functions
   are: `iv_containers()`, `iv_identify_containers()`, `iv_identify_container()`,

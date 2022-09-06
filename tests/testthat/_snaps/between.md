@@ -13,7 +13,7 @@
       (expect_error(iv_locate_between(NA, iv(1, 2), missing = "error")))
     Output
       <error/vctrs_error_matches_incomplete>
-      Error in `vec_locate_matches()`:
+      Error in `iv_locate_between()`:
       ! No element can contain missing values.
       x The element at location 1 contains missing values.
 
@@ -23,7 +23,7 @@
       (expect_error(iv_count_between(NA, iv(1, 2), missing = "error")))
     Output
       <error/vctrs_error_matches_incomplete>
-      Error in `vec_locate_matches()`:
+      Error in `iv_locate_between()`:
       ! No element can contain missing values.
       x The element at location 1 contains missing values.
 
@@ -33,7 +33,7 @@
       (expect_error(iv_count_between(3, iv(1, 2), no_match = "error")))
     Output
       <error/vctrs_error_matches_nothing>
-      Error in `vec_locate_matches()`:
+      Error in `iv_locate_between()`:
       ! Each element must have a match.
       x The element at location 1 does not have a match.
 
@@ -52,7 +52,7 @@
       (expect_error(iv_between(NA, iv(1, 2), missing = "error")))
     Output
       <error/vctrs_error_matches_incomplete>
-      Error in `vec_locate_matches()`:
+      Error in `iv_between()`:
       ! No element can contain missing values.
       x The element at location 1 contains missing values.
 

@@ -129,7 +129,8 @@ iv_locate_between <- function(needles,
     incomplete = incomplete,
     no_match = no_match,
     remaining = remaining,
-    multiple = multiple
+    multiple = multiple,
+    call = current_env()
   )
 }
 
@@ -341,7 +342,8 @@ iv_between <- function(needles,
     condition = condition,
     incomplete = incomplete,
     no_match = 0L,
-    multiple = "any"
+    multiple = "any",
+    call = current_env()
   )
 
   # 0L -> FALSE
