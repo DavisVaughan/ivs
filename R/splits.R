@@ -160,6 +160,8 @@ iv_identify_splits <- function(x, ..., on = NULL) {
     no_match = "error",
     incomplete = NA_integer_
   )
+  # TODO: https://github.com/r-lib/vctrs/issues/1210
+  # vec_partition(loc$haystack, vec_identify_runs(loc$needles))
   loc <- vec_split(loc$haystack, loc$needles)
 
   candidates <- new_iv(candidate_start, candidate_end)
@@ -196,6 +198,8 @@ iv_locate_splits <- function(x, ..., on = NULL) {
     no_match = "drop",
     incomplete = "match"
   )
+  # TODO: https://github.com/r-lib/vctrs/issues/1210
+  # vec_partition(loc$haystack, vec_identify_runs(loc$needles))
   loc <- vec_split(loc$haystack, loc$needles)
 
   key <- vec_slice(needles, loc$key)
