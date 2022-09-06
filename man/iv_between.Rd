@@ -7,16 +7,7 @@
 iv_between(needles, haystack, ..., missing = "equals")
 }
 \arguments{
-\item{needles}{\verb{[vector, iv]}
-
-\code{needles} should be a vector and \code{haystack} should be an iv. \code{needles}
-should have the same type as the start/end components of \code{haystack}.
-\itemize{
-\item Each element of \code{needles} represents the value to search for.
-\item \code{haystack} represents the intervals to search in.
-}}
-
-\item{haystack}{\verb{[vector, iv]}
+\item{needles, haystack}{\verb{[vector, iv]}
 
 \code{needles} should be a vector and \code{haystack} should be an iv. \code{needles}
 should have the same type as the start/end components of \code{haystack}.

@@ -6,7 +6,7 @@
 \alias{ivs-package}
 \title{ivs: Interval Vectors}
 \description{
-Provides a library for generic interval manipulations using a new interval vector class. Capabilities include: locating various kinds of relationships between two interval vectors, merging overlaps within a single interval vector, splitting an interval vector on its overlapping endpoints, and applying set theoretical operations on interval vectors. Many of the operations in this package were inspired by James Allen's interval algebra, Allen (1983) <doi:10.1145/182.358434>.
+Provides a library for generic interval manipulations using a new interval vector class. Capabilities include: locating various kinds of relationships between two interval vectors, merging overlaps within a single interval vector, splitting an interval vector on its overlapping endpoints, and applying set theoretical operations on interval vectors. Many of the operations in this package were inspired by James Allen's interval algebra, Allen (1983) \doi{10.1145/182.358434}.
 }
 \seealso{
 Useful links:

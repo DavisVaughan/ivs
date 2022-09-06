@@ -8,13 +8,7 @@
 iv_pairwise_relates(x, y, ..., type)
 }
 \arguments{
-\item{x}{\verb{[iv]}
-
-A pair of interval vectors.
-
-These will be recycled against each other and cast to the same type.}
-
-\item{y}{\verb{[iv]}
+\item{x, y}{\verb{[iv]}
 
 A pair of interval vectors.
 
