@@ -26,6 +26,10 @@ This vignette collects links to a number of Stack Overflow questions that use iv
 
 - [Group hospital patient stay dates](https://stackoverflow.com/questions/72188780/grouping-dates-in-r-to-create-patient-episodes/72189705#72189705)
 
+- [Merge overlaps within groups](https://stackoverflow.com/questions/56190415/group-by-if-overlap/73636229#73636229)
+
+- [Detect self-overlaps within groups](https://stackoverflow.com/questions/34951356/r-find-overlap-among-time-periods/73639374#73639374)
+
 #### iv_identify_group()
 
 - [Identify overlapping date ranges](https://stackoverflow.com/questions/57208770/identify-overlapping-date-ranges-by-id-r/71753203#71753203)
@@ -44,6 +48,10 @@ This vignette collects links to a number of Stack Overflow questions that use iv
 
 - [Another aggregate rolling enrollment by month](https://stackoverflow.com/questions/73561876/finding-how-many-records-are-open-in-a-month-in-a-dataset-containing-single-rec/73575090#73575090)
 
+#### iv_count_overlaps()
+
+- [Detect self-overlaps](https://stackoverflow.com/questions/40129485/overlap-ranges-in-single-dataframe/73636659#73636659)
+
 #### iv_complement()
 
 - [Find ranges of dates where an apartment is empty](https://stackoverflow.com/questions/72536566/adding-rows-for-missing-intervals-between-existing-intervals-in-r/72547866#72547866)
@@ -51,3 +59,7 @@ This vignette collects links to a number of Stack Overflow questions that use iv
 #### iv_locate_overlaps()
 
 - [Locate self overlaps and compute a proportion within those overlaps](https://stackoverflow.com/questions/72987129/count-instances-of-value-within-overlapping-dates/73039209#73039209)
+
+#### iv_overlaps()
+
+- [Detecting if there are any overlaps between two sets of ranges](https://stackoverflow.com/questions/26905601/comparing-and-finding-overlap-range-in-r/73639244#73639244)
