@@ -315,3 +315,23 @@ test_that("end of a subclass works", {
   x <- new_nested_integer_iv(iv)
   expect_identical(iv_end(x), 2L)
 })
+
+# ------------------------------------------------------------------------------
+# Concatenation
+
+test_that("can concatenate ivs", {
+  testthat_import_from("clock", "year_month_day")
+
+  x1 <- year_month_day(2019, 1)
+  x2 <- year_month_day(2019, 2)
+
+  x <- iv(x1, x2)
+  x_exp <- iv(vec_c(x1, x1), vec_c(x2, x2))
+
+  df <- data_frame(x = data_frame(y = x))
+  df_exp <- data_frame(x = data_frame(y = x_exp))
+
+  expect_equal(vec_c(x, x), x_exp)
+  expect_equal(vec_rbind(df, df), df_exp)
+  expect_equal(vec_c(df, df), df_exp)
+})

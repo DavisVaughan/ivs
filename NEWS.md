@@ -1,5 +1,7 @@
 # ivs 0.1.0.9000
 
+* Compatibility with recursive proxying (r-lib/vctrs#1648).
+
 * Improved on the call reported by errors thrown in ivs (#23).
 
 * New family of functions for identifying interval _containers_, which are

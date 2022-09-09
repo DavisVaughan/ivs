@@ -276,8 +276,16 @@ vec_cast.iv.iv <- function(x, to, ...) {
   new_bare_iv(start, end)
 }
 
+# Proxy and restore recursively through all fields
+
+#' @export
+vec_proxy.iv <- function(x, ...) {
+  x <- map(unclass(x), vec_proxy, ...)
+  data_frame(!!!x)
+}
 #' @export
 vec_restore.iv <- function(x, to, ...) {
+  x <- map2(x, unclass(to), vec_restore, ...)
   new_bare_iv_from_fields(x)
 }
 

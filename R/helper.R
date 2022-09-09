@@ -27,6 +27,18 @@ new_nested_integer_iv <- function(iv, ..., class = character()) {
   new_rcrd(fields, ..., class = c(class, "nested_integer_iv"))
 }
 
+# Proxy and restore recursively through `iv_proxy()`
+
+#' @export
+vec_proxy.nested_integer_iv <- function(x, ...) {
+  vec_proxy(iv_proxy(x), ...)
+}
+#' @export
+vec_restore.nested_integer_iv <- function(x, to, ...) {
+  out <- vec_restore(x, iv_proxy(to), ...)
+  iv_restore(out, to)
+}
+
 #' @export
 vec_ptype_full.nested_integer_iv <- function(x, ...) {
   "nested_integer_iv"
