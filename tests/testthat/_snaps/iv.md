@@ -79,7 +79,7 @@
     Code
       iv_pairs(c("a", "b"), c(1, 2))
     Condition
-      Error:
+      Error in `iv_pairs()`:
       ! Can't combine `..1` <character> and `..2` <double>.
 
 # ptype2 errors as needed
