@@ -126,7 +126,7 @@ iv_splits <- function(x, ..., on = NULL) {
     no_match = "drop",
     multiple = "any",
     incomplete = "match",
-    call = current_env()
+    error_call = current_env()
   )
 
   out <- vec_slice(needles, loc$needles)
@@ -160,7 +160,7 @@ iv_identify_splits <- function(x, ..., on = NULL) {
     condition = c("<", ">"),
     no_match = "error",
     incomplete = NA_integer_,
-    call = current_env()
+    error_call = current_env()
   )
   # TODO: https://github.com/r-lib/vctrs/issues/1210
   # vec_partition(loc$haystack, vec_identify_runs(loc$needles))
@@ -199,7 +199,7 @@ iv_locate_splits <- function(x, ..., on = NULL) {
     condition = c("<", ">"),
     no_match = "drop",
     incomplete = "match",
-    call = current_env()
+    error_call = current_env()
   )
   # TODO: https://github.com/r-lib/vctrs/issues/1210
   # vec_partition(loc$haystack, vec_identify_runs(loc$needles))
@@ -216,10 +216,14 @@ iv_locate_splits <- function(x, ..., on = NULL) {
   out
 }
 
-iv_split_candidates <- function(start, end, ..., on = NULL, call = caller_env()) {
+iv_split_candidates <- function(start,
+                                end,
+                                ...,
+                                on = NULL,
+                                error_call = caller_env()) {
   check_dots_empty0(...)
 
-  on <- vec_cast(on, start, x_arg = "on", to_arg = "iv_start(x)", call = call)
+  on <- vec_cast(on, start, x_arg = "on", to_arg = "iv_start(x)", call = error_call)
 
   # Candidates are built from all sorted unique values
   points <- vec_sort(vec_unique(vec_c(start, end, on)))
