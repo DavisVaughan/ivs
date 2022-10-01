@@ -22,7 +22,7 @@ Depends:
 Imports: 
     glue (>= 1.6.2),
     rlang (>= 1.0.5),
-    vctrs (>= 0.4.1.9000)
+    vctrs (>= 0.4.2.9000)
 Suggests: 
     bit64 (>= 4.0.5),
     clock (>= 0.6.0),
