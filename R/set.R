@@ -151,8 +151,8 @@ iv_intersect <- function(x, y) {
   x <- args[[1]]
   y <- args[[2]]
 
-  x_missing <- vec_equal_na(x)
-  y_missing <- vec_equal_na(y)
+  x_missing <- vec_detect_missing(x)
+  y_missing <- vec_detect_missing(y)
 
   any_x_missing <- any(x_missing)
   any_y_missing <- any(y_missing)
@@ -211,8 +211,8 @@ iv_difference <- function(x, y) {
   x <- args[[1]]
   y <- args[[2]]
 
-  x_missing <- vec_equal_na(x)
-  y_missing <- vec_equal_na(y)
+  x_missing <- vec_detect_missing(x)
+  y_missing <- vec_detect_missing(y)
 
   any_x_missing <- any(x_missing)
   any_y_missing <- any(y_missing)
@@ -270,8 +270,8 @@ iv_symmetric_difference <- function(x, y) {
   x <- args[[1]]
   y <- args[[2]]
 
-  x_missing <- vec_equal_na(x)
-  y_missing <- vec_equal_na(y)
+  x_missing <- vec_detect_missing(x)
+  y_missing <- vec_detect_missing(y)
 
   any_x_missing <- any(x_missing)
   any_y_missing <- any(y_missing)

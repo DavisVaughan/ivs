@@ -67,7 +67,7 @@ iv_format.data.frame <- function(x) {
 
   out <- vec_paste0(abbr, "[", vec_seq_along(x), ",]")
 
-  missing <- vec_equal_na(x)
+  missing <- vec_detect_missing(x)
   if (any(missing)) {
     out[missing] <- "NA"
   }

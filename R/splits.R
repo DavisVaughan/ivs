@@ -232,7 +232,7 @@ iv_split_candidates <- function(start, end, ..., on = NULL, call = caller_env())
   # 1 unique point (an `NA`), but we still want to keep `[NA, NA)` as an
   # interval candidate so we remove it now and add it back at the end.
   last <- vec_slice(points, size_points)
-  any_missing <- any(vec_equal_na(last))
+  any_missing <- any(vec_detect_missing(last))
   if (any_missing) {
     points <- vec_slice(points, -size_points)
     size_points <- size_points - 1L
