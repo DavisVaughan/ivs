@@ -149,7 +149,7 @@ iv_identify_group <- function(x, ..., abutting = TRUE) {
 
   times <- list_sizes(groups$loc)
 
-  loc <- vec_unchop(groups$loc, ptype = integer(), name_spec = zap())
+  loc <- list_unchop(groups$loc, ptype = integer(), name_spec = zap())
   loc <- vec_order(loc)
 
   start <- groups$key$start

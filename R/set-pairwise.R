@@ -281,7 +281,7 @@ iv_pairwise_difference <- function(x, y) {
 
   if (anyNA(update)) {
     # Ensure missings in `y` get propagated
-    missing <- vec_equal_na(update)
+    missing <- vec_detect_missing(update)
     start <- vec_assign(start, missing, NA)
     end <- vec_assign(end, missing, NA)
   }

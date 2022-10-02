@@ -159,9 +159,9 @@ test_that("can `vec_equal()`", {
   expect_identical(vec_equal(na, na, na_equal = TRUE), TRUE)
 })
 
-test_that("can `vec_equal_na()`", {
+test_that("can `vec_detect_missing()`", {
   x <- iv_pairs(c(1, 2), c(NA, NA))
-  expect_identical(vec_equal_na(x), c(FALSE, TRUE))
+  expect_identical(vec_detect_missing(x), c(FALSE, TRUE))
 })
 
 # ------------------------------------------------------------------------------
