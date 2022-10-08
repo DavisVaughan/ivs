@@ -254,6 +254,20 @@ is_iv <- function(x) {
 # ------------------------------------------------------------------------------
 
 #' @export
+vec_ptype.ivs_iv <- function(x, ...) {
+  start <- unclass(x)[[1L]]
+  ptype <- vec_ptype(start)
+  new_bare_iv(ptype, ptype)
+}
+
+#' @export
+vec_ptype_finalise.ivs_iv <- function(x, ...) {
+  start <- unclass(x)[[1L]]
+  ptype <- vec_ptype_finalise(start)
+  new_bare_iv(ptype, ptype)
+}
+
+#' @export
 vec_ptype2.ivs_iv.ivs_iv <- function(x, y, ...) {
   # If they are ivs, we can assume the structure is correct.
   # Going for absolute performance here.
