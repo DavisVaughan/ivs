@@ -1,3 +1,6 @@
+# Hardcoding the class isn't best practice. We are only doing this until
+# `vctrs::new_vctr()` and potentially `vctrs::new_rcrd()` get rewritten in C.
+# https://github.com/r-lib/vctrs/pull/1498
 iv_classes <- c("ivs_iv", "vctrs_rcrd", "vctrs_vctr")
 
 #' Construct a new iv
