@@ -169,8 +169,11 @@ iv_identify_splits <- function(x, ..., on = NULL) {
   candidates <- new_iv(candidate_start, candidate_end)
   candidates <- iv_restore(candidates, x)
 
+  ptype <- vec_ptype(candidates)
+  ptype <- vec_ptype_finalise(ptype)
+
   out <- vec_chop(candidates, loc$val)
-  out <- new_list_of(out, ptype = vec_ptype(candidates))
+  out <- new_list_of(out, ptype = ptype)
 
   out
 }
