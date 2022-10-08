@@ -62,6 +62,14 @@ test_that("missing intervals are identified", {
   )
 })
 
+test_that("identify containers works with single missing interval", {
+  x <- iv(NA, NA)
+  out <- iv_identify_containers(x)
+
+  expect_identical(out, list_of(x))
+  expect_identical(attr(out, "ptype"), iv(logical(), logical()))
+})
+
 test_that("identify containers is generic", {
   x <- nested_integer_iv_pairs(c(1, 5), c(3, 5), c(NA, NA), c(2, 6))
 

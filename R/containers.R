@@ -136,8 +136,11 @@ iv_identify_containers <- function(x) {
   # vec_partition(loc$haystack, vec_identify_runs(loc$needles))
   loc <- vec_split(loc$haystack, by = loc$needles)
 
+  ptype <- vec_ptype(containers)
+  ptype <- vec_ptype_finalise(ptype)
+
   out <- vec_chop(containers, loc$val)
-  out <- new_list_of(out, ptype = vec_ptype(containers))
+  out <- new_list_of(out, ptype = ptype)
 
   out
 }
