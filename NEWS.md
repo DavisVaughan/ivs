@@ -1,5 +1,12 @@
 # ivs 0.1.0.9000
 
+* You can now combine an iv containing unspecified components with any other iv
+  (#33).
+
+* `vec_ptype()` and `vec_ptype_finalise()` methods have been added for the iv
+  class. This should result in slightly better performance when combining many
+  ivs together (#27).
+
 * The `"iv"` class name has been renamed to the more specific `"ivs_iv"` to
   better insulate it from potential collisions with classes from other packages
   (#25).
