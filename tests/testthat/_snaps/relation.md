@@ -3,7 +3,7 @@
     Code
       (expect_error(iv_locate_overlaps(iv(1, 2), iv("a", "b"))))
     Output
-      <error/vctrs_error_incompatible_type>
+      <error/vctrs_error_ptype2>
       Error in `iv_locate_overlaps()`:
       ! Can't combine `needles` <double> and `haystack` <character>.
 
@@ -32,7 +32,7 @@
     Code
       (expect_error(iv_locate_precedes(iv(1, 2), iv("a", "b"))))
     Output
-      <error/vctrs_error_incompatible_type>
+      <error/vctrs_error_ptype2>
       Error in `iv_locate_precedes()`:
       ! Can't combine `needles` <double> and `haystack` <character>.
 
@@ -60,7 +60,7 @@
     Code
       (expect_error(iv_locate_relates(iv(1, 2), iv("a", "b"))))
     Output
-      <error/vctrs_error_incompatible_type>
+      <error/vctrs_error_ptype2>
       Error in `iv_locate_relates()`:
       ! Can't combine `needles` <double> and `haystack` <character>.
 
@@ -91,7 +91,7 @@
     Code
       (expect_error(iv_overlaps(iv(1, 2), iv("a", "b"))))
     Output
-      <error/vctrs_error_incompatible_type>
+      <error/vctrs_error_ptype2>
       Error in `iv_overlaps()`:
       ! Can't combine `needles` <double> and `haystack` <character>.
 
@@ -140,7 +140,7 @@
     Code
       (expect_error(iv_pairwise_overlaps(iv(1, 2), iv("a", "b"))))
     Output
-      <error/vctrs_error_incompatible_type>
+      <error/vctrs_error_ptype2>
       Error in `iv_pairwise_overlaps()`:
       ! Can't combine `x` <double> and `y` <character>.
 

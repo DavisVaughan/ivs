@@ -3,7 +3,7 @@
     Code
       (expect_error(iv_locate_between(1, iv("a", "b"))))
     Output
-      <error/vctrs_error_incompatible_type>
+      <error/vctrs_error_ptype2>
       Error in `iv_locate_between()`:
       ! Can't combine `needles` <double> and `iv_start(haystack)` <character>.
 
@@ -42,7 +42,7 @@
     Code
       (expect_error(iv_between(1, iv("a", "b"))))
     Output
-      <error/vctrs_error_incompatible_type>
+      <error/vctrs_error_ptype2>
       Error in `iv_between()`:
       ! Can't combine `needles` <double> and `iv_start(haystack)` <character>.
 
@@ -61,7 +61,7 @@
     Code
       (expect_error(iv_pairwise_between(1, iv("a", "b"))))
     Output
-      <error/vctrs_error_incompatible_type>
+      <error/vctrs_error_ptype2>
       Error in `iv_pairwise_between()`:
       ! Can't combine `x` <double> and `iv_start(y)` <character>.
 
