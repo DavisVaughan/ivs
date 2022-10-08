@@ -123,6 +123,36 @@ test_that("cast errors as needed", {
 })
 
 # ------------------------------------------------------------------------------
+# vec_proxy() / vec_restore()
+
+test_that("can concatenate ivs with recursive proxying/restoration (r-lib/vctrs#1648)", {
+  start <- new_rcrd(list(year = 2019, month = 1))
+  end <- new_rcrd(list(year = 2019, month = 2))
+
+  x <- iv(start, end)
+  expect <- iv(vec_c(start, start), vec_c(end, end))
+  expect_identical(vec_c(x, x), expect)
+
+  df <- data_frame(x = data_frame(y = x))
+  expect <- data_frame(x = data_frame(y = expect))
+  expect_identical(vec_c(df, df), expect)
+  expect_identical(vec_rbind(df, df), expect)
+
+  # With deeply recursive proxying/restoration
+  start <- data_frame(x = start)
+  end <- data_frame(x = end)
+
+  x <- iv(start, end)
+  expect <- iv(vec_c(start, start), vec_c(end, end))
+  expect_identical(vec_c(x, x), expect)
+
+  df <- data_frame(x = data_frame(y = x))
+  expect <- data_frame(x = data_frame(y = expect))
+  expect_identical(vec_c(df, df), expect)
+  expect_identical(vec_rbind(df, df), expect)
+})
+
+# ------------------------------------------------------------------------------
 # vec_proxy_equal()
 
 test_that("`vec_proxy_equal()` works", {
