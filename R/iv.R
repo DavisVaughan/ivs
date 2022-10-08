@@ -1,4 +1,4 @@
-iv_classes <- c("iv", "vctrs_rcrd", "vctrs_vctr")
+iv_classes <- c("ivs_iv", "vctrs_rcrd", "vctrs_vctr")
 
 #' Construct a new iv
 #'
@@ -245,13 +245,13 @@ iv_pairs <- function(..., ptype = NULL) {
 #' is_iv(1)
 #' is_iv(new_iv(1, 2))
 is_iv <- function(x) {
-  inherits(x, "iv")
+  inherits(x, "ivs_iv")
 }
 
 # ------------------------------------------------------------------------------
 
 #' @export
-vec_ptype2.iv.iv <- function(x, y, ...) {
+vec_ptype2.ivs_iv.ivs_iv <- function(x, y, ...) {
   # If they are ivs, we can assume the structure is correct.
   # Going for absolute performance here.
   x <- unclass(x)[[1L]]
@@ -263,7 +263,7 @@ vec_ptype2.iv.iv <- function(x, y, ...) {
 }
 
 #' @export
-vec_cast.iv.iv <- function(x, to, ...) {
+vec_cast.ivs_iv.ivs_iv <- function(x, to, ...) {
   # If they are ivs, we can assume the structure is correct.
   # Going for absolute performance here.
   to <- unclass(to)[[1L]]
@@ -279,7 +279,7 @@ vec_cast.iv.iv <- function(x, to, ...) {
 }
 
 #' @export
-vec_restore.iv <- function(x, to, ...) {
+vec_restore.ivs_iv <- function(x, to, ...) {
   new_bare_iv_from_fields(x)
 }
 
@@ -387,7 +387,7 @@ iv_proxy.default <- function(x, ...) {
 }
 
 #' @export
-iv_proxy.iv <- function(x, ...) {
+iv_proxy.ivs_iv <- function(x, ...) {
   x
 }
 
@@ -406,14 +406,14 @@ iv_restore.default <- function(x, to, ...) {
 }
 
 #' @export
-iv_restore.iv <- function(x, to, ...) {
+iv_restore.ivs_iv <- function(x, to, ...) {
   x
 }
 
 # ------------------------------------------------------------------------------
 
 #' @export
-vec_ptype_abbr.iv <- function(x, ...) {
+vec_ptype_abbr.ivs_iv <- function(x, ...) {
   proxy <- iv_proxy(x)
   start <- field_start(proxy)
   inner <- vec_ptype_abbr(start)
@@ -421,7 +421,7 @@ vec_ptype_abbr.iv <- function(x, ...) {
 }
 
 #' @export
-vec_ptype_full.iv <- function(x, ...) {
+vec_ptype_full.ivs_iv <- function(x, ...) {
   proxy <- iv_proxy(x)
   start <- field_start(proxy)
   inner <- vec_ptype_full(start)

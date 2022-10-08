@@ -24,36 +24,36 @@ new_nested_integer_iv <- function(iv, ..., class = character()) {
 
   fields <- list(iv = iv)
 
-  new_rcrd(fields, ..., class = c(class, "nested_integer_iv"))
+  new_rcrd(fields, ..., class = c(class, "ivs_nested_integer_iv"))
 }
 
 #' @export
-vec_ptype_full.nested_integer_iv <- function(x, ...) {
+vec_ptype_full.ivs_nested_integer_iv <- function(x, ...) {
   "nested_integer_iv"
 }
 
 #' @export
-format.nested_integer_iv <- function(x, ...) {
+format.ivs_nested_integer_iv <- function(x, ...) {
   format(field(x, "iv"), ...)
 }
 
 #' @export
-vec_ptype2.nested_integer_iv.nested_integer_iv <- function(x, y, ...) {
+vec_ptype2.ivs_nested_integer_iv.ivs_nested_integer_iv <- function(x, y, ...) {
   iv <- new_iv(start = integer(), end = integer())
   new_nested_integer_iv(iv = iv)
 }
 
 #' @export
-vec_cast.nested_integer_iv.nested_integer_iv <- function(x, to, ...) {
+vec_cast.ivs_nested_integer_iv.ivs_nested_integer_iv <- function(x, to, ...) {
   x
 }
 
 #' @export
-iv_proxy.nested_integer_iv <- function(x, ...) {
+iv_proxy.ivs_nested_integer_iv <- function(x, ...) {
   field(x, "iv")
 }
 
 #' @export
-iv_restore.nested_integer_iv <- function(x, to, ...) {
+iv_restore.ivs_nested_integer_iv <- function(x, to, ...) {
   new_nested_integer_iv(x)
 }

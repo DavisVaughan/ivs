@@ -1,5 +1,9 @@
 # ivs 0.1.0.9000
 
+* The `"iv"` class name has been renamed to the more specific `"ivs_iv"` to
+  better insulate it from potential collisions with classes from other packages
+  (#25).
+
 * Improved on the call reported by errors thrown in ivs (#23).
 
 * New family of functions for identifying interval _containers_, which are
