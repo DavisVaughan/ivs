@@ -95,12 +95,84 @@ test_that("can check if an object is an iv", {
 })
 
 # ------------------------------------------------------------------------------
+# vec_ptype()
+
+test_that("ptype is computed correctly with simple vectors (#27)", {
+  expect_identical(
+    vec_ptype(iv(1:5, 2:6)),
+    iv(integer(), integer())
+  )
+})
+
+test_that("ptype is computed correctly with data frame components", {
+  start <- data_frame(a = 1, b = "x")
+  end <- data_frame(a = 3, b = "a")
+  x <- iv(start, end)
+
+  expect <- data_frame(a = double(), b = character())
+  expect <- iv(expect, expect)
+
+  expect_identical(vec_ptype(x), expect)
+})
+
+test_that("ptype returns unspecified on fully `NA` unspecified vectors", {
+  # Must be unspecified so `vec_ptype2()` can combine ivs with unspecified
+  # `start/end` with any other iv.
+  x <- iv(NA, NA)
+  ptype <- new_iv(unspecified(), unspecified())
+  expect_identical(vec_ptype(x), ptype)
+
+  # Not finalized recursively either
+  x <- data_frame(x = NA, y = NA)
+  x <- iv(x, x)
+  ptype <- data_frame(x = unspecified(), y = unspecified())
+  ptype <- new_iv(ptype, ptype)
+  expect_identical(vec_ptype(x), ptype)
+})
+
+test_that("ptype is finalised through `vec_ptype_finalise()`", {
+  x <- iv(NA, NA)
+
+  ptype <- vec_ptype(x)
+  expect <- new_iv(unspecified(), unspecified())
+  expect_identical(ptype, expect)
+
+  ptype <- vec_ptype_finalise(ptype)
+  expect <- new_iv(logical(), logical())
+  expect_identical(ptype, expect)
+
+  # Finalized recursively
+  x <- data_frame(x = NA, y = NA)
+  x <- iv(x, x)
+
+  ptype <- vec_ptype(x)
+  expect <- data_frame(x = unspecified(), y = unspecified())
+  expect <- new_iv(expect, expect)
+  expect_identical(ptype, expect)
+
+  ptype <- vec_ptype_finalise(ptype)
+  expect <- data_frame(x = logical(), y = logical())
+  expect <- new_iv(expect, expect)
+  expect_identical(ptype, expect)
+})
+
+# ------------------------------------------------------------------------------
 # vec_ptype2()
 
 test_that("ptype2 is computed right", {
   expect_identical(
     vec_ptype2(iv(1, 2), iv(1L, 2L)),
     iv(double(), double())
+  )
+})
+
+test_that("ptype2 with unspecified start/end uses type of finalised input (#33)", {
+  x <- iv(NA, NA)
+  y <- iv("x", "y")
+
+  expect_identical(
+    vec_ptype2(x, y),
+    iv(character(), character())
   )
 })
 

@@ -137,7 +137,10 @@ test_that("identify splits works with single interval", {
 
 test_that("identify splits works with single missing interval", {
   x <- iv(NA, NA)
-  expect_identical(iv_identify_splits(x), list_of(x))
+  out <- iv_identify_splits(x)
+
+  expect_identical(out, list_of(x))
+  expect_identical(attr(out, "ptype"), iv(logical(), logical()))
 })
 
 test_that("identify splits works with `on`", {

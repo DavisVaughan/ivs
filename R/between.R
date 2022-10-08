@@ -99,11 +99,9 @@ iv_locate_between <- function(needles,
   haystack_start <- field_start(haystack)
   haystack_end <- field_end(haystack)
 
-  ptype <- vec_ptype2(
-    needles,
-    haystack_start,
-    x_arg = "needles",
-    y_arg = "iv_start(haystack)"
+  ptype <- vec_ptype_common(
+    needles = needles,
+    `iv_start(haystack)` = haystack_start
   )
 
   args <- vec_cast_common(
@@ -313,11 +311,9 @@ iv_between <- function(needles,
   haystack_start <- field_start(haystack)
   haystack_end <- field_end(haystack)
 
-  ptype <- vec_ptype2(
-    needles,
-    haystack_start,
-    x_arg = "needles",
-    y_arg = "iv_start(haystack)"
+  ptype <- vec_ptype_common(
+    needles = needles,
+    `iv_start(haystack)` = haystack_start
   )
 
   args <- vec_cast_common(
@@ -411,11 +407,9 @@ iv_pairwise_between <- function(x, y) {
   y_start <- field_start(y)
   y_end <- field_end(y)
 
-  ptype <- vec_ptype2(
-    x,
-    y_start,
-    x_arg = "x",
-    y_arg = "iv_start(y)"
+  ptype <- vec_ptype_common(
+    x = x,
+    `iv_start(y)` = y_start
   )
 
   args <- vec_cast_common(

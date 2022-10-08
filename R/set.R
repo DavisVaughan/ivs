@@ -166,6 +166,7 @@ iv_intersect <- function(x, y) {
 
   if (vec_size(x) == 0L || vec_size(y) == 0L) {
     out <- vec_ptype(x)
+    out <- vec_ptype_finalise(out)
 
     if (any_x_missing && any_y_missing) {
       out <- vec_c(out, vec_init(out))
