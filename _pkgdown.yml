@@ -10,6 +10,7 @@ reference:
   - title: Interval vectors
     contents:
     - iv
+    - iv_diff
     - iv_start
 
   - title: Single vector operations
