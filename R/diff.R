@@ -1,4 +1,4 @@
-#' Interval diff
+#' Diff a vector to create an interval vector
 #'
 #' @description
 #' `iv_diff()` is a convenient way to generate an iv from a preexisting vector,

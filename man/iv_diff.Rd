@@ -2,7 +2,7 @@
 % Please edit documentation in R/diff.R
 \name{iv_diff}
 \alias{iv_diff}
-\title{Interval diff}
+\title{Diff a vector to create an interval vector}
 \usage{
 iv_diff(x)
 }
