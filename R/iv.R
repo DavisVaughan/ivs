@@ -256,14 +256,14 @@ is_iv <- function(x) {
 #' @export
 vec_ptype.ivs_iv <- function(x, ...) {
   start <- unclass(x)[[1L]]
-  ptype <- vec_ptype(start)
+  ptype <- vec_ptype(start, ...)
   new_bare_iv(ptype, ptype)
 }
 
 #' @export
 vec_ptype_finalise.ivs_iv <- function(x, ...) {
   start <- unclass(x)[[1L]]
-  ptype <- vec_ptype_finalise(start)
+  ptype <- vec_ptype_finalise(start, ...)
   new_bare_iv(ptype, ptype)
 }
 
