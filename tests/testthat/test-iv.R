@@ -23,18 +23,21 @@ test_that("can generate an iv", {
   expect_identical(iv(1, 2), new_iv(1, 2))
 })
 
-test_that("incomplete values are propagated", {
+test_that("incomplete values are propagated (#36)", {
   expect_identical(iv(NA, TRUE), iv(NA, NA))
   expect_identical(iv(TRUE, NA), iv(NA, NA))
 
   # Propagates incompleteness, not missingness!
-  # Seen as incomplete even though start is "less" than end
   x <- data_frame(x = 1, y = NA)
   y <- data_frame(x = 2, y = 1)
-
   expect <- data_frame(x = NA_real_, y = NA_real_)
 
+  # Seen as incomplete even though start is "less" than end
   expect_identical(iv(x, y), iv(expect, expect))
+
+  # Seen as incomplete even though start is "greater" than end (#36)
+  # No error here, incompleteness is handled first
+  expect_identical(iv(y, x), iv(expect, expect))
 })
 
 test_that("can force a ptype", {

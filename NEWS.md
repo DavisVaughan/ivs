@@ -1,5 +1,8 @@
 # ivs 0.1.0.9000
 
+* In `iv()`, incomplete value propagation is now done before the `start < end`
+  check, which fixes an inconsistent edge case (#36).
+
 * New `iv_diff()` for generating an iv from an existing vector that is in
   strictly increasing order (#17).
 

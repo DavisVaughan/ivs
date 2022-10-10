@@ -62,6 +62,17 @@ test_that("incomplete values are promoted to fully missing", {
   )
 })
 
+test_that("incomplete rows become fully missing even if they are technically comparable (#36)", {
+  # Row 1 is technically "greater than" row 2 if `vec_compare()` is used, but we
+  # want incomplete rows to always be considered missing.
+  x <- data_frame(a = c(1, 0, 3, 3), b = c(2, NA, 4, 5))
+
+  expect_identical(
+    iv_diff(x),
+    iv_pairs(c(NA, NA), c(NA, NA), vec_c(x[3,], x[4,]))
+  )
+})
+
 test_that("works with size 1 input", {
   expect_identical(iv_diff(1), iv(double(), double()))
 
