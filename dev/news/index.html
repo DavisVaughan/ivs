@@ -55,7 +55,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0.9000" id="ivs-0109000">ivs 0.1.0.9000<a class="anchor" aria-label="anchor" href="#ivs-0109000"></a></h2>
-<ul><li><p>New <code><a href="../reference/iv_diff.html">iv_diff()</a></code> for generating an iv from an existing vector that is in strictly increasing order (<a href="https://github.com/DavisVaughan/ivs/issues/17" class="external-link">#17</a>).</p></li>
+<ul><li><p>In <code><a href="../reference/iv.html">iv()</a></code>, incomplete value propagation is now done before the <code>start &lt; end</code> check, which fixes an inconsistent edge case (<a href="https://github.com/DavisVaughan/ivs/issues/36" class="external-link">#36</a>).</p></li>
+<li><p>New <code><a href="../reference/iv_diff.html">iv_diff()</a></code> for generating an iv from an existing vector that is in strictly increasing order (<a href="https://github.com/DavisVaughan/ivs/issues/17" class="external-link">#17</a>).</p></li>
 <li><p>You can now combine an iv containing unspecified components with any other iv (<a href="https://github.com/DavisVaughan/ivs/issues/33" class="external-link">#33</a>).</p></li>
 <li><p><code><a href="https://vctrs.r-lib.org/reference/vec_ptype.html" class="external-link">vec_ptype()</a></code> and <code><a href="https://vctrs.r-lib.org/reference/new_partial.html" class="external-link">vec_ptype_finalise()</a></code> methods have been added for the iv class. This should result in slightly better performance when combining many ivs together (<a href="https://github.com/DavisVaughan/ivs/issues/27" class="external-link">#27</a>).</p></li>
 <li><p>The <code>"iv"</code> class name has been renamed to the more specific <code>"ivs_iv"</code> to better insulate it from potential collisions with classes from other packages (<a href="https://github.com/DavisVaughan/ivs/issues/25" class="external-link">#25</a>).</p></li>
