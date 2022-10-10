@@ -13,16 +13,14 @@ err_locs <- function(x) {
 
   if (size == 0L) {
     abort("`x` must have at least 1 location.", .internal = TRUE)
-  }
-
-  if (size > 5L) {
-    x <- x[1:5]
-    extra <- glue(" and {size - 5L} more")
+  } else if (size == 1L) {
+    glue("`{x}`")
+  } else if (size <= 5L) {
+    x <- glue_collapse(x, sep = ", ")
+    glue("`c({x})`")
   } else {
-    extra <- ""
+    x <- x[1:5]
+    x <- glue_collapse(x, sep = ", ")
+    glue("`c({x})` and {size - 5L} more")
   }
-
-  x <- glue_collapse(x, sep = ", ")
-
-  glue("`c({x})`{extra}")
 }

@@ -22,7 +22,7 @@
     Condition
       Error in `iv_diff()`:
       ! `x` must be in strictly increasing order.
-      i `x` is not in strictly increasing order at locations: `c(3)`.
+      i `x` is not in strictly increasing order at locations: `3`.
 
 ---
 
@@ -40,5 +40,5 @@
     Condition
       Error in `iv_diff()`:
       ! `x` must be in strictly increasing order.
-      i `x` is not in strictly increasing order at locations: `c(3)`.
+      i `x` is not in strictly increasing order at locations: `3`.
 

@@ -5,7 +5,7 @@
     Condition
       Error in `iv()`:
       ! `start` must be less than `end`.
-      i `start` is not less than `end` at locations: `c(1)`.
+      i `start` is not less than `end` at locations: `1`.
 
 ---
 
@@ -14,7 +14,7 @@
     Condition
       Error in `iv()`:
       ! `start` must be less than `end`.
-      i `start` is not less than `end` at locations: `c(1)`.
+      i `start` is not less than `end` at locations: `1`.
 
 ---
 
