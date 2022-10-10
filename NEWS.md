@@ -1,5 +1,8 @@
 # ivs 0.1.0.9000
 
+* New `iv_diff()` for generating an iv from an existing vector that is in
+  strictly increasing order (#17).
+
 * You can now combine an iv containing unspecified components with any other iv
   (#33).
 
