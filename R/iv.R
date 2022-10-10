@@ -169,6 +169,16 @@ iv <- function(start, end, ..., ptype = NULL, size = NULL) {
   start <- args$start
   end <- args$end
 
+  joint <- data_frame(start = start, end = end)
+  complete <- vec_detect_complete(joint)
+
+  if (!all(complete)) {
+    incomplete <- !complete
+    na <- vec_init(start)
+    start <- vec_assign(start, incomplete, na)
+    end <- vec_assign(end, incomplete, na)
+  }
+
   compare <- vec_compare(start, end)
   greater_or_equal <- compare != -1L
 
@@ -182,16 +192,6 @@ iv <- function(start, end, ..., ptype = NULL, size = NULL) {
       )
     )
     abort(message)
-  }
-
-  joint <- data_frame(start = start, end = end)
-  complete <- vec_detect_complete(joint)
-
-  if (!all(complete)) {
-    incomplete <- !complete
-    na <- vec_init(start)
-    start <- vec_assign(start, incomplete, na)
-    end <- vec_assign(end, incomplete, na)
   }
 
   new_iv(start, end)
