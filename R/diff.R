@@ -65,7 +65,7 @@
 #' df %>% mutate(iv = iv_diff(c(NA, x)))
 #' df %>% mutate(iv = iv_diff(c(x, NA)))
 iv_diff <- function(x) {
-  vec_assert(x)
+  obj_check_vector(x)
 
   rank <- vec_rank(x, ties = "dense", incomplete = "na")
   is_strictly_increasing <- !is.unsorted(rank, na.rm = TRUE, strictly = TRUE)

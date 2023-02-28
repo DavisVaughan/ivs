@@ -43,7 +43,7 @@ check_count_missing <- function(missing, ..., call = caller_env()) {
     )
   } else {
     missing <- vec_cast(missing, to = integer(), call = call)
-    vec_assert(missing, size = 1L, call = call)
+    vec_check_size(missing, size = 1L, call = call)
   }
 
   missing
@@ -70,7 +70,7 @@ check_count_no_match <- function(no_match, ..., call = caller_env()) {
     )
   } else {
     no_match <- vec_cast(no_match, to = integer(), call = call)
-    vec_assert(no_match, size = 1L, call = call)
+    vec_check_size(no_match, size = 1L, call = call)
   }
 
   no_match
