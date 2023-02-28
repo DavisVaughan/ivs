@@ -52,6 +52,59 @@ test_that("between can error on missing needles", {
 })
 
 # ------------------------------------------------------------------------------
+# iv_locate_includes()
+
+test_that("locate includes gets endpoints right", {
+  x <- iv_pairs(c(1, 5), c(0, 1))
+  y <- c(1, 3)
+
+  expect_identical(
+    iv_locate_includes(x, y),
+    data_frame(needles = c(1L, 1L, 2L), haystack = c(1L, 2L, NA))
+  )
+})
+
+test_that("can control missing value results", {
+  x <- iv_pairs(c(1, 4), c(NA, NA))
+  y <- c(NA, 3)
+
+  expect_identical(
+    iv_locate_includes(x, y),
+    data_frame(needles = c(1L, 2L), haystack = c(2L, 1L))
+  )
+  expect_identical(
+    iv_locate_includes(x, y, missing = NA_integer_),
+    data_frame(needles = c(1L, 2L), haystack = c(2L, NA_integer_))
+  )
+  expect_identical(
+    iv_locate_includes(x, y, missing = "drop"),
+    data_frame(needles = 1L, haystack = 2L)
+  )
+})
+
+test_that("`NaN` values look like `NA_real_`", {
+  x <- iv_pairs(c(NA, NA))
+  y <- NaN
+
+  expect_identical(
+    iv_locate_includes(x, y, missing = "equals"),
+    data_frame(needles = 1L, haystack = 1L)
+  )
+})
+
+test_that("includes takes the common type", {
+  expect_snapshot(
+    (expect_error(iv_locate_includes(iv("a", "b"), 1)))
+  )
+})
+
+test_that("includes can error on missing needles", {
+  expect_snapshot(
+    (expect_error(iv_locate_includes(iv(NA, NA), 1, missing = "error")))
+  )
+})
+
+# ------------------------------------------------------------------------------
 # iv_count_between()
 
 test_that("count between gets endpoints right", {

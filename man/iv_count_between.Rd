@@ -9,11 +9,14 @@ iv_count_between(needles, haystack, ..., missing = "equals", no_match = 0L)
 \arguments{
 \item{needles, haystack}{\verb{[vector, iv]}
 
-\code{needles} should be a vector and \code{haystack} should be an iv. \code{needles}
-should have the same type as the start/end components of \code{haystack}.
+For \verb{iv_*_between()}, \code{needles} should be a vector and \code{haystack} should be
+an iv.
+
+For \verb{iv_*_includes()}, \code{needles} should be an iv and \code{haystack} should be
+a vector.
 \itemize{
-\item Each element of \code{needles} represents the value to search for.
-\item \code{haystack} represents the intervals to search in.
+\item Each element of \code{needles} represents the value / interval to match.
+\item \code{haystack} represents the values / intervals to match against.
 }}
 
 \item{...}{These dots are for future extensions and must be empty.}
