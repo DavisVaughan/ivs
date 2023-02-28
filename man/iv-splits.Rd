@@ -44,7 +44,7 @@ The intervals in the resulting iv are known as "splits".
 \item \code{iv_identify_splits()} identifies the splits that correspond to each
 interval in \code{x}. It replaces \code{x} with a list of the same size where each
 element of the list contains the splits that the corresponding interval in
-\code{x} overlaps. This is particularly useful alongside \code{\link[tidyr:nest]{tidyr::unnest()}}.
+\code{x} overlaps. This is particularly useful alongside \code{\link[tidyr:unnest]{tidyr::unnest()}}.
 \item \code{iv_locate_splits()} returns a two column data frame with a \code{key} column
 containing the result of \code{iv_splits()} and a \code{loc} list-column containing
 integer vectors that map each interval in \code{x} to the splits that it overlaps.

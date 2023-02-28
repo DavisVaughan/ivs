@@ -67,8 +67,8 @@ the \code{haystack} column for intervals in \code{needles} that are missing.
 \item \code{"drop"} drops \code{needles} with zero matches from the result.
 \item \code{"error"} throws an error if any \code{needles} have zero matches.
 \item If a single integer is provided, this represents the value returned in
-the \code{haystack} column for observations of \code{needles} that have zero
-matches. The default represents an unmatched needle with \code{NA}.
+the \code{haystack} column for values of \code{needles} that have zero matches. The
+default represents an unmatched needle with \code{NA}.
 }}
 
 \item{remaining}{Handling of \code{haystack} values that \code{needles} never matched.
@@ -92,9 +92,6 @@ which match will be returned. It is often faster than \code{"first"} and
 \code{"last"} if you just need to detect if there is at least one match.
 \item \code{"first"} returns the first match detected in \code{haystack}.
 \item \code{"last"} returns the last match detected in \code{haystack}.
-\item \code{"warning"} throws a warning if multiple matches are detected, but
-otherwise falls back to \code{"all"}.
-\item \code{"error"} throws an error if multiple matches are detected.
 }}
 }
 \value{

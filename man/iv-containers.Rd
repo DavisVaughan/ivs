@@ -41,7 +41,7 @@ other interval.
 \item \code{iv_identify_containers()} identifies the containers that each interval in
 \code{x} falls in. It replaces \code{x} with a list of the same size where each element
 of the list contains the containers that the corresponding interval in \code{x}
-falls in. This is particularly useful alongside \code{\link[tidyr:nest]{tidyr::unnest()}}.
+falls in. This is particularly useful alongside \code{\link[tidyr:unnest]{tidyr::unnest()}}.
 \item \code{iv_identify_container()} is similar in spirit to
 \code{iv_identify_containers()}, but is useful when you suspect that each interval
 in \code{x} is contained within exactly 1 container. It replaces \code{x} with an iv of
