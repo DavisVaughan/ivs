@@ -51,9 +51,9 @@
 #' @seealso
 #' [Locating relationships][relation-locate]
 #'
-#' [Detect when a vector falls between an iv][iv_between]
+#' [Detect relationships between a vector and an iv][iv_between]
 #'
-#' [Pairwise detect when a vector falls between an iv][iv_pairwise_between]
+#' [Pairwise detect relationships between a vector and an iv][iv_pairwise_between]
 #'
 #' @name vector-locate
 #' @examples
@@ -215,16 +215,22 @@ iv_locate_vector <- function(x,
   )
 }
 
-#' Count when a vector falls between an iv
+#' Count relationships between a vector and an iv
 #'
 #' @description
-#' `iv_count_between()` counts instances of when `needles`, a vector, falls
-#' between the bounds of `haystack`, an iv. It works similar to [base::match()],
-#' where `needles[i]` checks for a match in all of `haystack`.
+#' This family of functions counts different types of relationships between a
+#' vector and an iv. It works similar to [base::match()], where `needles[i]`
+#' checks for a match in all of `haystack`.
 #'
-#' This function returns an integer vector the same size as `needles`
-#' containing a count of the times where the `i`-th value of `needles`
-#' fell between any interval of `haystack`.
+#' - `iv_count_between()` counts instances of when `needles`, a vector, falls
+#'   between the bounds of `haystack`, an iv.
+#'
+#' - `iv_count_includes()` counts instances of when `needles`, an iv, includes
+#'   the values of `haystack`, a vector.
+#'
+#' These functions return an integer vector the same size as `needles`
+#' containing a count of the times where the `i`-th value of `needles` contained
+#' a match in `haystack`.
 #'
 #' @inheritParams iv_locate_between
 #'
@@ -233,7 +239,7 @@ iv_locate_vector <- function(x,
 #'   Handling of missing values in `needles`.
 #'
 #'   - `"equals"` considers missing values in `needles` as exactly equal
-#'     to missing intervals in `haystack` when determining if there is a
+#'     to missing values in `haystack` when determining if there is a
 #'     matching relationship between them.
 #'
 #'   - `"error"` throws an error if any values in `needles` are missing.
@@ -255,9 +261,9 @@ iv_locate_vector <- function(x,
 #' @return An integer vector the same size as `needles`.
 #'
 #' @seealso
-#' [Locating where a vector falls between an iv][iv_locate_between]
+#' [Locating relationships between a vector and an iv][vector-locate]
 #'
-#' @export
+#' @name vector-count
 #' @examples
 #' x <- as.Date(c("2019-01-05", "2019-01-10", "2019-01-07", "2019-01-20"))
 #'
@@ -275,22 +281,32 @@ iv_locate_vector <- function(x,
 #' # Count the number of times `x` is between the intervals in `y`
 #' iv_count_between(x, y)
 #'
+#' # Count the number of times `y` includes a value from `x`
+#' iv_count_includes(y, x)
+#'
 #' # ---------------------------------------------------------------------------
 #'
 #' a <- c(1, NA)
 #' b <- iv(c(NA, NA), c(NA, NA))
 #'
 #' # By default, missing values in `needles` are treated as being exactly
-#' # equal to missing intervals in `haystack`, so the missing value in `a` is
+#' # equal to missing values in `haystack`, so the missing value in `a` is
 #' # considered between the missing interval in `b`.
 #' iv_count_between(a, b)
+#' iv_count_includes(b, a)
 #'
 #' # If you'd like to propagate missing values, set `missing = NA`
 #' iv_count_between(a, b, missing = NA)
+#' iv_count_includes(b, a, missing = NA)
 #'
 #' # If you'd like missing values to be treated as unmatched, set
 #' # `missing = 0L`
 #' iv_count_between(a, b, missing = 0L)
+#' iv_count_includes(b, a, missing = 0L)
+NULL
+
+#' @rdname vector-count
+#' @export
 iv_count_between <- function(needles,
                              haystack,
                              ...,
@@ -298,14 +314,68 @@ iv_count_between <- function(needles,
                              no_match = 0L) {
   check_dots_empty0(...)
 
-  missing <- check_count_missing(missing)
-  no_match <- check_count_no_match(no_match)
+  iv_count_vector(
+    x = needles,
+    y = haystack,
+    x_arg = "needles",
+    y_arg = "haystack",
+    type = "between",
+    missing = missing,
+    no_match = no_match
+  )
+}
 
-  locations <- iv_locate_between(
-    needles = needles,
-    haystack = haystack,
+#' @rdname vector-count
+#' @export
+iv_count_includes <- function(needles,
+                              haystack,
+                              ...,
+                              missing = "equals",
+                              no_match = 0L) {
+  check_dots_empty0(...)
+
+  iv_count_vector(
+    x = haystack,
+    y = needles,
+    x_arg = "haystack",
+    y_arg = "needles",
+    type = "includes",
+    missing = missing,
+    no_match = no_match
+  )
+}
+
+iv_count_vector <- function(x,
+                            y,
+                            x_arg,
+                            y_arg,
+                            type,
+                            missing,
+                            no_match,
+                            ...,
+                            error_call = caller_env()) {
+  check_dots_empty0(...)
+
+  missing <- check_count_missing(missing, call = error_call)
+  no_match <- check_count_no_match(no_match, call = error_call)
+
+  # Never makes sense to keep remaining `y` rows
+  remaining <- "drop"
+
+  # Obviously we are trying to count all of the matches
+  multiple <- "all"
+
+  locations <- iv_locate_vector(
+    x = x,
+    y = y,
+    x_arg = x_arg,
+    y_arg = y_arg,
+    type = type,
     missing = translate_count_missing(missing),
-    no_match = translate_count_no_match(no_match)
+    no_match = translate_count_no_match(no_match),
+    remaining = remaining,
+    multiple = multiple,
+    error_call = error_call
   )
 
   iv_count_locations(locations, missing, no_match)

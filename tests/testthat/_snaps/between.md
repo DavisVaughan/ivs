@@ -23,7 +23,7 @@
       (expect_error(iv_count_between(NA, iv(1, 2), missing = "error")))
     Output
       <error/vctrs_error_matches_incomplete>
-      Error in `iv_locate_between()`:
+      Error in `iv_count_between()`:
       ! `needles` can't contain missing values.
       x Location 1 contains missing values.
 
@@ -46,13 +46,33 @@
       ! `needles` can't contain missing values.
       x Location 1 contains missing values.
 
+---
+
+    Code
+      (expect_error(iv_count_includes(iv(NA, NA), 2, missing = "error")))
+    Output
+      <error/vctrs_error_matches_incomplete>
+      Error in `iv_count_includes()`:
+      ! `needles` can't contain missing values.
+      x Location 1 contains missing values.
+
 # between can error on unmatched needles
 
     Code
       (expect_error(iv_count_between(3, iv(1, 2), no_match = "error")))
     Output
       <error/vctrs_error_matches_nothing>
-      Error in `iv_locate_between()`:
+      Error in `iv_count_between()`:
+      ! Each value of `needles` must have a match in `haystack`.
+      x Location 1 of `needles` does not have a match.
+
+# includes can error on unmatched needles
+
+    Code
+      (expect_error(iv_count_includes(iv(1, 2), 3, no_match = "error")))
+    Output
+      <error/vctrs_error_matches_nothing>
+      Error in `iv_count_includes()`:
       ! Each value of `needles` must have a match in `haystack`.
       x Location 1 of `needles` does not have a match.
 
