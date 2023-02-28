@@ -154,14 +154,14 @@ iv_identify_group <- function(x, ..., abutting = TRUE) {
   loc <- list_unchop(groups$loc, ptype = integer(), name_spec = zap())
   loc <- vec_order(loc)
 
-  start <- groups$key$start
-  end <- groups$key$end
+  key <- groups$key
+  key <- vec_rep_each(key, times = times)
+  key <- vec_slice(key, loc)
+
+  start <- key$start
+  end <- key$end
 
   out <- new_iv(start, end)
-
-  out <- vec_rep_each(out, times = times)
-  out <- vec_slice(out, loc)
-
   out <- iv_restore(out, x)
 
   out
