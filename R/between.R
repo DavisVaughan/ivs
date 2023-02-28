@@ -96,6 +96,8 @@ iv_locate_between <- function(needles,
   check_dots_empty0(...)
 
   haystack <- iv_proxy(haystack)
+  check_iv(haystack)
+
   haystack_start <- field_start(haystack)
   haystack_end <- field_end(haystack)
 
@@ -308,6 +310,8 @@ iv_between <- function(needles,
   check_dots_empty0(...)
 
   haystack <- iv_proxy(haystack)
+  check_iv(haystack)
+
   haystack_start <- field_start(haystack)
   haystack_end <- field_end(haystack)
 
@@ -404,6 +408,8 @@ iv_pairwise_between <- function(x, y) {
   y <- args[[2L]]
 
   y <- iv_proxy(y)
+  check_iv(y)
+
   y_start <- field_start(y)
   y_end <- field_end(y)
 

@@ -1,5 +1,10 @@
 # ivs 0.1.0.9000
 
+* `iv_proxy()` now returns the input unchanged if it doesn't implement an S3
+  method, rather than erroring. In combination with `is_iv()`, this provides a
+  way to check if an input implements a proxy method and to implement different
+  behaviors depending on the result.
+
 * In `iv()`, incomplete value propagation is now done before the `start < end`
   check, which fixes an inconsistent edge case (#36).
 

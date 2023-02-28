@@ -98,6 +98,25 @@ test_that("can check if an object is an iv", {
 })
 
 # ------------------------------------------------------------------------------
+# check_iv()
+
+test_that("can check if an object is an iv and error if not", {
+  my_check <- function(x) {
+    check_iv(x)
+  }
+
+  expect_snapshot(error = TRUE, {
+    check_iv(1)
+  })
+  expect_snapshot(error = TRUE, {
+    my_check()
+  })
+  expect_snapshot(error = TRUE, {
+    my_check(1)
+  })
+})
+
+# ------------------------------------------------------------------------------
 # vec_ptype()
 
 test_that("ptype is computed correctly with simple vectors (#27)", {
@@ -369,8 +388,8 @@ test_that("proxy of a subclass works", {
   expect_identical(iv_proxy(x), iv)
 })
 
-test_that("default proxy error works", {
-  expect_snapshot(error = TRUE, iv_proxy(1))
+test_that("default proxy returns input", {
+  expect_identical(iv_proxy(1), 1)
 })
 
 # ------------------------------------------------------------------------------

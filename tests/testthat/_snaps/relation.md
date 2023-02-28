@@ -27,6 +27,14 @@
       ! `needles` can't contain missing values.
       x Location 1 contains missing values.
 
+# validates overlaps `type`
+
+    Code
+      iv_overlaps(iv(1, 2), iv(1, 2), type = "foo")
+    Condition
+      Error in `iv_overlaps()`:
+      ! `type` must be one of "any", "equals", "contains", "within", "starts", or "ends", not "foo".
+
 # iv_locate_precedes - takes common type
 
     Code
@@ -85,6 +93,14 @@
       Error in `iv_locate_relates()`:
       ! `needles` can't contain missing values.
       x Location 1 contains missing values.
+
+# validates relation `type`
+
+    Code
+      iv_relates(iv(1, 2), iv(1, 2), type = "foo")
+    Condition
+      Error in `iv_relates()`:
+      ! `type` must be one of "precedes", "preceded-by", "meets", "met-by", "overlaps", "overlapped-by", "starts", "started-by", "finishes", "finished-by", "during", "contains", or "equals", not "foo".
 
 # iv_detect_impl - takes common type
 

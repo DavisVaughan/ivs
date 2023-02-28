@@ -208,6 +208,12 @@ test_that("'equals' - needle and haystack have same start and end", {
   expect_true(iv_overlaps(iv(NA, NA), iv(NA, NA), type = "equals"))
 })
 
+test_that("validates overlaps `type`", {
+  expect_snapshot(error = TRUE, {
+    iv_overlaps(iv(1, 2), iv(1, 2), type = "foo")
+  })
+})
+
 # ------------------------------------------------------------------------------
 # iv_locate_precedes()
 
@@ -847,6 +853,12 @@ test_that("'equals'", {
   expect_false(iv_relates(iv(6, 7), iv(1, 5), type = "equals"))
 
   expect_true(iv_relates(iv(NA, NA), iv(NA, NA), type = "equals"))
+})
+
+test_that("validates relation `type`", {
+  expect_snapshot(error = TRUE, {
+    iv_relates(iv(1, 2), iv(1, 2), type = "foo")
+  })
 })
 
 # ------------------------------------------------------------------------------

@@ -112,6 +112,7 @@ iv_groups <- function(x, ..., abutting = TRUE) {
   check_dots_empty0(...)
 
   proxy <- iv_proxy(x)
+  check_iv(proxy, arg = "x")
 
   start <- field_start(proxy)
   end <- field_end(proxy)
@@ -137,6 +138,7 @@ iv_identify_group <- function(x, ..., abutting = TRUE) {
   check_dots_empty0(...)
 
   proxy <- iv_proxy(x)
+  check_iv(proxy, arg = "x")
 
   start <- field_start(proxy)
   end <- field_end(proxy)
@@ -171,6 +173,7 @@ iv_locate_groups <- function(x, ..., abutting = TRUE) {
   check_dots_empty0(...)
 
   proxy <- iv_proxy(x)
+  check_iv(proxy, arg = "x")
 
   start <- field_start(proxy)
   end <- field_end(proxy)

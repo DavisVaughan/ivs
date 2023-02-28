@@ -102,6 +102,7 @@ iv_format.integer64 <- function(x) {
 #' @export
 format.ivs_iv <- function(x, ...) {
   proxy <- iv_proxy(x)
+  check_iv(proxy, arg = "x")
 
   start <- field_start(proxy)
   end <- field_end(proxy)

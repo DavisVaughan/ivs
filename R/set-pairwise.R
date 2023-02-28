@@ -83,6 +83,9 @@ iv_pairwise_complement <- function(x, y) {
   x_proxy <- iv_proxy(x)
   y_proxy <- iv_proxy(y)
 
+  check_iv(x_proxy, arg = "x")
+  check_iv(y_proxy, arg = "y")
+
   x_start <- field_start(x_proxy)
   y_start <- field_start(y_proxy)
 
@@ -119,6 +122,9 @@ iv_pairwise_union <- function(x, y) {
 
   x_proxy <- iv_proxy(x)
   y_proxy <- iv_proxy(y)
+
+  check_iv(x_proxy, arg = "x")
+  check_iv(y_proxy, arg = "y")
 
   x_start <- field_start(x_proxy)
   y_start <- field_start(y_proxy)
@@ -164,6 +170,9 @@ iv_pairwise_span <- function(x, y) {
   x_proxy <- iv_proxy(x)
   y_proxy <- iv_proxy(y)
 
+  check_iv(x_proxy, arg = "x")
+  check_iv(y_proxy, arg = "y")
+
   x_start <- field_start(x_proxy)
   y_start <- field_start(y_proxy)
 
@@ -190,6 +199,9 @@ iv_pairwise_intersect <- function(x, y) {
 
   x_proxy <- iv_proxy(x)
   y_proxy <- iv_proxy(y)
+
+  check_iv(x_proxy, arg = "x")
+  check_iv(y_proxy, arg = "y")
 
   x_start <- field_start(x_proxy)
   y_start <- field_start(y_proxy)
@@ -228,6 +240,9 @@ iv_pairwise_difference <- function(x, y) {
 
   x_proxy <- iv_proxy(x)
   y_proxy <- iv_proxy(y)
+
+  check_iv(x_proxy, arg = "x")
+  check_iv(y_proxy, arg = "y")
 
   x_start <- field_start(x_proxy)
   y_start <- field_start(y_proxy)
@@ -303,6 +318,9 @@ iv_pairwise_symmetric_difference <- function(x, y) {
 
   x_proxy <- iv_proxy(x)
   y_proxy <- iv_proxy(y)
+
+  check_iv(x_proxy, arg = "x")
+  check_iv(y_proxy, arg = "y")
 
   x_start <- field_start(x_proxy)
   y_start <- field_start(y_proxy)

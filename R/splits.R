@@ -107,6 +107,7 @@ iv_splits <- function(x, ..., on = NULL) {
   check_dots_empty0(...)
 
   proxy <- iv_proxy(x)
+  check_iv(proxy, arg = "x")
 
   start <- field_start(proxy)
   end <- field_end(proxy)
@@ -143,6 +144,7 @@ iv_identify_splits <- function(x, ..., on = NULL) {
   check_dots_empty0(...)
 
   proxy <- iv_proxy(x)
+  check_iv(proxy, arg = "x")
 
   start <- field_start(proxy)
   end <- field_end(proxy)
@@ -184,6 +186,7 @@ iv_locate_splits <- function(x, ..., on = NULL) {
   check_dots_empty0(...)
 
   proxy <- iv_proxy(x)
+  check_iv(proxy, arg = "x")
 
   start <- field_start(proxy)
   end <- field_end(proxy)

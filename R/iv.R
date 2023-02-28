@@ -251,6 +251,19 @@ is_iv <- function(x) {
   inherits(x, "ivs_iv")
 }
 
+check_iv <- function(x, ..., arg = caller_arg(x), call = caller_env()) {
+  if (!missing(x) && is_iv(x)) {
+    return(invisible(NULL))
+  }
+
+  stop_input_type(
+    x = x,
+    what = "an <iv>",
+    arg = arg,
+    call = call
+  )
+}
+
 # ------------------------------------------------------------------------------
 
 #' @export
@@ -331,6 +344,12 @@ vec_restore.ivs_iv <- function(x, to, ...) {
 #' This system allows you to use any `iv_*()` function on your iv extension
 #' object without having to define S3 methods for all of them.
 #'
+#' Note that the default method for `iv_proxy()` returns its input unchanged,
+#' even if it isn't an iv. Each `iv_*()` function does separate checking to
+#' ensure that the proxy is a valid iv, or implements an alternate behavior if
+#' no proxy method is implemented. In contrast, `iv_restore()` will error if a
+#' method for `to` isn't registered.
+#'
 #' @inheritParams rlang::args_dots_empty
 #'
 #' @param x `[vector]`
@@ -399,12 +418,6 @@ iv_proxy <- function(x, ...) {
 
 #' @export
 iv_proxy.default <- function(x, ...) {
-  class <- class(x)[[1L]]
-  abort(glue("Object `x`, with type <{class}>, is not an <iv> and does not implement an `iv_proxy()` method."))
-}
-
-#' @export
-iv_proxy.ivs_iv <- function(x, ...) {
   x
 }
 
@@ -432,6 +445,7 @@ iv_restore.ivs_iv <- function(x, to, ...) {
 #' @export
 vec_ptype_abbr.ivs_iv <- function(x, ...) {
   proxy <- iv_proxy(x)
+  check_iv(proxy, arg = "x")
   start <- field_start(proxy)
   inner <- vec_ptype_abbr(start)
   vec_paste0("iv<", inner, ">")
@@ -440,6 +454,7 @@ vec_ptype_abbr.ivs_iv <- function(x, ...) {
 #' @export
 vec_ptype_full.ivs_iv <- function(x, ...) {
   proxy <- iv_proxy(x)
+  check_iv(proxy, arg = "x")
   start <- field_start(proxy)
   inner <- vec_ptype_full(start)
   vec_paste0("iv<", inner, ">")
@@ -473,6 +488,7 @@ NULL
 #' @export
 iv_start <- function(x) {
   x <- iv_proxy(x)
+  check_iv(x)
   field_start(x)
 }
 
@@ -480,6 +496,7 @@ iv_start <- function(x) {
 #' @export
 iv_end <- function(x) {
   x <- iv_proxy(x)
+  check_iv(x)
   field_end(x)
 }
 

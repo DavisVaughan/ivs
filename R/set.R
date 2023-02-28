@@ -119,6 +119,7 @@ NULL
 #' @export
 iv_complement <- function(x, ..., lower = NULL, upper = NULL) {
   proxy <- iv_proxy(x)
+  check_iv(proxy, arg = "x")
 
   start <- field_start(proxy)
   end <- field_end(proxy)
@@ -177,6 +178,9 @@ iv_intersect <- function(x, y) {
 
   x_proxy <- iv_proxy(x)
   y_proxy <- iv_proxy(y)
+
+  check_iv(x_proxy, arg = "x")
+  check_iv(y_proxy, arg = "y")
 
   # TODO: `vec_min()` and `vec_max()`
   # https://github.com/r-lib/vctrs/issues/86
@@ -238,6 +242,9 @@ iv_difference <- function(x, y) {
   x_proxy <- iv_proxy(x)
   y_proxy <- iv_proxy(y)
 
+  check_iv(x_proxy, arg = "x")
+  check_iv(y_proxy, arg = "y")
+
   # TODO: `vec_min()` and `vec_max()`
   # https://github.com/r-lib/vctrs/issues/86
   lower <- min(
@@ -296,6 +303,9 @@ iv_symmetric_difference <- function(x, y) {
 
   x_proxy <- iv_proxy(x)
   y_proxy <- iv_proxy(y)
+
+  check_iv(x_proxy, arg = "x")
+  check_iv(y_proxy, arg = "y")
 
   # TODO: `vec_min()` and `vec_max()`
   # https://github.com/r-lib/vctrs/issues/86
