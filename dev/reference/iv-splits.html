@@ -85,7 +85,7 @@ The intervals in the resulting iv are known as "splits".</p><ul><li><p><code>iv_
 <li><p><code>iv_identify_splits()</code> identifies the splits that correspond to each
 interval in <code>x</code>. It replaces <code>x</code> with a list of the same size where each
 element of the list contains the splits that the corresponding interval in
-<code>x</code> overlaps. This is particularly useful alongside <code><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">tidyr::unnest()</a></code>.</p></li>
+<code>x</code> overlaps. This is particularly useful alongside <code><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">tidyr::unnest()</a></code>.</p></li>
 <li><p><code>iv_locate_splits()</code> returns a two column data frame with a <code>key</code> column
 containing the result of <code>iv_splits()</code> and a <code>loc</code> list-column containing
 integer vectors that map each interval in <code>x</code> to the splits that it overlaps.</p></li>

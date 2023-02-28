@@ -119,8 +119,8 @@ the <code>haystack</code> column for values in <code>needles</code> that are mis
 <dd><p>Handling of <code>needles</code> without a match.</p><ul><li><p><code>"drop"</code> drops <code>needles</code> with zero matches from the result.</p></li>
 <li><p><code>"error"</code> throws an error if any <code>needles</code> have zero matches.</p></li>
 <li><p>If a single integer is provided, this represents the value returned in
-the <code>haystack</code> column for observations of <code>needles</code> that have zero
-matches. The default represents an unmatched needle with <code>NA</code>.</p></li>
+the <code>haystack</code> column for values of <code>needles</code> that have zero matches. The
+default represents an unmatched needle with <code>NA</code>.</p></li>
 </ul></dd>
 
 
@@ -144,9 +144,6 @@ which match will be returned. It is often faster than <code>"first"</code> and
 <code>"last"</code> if you just need to detect if there is at least one match.</p></li>
 <li><p><code>"first"</code> returns the first match detected in <code>haystack</code>.</p></li>
 <li><p><code>"last"</code> returns the last match detected in <code>haystack</code>.</p></li>
-<li><p><code>"warning"</code> throws a warning if multiple matches are detected, but
-otherwise falls back to <code>"all"</code>.</p></li>
-<li><p><code>"error"</code> throws an error if multiple matches are detected.</p></li>
 </ul></dd>
 
 </dl></div>
