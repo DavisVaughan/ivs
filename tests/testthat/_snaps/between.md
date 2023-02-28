@@ -14,8 +14,8 @@
     Output
       <error/vctrs_error_matches_incomplete>
       Error in `iv_locate_between()`:
-      ! No element can contain missing values.
-      x The element at location 1 contains missing values.
+      ! `needles` can't contain missing values.
+      x Location 1 contains missing values.
 
 ---
 
@@ -24,8 +24,8 @@
     Output
       <error/vctrs_error_matches_incomplete>
       Error in `iv_locate_between()`:
-      ! No element can contain missing values.
-      x The element at location 1 contains missing values.
+      ! `needles` can't contain missing values.
+      x Location 1 contains missing values.
 
 # between can error on unmatched needles
 
@@ -34,8 +34,8 @@
     Output
       <error/vctrs_error_matches_nothing>
       Error in `iv_locate_between()`:
-      ! Each element must have a match.
-      x The element at location 1 does not have a match.
+      ! Each value of `needles` must have a match in `haystack`.
+      x Location 1 of `needles` does not have a match.
 
 # detect between takes the common type
 
@@ -53,8 +53,8 @@
     Output
       <error/vctrs_error_matches_incomplete>
       Error in `iv_between()`:
-      ! No element can contain missing values.
-      x The element at location 1 contains missing values.
+      ! `needles` can't contain missing values.
+      x Location 1 contains missing values.
 
 # detect pairwise between takes the common type
 

@@ -14,8 +14,8 @@
     Output
       <error/vctrs_error_matches_incomplete>
       Error in `iv_locate_overlaps()`:
-      ! No element can contain missing values.
-      x The element at location 1 contains missing values.
+      ! `needles` can't contain missing values.
+      x Location 1 contains missing values.
 
 # iv_count_overlaps - can error on missing needles
 
@@ -24,8 +24,8 @@
     Output
       <error/vctrs_error_matches_incomplete>
       Error in `iv_locate_overlaps()`:
-      ! No element can contain missing values.
-      x The element at location 1 contains missing values.
+      ! `needles` can't contain missing values.
+      x Location 1 contains missing values.
 
 # iv_locate_precedes - takes common type
 
@@ -52,8 +52,8 @@
     Output
       <error/vctrs_error_matches_incomplete>
       Error in `iv_locate_precedes()`:
-      ! No element can contain missing values.
-      x The element at location 1 contains missing values.
+      ! `needles` can't contain missing values.
+      x Location 1 contains missing values.
 
 # iv_locate_relates - takes common type
 
@@ -72,8 +72,8 @@
     Output
       <error/vctrs_error_matches_incomplete>
       Error in `iv_locate_relates()`:
-      ! No element can contain missing values.
-      x The element at location 1 contains missing values.
+      ! `needles` can't contain missing values.
+      x Location 1 contains missing values.
 
 # iv_count_relates - can error on missing needles
 
@@ -83,8 +83,8 @@
     Output
       <error/vctrs_error_matches_incomplete>
       Error in `iv_locate_relates()`:
-      ! No element can contain missing values.
-      x The element at location 1 contains missing values.
+      ! `needles` can't contain missing values.
+      x Location 1 contains missing values.
 
 # iv_detect_impl - takes common type
 
@@ -123,8 +123,8 @@
     Output
       <error/vctrs_error_matches_incomplete>
       Error in `iv_overlaps()`:
-      ! No element can contain missing values.
-      x The element at location 1 contains missing values.
+      ! `needles` can't contain missing values.
+      x Location 1 contains missing values.
 
 # iv_detect_pairwise_impl - recycles correctly
 
