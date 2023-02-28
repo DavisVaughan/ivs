@@ -256,6 +256,59 @@ test_that("detect between can error on missing needles", {
 })
 
 # ------------------------------------------------------------------------------
+# iv_includes()
+
+test_that("detect includes gets endpoints right", {
+  x <- iv_pairs(c(1, 5), c(0, 1))
+  y <- c(1, 3, 5)
+
+  expect_identical(
+    iv_includes(x, y),
+    c(TRUE, FALSE)
+  )
+})
+
+test_that("can control missing value results", {
+  x <- iv_pairs(c(NA, NA), c(1, 4))
+  y <- c(NA, 3)
+
+  expect_identical(
+    iv_includes(x, y),
+    c(TRUE, TRUE)
+  )
+  expect_identical(
+    iv_includes(x, y, missing = NA),
+    c(NA, TRUE)
+  )
+  expect_identical(
+    iv_includes(x, y, missing = FALSE),
+    c(FALSE, TRUE)
+  )
+})
+
+test_that("`NaN` values look like `NA_real_`", {
+  x <- iv_pairs(c(NA, NA))
+  y <- NaN
+
+  expect_identical(
+    iv_includes(x, y, missing = "equals"),
+    TRUE
+  )
+})
+
+test_that("detect includes takes the common type", {
+  expect_snapshot(
+    (expect_error(iv_includes(iv("a", "b"), 1)))
+  )
+})
+
+test_that("detect includes can error on missing needles", {
+  expect_snapshot(
+    (expect_error(iv_includes(iv(NA, NA), 2, missing = "error")))
+  )
+})
+
+# ------------------------------------------------------------------------------
 # iv_pairwise_between()
 
 test_that("detect pairwise between gets endpoints right", {

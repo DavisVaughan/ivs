@@ -381,16 +381,22 @@ iv_count_vector <- function(x,
   iv_count_locations(locations, missing, no_match)
 }
 
-#' Detect when a vector falls between an iv
+#' Detect relationships between a vector and an iv
 #'
 #' @description
-#' `iv_between()` detects when `needles`, a vector, falls between the
-#' bounds of `haystack`, an iv. It works similar to [base::%in%], where
-#' `needles[i]` checks for a match in all of `haystack`.
+#' This family of functions detects different types of relationships between a
+#' vector and an iv. It works similar to [base::%in%], where `needles[i]`
+#' checks for a match in all of `haystack`.
+#'
+#' - `iv_between()` detects when `needles`, a vector, falls between the
+#'   bounds in `haystack`, an iv.
+#'
+#' - `iv_includes()` detects when `needles`, an iv, includes the values
+#'   of `haystack`, a vector.
 #'
 #' This function returns a logical vector the same size as `needles` containing
-#' `TRUE` if the value in `needles` is between any interval in `haystack` and
-#' `FALSE` otherwise.
+#' `TRUE` if the value in `needles` matches any value in `haystack` and `FALSE`
+#' otherwise.
 #'
 #' @inheritParams iv_locate_between
 #'
@@ -399,7 +405,7 @@ iv_count_vector <- function(x,
 #'   Handling of missing values in `needles`.
 #'
 #'   - `"equals"` considers missing values in `needles` as exactly equal
-#'     to missing intervals in `haystack` when determining if there is a
+#'     to missing values in `haystack` when determining if there is a
 #'     matching relationship between them. Matched missing values in
 #'     `needles` result in a `TRUE` value in the result, and unmatched missing
 #'     values result in a `FALSE` value.
@@ -416,11 +422,11 @@ iv_count_vector <- function(x,
 #' @seealso
 #' [Locating relationships][relation-locate]
 #'
-#' [Locating where a vector falls between an iv][iv_locate_between]
+#' [Locating relationships between a vector and an iv][vector-locate]
 #'
-#' [Pairwise detect when a vector falls between an iv][iv_pairwise_between]
+#' [Pairwise detect relationships between a vector and an iv][iv_pairwise_between]
 #'
-#' @export
+#' @name vector-detect
 #' @examples
 #' x <- as.Date(c("2019-01-05", "2019-01-10", "2019-01-07", "2019-01-20"))
 #'
@@ -435,8 +441,11 @@ iv_count_vector <- function(x,
 #' x
 #' y
 #'
-#' # Detect if any location where `x` is between the intervals in `y`
+#' # Detect if the i-th location in `x` is between any intervals in `y`
 #' iv_between(x, y)
+#'
+#' # Detect if the i-th location in `y` includes any value in `x`
+#' iv_includes(y, x)
 #'
 #' # ---------------------------------------------------------------------------
 #'
@@ -444,48 +453,101 @@ iv_count_vector <- function(x,
 #' b <- iv(c(NA, NA), c(NA, NA))
 #'
 #' # By default, missing values in `needles` are treated as being exactly
-#' # equal to missing intervals in `haystack`, so the missing value in `a` is
+#' # equal to missing values in `haystack`, so the missing value in `a` is
 #' # considered between the missing interval in `b`.
 #' iv_between(a, b)
+#' iv_includes(b, a)
 #'
 #' # If you'd like to propagate missing values, set `missing = NA`
 #' iv_between(a, b, missing = NA)
+#' iv_includes(b, a, missing = NA)
 #'
 #' # If you'd like missing values to be treated as unmatched, set
 #' # `missing = FALSE`
 #' iv_between(a, b, missing = FALSE)
+#' iv_includes(b, a, missing = FALSE)
+NULL
+
+#' @rdname vector-detect
+#' @export
 iv_between <- function(needles,
                        haystack,
                        ...,
                        missing = "equals") {
   check_dots_empty0(...)
 
-  haystack <- iv_proxy(haystack)
-  check_iv(haystack)
-
-  haystack_start <- field_start(haystack)
-  haystack_end <- field_end(haystack)
-
-  ptype <- vec_ptype_common(
-    needles = needles,
-    `iv_start(haystack)` = haystack_start
+  iv_detect_vector(
+    x = needles,
+    y = haystack,
+    x_arg = "needles",
+    y_arg = "haystack",
+    type = "between",
+    missing = missing
   )
+}
 
-  args <- vec_cast_common(
-    needles,
-    haystack_start,
-    haystack_end,
-    .to = ptype
+#' @rdname vector-detect
+#' @export
+iv_includes <- function(needles,
+                        haystack,
+                        ...,
+                        missing = "equals") {
+  check_dots_empty0(...)
+
+  iv_detect_vector(
+    x = haystack,
+    y = needles,
+    x_arg = "haystack",
+    y_arg = "needles",
+    type = "includes",
+    missing = missing
   )
-  needles <- args[[1L]]
-  haystack_start <- args[[2L]]
-  haystack_end <- args[[3L]]
+}
 
-  needles <- data_frame(a = needles, b = needles)
-  haystack <- data_frame(a = haystack_start, b = haystack_end)
-  condition <- c(">=", "<")
+iv_detect_vector <- function(x,
+                             y,
+                             x_arg,
+                             y_arg,
+                             type,
+                             missing,
+                             ...,
+                             error_call = caller_env()) {
+  check_dots_empty0(...)
 
-  incomplete <- check_detect_missing(missing, "match")
+  y <- iv_proxy(y)
+  check_iv(y, arg = y_arg, call = error_call)
+
+  y_start <- field_start(y)
+  y_end <- field_end(y)
+
+  y_start_arg <- paste0("iv_start(", y_arg, ")")
+  y_end_arg <- paste0("iv_end(", y_arg, ")")
+
+  args <- list(x, y_start, y_end)
+  names(args) <- c(x_arg, y_start_arg, y_end_arg)
+
+  args <- vec_cast_common(!!!args, .call = error_call)
+  x <- args[[1L]]
+  y_start <- args[[2L]]
+  y_end <- args[[3L]]
+
+  incomplete <- check_detect_missing(missing, "match", call = error_call)
+
+  if (type == "between") {
+    condition <- c(">=", "<")
+    needles <- data_frame(a = x, b = x)
+    haystack <- data_frame(a = y_start, b = y_end)
+    needles_arg <- x_arg
+    haystack_arg <- y_arg
+  } else if (type == "includes") {
+    condition <- c("<=", ">")
+    needles <- data_frame(a = y_start, b = y_end)
+    haystack <- data_frame(a = x, b = x)
+    needles_arg <- y_arg
+    haystack_arg <- x_arg
+  } else {
+    abort("Unknown `type`.", .internal = TRUE)
+  }
 
   matches <- vec_locate_matches(
     needles = needles,
@@ -494,7 +556,9 @@ iv_between <- function(needles,
     incomplete = incomplete,
     no_match = 0L,
     multiple = "any",
-    error_call = current_env()
+    needles_arg = needles_arg,
+    haystack_arg = haystack_arg,
+    error_call = error_call
   )
 
   # 0L -> FALSE

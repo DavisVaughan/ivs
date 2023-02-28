@@ -95,6 +95,25 @@
       ! `needles` can't contain missing values.
       x Location 1 contains missing values.
 
+# detect includes takes the common type
+
+    Code
+      (expect_error(iv_includes(iv("a", "b"), 1)))
+    Output
+      <error/vctrs_error_ptype2>
+      Error in `iv_includes()`:
+      ! Can't combine `haystack` <double> and `iv_start(needles)` <character>.
+
+# detect includes can error on missing needles
+
+    Code
+      (expect_error(iv_includes(iv(NA, NA), 2, missing = "error")))
+    Output
+      <error/vctrs_error_matches_incomplete>
+      Error in `iv_includes()`:
+      ! `needles` can't contain missing values.
+      x Location 1 contains missing values.
+
 # detect pairwise between takes the common type
 
     Code
