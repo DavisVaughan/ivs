@@ -156,7 +156,7 @@ iv_locate_includes(b, a, missing = NA)
 \seealso{
 \link[=relation-locate]{Locating relationships}
 
-\link[=iv_between]{Detect relationships between a vector and an iv}
+\link[=vector-detect]{Detect relationships between a vector and an iv}
 
-\link[=iv_pairwise_between]{Pairwise detect relationships between a vector and an iv}
+\link[=vector-detect-pairwise]{Pairwise detect relationships between a vector and an iv}
 }

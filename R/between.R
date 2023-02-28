@@ -51,9 +51,9 @@
 #' @seealso
 #' [Locating relationships][relation-locate]
 #'
-#' [Detect relationships between a vector and an iv][iv_between]
+#' [Detect relationships between a vector and an iv][vector-detect]
 #'
-#' [Pairwise detect relationships between a vector and an iv][iv_pairwise_between]
+#' [Pairwise detect relationships between a vector and an iv][vector-detect-pairwise]
 #'
 #' @name vector-locate
 #' @examples
@@ -424,7 +424,7 @@ iv_count_vector <- function(x,
 #'
 #' [Locating relationships between a vector and an iv][vector-locate]
 #'
-#' [Pairwise detect relationships between a vector and an iv][iv_pairwise_between]
+#' [Pairwise detect relationships between a vector and an iv][vector-detect-pairwise]
 #'
 #' @name vector-detect
 #' @examples
@@ -569,34 +569,41 @@ iv_detect_vector <- function(x,
   out
 }
 
-#' Pairwise detect when a vector falls between an iv
+#' Pairwise detect relationships between a vector and an iv
 #'
 #' @description
-#' `iv_pairwise_between()` detects when `x`, a vector, falls between the
-#' bounds of `y`, an iv, _pairwise_, where pairwise means that the i-th value
-#' of `x` is compared against the i-th interval of `y`. This is in contrast to
+#' This family of functions detects different types of relationships between a
+#' vector and an iv _pairwise_. where pairwise means that the i-th value of `x`
+#' is compared against the i-th value of `y`. This is in contrast to
 #' [iv_between()], which works more like [base::%in%].
+#'
+#' - `iv_pairwise_between()` detects if the i-th value of `x`, a vector, falls
+#'   between the bounds of the i-th value of `y`, an iv.
+#'
+#' - `iv_pairwise_includes()` detects if the i-th value of `x`, an iv, includes
+#'   the i-th value of `y`, a vector.
 #'
 #' These functions return a logical vector the same size as the common size of
 #' `x` and `y`.
 #'
 #' @param x,y `[vector, iv]`
 #'
-#'   `x` should be a vector and `y` should be an iv. `x` should have the same
-#'   type as the start/end components of `y`.
+#'   For `iv_pairwise_between()`, `x` must be a vector and `y` must be an iv.
 #'
-#'   These will be recycled against each other.
+#'   For `iv_pairwise_includes()`, `x` must be an iv and `y` must be a vector.
+#'
+#'   `x` and `y` will be recycled against each other.
 #'
 #' @return A logical vector the same size as the common size of `x` and `y`.
 #'
 #' @seealso
 #' [Locating relationships][relation-locate]
 #'
-#' [Locating where a vector falls between an iv][iv_locate_between]
+#' [Locating relationships between a vector and an iv][vector-locate]
 #'
-#' [Detecting when a vector falls between an iv][iv_between]
+#' [Detecting relationships between a vector and an iv][vector-detect]
 #'
-#' @export
+#' @name vector-detect-pairwise
 #' @examples
 #' x <- as.Date(c("2019-01-01", "2019-01-08", "2019-01-21"))
 #'
@@ -612,33 +619,61 @@ iv_detect_vector <- function(x,
 #' # Does the i-th value of `x` fall between the i-th interval of `y`?
 #' iv_pairwise_between(x, y)
 #'
+#' # Does the i-th interval of `y` include the i-th value of `x`?
+#' iv_pairwise_includes(y, x)
+#'
 #' a <- c(1, NA, NA)
 #' b <- iv_pairs(c(NA, NA), c(3, 4), c(NA, NA))
 #'
 #' # Missing intervals always propagate
 #' iv_pairwise_between(a, b)
+#' iv_pairwise_includes(b, a)
+NULL
+
+#' @rdname vector-detect-pairwise
+#' @export
 iv_pairwise_between <- function(x, y) {
-  args <- vec_recycle_common(x = x, y = y)
-  x <- args[[1L]]
-  y <- args[[2L]]
+  iv_detect_pairwise_vector(
+    x = x,
+    y = y,
+    x_arg = "x",
+    y_arg = "y"
+  )
+}
+
+#' @rdname vector-detect-pairwise
+#' @export
+iv_pairwise_includes <- function(x, y) {
+  iv_detect_pairwise_vector(
+    x = y,
+    y = x,
+    x_arg = "y",
+    y_arg = "x"
+  )
+}
+
+iv_detect_pairwise_vector <- function(x,
+                                      y,
+                                      x_arg,
+                                      y_arg,
+                                      ...,
+                                      error_call = caller_env()) {
+  check_dots_empty0(...)
 
   y <- iv_proxy(y)
-  check_iv(y)
+  check_iv(y, arg = y_arg, call = error_call)
 
   y_start <- field_start(y)
   y_end <- field_end(y)
 
-  ptype <- vec_ptype_common(
-    x = x,
-    `iv_start(y)` = y_start
-  )
+  y_start_arg <- paste0("iv_start(", y_arg, ")")
+  y_end_arg <- paste0("iv_end(", y_arg, ")")
 
-  args <- vec_cast_common(
-    x,
-    y_start,
-    y_end,
-    .to = ptype
-  )
+  args <- list(x, y_start, y_end)
+  names(args) <- c(x_arg, y_start_arg, y_end_arg)
+
+  args <- vec_cast_common(!!!args, .call = error_call)
+  args <- vec_recycle_common(!!!args, .call = error_call)
   x <- args[[1L]]
   y_start <- args[[2L]]
   y_end <- args[[3L]]

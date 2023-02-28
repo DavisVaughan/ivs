@@ -123,3 +123,30 @@
       Error in `iv_pairwise_between()`:
       ! Can't combine `x` <double> and `iv_start(y)` <character>.
 
+# detect pairwise between throws recycling errors
+
+    Code
+      (expect_error(iv_pairwise_between(1:3, iv(1:2, 2:3))))
+    Output
+      <error/vctrs_error_incompatible_size>
+      Error in `iv_pairwise_between()`:
+      ! Can't recycle `x` (size 3) to match `iv_start(y)` (size 2).
+
+# detect pairwise includes takes the common type
+
+    Code
+      (expect_error(iv_pairwise_includes(iv("a", "b"), 1)))
+    Output
+      <error/vctrs_error_ptype2>
+      Error in `iv_pairwise_includes()`:
+      ! Can't combine `y` <double> and `iv_start(x)` <character>.
+
+# detect pairwise includes throws recycling errors
+
+    Code
+      (expect_error(iv_pairwise_includes(iv(1:2, 2:3), 1:3)))
+    Output
+      <error/vctrs_error_incompatible_size>
+      Error in `iv_pairwise_includes()`:
+      ! Can't recycle `y` (size 3) to match `iv_start(x)` (size 2).
+

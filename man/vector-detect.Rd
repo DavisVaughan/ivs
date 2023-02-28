@@ -104,5 +104,5 @@ iv_includes(b, a, missing = FALSE)
 
 \link[=vector-locate]{Locating relationships between a vector and an iv}
 
-\link[=iv_pairwise_between]{Pairwise detect relationships between a vector and an iv}
+\link[=vector-detect-pairwise]{Pairwise detect relationships between a vector and an iv}
 }

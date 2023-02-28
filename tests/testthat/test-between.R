@@ -351,3 +351,59 @@ test_that("detect pairwise between takes the common type", {
     (expect_error(iv_pairwise_between(1, iv("a", "b"))))
   )
 })
+
+test_that("detect pairwise between throws recycling errors", {
+  expect_snapshot(
+    (expect_error(iv_pairwise_between(1:3, iv(1:2, 2:3))))
+  )
+})
+
+# ------------------------------------------------------------------------------
+# iv_pairwise_includes()
+
+test_that("detect pairwise includes gets endpoints right", {
+  x <- iv_pairs(c(1, 5), c(0, 1), c(1, 5))
+  y <- c(1, 3, 5)
+
+  expect_identical(
+    iv_pairwise_includes(x, y),
+    c(TRUE, FALSE, FALSE)
+  )
+})
+
+test_that("missing values always propagate", {
+  expect_identical(
+    iv_pairwise_includes(iv(NA, NA), NA),
+    NA
+  )
+  expect_identical(
+    iv_pairwise_includes(iv(2, 3), NA),
+    NA
+  )
+  expect_identical(
+    iv_pairwise_includes(iv(NA, NA), 1),
+    NA
+  )
+})
+
+test_that("`NaN` values look like `NA_real_`", {
+  x <- iv_pairs(c(1, 2))
+  y <- NaN
+
+  expect_identical(
+    iv_pairwise_includes(x, y),
+    NA
+  )
+})
+
+test_that("detect pairwise includes takes the common type", {
+  expect_snapshot(
+    (expect_error(iv_pairwise_includes(iv("a", "b"), 1)))
+  )
+})
+
+test_that("detect pairwise includes throws recycling errors", {
+  expect_snapshot(
+    (expect_error(iv_pairwise_includes(iv(1:2, 2:3), 1:3)))
+  )
+})
