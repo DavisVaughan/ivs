@@ -70,7 +70,7 @@ in a new two column data frame."><meta name="robots" content="noindex"><!-- math
     <p><code>iv_align()</code> will align/join <code>needles</code> and <code>haystack</code> together using a data
 frame of <code>locations</code>. These <code>locations</code> are intended to be the output of one
 of: <code><a href="relation-locate.html">iv_locate_overlaps()</a></code>, <code><a href="relation-locate.html">iv_locate_precedes()</a></code>, <code><a href="relation-locate.html">iv_locate_follows()</a></code>,
-<code><a href="allen-relation-locate.html">iv_locate_relates()</a></code>, or <code><a href="iv_locate_between.html">iv_locate_between()</a></code>.</p>
+<code><a href="allen-relation-locate.html">iv_locate_relates()</a></code>, or <code><a href="vector-locate.html">iv_locate_between()</a></code>.</p>
 <p>This is mainly a convenience function that slices both <code>needles</code> and
 <code>haystack</code> according to those <code>locations</code>, and then stores the result
 in a new two column data frame.</p>
@@ -96,7 +96,7 @@ in a new two column data frame.</p>
 <dd><p><code>[two-column data frame]</code></p>
 <p>The data frame of locations returned from one of <code><a href="relation-locate.html">iv_locate_overlaps()</a></code>,
 <code><a href="relation-locate.html">iv_locate_precedes()</a></code>, <code><a href="relation-locate.html">iv_locate_follows()</a></code>, <code><a href="allen-relation-locate.html">iv_locate_relates()</a></code>, or
-<code><a href="iv_locate_between.html">iv_locate_between()</a></code>.</p></dd>
+<code><a href="vector-locate.html">iv_locate_between()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -131,7 +131,7 @@ version of <code>haystack</code>.</p>
 <span class="r-in"><span><span class="va">needles</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">15</span>, <span class="fl">4</span>, <span class="fl">11</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">haystack</span> <span class="op">&lt;-</span> <span class="fu"><a href="iv.html">iv_pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">7</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">locations</span> <span class="op">&lt;-</span> <span class="fu"><a href="iv_locate_between.html">iv_locate_between</a></span><span class="op">(</span><span class="va">needles</span>, <span class="va">haystack</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">locations</span> <span class="op">&lt;-</span> <span class="fu"><a href="vector-locate.html">iv_locate_between</a></span><span class="op">(</span><span class="va">needles</span>, <span class="va">haystack</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">iv_align</span><span class="op">(</span><span class="va">needles</span>, <span class="va">haystack</span>, locations <span class="op">=</span> <span class="va">locations</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   needles haystack</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1       1   [1, 5)</span>

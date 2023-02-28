@@ -395,11 +395,11 @@ when any commercial was being run.</p>
 <span><span class="co">#&gt; [1] [2019-10-12, 2020-01-10) [2020-04-01, 2020-06-30) [2020-06-01, 2020-08-30)</span></span>
 <span><span class="co">#&gt; [4] [2021-05-10, 2021-08-08)</span></span></code></pre></div>
 <p>You can check if a sale was made while any commercial was being run
-with <code><a href="../reference/iv_between.html">iv_between()</a></code>, which works like <code>%in%</code> and
+with <code><a href="../reference/vector-detect.html">iv_between()</a></code>, which works like <code>%in%</code> and
 is similar to <code><a href="../reference/relation-detect.html">iv_overlaps()</a></code>:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>sales <span class="op">=</span> <span class="va">sales</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>commercial_running <span class="op">=</span> <span class="fu"><a href="../reference/iv_between.html">iv_between</a></span><span class="op">(</span><span class="va">sales</span>, <span class="va">commercials</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>commercial_running <span class="op">=</span> <span class="fu"><a href="../reference/vector-detect.html">iv_between</a></span><span class="op">(</span><span class="va">sales</span>, <span class="va">commercials</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 2</span></span></span>
 <span><span class="co">#&gt;   sales      commercial_running</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>             </span></span>
@@ -407,18 +407,18 @@ is similar to <code><a href="../reference/relation-detect.html">iv_overlaps()</a
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 2020-05-10 TRUE              </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 2020-06-10 TRUE</span></span></code></pre></div>
 <p>You can find the commercials that were airing when the sale was made
-with <code><a href="../reference/iv_locate_between.html">iv_locate_between()</a></code> and <code><a href="../reference/iv_align.html">iv_align()</a></code>:</p>
+with <code><a href="../reference/vector-locate.html">iv_locate_between()</a></code> and <code><a href="../reference/iv_align.html">iv_align()</a></code>:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/iv_align.html">iv_align</a></span><span class="op">(</span><span class="va">sales</span>, <span class="va">commercials</span>, locations <span class="op">=</span> <span class="fu"><a href="../reference/iv_locate_between.html">iv_locate_between</a></span><span class="op">(</span><span class="va">sales</span>, <span class="va">commercials</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/iv_align.html">iv_align</a></span><span class="op">(</span><span class="va">sales</span>, <span class="va">commercials</span>, locations <span class="op">=</span> <span class="fu"><a href="../reference/vector-locate.html">iv_locate_between</a></span><span class="op">(</span><span class="va">sales</span>, <span class="va">commercials</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      needles                 haystack</span></span>
 <span><span class="co">#&gt; 1 2019-01-01                 [NA, NA)</span></span>
 <span><span class="co">#&gt; 2 2020-05-10 [2020-04-01, 2020-06-30)</span></span>
 <span><span class="co">#&gt; 3 2020-06-10 [2020-04-01, 2020-06-30)</span></span>
 <span><span class="co">#&gt; 4 2020-06-10 [2020-06-01, 2020-08-30)</span></span></code></pre></div>
 <p>If you aren’t looking for the <code>%in%</code>-like behavior of
-<code><a href="../reference/iv_between.html">iv_between()</a></code>, and instead want to pairwise detect whether
+<code><a href="../reference/vector-detect.html">iv_between()</a></code>, and instead want to pairwise detect whether
 one value falls between an interval or not, you can use
-<code><a href="../reference/iv_pairwise_between.html">iv_pairwise_between()</a></code>:</p>
+<code><a href="../reference/vector-detect-pairwise.html">iv_pairwise_between()</a></code>:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">12</span><span class="op">)</span></span>
 <span><span class="va">x</span></span>
@@ -429,7 +429,7 @@ one value falls between an interval or not, you can use
 <span><span class="co">#&gt; &lt;iv&lt;double&gt;[4]&gt;</span></span>
 <span><span class="co">#&gt; [1] [0, 6)   [7, 9)   [10, 12) [10, 12)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/iv_pairwise_between.html">iv_pairwise_between</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/vector-detect-pairwise.html">iv_pairwise_between</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1]  TRUE FALSE  TRUE FALSE</span></span></code></pre></div>
 <p>Keep in mind that the intervals are half-open, so <code>12</code>
 doesn’t fall between the interval of <code>[10, 12)</code>! This is
@@ -542,14 +542,14 @@ be any hits for that month, so we won’t include it.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with 17 more rows</span></span></span></code></pre></div>
 <p>Now we need to add a column to <code>months</code> to represent the
 number of subscriptions that were active in that month. To do this we
-can use <code><a href="../reference/iv_count_between.html">iv_count_between()</a></code>. It works like
-<code><a href="../reference/iv_between.html">iv_between()</a></code> and <code><a href="../reference/iv_locate_between.html">iv_locate_between()</a></code> but
+can use <code><a href="../reference/vector-count.html">iv_count_between()</a></code>. It works like
+<code><a href="../reference/vector-detect.html">iv_between()</a></code> and <code><a href="../reference/vector-locate.html">iv_locate_between()</a></code> but
 returns an integer vector corresponding to the number of times the
 <code>i</code>-th “needle” value fell between any of the values in the
 “haystack”.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">months</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>count <span class="op">=</span> <span class="fu"><a href="../reference/iv_count_between.html">iv_count_between</a></span><span class="op">(</span><span class="va">month</span>, <span class="va">enrollments</span><span class="op">$</span><span class="va">active</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>count <span class="op">=</span> <span class="fu"><a href="../reference/vector-count.html">iv_count_between</a></span><span class="op">(</span><span class="va">month</span>, <span class="va">enrollments</span><span class="op">$</span><span class="va">active</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span>n <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 27 × 2</span></span></span>
 <span><span class="co">#&gt;    month        count</span></span>

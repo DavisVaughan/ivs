@@ -73,22 +73,10 @@
     <loc>https://davisvaughan.github.io/ivs/dev/reference/iv_align.html</loc>
   </url>
   <url>
-    <loc>https://davisvaughan.github.io/ivs/dev/reference/iv_between.html</loc>
-  </url>
-  <url>
-    <loc>https://davisvaughan.github.io/ivs/dev/reference/iv_count_between.html</loc>
-  </url>
-  <url>
     <loc>https://davisvaughan.github.io/ivs/dev/reference/iv_diff.html</loc>
   </url>
   <url>
     <loc>https://davisvaughan.github.io/ivs/dev/reference/iv_format.html</loc>
-  </url>
-  <url>
-    <loc>https://davisvaughan.github.io/ivs/dev/reference/iv_locate_between.html</loc>
-  </url>
-  <url>
-    <loc>https://davisvaughan.github.io/ivs/dev/reference/iv_pairwise_between.html</loc>
   </url>
   <url>
     <loc>https://davisvaughan.github.io/ivs/dev/reference/ivs-package.html</loc>
@@ -107,5 +95,17 @@
   </url>
   <url>
     <loc>https://davisvaughan.github.io/ivs/dev/reference/relation-locate.html</loc>
+  </url>
+  <url>
+    <loc>https://davisvaughan.github.io/ivs/dev/reference/vector-count.html</loc>
+  </url>
+  <url>
+    <loc>https://davisvaughan.github.io/ivs/dev/reference/vector-detect-pairwise.html</loc>
+  </url>
+  <url>
+    <loc>https://davisvaughan.github.io/ivs/dev/reference/vector-detect.html</loc>
+  </url>
+  <url>
+    <loc>https://davisvaughan.github.io/ivs/dev/reference/vector-locate.html</loc>
   </url>
 </urlset>
