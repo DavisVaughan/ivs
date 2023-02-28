@@ -220,13 +220,11 @@ iv_pairs <- function(..., ptype = NULL) {
     ))
   }
 
-  error_call <- current_env()
-
   start <- map(args, vec_slice, i = 1L)
   end <- map(args, vec_slice, i = 2L)
 
-  start <- vec_c(!!!start, .error_call = error_call)
-  end <- vec_c(!!!end, .error_call = error_call)
+  start <- vec_c(!!!start, .error_call = current_env())
+  end <- vec_c(!!!end, .error_call = current_env())
 
   iv(start, end, ptype = ptype)
 }
