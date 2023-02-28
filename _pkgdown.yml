@@ -19,7 +19,7 @@ reference:
     - iv_splits
     - iv_containers
 
-  - title: Relationships
+  - title: Relationships between two ivs
     contents:
     - iv_overlaps
     - iv_locate_overlaps
@@ -27,7 +27,7 @@ reference:
     - iv_pairwise_overlaps
     - iv_align
 
-  - title: Between
+  - title: Relationships between a vector and an iv
     contents:
     - iv_between
     - iv_locate_between
