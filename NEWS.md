@@ -1,5 +1,12 @@
 # ivs 0.1.0.9000
 
+* New family of functions that perform the inverse of `iv_between()`, i.e.
+  rather than detecting if `needles[i]`, a vector value, falls _between_ any
+  intervals in `haystack`, an iv, these detect if `needles[i]`, an interval,
+  _includes_ any value from `haystack`, a vector. These functions are:
+  `iv_includes()`, `iv_locate_includes()`, `iv_count_includes()`, and
+  `iv_pairwise_includes()` (#41).
+
 * `iv_proxy()` now returns the input unchanged if it doesn't implement an S3
   method, rather than erroring. In combination with `is_iv()`, this provides a
   way to check if an input implements a proxy method and to implement different
