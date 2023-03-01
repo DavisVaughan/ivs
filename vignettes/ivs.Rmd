@@ -635,7 +635,7 @@ x
 
 The defaults of all functions in ivs treat missing intervals in one of two ways:
 
--   Set-like operations treat missing intervals as *overlapping* other missing intervals, but they won't overlap any other interval.
+-   Match-like operations treat missing intervals as *overlapping* other missing intervals, but they won't overlap any other interval.
     These include `iv_locate_overlaps()`, `iv_set_intersect()`, and `iv_splits()`.
 
 -   Pairwise operations treat missing intervals as *infectious*, meaning that if the i-th interval of `x` is missing and the i-th interval of `y` is not missing (or vice versa), then the result is forced to be a missing interval.
@@ -647,7 +647,7 @@ y
 ```
 
 ```{r}
-# Set-like operations treat missing intervals as overlapping
+# Match-like operations treat missing intervals as overlapping
 iv_locate_overlaps(x, y)
 
 iv_set_intersect(x, y)
