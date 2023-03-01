@@ -2,25 +2,22 @@
 % Please edit documentation in R/set-pairwise.R
 \name{iv-set-pairwise}
 \alias{iv-set-pairwise}
-\alias{iv_pairwise_complement}
-\alias{iv_pairwise_union}
-\alias{iv_pairwise_span}
-\alias{iv_pairwise_intersect}
-\alias{iv_pairwise_difference}
-\alias{iv_pairwise_symmetric_difference}
+\alias{iv_pairwise_set_complement}
+\alias{iv_pairwise_set_union}
+\alias{iv_pairwise_set_intersect}
+\alias{iv_pairwise_set_difference}
+\alias{iv_pairwise_set_symmetric_difference}
 \title{Pairwise set operations}
 \usage{
-iv_pairwise_complement(x, y)
+iv_pairwise_set_complement(x, y)
 
-iv_pairwise_union(x, y)
+iv_pairwise_set_union(x, y)
 
-iv_pairwise_span(x, y)
+iv_pairwise_set_intersect(x, y)
 
-iv_pairwise_intersect(x, y)
+iv_pairwise_set_difference(x, y)
 
-iv_pairwise_difference(x, y)
-
-iv_pairwise_symmetric_difference(x, y)
+iv_pairwise_set_symmetric_difference(x, y)
 }
 \arguments{
 \item{x, y}{\verb{[iv]}
@@ -36,24 +33,25 @@ An iv the same size and type as \code{x} and \code{y}.
 This family of functions performs \emph{pairwise} set operations on two ivs.
 Pairwise refers to the fact that the i-th interval of \code{x} is going to be
 compared against the i-th interval of \code{y}. This is in contrast to their
-set-like counterparts (like \code{\link[=iv_union]{iv_union()}}), which operate on the whole sets of
-\code{x} and \code{y} at once.
+counterparts, like \code{\link[=iv_set_union]{iv_set_union()}}, which treat the entire vector of \code{x}
+as a single set to be compared against all of \code{y}.
 
-The descriptions of these operations are the same as their set-like
+The descriptions of these operations are the same as their non-pairwise
 counterparts, but the ones here also have a number of restrictions due to
 the fact that each must return an output that is the same size as its inputs:
 \itemize{
-\item For \code{iv_pairwise_complement()}, \code{x[i]} and \code{y[i]} can't overlap or abut,
-as this would generate an empty complement.
-\item For \code{iv_pairwise_union()}, \code{x[i]} and \code{y[i]} can't be separated by a gap.
-Use \code{iv_pairwise_span()} if you want to force gaps to be filled anyways.
-\item For \code{iv_pairwise_intersect()}, \code{x[i]} and \code{y[i]} must overlap, otherwise
-an empty interval would be generated.
-\item For \code{iv_pairwise_difference()}, \code{x[i]} can't be completely contained
+\item For \code{iv_pairwise_set_complement()}, \code{x[i]} and \code{y[i]} can't overlap or
+abut, as this would generate an empty complement.
+\item For \code{iv_pairwise_set_union()}, \code{x[i]} and \code{y[i]} can't be separated by a
+gap. Use \code{\link[=iv_pairwise_span]{iv_pairwise_span()}} if you want to force gaps to be filled
+anyways.
+\item For \code{iv_pairwise_set_intersect()}, \code{x[i]} and \code{y[i]} must overlap,
+otherwise an empty interval would be generated.
+\item For \code{iv_pairwise_set_difference()}, \code{x[i]} can't be completely contained
 within \code{y[i]}, as that would generate an empty interval. Additionally,
 \code{y[i]} can't be completely contained within \code{x[i]}, as that would result
 in two distinct intervals for a single observation.
-\item For \code{iv_pairwise_symmetric_difference()}, \code{x[i]} and \code{y[i]} must share
+\item For \code{iv_pairwise_set_symmetric_difference()}, \code{x[i]} and \code{y[i]} must share
 exactly one endpoint, otherwise an empty interval or two distinct intervals
 would be generated.
 }
@@ -62,31 +60,31 @@ would be generated.
 x <- iv_pairs(c(1, 3), c(6, 8))
 y <- iv_pairs(c(5, 7), c(2, 3))
 
-iv_pairwise_complement(x, y)
+iv_pairwise_set_complement(x, y)
 
 z <- iv_pairs(c(2, 5), c(4, 7))
 
-iv_pairwise_union(x, z)
+iv_pairwise_set_union(x, z)
 
 # Can't take the union when there are gaps
-try(iv_pairwise_union(x, y))
+try(iv_pairwise_set_union(x, y))
 
 # But you can force a union across gaps with `iv_pairwise_span()`
 iv_pairwise_span(x, y)
 
-iv_pairwise_intersect(x, z)
+iv_pairwise_set_intersect(x, z)
 
 # Can't take an intersection of non-overlapping intervals
-try(iv_pairwise_intersect(x, y))
+try(iv_pairwise_set_intersect(x, y))
 
-iv_pairwise_difference(x, z)
+iv_pairwise_set_difference(x, z)
 
 # The pairwise symmetric difference function is fairly strict,
 # and is only well defined when exactly one of the interval endpoints match
 w <- iv_pairs(c(1, 6), c(7, 8))
-iv_pairwise_symmetric_difference(x, w)
+iv_pairwise_set_symmetric_difference(x, w)
 }
 \seealso{
-The set-like versions of these functions, such as
-\code{\link[=iv_union]{iv_union()}}.
+The non-pairwise versions of these functions, such as
+\code{\link[=iv_set_union]{iv_set_union()}}.
 }

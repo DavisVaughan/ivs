@@ -19,6 +19,10 @@ reference:
     - iv_splits
     - iv_containers
 
+  - title: Binary vector operations
+    contents:
+    - iv_pairwise_span
+
   - title: Relationships between two ivs
     contents:
     - iv_overlaps
@@ -36,8 +40,8 @@ reference:
 
   - title: Set operations
     contents:
-    - iv_complement
-    - iv_pairwise_complement
+    - iv_set_complement
+    - iv_pairwise_set_complement
 
   - title: Allen's Interval Algebra
     contents:

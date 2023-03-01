@@ -21,6 +21,7 @@ Depends:
     R (>= 3.4)
 Imports: 
     glue (>= 1.6.2),
+    lifecycle (>= 1.0.3),
     rlang (>= 1.0.6.9000),
     vctrs (>= 0.5.2.9000)
 Suggests: 

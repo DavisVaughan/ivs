@@ -1,5 +1,20 @@
 # ivs 0.1.0.9000
 
+* The family of "set" functions has been renamed to include a `set_` prefix,
+  for example, `iv_union()` is now `iv_set_union()`. This has been done to
+  align with the new family of vctrs set functions, like `vec_set_union()`, and
+  to reduce the ambiguity between the new `iv_diff()` helper and
+  `iv_difference()` (now `iv_set_difference()`). The old names are deprecated,
+  and will be removed in a future release (#35).
+  
+  * `iv_complement()` -> `iv_set_complement()`
+  * `iv_union()` -> `iv_set_union()`
+  * `iv_intersect()` -> `iv_set_intersect()`
+  * `iv_difference()` -> `iv_set_difference()`
+  * `iv_symmetric_difference()` -> `iv_set_symmetric_difference()`
+  * The same changes have been made for the `iv_pairwise_*()` functions that
+    share the same suffixes.
+
 * New family of functions that perform the inverse of `iv_between()`, i.e.
   rather than detecting if `needles[i]`, a vector value, falls _between_ any
   intervals in `haystack`, an iv, these detect if `needles[i]`, an interval,

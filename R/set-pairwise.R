@@ -4,28 +4,29 @@
 #' This family of functions performs _pairwise_ set operations on two ivs.
 #' Pairwise refers to the fact that the i-th interval of `x` is going to be
 #' compared against the i-th interval of `y`. This is in contrast to their
-#' set-like counterparts (like [iv_union()]), which operate on the whole sets of
-#' `x` and `y` at once.
+#' counterparts, like [iv_set_union()], which treat the entire vector of `x`
+#' as a single set to be compared against all of `y`.
 #'
-#' The descriptions of these operations are the same as their set-like
+#' The descriptions of these operations are the same as their non-pairwise
 #' counterparts, but the ones here also have a number of restrictions due to
 #' the fact that each must return an output that is the same size as its inputs:
 #'
-#' - For `iv_pairwise_complement()`, `x[i]` and `y[i]` can't overlap or abut,
-#'   as this would generate an empty complement.
+#' - For `iv_pairwise_set_complement()`, `x[i]` and `y[i]` can't overlap or
+#'   abut, as this would generate an empty complement.
 #'
-#' - For `iv_pairwise_union()`, `x[i]` and `y[i]` can't be separated by a gap.
-#'   Use `iv_pairwise_span()` if you want to force gaps to be filled anyways.
+#' - For `iv_pairwise_set_union()`, `x[i]` and `y[i]` can't be separated by a
+#'   gap. Use [iv_pairwise_span()] if you want to force gaps to be filled
+#'   anyways.
 #'
-#' - For `iv_pairwise_intersect()`, `x[i]` and `y[i]` must overlap, otherwise
-#'   an empty interval would be generated.
+#' - For `iv_pairwise_set_intersect()`, `x[i]` and `y[i]` must overlap,
+#'   otherwise an empty interval would be generated.
 #'
-#' - For `iv_pairwise_difference()`, `x[i]` can't be completely contained
+#' - For `iv_pairwise_set_difference()`, `x[i]` can't be completely contained
 #'   within `y[i]`, as that would generate an empty interval. Additionally,
 #'   `y[i]` can't be completely contained within `x[i]`, as that would result
 #'   in two distinct intervals for a single observation.
 #'
-#' - For `iv_pairwise_symmetric_difference()`, `x[i]` and `y[i]` must share
+#' - For `iv_pairwise_set_symmetric_difference()`, `x[i]` and `y[i]` must share
 #'   exactly one endpoint, otherwise an empty interval or two distinct intervals
 #'   would be generated.
 #'
@@ -37,8 +38,8 @@
 #'
 #' @return An iv the same size and type as `x` and `y`.
 #'
-#' @seealso The set-like versions of these functions, such as
-#' [iv_union()].
+#' @seealso The non-pairwise versions of these functions, such as
+#' [iv_set_union()].
 #'
 #' @name iv-set-pairwise
 #'
@@ -46,34 +47,34 @@
 #' x <- iv_pairs(c(1, 3), c(6, 8))
 #' y <- iv_pairs(c(5, 7), c(2, 3))
 #'
-#' iv_pairwise_complement(x, y)
+#' iv_pairwise_set_complement(x, y)
 #'
 #' z <- iv_pairs(c(2, 5), c(4, 7))
 #'
-#' iv_pairwise_union(x, z)
+#' iv_pairwise_set_union(x, z)
 #'
 #' # Can't take the union when there are gaps
-#' try(iv_pairwise_union(x, y))
+#' try(iv_pairwise_set_union(x, y))
 #'
 #' # But you can force a union across gaps with `iv_pairwise_span()`
 #' iv_pairwise_span(x, y)
 #'
-#' iv_pairwise_intersect(x, z)
+#' iv_pairwise_set_intersect(x, z)
 #'
 #' # Can't take an intersection of non-overlapping intervals
-#' try(iv_pairwise_intersect(x, y))
+#' try(iv_pairwise_set_intersect(x, y))
 #'
-#' iv_pairwise_difference(x, z)
+#' iv_pairwise_set_difference(x, z)
 #'
 #' # The pairwise symmetric difference function is fairly strict,
 #' # and is only well defined when exactly one of the interval endpoints match
 #' w <- iv_pairs(c(1, 6), c(7, 8))
-#' iv_pairwise_symmetric_difference(x, w)
+#' iv_pairwise_set_symmetric_difference(x, w)
 NULL
 
 #' @rdname iv-set-pairwise
 #' @export
-iv_pairwise_complement <- function(x, y) {
+iv_pairwise_set_complement <- function(x, y) {
   args <- list(x = x, y = y)
   args <- vec_cast_common(!!!args)
   args <- vec_recycle_common(!!!args)
@@ -113,7 +114,7 @@ iv_pairwise_complement <- function(x, y) {
 
 #' @rdname iv-set-pairwise
 #' @export
-iv_pairwise_union <- function(x, y) {
+iv_pairwise_set_union <- function(x, y) {
   args <- list(x = x, y = y)
   args <- vec_cast_common(!!!args)
   args <- vec_recycle_common(!!!args)
@@ -160,37 +161,7 @@ iv_pairwise_union <- function(x, y) {
 
 #' @rdname iv-set-pairwise
 #' @export
-iv_pairwise_span <- function(x, y) {
-  args <- list(x = x, y = y)
-  args <- vec_cast_common(!!!args)
-  args <- vec_recycle_common(!!!args)
-  x <- args[[1]]
-  y <- args[[2]]
-
-  x_proxy <- iv_proxy(x)
-  y_proxy <- iv_proxy(y)
-
-  check_iv(x_proxy, arg = "x")
-  check_iv(y_proxy, arg = "y")
-
-  x_start <- field_start(x_proxy)
-  y_start <- field_start(y_proxy)
-
-  x_end <- field_end(x_proxy)
-  y_end <- field_end(y_proxy)
-
-  start <- vec_pairwise_min(x_start, y_start)
-  end <- vec_pairwise_max(x_end, y_end)
-
-  out <- new_iv(start, end)
-  out <- iv_restore(out, x)
-
-  out
-}
-
-#' @rdname iv-set-pairwise
-#' @export
-iv_pairwise_intersect <- function(x, y) {
+iv_pairwise_set_intersect <- function(x, y) {
   args <- list(x = x, y = y)
   args <- vec_cast_common(!!!args)
   args <- vec_recycle_common(!!!args)
@@ -231,7 +202,7 @@ iv_pairwise_intersect <- function(x, y) {
 
 #' @rdname iv-set-pairwise
 #' @export
-iv_pairwise_difference <- function(x, y) {
+iv_pairwise_set_difference <- function(x, y) {
   args <- list(x = x, y = y)
   args <- vec_recycle_common(!!!args)
   args <- vec_cast_common(!!!args)
@@ -309,7 +280,7 @@ iv_pairwise_difference <- function(x, y) {
 
 #' @rdname iv-set-pairwise
 #' @export
-iv_pairwise_symmetric_difference <- function(x, y) {
+iv_pairwise_set_symmetric_difference <- function(x, y) {
   args <- list(x = x, y = y)
   args <- vec_recycle_common(!!!args)
   args <- vec_cast_common(!!!args)

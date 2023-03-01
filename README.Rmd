@@ -45,7 +45,7 @@ There are a number of useful things you can do with these, including:
 
 - Splitting an iv on its overlapping endpoints with `iv_splits()`.
 
-- Applying set theoretical operations on two ivs, such as `iv_intersect()`.
+- Applying set theoretical operations on two ivs, such as `iv_set_intersect()`.
 
 Interval vectors are completely generic, meaning that you can create them from any comparable type that is supported by [vctrs](https://vctrs.r-lib.org). This means that user defined S3 types work automatically, like `hms::hms()`, `bit64::integer64()`, and `clock::year_month_day()`.
 
