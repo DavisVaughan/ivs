@@ -155,7 +155,7 @@ iv_identify_container <- function(x) {
     needles = x,
     haystack = containers,
     type = "within",
-    multiple = "error"
+    relationship = "many-to-one"
   ))
 
   out <- vec_slice(containers, loc$haystack)
@@ -187,9 +187,9 @@ iv_locate_containers <- function(x) {
 
 
 with_multiple_containers_errors <- function(expr, error_call = caller_env()) {
-  try_fetch(
+  withCallingHandlers(
     expr = expr,
-    vctrs_error_matches_multiple = function(cnd) {
+    vctrs_error_matches_relationship_many_to_one = function(cnd) {
       stop_multiple_containers(cnd$i, error_call = error_call)
     }
   )
