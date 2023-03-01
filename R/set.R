@@ -13,7 +13,7 @@
 #'   It is equivalent to combining the two vectors together and then calling
 #'   `iv_groups()`.
 #'
-#' - `iv_intersect()` answers the question, "Which intervals are in `x` and
+#' - `iv_set_intersect()` answers the question, "Which intervals are in `x` and
 #'   `y`?"
 #'
 #' - `iv_difference()` answers the question, "Which intervals are in `x` but not
@@ -96,7 +96,7 @@
 #' iv_set_union(x, y)
 #'
 #' # Which intervals are in x and y?
-#' iv_intersect(x, y)
+#' iv_set_intersect(x, y)
 #'
 #' # Which intervals are in x but not y?
 #' iv_difference(x, y)
@@ -147,7 +147,7 @@ iv_set_union <- function(x, y) {
 
 #' @rdname iv-sets
 #' @export
-iv_intersect <- function(x, y) {
+iv_set_intersect <- function(x, y) {
   args <- vec_cast_common(x = x, y = y)
   x <- args[[1]]
   y <- args[[2]]

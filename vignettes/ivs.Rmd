@@ -526,7 +526,7 @@ These are:
 
 -   `iv_set_union()`
 
--   `iv_intersect()`
+-   `iv_set_intersect()`
 
 -   `iv_difference()`
 
@@ -564,11 +564,11 @@ y
 iv_set_union(x, y)
 ```
 
-`iv_intersect()` takes the intersection of two ivs.
+`iv_set_intersect()` takes the intersection of two ivs.
 It answers the question, "Which intervals are in `x` and `y`?"
 
 ```{r}
-iv_intersect(x, y)
+iv_set_intersect(x, y)
 ```
 
 `iv_difference()` takes the asymmetrical difference of two ivs.
@@ -599,10 +599,10 @@ x
 y
 ```
 
-`iv_intersect()` isn't very useful to answer this particular question, because it first merges all overlapping intervals in each input.
+`iv_set_intersect()` isn't very useful to answer this particular question, because it first merges all overlapping intervals in each input.
 
 ```{r}
-iv_intersect(x, y)
+iv_set_intersect(x, y)
 ```
 
 Instead, we can find the overlaps and align them, and then pairwise intersect the results:
@@ -636,7 +636,7 @@ x
 The defaults of all functions in ivs treat missing intervals in one of two ways:
 
 -   Set-like operations treat missing intervals as *overlapping* other missing intervals, but they won't overlap any other interval.
-    These include `iv_locate_overlaps()`, `iv_intersect()`, and `iv_splits()`.
+    These include `iv_locate_overlaps()`, `iv_set_intersect()`, and `iv_splits()`.
 
 -   Pairwise operations treat missing intervals as *infectious*, meaning that if the i-th interval of `x` is missing and the i-th interval of `y` is not missing (or vice versa), then the result is forced to be a missing interval.
     These include any operations prefixed with `iv_pairwise_*()`.
@@ -650,7 +650,7 @@ y
 # Set-like operations treat missing intervals as overlapping
 iv_locate_overlaps(x, y)
 
-iv_intersect(x, y)
+iv_set_intersect(x, y)
 ```
 
 ```{r}

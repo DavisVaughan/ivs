@@ -16,3 +16,12 @@
       `iv_union()` was deprecated in ivs 0.2.0.
       i Please use `iv_set_union()` instead.
 
+# `iv_intersect()` works but throws a deprecation warning
+
+    Code
+      out <- iv_intersect(x, y)
+    Condition
+      Warning:
+      `iv_intersect()` was deprecated in ivs 0.2.0.
+      i Please use `iv_set_intersect()` instead.
+

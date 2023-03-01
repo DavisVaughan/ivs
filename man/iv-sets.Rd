@@ -4,7 +4,7 @@
 \alias{iv-sets}
 \alias{iv_set_complement}
 \alias{iv_set_union}
-\alias{iv_intersect}
+\alias{iv_set_intersect}
 \alias{iv_difference}
 \alias{iv_symmetric_difference}
 \title{Set operations}
@@ -13,7 +13,7 @@ iv_set_complement(x, ..., lower = NULL, upper = NULL)
 
 iv_set_union(x, y)
 
-iv_intersect(x, y)
+iv_set_intersect(x, y)
 
 iv_difference(x, y)
 
@@ -55,7 +55,7 @@ Missing intervals are always dropped in the complement.
 \item \code{iv_set_union()} answers the question, "Which intervals are in \code{x} or \code{y}?"
 It is equivalent to combining the two vectors together and then calling
 \code{iv_groups()}.
-\item \code{iv_intersect()} answers the question, "Which intervals are in \code{x} and
+\item \code{iv_set_intersect()} answers the question, "Which intervals are in \code{x} and
 \code{y}?"
 \item \code{iv_difference()} answers the question, "Which intervals are in \code{x} but not
 \code{y}?" Note that this is an asymmetrical difference.
@@ -111,7 +111,7 @@ iv_set_complement(x, lower = -Inf, upper = Inf)
 iv_set_union(x, y)
 
 # Which intervals are in x and y?
-iv_intersect(x, y)
+iv_set_intersect(x, y)
 
 # Which intervals are in x but not y?
 iv_difference(x, y)

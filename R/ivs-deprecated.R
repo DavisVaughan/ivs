@@ -46,3 +46,15 @@ iv_union <- function(x, y) {
   )
   iv_set_union(x, y)
 }
+
+#' @export
+#' @rdname iv-sets-deprecated
+iv_intersect <- function(x, y) {
+  lifecycle::deprecate_warn(
+    when = "0.2.0",
+    what = "iv_intersect()",
+    with = "iv_set_intersect()",
+    always = TRUE
+  )
+  iv_set_intersect(x, y)
+}

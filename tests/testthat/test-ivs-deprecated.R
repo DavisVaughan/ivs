@@ -28,3 +28,19 @@ test_that("`iv_union()` works but throws a deprecation warning", {
     iv_set_union(x, y)
   )
 })
+
+# ------------------------------------------------------------------------------
+# iv_intersect()
+
+test_that("`iv_intersect()` works but throws a deprecation warning", {
+  x <- iv(1, 3)
+  y <- iv(2, 4)
+
+  expect_snapshot({
+    out <- iv_intersect(x, y)
+  })
+  expect_identical(
+    out,
+    iv_set_intersect(x, y)
+  )
+})
