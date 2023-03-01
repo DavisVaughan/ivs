@@ -2,14 +2,14 @@
 % Please edit documentation in R/set.R
 \name{iv-sets}
 \alias{iv-sets}
-\alias{iv_complement}
+\alias{iv_set_complement}
 \alias{iv_union}
 \alias{iv_intersect}
 \alias{iv_difference}
 \alias{iv_symmetric_difference}
 \title{Set operations}
 \usage{
-iv_complement(x, ..., lower = NULL, upper = NULL)
+iv_set_complement(x, ..., lower = NULL, upper = NULL)
 
 iv_union(x, y)
 
@@ -38,7 +38,7 @@ An interval vector.}
 }
 \value{
 \itemize{
-\item For \code{iv_complement()}, a vector of the same type as \code{x} containing the
+\item For \code{iv_set_complement()}, a vector of the same type as \code{x} containing the
 complement.
 \item For all other set operations, a vector of the same type as the common type
 of \code{x} and \code{y} containing the result.
@@ -48,7 +48,7 @@ of \code{x} and \code{y} containing the result.
 This family of functions treats ivs as sets. They always compute
 the \link[=iv_groups]{minimal} iv of each input and return a minimal iv.
 \itemize{
-\item \code{iv_complement()} takes the complement of the intervals in an iv. By
+\item \code{iv_set_complement()} takes the complement of the intervals in an iv. By
 default, the minimum and maximum of the inputs define the bounds to take
 the complement over, but this can be adjusted with \code{lower} and \code{upper}.
 Missing intervals are always dropped in the complement.
@@ -101,11 +101,11 @@ y
 
 # Complement contains any values from `[-5, 12)` that aren't represented
 # in these intervals. Missing intervals are dropped.
-iv_complement(x)
+iv_set_complement(x)
 
 # Expand out the "universe" of possible values
-iv_complement(x, lower = -Inf)
-iv_complement(x, lower = -Inf, upper = Inf)
+iv_set_complement(x, lower = -Inf)
+iv_set_complement(x, lower = -Inf, upper = Inf)
 
 # Which intervals are in x or y?
 iv_union(x, y)

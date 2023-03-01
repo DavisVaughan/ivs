@@ -522,7 +522,7 @@ guests2 %>%
 There are a number of set theoretical operations that you can use on ivs.
 These are:
 
--   `iv_complement()`
+-   `iv_set_complement()`
 
 -   `iv_union()`
 
@@ -532,23 +532,23 @@ These are:
 
 -   `iv_symmetric_difference()`
 
-`iv_complement()` works on a single iv, while all the others work on two intervals at a time.
+`iv_set_complement()` works on a single iv, while all the others work on two intervals at a time.
 All of these functions return a *minimal* interval vector.
 The easiest way to think about these functions is to imagine `iv_groups()` being called on each of the inputs first (to reduce them down to their minimal form) before applying the operation.
 
-`iv_complement()` computes the set complement of the intervals in a single iv.
+`iv_set_complement()` computes the set complement of the intervals in a single iv.
 
 ```{r}
 x <- iv_pairs(c(1, 3), c(2, 5), c(10, 12), c(13, 15))
 x
 
-iv_complement(x)
+iv_set_complement(x)
 ```
 
-By default, `iv_complement()` uses the smallest/largest values of its input as the bounds to compute the complement over, but you can supply bounds explicitly with `lower` and `upper`:
+By default, `iv_set_complement()` uses the smallest/largest values of its input as the bounds to compute the complement over, but you can supply bounds explicitly with `lower` and `upper`:
 
 ```{r}
-iv_complement(x, lower = 0, upper = Inf)
+iv_set_complement(x, lower = 0, upper = Inf)
 ```
 
 `iv_union()` takes the union of two ivs.

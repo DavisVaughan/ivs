@@ -56,7 +56,7 @@ This vignette collects links to a number of Stack Overflow questions that use iv
 
 - [Track rolling monthly disease prevalence](https://stackoverflow.com/questions/75221096/how-to-aggregate-data-by-month-using-study-start-and-end-dates-in-r-to-calculate/75222987#75222987)
 
-#### iv_complement()
+#### iv_set_complement()
 
 - [Find ranges of dates where an apartment is empty](https://stackoverflow.com/questions/72536566/adding-rows-for-missing-intervals-between-existing-intervals-in-r/72547866#72547866)
 

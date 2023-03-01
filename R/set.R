@@ -4,7 +4,7 @@
 #' This family of functions treats ivs as sets. They always compute
 #' the [minimal][iv_groups()] iv of each input and return a minimal iv.
 #'
-#' - `iv_complement()` takes the complement of the intervals in an iv. By
+#' - `iv_set_complement()` takes the complement of the intervals in an iv. By
 #'   default, the minimum and maximum of the inputs define the bounds to take
 #'   the complement over, but this can be adjusted with `lower` and `upper`.
 #'   Missing intervals are always dropped in the complement.
@@ -54,7 +54,7 @@
 #'   often useful to expand the universe to, say, `-Inf` to `Inf`.
 #'
 #' @return
-#' - For `iv_complement()`, a vector of the same type as `x` containing the
+#' - For `iv_set_complement()`, a vector of the same type as `x` containing the
 #' complement.
 #'
 #' - For all other set operations, a vector of the same type as the common type
@@ -86,11 +86,11 @@
 #'
 #' # Complement contains any values from `[-5, 12)` that aren't represented
 #' # in these intervals. Missing intervals are dropped.
-#' iv_complement(x)
+#' iv_set_complement(x)
 #'
 #' # Expand out the "universe" of possible values
-#' iv_complement(x, lower = -Inf)
-#' iv_complement(x, lower = -Inf, upper = Inf)
+#' iv_set_complement(x, lower = -Inf)
+#' iv_set_complement(x, lower = -Inf, upper = Inf)
 #'
 #' # Which intervals are in x or y?
 #' iv_union(x, y)
@@ -117,7 +117,7 @@ NULL
 
 #' @rdname iv-sets
 #' @export
-iv_complement <- function(x, ..., lower = NULL, upper = NULL) {
+iv_set_complement <- function(x, ..., lower = NULL, upper = NULL) {
   proxy <- iv_proxy(x)
   check_iv(proxy, arg = "x")
 
@@ -193,12 +193,12 @@ iv_intersect <- function(x, y) {
     max(field_end(y_proxy))
   )
 
-  x_c <- iv_complement(x_proxy, lower = lower, upper = upper)
-  y_c <- iv_complement(y_proxy, lower = lower, upper = upper)
+  x_c <- iv_set_complement(x_proxy, lower = lower, upper = upper)
+  y_c <- iv_set_complement(y_proxy, lower = lower, upper = upper)
 
   u <- iv_union(x_c, y_c)
 
-  out <- iv_complement(u, lower = lower, upper = upper)
+  out <- iv_set_complement(u, lower = lower, upper = upper)
 
   if (any_x_missing && any_y_missing) {
     out <- vec_c(out, vec_init(out))
@@ -256,11 +256,11 @@ iv_difference <- function(x, y) {
     max(field_end(y_proxy))
   )
 
-  x_c <- iv_complement(x_proxy, lower = lower, upper = upper)
+  x_c <- iv_set_complement(x_proxy, lower = lower, upper = upper)
 
   u <- iv_union(x_c, y_proxy)
 
-  out <- iv_complement(u, lower = lower, upper = upper)
+  out <- iv_set_complement(u, lower = lower, upper = upper)
 
   if (any_x_missing && !any_y_missing) {
     out <- vec_c(out, vec_init(out))
@@ -318,13 +318,13 @@ iv_symmetric_difference <- function(x, y) {
     max(field_end(y_proxy))
   )
 
-  x_c <- iv_complement(x_proxy, lower = lower, upper = upper)
+  x_c <- iv_set_complement(x_proxy, lower = lower, upper = upper)
   x_c_union_y <- iv_union(x_c, y_proxy)
-  x_setdiff_y <- iv_complement(x_c_union_y, lower = lower, upper = upper)
+  x_setdiff_y <- iv_set_complement(x_c_union_y, lower = lower, upper = upper)
 
-  y_c <- iv_complement(y_proxy, lower = lower, upper = upper)
+  y_c <- iv_set_complement(y_proxy, lower = lower, upper = upper)
   y_c_union_x <- iv_union(y_c, x_proxy)
-  y_setdiff_x <- iv_complement(y_c_union_x, lower = lower, upper = upper)
+  y_setdiff_x <- iv_set_complement(y_c_union_x, lower = lower, upper = upper)
 
   out <- iv_union(x_setdiff_y, y_setdiff_x)
 
