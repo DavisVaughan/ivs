@@ -25,3 +25,12 @@
       `iv_intersect()` was deprecated in ivs 0.2.0.
       i Please use `iv_set_intersect()` instead.
 
+# `iv_difference()` works but throws a deprecation warning
+
+    Code
+      out <- iv_difference(x, y)
+    Condition
+      Warning:
+      `iv_difference()` was deprecated in ivs 0.2.0.
+      i Please use `iv_set_difference()` instead.
+

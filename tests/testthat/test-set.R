@@ -160,14 +160,14 @@ test_that("intersect is generic over container", {
 })
 
 # ------------------------------------------------------------------------------
-# iv_difference()
+# iv_set_difference()
 
 test_that("difference doesn't keep abutting separate", {
   x <- iv(start = c(1L, 2L), end = c(2L, 3L))
   y <- iv(start = integer(), end = integer())
 
   expect_identical(
-    iv_difference(x, y),
+    iv_set_difference(x, y),
     iv(start = 1L, end = 3L)
   )
 })
@@ -178,22 +178,22 @@ test_that("difference works", {
   z <- iv(start = 3L, end = 7L)
 
   expect_identical(
-    iv_difference(x, y),
+    iv_set_difference(x, y),
     iv(start = c(1L, 3L, 6L), end = c(2L, 4L, 8L))
   )
   expect_identical(
-    iv_difference(x, z),
+    iv_set_difference(x, z),
     iv(start = c(1L, 7L), end = c(3L, 8L))
   )
 })
 
 test_that("difference works with size zero inputs", {
   x <- iv(start = integer(), end = integer())
-  expect_identical(iv_difference(x, x), x)
+  expect_identical(iv_set_difference(x, x), x)
 
   y <- iv(start = 1L, end = 2L)
-  expect_identical(iv_difference(x, y), x)
-  expect_identical(iv_difference(y, x), y)
+  expect_identical(iv_set_difference(x, y), x)
+  expect_identical(iv_set_difference(y, x), y)
 })
 
 test_that("difference keeps a single missing interval when applicable", {
@@ -202,20 +202,20 @@ test_that("difference keeps a single missing interval when applicable", {
   z <- iv(1, 4)
 
   expect_identical(
-    iv_difference(x, y),
+    iv_set_difference(x, y),
     iv_pairs(c(0, 1))
   )
   expect_identical(
-    iv_difference(y, x),
+    iv_set_difference(y, x),
     iv_pairs(c(2, 4))
   )
 
   expect_identical(
-    iv_difference(x, z),
+    iv_set_difference(x, z),
     iv_pairs(c(0, 1), c(NA, NA))
   )
   expect_identical(
-    iv_difference(z, x),
+    iv_set_difference(z, x),
     iv_pairs(c(2, 4))
   )
 })
@@ -226,20 +226,20 @@ test_that("difference works when all of one input is missing", {
   z <- iv(0, 2)
 
   expect_identical(
-    iv_difference(x, y),
+    iv_set_difference(x, y),
     iv(double(), double())
   )
   expect_identical(
-    iv_difference(y, x),
+    iv_set_difference(y, x),
     iv(0, 2)
   )
 
   expect_identical(
-    iv_difference(x, z),
+    iv_set_difference(x, z),
     iv(NA_real_, NA_real_)
   )
   expect_identical(
-    iv_difference(z, x),
+    iv_set_difference(z, x),
     iv(0, 2)
   )
 })
@@ -248,19 +248,19 @@ test_that("minimizes on early exits", {
   x <- iv(integer(), integer())
   y <- iv(c(1L, 3L), c(3L, 4L))
 
-  expect_identical(iv_difference(x, y), x)
-  expect_identical(iv_difference(y, x), iv(1L, 4L))
+  expect_identical(iv_set_difference(x, y), x)
+  expect_identical(iv_set_difference(y, x), iv(1L, 4L))
 
   z <- iv(NA_integer_, NA_integer_)
 
-  expect_identical(iv_difference(z, y), z)
-  expect_identical(iv_difference(y, z), iv(1L, 4L))
+  expect_identical(iv_set_difference(z, y), z)
+  expect_identical(iv_set_difference(y, z), iv(1L, 4L))
 })
 
 test_that("difference is generic over container", {
   x <- nested_integer_iv_pairs(c(1, 3))
   y <- nested_integer_iv_pairs(c(2, 3))
-  expect_identical(iv_difference(x, y), nested_integer_iv_pairs(c(1, 2)))
+  expect_identical(iv_set_difference(x, y), nested_integer_iv_pairs(c(1, 2)))
 })
 
 # ------------------------------------------------------------------------------

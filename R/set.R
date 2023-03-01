@@ -16,8 +16,8 @@
 #' - `iv_set_intersect()` answers the question, "Which intervals are in `x` and
 #'   `y`?"
 #'
-#' - `iv_difference()` answers the question, "Which intervals are in `x` but not
-#'   `y`?" Note that this is an asymmetrical difference.
+#' - `iv_set_difference()` answers the question, "Which intervals are in `x` but
+#'   not `y`?" Note that this is an asymmetrical difference.
 #'
 #' - `iv_symmetric_difference()` answers the question, "Which intervals are in
 #'   `x` or `y` but not both?"
@@ -99,13 +99,13 @@
 #' iv_set_intersect(x, y)
 #'
 #' # Which intervals are in x but not y?
-#' iv_difference(x, y)
+#' iv_set_difference(x, y)
 #'
 #' # Which intervals are in y but not x?
-#' iv_difference(y, x)
+#' iv_set_difference(y, x)
 #'
 #' # Missing intervals in x are kept if there aren't missing intervals in y
-#' iv_difference(x, iv(1, 2))
+#' iv_set_difference(x, iv(1, 2))
 #'
 #' # Which intervals are in x or y but not both?
 #' iv_symmetric_difference(x, y)
@@ -211,7 +211,7 @@ iv_set_intersect <- function(x, y) {
 
 #' @rdname iv-sets
 #' @export
-iv_difference <- function(x, y) {
+iv_set_difference <- function(x, y) {
   args <- vec_cast_common(x = x, y = y)
   x <- args[[1]]
   y <- args[[2]]

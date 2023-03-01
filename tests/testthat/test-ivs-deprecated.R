@@ -44,3 +44,19 @@ test_that("`iv_intersect()` works but throws a deprecation warning", {
     iv_set_intersect(x, y)
   )
 })
+
+# ------------------------------------------------------------------------------
+# iv_difference()
+
+test_that("`iv_difference()` works but throws a deprecation warning", {
+  x <- iv(1, 3)
+  y <- iv(2, 4)
+
+  expect_snapshot({
+    out <- iv_difference(x, y)
+  })
+  expect_identical(
+    out,
+    iv_set_difference(x, y)
+  )
+})

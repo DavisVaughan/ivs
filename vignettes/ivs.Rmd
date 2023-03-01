@@ -528,7 +528,7 @@ These are:
 
 -   `iv_set_intersect()`
 
--   `iv_difference()`
+-   `iv_set_difference()`
 
 -   `iv_symmetric_difference()`
 
@@ -571,11 +571,11 @@ It answers the question, "Which intervals are in `x` and `y`?"
 iv_set_intersect(x, y)
 ```
 
-`iv_difference()` takes the asymmetrical difference of two ivs.
+`iv_set_difference()` takes the asymmetrical difference of two ivs.
 It answers the question, "Which intervals are in `x` but not `y`?"
 
 ```{r}
-iv_difference(x, y)
+iv_set_difference(x, y)
 ```
 
 ## Pairwise set operations

@@ -5,6 +5,7 @@
 \alias{iv_complement}
 \alias{iv_union}
 \alias{iv_intersect}
+\alias{iv_difference}
 \title{Set operations}
 \usage{
 iv_complement(x, ..., lower = NULL, upper = NULL)
@@ -12,6 +13,8 @@ iv_complement(x, ..., lower = NULL, upper = NULL)
 iv_union(x, y)
 
 iv_intersect(x, y)
+
+iv_difference(x, y)
 }
 \arguments{
 \item{x}{\verb{[iv]}

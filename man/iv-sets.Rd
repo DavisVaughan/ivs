@@ -5,7 +5,7 @@
 \alias{iv_set_complement}
 \alias{iv_set_union}
 \alias{iv_set_intersect}
-\alias{iv_difference}
+\alias{iv_set_difference}
 \alias{iv_symmetric_difference}
 \title{Set operations}
 \usage{
@@ -15,7 +15,7 @@ iv_set_union(x, y)
 
 iv_set_intersect(x, y)
 
-iv_difference(x, y)
+iv_set_difference(x, y)
 
 iv_symmetric_difference(x, y)
 }
@@ -57,8 +57,8 @@ It is equivalent to combining the two vectors together and then calling
 \code{iv_groups()}.
 \item \code{iv_set_intersect()} answers the question, "Which intervals are in \code{x} and
 \code{y}?"
-\item \code{iv_difference()} answers the question, "Which intervals are in \code{x} but not
-\code{y}?" Note that this is an asymmetrical difference.
+\item \code{iv_set_difference()} answers the question, "Which intervals are in \code{x} but
+not \code{y}?" Note that this is an asymmetrical difference.
 \item \code{iv_symmetric_difference()} answers the question, "Which intervals are in
 \code{x} or \code{y} but not both?"
 }
@@ -114,13 +114,13 @@ iv_set_union(x, y)
 iv_set_intersect(x, y)
 
 # Which intervals are in x but not y?
-iv_difference(x, y)
+iv_set_difference(x, y)
 
 # Which intervals are in y but not x?
-iv_difference(y, x)
+iv_set_difference(y, x)
 
 # Missing intervals in x are kept if there aren't missing intervals in y
-iv_difference(x, iv(1, 2))
+iv_set_difference(x, iv(1, 2))
 
 # Which intervals are in x or y but not both?
 iv_symmetric_difference(x, y)
