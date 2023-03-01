@@ -5,6 +5,7 @@
 \alias{iv_pairwise_complement}
 \alias{iv_pairwise_union}
 \alias{iv_pairwise_intersect}
+\alias{iv_pairwise_difference}
 \title{Pairwise set operations}
 \usage{
 iv_pairwise_complement(x, y)
@@ -12,6 +13,8 @@ iv_pairwise_complement(x, y)
 iv_pairwise_union(x, y)
 
 iv_pairwise_intersect(x, y)
+
+iv_pairwise_difference(x, y)
 }
 \arguments{
 \item{x, y}{\verb{[iv]}

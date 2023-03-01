@@ -6,7 +6,7 @@
 \alias{iv_pairwise_set_union}
 \alias{iv_pairwise_span}
 \alias{iv_pairwise_set_intersect}
-\alias{iv_pairwise_difference}
+\alias{iv_pairwise_set_difference}
 \alias{iv_pairwise_symmetric_difference}
 \title{Pairwise set operations}
 \usage{
@@ -18,7 +18,7 @@ iv_pairwise_span(x, y)
 
 iv_pairwise_set_intersect(x, y)
 
-iv_pairwise_difference(x, y)
+iv_pairwise_set_difference(x, y)
 
 iv_pairwise_symmetric_difference(x, y)
 }
@@ -50,7 +50,7 @@ gap. Use \code{iv_pairwise_span()} if you want to force gaps to be filled
 anyways.
 \item For \code{iv_pairwise_set_intersect()}, \code{x[i]} and \code{y[i]} must overlap,
 otherwise an empty interval would be generated.
-\item For \code{iv_pairwise_difference()}, \code{x[i]} can't be completely contained
+\item For \code{iv_pairwise_set_difference()}, \code{x[i]} can't be completely contained
 within \code{y[i]}, as that would generate an empty interval. Additionally,
 \code{y[i]} can't be completely contained within \code{x[i]}, as that would result
 in two distinct intervals for a single observation.
@@ -80,7 +80,7 @@ iv_pairwise_set_intersect(x, z)
 # Can't take an intersection of non-overlapping intervals
 try(iv_pairwise_set_intersect(x, y))
 
-iv_pairwise_difference(x, z)
+iv_pairwise_set_difference(x, z)
 
 # The pairwise symmetric difference function is fairly strict,
 # and is only well defined when exactly one of the interval endpoints match

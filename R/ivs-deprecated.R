@@ -139,3 +139,15 @@ iv_pairwise_intersect <- function(x, y) {
   )
   iv_pairwise_set_intersect(x, y)
 }
+
+#' @export
+#' @rdname iv-set-pairwise-deprecated
+iv_pairwise_difference <- function(x, y) {
+  lifecycle::deprecate_warn(
+    when = "0.2.0",
+    what = "iv_pairwise_difference()",
+    with = "iv_pairwise_set_difference()",
+    always = TRUE
+  )
+  iv_pairwise_set_difference(x, y)
+}

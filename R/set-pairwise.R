@@ -21,7 +21,7 @@
 #' - For `iv_pairwise_set_intersect()`, `x[i]` and `y[i]` must overlap,
 #'   otherwise an empty interval would be generated.
 #'
-#' - For `iv_pairwise_difference()`, `x[i]` can't be completely contained
+#' - For `iv_pairwise_set_difference()`, `x[i]` can't be completely contained
 #'   within `y[i]`, as that would generate an empty interval. Additionally,
 #'   `y[i]` can't be completely contained within `x[i]`, as that would result
 #'   in two distinct intervals for a single observation.
@@ -64,7 +64,7 @@
 #' # Can't take an intersection of non-overlapping intervals
 #' try(iv_pairwise_set_intersect(x, y))
 #'
-#' iv_pairwise_difference(x, z)
+#' iv_pairwise_set_difference(x, z)
 #'
 #' # The pairwise symmetric difference function is fairly strict,
 #' # and is only well defined when exactly one of the interval endpoints match
@@ -232,7 +232,7 @@ iv_pairwise_set_intersect <- function(x, y) {
 
 #' @rdname iv-set-pairwise
 #' @export
-iv_pairwise_difference <- function(x, y) {
+iv_pairwise_set_difference <- function(x, y) {
   args <- list(x = x, y = y)
   args <- vec_recycle_common(!!!args)
   args <- vec_cast_common(!!!args)

@@ -70,3 +70,12 @@
       `iv_pairwise_intersect()` was deprecated in ivs 0.2.0.
       i Please use `iv_pairwise_set_intersect()` instead.
 
+# `iv_pairwise_difference()` works but throws a deprecation warning
+
+    Code
+      out <- iv_pairwise_difference(x, y)
+    Condition
+      Warning:
+      `iv_pairwise_difference()` was deprecated in ivs 0.2.0.
+      i Please use `iv_pairwise_set_difference()` instead.
+

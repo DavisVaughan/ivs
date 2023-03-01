@@ -239,65 +239,65 @@ test_that("pairwise intersect is generic over container", {
 })
 
 # ------------------------------------------------------------------------------
-# iv_pairwise_difference()
+# iv_pairwise_set_difference()
 
 test_that("can pairwise difference from all sides of `x`", {
   x <- iv(1, 10)
 
   y <- iv(-1, 0)
   expect_identical(
-    iv_pairwise_difference(x, y),
+    iv_pairwise_set_difference(x, y),
     iv(1, 10)
   )
 
   y <- iv(-1, 1)
   expect_identical(
-    iv_pairwise_difference(x, y),
+    iv_pairwise_set_difference(x, y),
     iv(1, 10)
   )
 
   y <- iv(1, 3)
   expect_identical(
-    iv_pairwise_difference(x, y),
+    iv_pairwise_set_difference(x, y),
     iv(3, 10)
   )
 
   y <- iv(7, 10)
   expect_identical(
-    iv_pairwise_difference(x, y),
+    iv_pairwise_set_difference(x, y),
     iv(1, 7)
   )
 
   y <- iv(10, 12)
   expect_identical(
-    iv_pairwise_difference(x, y),
+    iv_pairwise_set_difference(x, y),
     iv(1, 10)
   )
 
   y <- iv(11, 12)
   expect_identical(
-    iv_pairwise_difference(x, y),
+    iv_pairwise_set_difference(x, y),
     iv(1, 10)
   )
 })
 
 test_that("pairwise difference between interval and itself is not allowed", {
   x <- iv(1, 3)
-  expect_snapshot((expect_error(iv_pairwise_difference(x, x))))
+  expect_snapshot((expect_error(iv_pairwise_set_difference(x, x))))
 })
 
 test_that("throws error when `y` is contained within `x`", {
   x <- iv(1, 4)
   y <- iv(2, 3)
 
-  expect_snapshot((expect_error(iv_pairwise_difference(x, y))))
+  expect_snapshot((expect_error(iv_pairwise_set_difference(x, y))))
 })
 
 test_that("throws error when `y` contains `x`", {
   x <- iv(2, 3)
   y <- iv(1, 4)
 
-  expect_snapshot((expect_error(iv_pairwise_difference(x, y))))
+  expect_snapshot((expect_error(iv_pairwise_set_difference(x, y))))
 })
 
 test_that("pairwise difference propagates NAs", {
@@ -305,11 +305,11 @@ test_that("pairwise difference propagates NAs", {
   y <- iv(1, 4)
 
   expect_identical(
-    iv_pairwise_difference(x, y),
+    iv_pairwise_set_difference(x, y),
     iv(c(0, NA), c(1, NA))
   )
   expect_identical(
-    iv_pairwise_difference(y, x),
+    iv_pairwise_set_difference(y, x),
     iv(c(2, NA), c(4, NA))
   )
 })
