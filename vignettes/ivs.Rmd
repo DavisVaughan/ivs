@@ -524,7 +524,7 @@ These are:
 
 -   `iv_set_complement()`
 
--   `iv_union()`
+-   `iv_set_union()`
 
 -   `iv_intersect()`
 
@@ -551,7 +551,7 @@ By default, `iv_set_complement()` uses the smallest/largest values of its input 
 iv_set_complement(x, lower = 0, upper = Inf)
 ```
 
-`iv_union()` takes the union of two ivs.
+`iv_set_union()` takes the union of two ivs.
 It is essentially a call to `vctrs::vec_c()` followed by `iv_groups()`.
 It answers the question, "Which intervals are in `x` or `y`?"
 
@@ -561,7 +561,7 @@ y <- iv_pairs(c(-5, 0), c(1, 4), c(8, 10), c(15, 16))
 x
 y
 
-iv_union(x, y)
+iv_set_union(x, y)
 ```
 
 `iv_intersect()` takes the intersection of two ivs.

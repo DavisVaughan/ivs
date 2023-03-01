@@ -36,8 +36,8 @@ An iv the same size and type as \code{x} and \code{y}.
 This family of functions performs \emph{pairwise} set operations on two ivs.
 Pairwise refers to the fact that the i-th interval of \code{x} is going to be
 compared against the i-th interval of \code{y}. This is in contrast to their
-set-like counterparts (like \code{\link[=iv_union]{iv_union()}}), which operate on the whole sets of
-\code{x} and \code{y} at once.
+set-like counterparts (like \code{\link[=iv_set_union]{iv_set_union()}}), which operate on the whole
+sets of \code{x} and \code{y} at once.
 
 The descriptions of these operations are the same as their set-like
 counterparts, but the ones here also have a number of restrictions due to
@@ -88,5 +88,5 @@ iv_pairwise_symmetric_difference(x, w)
 }
 \seealso{
 The set-like versions of these functions, such as
-\code{\link[=iv_union]{iv_union()}}.
+\code{\link[=iv_set_union]{iv_set_union()}}.
 }

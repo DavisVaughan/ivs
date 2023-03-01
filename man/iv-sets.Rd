@@ -3,7 +3,7 @@
 \name{iv-sets}
 \alias{iv-sets}
 \alias{iv_set_complement}
-\alias{iv_union}
+\alias{iv_set_union}
 \alias{iv_intersect}
 \alias{iv_difference}
 \alias{iv_symmetric_difference}
@@ -11,7 +11,7 @@
 \usage{
 iv_set_complement(x, ..., lower = NULL, upper = NULL)
 
-iv_union(x, y)
+iv_set_union(x, y)
 
 iv_intersect(x, y)
 
@@ -52,8 +52,8 @@ the \link[=iv_groups]{minimal} iv of each input and return a minimal iv.
 default, the minimum and maximum of the inputs define the bounds to take
 the complement over, but this can be adjusted with \code{lower} and \code{upper}.
 Missing intervals are always dropped in the complement.
-\item \code{iv_union()} answers the question, "Which intervals are in \code{x} or \code{y}?" It
-is equivalent to combining the two vectors together and then calling
+\item \code{iv_set_union()} answers the question, "Which intervals are in \code{x} or \code{y}?"
+It is equivalent to combining the two vectors together and then calling
 \code{iv_groups()}.
 \item \code{iv_intersect()} answers the question, "Which intervals are in \code{x} and
 \code{y}?"
@@ -108,7 +108,7 @@ iv_set_complement(x, lower = -Inf)
 iv_set_complement(x, lower = -Inf, upper = Inf)
 
 # Which intervals are in x or y?
-iv_union(x, y)
+iv_set_union(x, y)
 
 # Which intervals are in x and y?
 iv_intersect(x, y)

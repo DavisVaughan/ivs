@@ -34,3 +34,15 @@ iv_complement <- function(x, ..., lower = NULL, upper = NULL) {
   )
   iv_set_complement(x, ..., lower = lower, upper = upper)
 }
+
+#' @export
+#' @rdname iv-sets-deprecated
+iv_union <- function(x, y) {
+  lifecycle::deprecate_warn(
+    when = "0.2.0",
+    what = "iv_union()",
+    with = "iv_set_union()",
+    always = TRUE
+  )
+  iv_set_union(x, y)
+}

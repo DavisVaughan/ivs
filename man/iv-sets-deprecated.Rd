@@ -3,9 +3,12 @@
 \name{iv-sets-deprecated}
 \alias{iv-sets-deprecated}
 \alias{iv_complement}
+\alias{iv_union}
 \title{Set operations}
 \usage{
 iv_complement(x, ..., lower = NULL, upper = NULL)
+
+iv_union(x, y)
 }
 \arguments{
 \item{x}{\verb{[iv]}
@@ -19,6 +22,10 @@ An interval vector.}
 Bounds for the universe over which to compute the complement. These should
 have the same type as the element type of the interval vector. It is
 often useful to expand the universe to, say, \code{-Inf} to \code{Inf}.}
+
+\item{y}{\verb{[iv]}
+
+An interval vector.}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}

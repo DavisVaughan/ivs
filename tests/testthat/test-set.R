@@ -24,14 +24,14 @@ test_that("complement is generic", {
 })
 
 # ------------------------------------------------------------------------------
-# iv_union()
+# iv_set_union()
 
 test_that("set union doesn't keep abutting separate", {
   x <- iv(start = c(1L, 2L), end = c(2L, 3L))
   y <- iv(start = 5L, end = 6L)
 
   expect_identical(
-    iv_union(x, y),
+    iv_set_union(x, y),
     iv(start = c(1L, 5L), end = c(3L, 6L))
   )
 })
@@ -41,7 +41,7 @@ test_that("union treats intervals as half open `[a, b)`", {
   y <- iv(start = 3L, end = 5L)
 
   expect_identical(
-    iv_union(x, y),
+    iv_set_union(x, y),
     iv(start = c(1L, 3L), end = c(2L, 5L))
   )
 })
@@ -51,11 +51,11 @@ test_that("union keeps a single missing interval", {
   y <- iv(2, 3)
 
   expect_identical(
-    iv_union(x, y),
+    iv_set_union(x, y),
     iv_pairs(c(1, 3), c(NA, NA))
   )
   expect_identical(
-    iv_union(y, x),
+    iv_set_union(y, x),
     iv_pairs(c(1, 3), c(NA, NA))
   )
 })
@@ -63,7 +63,7 @@ test_that("union keeps a single missing interval", {
 test_that("union is generic over container", {
   x <- nested_integer_iv_pairs(c(1, 3))
   y <- nested_integer_iv_pairs(c(2, 5))
-  expect_identical(iv_union(x, y), nested_integer_iv_pairs(c(1, 5)))
+  expect_identical(iv_set_union(x, y), nested_integer_iv_pairs(c(1, 5)))
 })
 
 # ------------------------------------------------------------------------------

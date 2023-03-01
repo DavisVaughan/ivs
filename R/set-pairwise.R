@@ -4,8 +4,8 @@
 #' This family of functions performs _pairwise_ set operations on two ivs.
 #' Pairwise refers to the fact that the i-th interval of `x` is going to be
 #' compared against the i-th interval of `y`. This is in contrast to their
-#' set-like counterparts (like [iv_union()]), which operate on the whole sets of
-#' `x` and `y` at once.
+#' set-like counterparts (like [iv_set_union()]), which operate on the whole
+#' sets of `x` and `y` at once.
 #'
 #' The descriptions of these operations are the same as their set-like
 #' counterparts, but the ones here also have a number of restrictions due to
@@ -38,7 +38,7 @@
 #' @return An iv the same size and type as `x` and `y`.
 #'
 #' @seealso The set-like versions of these functions, such as
-#' [iv_union()].
+#' [iv_set_union()].
 #'
 #' @name iv-set-pairwise
 #'
