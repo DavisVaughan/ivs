@@ -71,21 +71,21 @@ test_that("pairwise complement is generic over container", {
 })
 
 # ------------------------------------------------------------------------------
-# iv_pairwise_union()
+# iv_pairwise_set_union()
 
 test_that("can take the pairwise union", {
   x <- iv(1, 3)
   y <- iv(2, 4)
 
   expect_identical(
-    iv_pairwise_union(x, y),
+    iv_pairwise_set_union(x, y),
     iv(1, 4)
   )
 
   y <- iv(3, 4)
 
   expect_identical(
-    iv_pairwise_union(x, y),
+    iv_pairwise_set_union(x, y),
     iv(1, 4)
   )
 })
@@ -94,9 +94,9 @@ test_that("errors on gaps", {
   x <- iv(1, 3)
   y <- iv(4, 5)
 
-  expect_snapshot((expect_error(iv_pairwise_union(x, y))))
+  expect_snapshot((expect_error(iv_pairwise_set_union(x, y))))
 
-  expect_snapshot((expect_error(iv_pairwise_union(y, x))))
+  expect_snapshot((expect_error(iv_pairwise_set_union(y, x))))
 })
 
 test_that("pairwise union propagates NAs", {
@@ -104,11 +104,11 @@ test_that("pairwise union propagates NAs", {
   y <- iv(1, 4)
 
   expect_identical(
-    iv_pairwise_union(x, y),
+    iv_pairwise_set_union(x, y),
     iv(c(0, NA), c(4, NA))
   )
   expect_identical(
-    iv_pairwise_union(y, x),
+    iv_pairwise_set_union(y, x),
     iv(c(0, NA), c(4, NA))
   )
 })
@@ -116,7 +116,7 @@ test_that("pairwise union propagates NAs", {
 test_that("pairwise union is generic over container", {
   x <- nested_integer_iv(1, 2)
   y <- nested_integer_iv(2, 3)
-  expect_identical(iv_pairwise_union(x, y), nested_integer_iv(1, 3))
+  expect_identical(iv_pairwise_set_union(x, y), nested_integer_iv(1, 3))
 })
 
 # ------------------------------------------------------------------------------

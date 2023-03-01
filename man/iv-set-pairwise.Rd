@@ -3,7 +3,7 @@
 \name{iv-set-pairwise}
 \alias{iv-set-pairwise}
 \alias{iv_pairwise_set_complement}
-\alias{iv_pairwise_union}
+\alias{iv_pairwise_set_union}
 \alias{iv_pairwise_span}
 \alias{iv_pairwise_intersect}
 \alias{iv_pairwise_difference}
@@ -12,7 +12,7 @@
 \usage{
 iv_pairwise_set_complement(x, y)
 
-iv_pairwise_union(x, y)
+iv_pairwise_set_union(x, y)
 
 iv_pairwise_span(x, y)
 
@@ -45,8 +45,9 @@ the fact that each must return an output that is the same size as its inputs:
 \itemize{
 \item For \code{iv_pairwise_set_complement()}, \code{x[i]} and \code{y[i]} can't overlap or
 abut, as this would generate an empty complement.
-\item For \code{iv_pairwise_union()}, \code{x[i]} and \code{y[i]} can't be separated by a gap.
-Use \code{iv_pairwise_span()} if you want to force gaps to be filled anyways.
+\item For \code{iv_pairwise_set_union()}, \code{x[i]} and \code{y[i]} can't be separated by a
+gap. Use \code{iv_pairwise_span()} if you want to force gaps to be filled
+anyways.
 \item For \code{iv_pairwise_intersect()}, \code{x[i]} and \code{y[i]} must overlap, otherwise
 an empty interval would be generated.
 \item For \code{iv_pairwise_difference()}, \code{x[i]} can't be completely contained
@@ -66,10 +67,10 @@ iv_pairwise_set_complement(x, y)
 
 z <- iv_pairs(c(2, 5), c(4, 7))
 
-iv_pairwise_union(x, z)
+iv_pairwise_set_union(x, z)
 
 # Can't take the union when there are gaps
-try(iv_pairwise_union(x, y))
+try(iv_pairwise_set_union(x, y))
 
 # But you can force a union across gaps with `iv_pairwise_span()`
 iv_pairwise_span(x, y)

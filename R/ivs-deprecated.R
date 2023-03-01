@@ -115,3 +115,15 @@ iv_pairwise_complement <- function(x, y) {
   )
   iv_pairwise_set_complement(x, y)
 }
+
+#' @export
+#' @rdname iv-set-pairwise-deprecated
+iv_pairwise_union <- function(x, y) {
+  lifecycle::deprecate_warn(
+    when = "0.2.0",
+    what = "iv_pairwise_union()",
+    with = "iv_pairwise_set_union()",
+    always = TRUE
+  )
+  iv_pairwise_set_union(x, y)
+}

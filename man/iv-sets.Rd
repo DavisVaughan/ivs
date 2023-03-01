@@ -131,5 +131,5 @@ iv_set_symmetric_difference(iv(1, 2), x)
 }
 \seealso{
 The \emph{pairwise} versions of these functions, such as
-\code{\link[=iv_pairwise_union]{iv_pairwise_union()}}.
+\code{\link[=iv_pairwise_set_union]{iv_pairwise_set_union()}}.
 }

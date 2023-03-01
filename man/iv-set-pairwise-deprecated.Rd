@@ -3,9 +3,12 @@
 \name{iv-set-pairwise-deprecated}
 \alias{iv-set-pairwise-deprecated}
 \alias{iv_pairwise_complement}
+\alias{iv_pairwise_union}
 \title{Pairwise set operations}
 \usage{
 iv_pairwise_complement(x, y)
+
+iv_pairwise_union(x, y)
 }
 \arguments{
 \item{x, y}{\verb{[iv]}

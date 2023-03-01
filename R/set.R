@@ -61,7 +61,7 @@
 #' of `x` and `y` containing the result.
 #'
 #' @seealso The _pairwise_ versions of these functions, such as
-#' [iv_pairwise_union()].
+#' [iv_pairwise_set_union()].
 #'
 #' @name iv-sets
 #'

@@ -14,8 +14,9 @@
 #' - For `iv_pairwise_set_complement()`, `x[i]` and `y[i]` can't overlap or
 #'   abut, as this would generate an empty complement.
 #'
-#' - For `iv_pairwise_union()`, `x[i]` and `y[i]` can't be separated by a gap.
-#'   Use `iv_pairwise_span()` if you want to force gaps to be filled anyways.
+#' - For `iv_pairwise_set_union()`, `x[i]` and `y[i]` can't be separated by a
+#'   gap. Use `iv_pairwise_span()` if you want to force gaps to be filled
+#'   anyways.
 #'
 #' - For `iv_pairwise_intersect()`, `x[i]` and `y[i]` must overlap, otherwise
 #'   an empty interval would be generated.
@@ -50,10 +51,10 @@
 #'
 #' z <- iv_pairs(c(2, 5), c(4, 7))
 #'
-#' iv_pairwise_union(x, z)
+#' iv_pairwise_set_union(x, z)
 #'
 #' # Can't take the union when there are gaps
-#' try(iv_pairwise_union(x, y))
+#' try(iv_pairwise_set_union(x, y))
 #'
 #' # But you can force a union across gaps with `iv_pairwise_span()`
 #' iv_pairwise_span(x, y)
@@ -113,7 +114,7 @@ iv_pairwise_set_complement <- function(x, y) {
 
 #' @rdname iv-set-pairwise
 #' @export
-iv_pairwise_union <- function(x, y) {
+iv_pairwise_set_union <- function(x, y) {
   args <- list(x = x, y = y)
   args <- vec_cast_common(!!!args)
   args <- vec_recycle_common(!!!args)

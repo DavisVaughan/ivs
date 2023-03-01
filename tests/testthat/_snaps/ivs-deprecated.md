@@ -52,3 +52,12 @@
       `iv_pairwise_complement()` was deprecated in ivs 0.2.0.
       i Please use `iv_pairwise_set_complement()` instead.
 
+# `iv_pairwise_union()` works but throws a deprecation warning
+
+    Code
+      out <- iv_pairwise_union(x, y)
+    Condition
+      Warning:
+      `iv_pairwise_union()` was deprecated in ivs 0.2.0.
+      i Please use `iv_pairwise_set_union()` instead.
+

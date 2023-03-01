@@ -75,10 +75,10 @@
 # errors on gaps
 
     Code
-      (expect_error(iv_pairwise_union(x, y)))
+      (expect_error(iv_pairwise_set_union(x, y)))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_union()`:
+      Error in `iv_pairwise_set_union()`:
       ! Can't take the union of intervals containing a gap.
       i Location 1 contains a gap.
       i Use `iv_pairwise_span()` to combine across gaps.
@@ -86,10 +86,10 @@
 ---
 
     Code
-      (expect_error(iv_pairwise_union(y, x)))
+      (expect_error(iv_pairwise_set_union(y, x)))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_union()`:
+      Error in `iv_pairwise_set_union()`:
       ! Can't take the union of intervals containing a gap.
       i Location 1 contains a gap.
       i Use `iv_pairwise_span()` to combine across gaps.
