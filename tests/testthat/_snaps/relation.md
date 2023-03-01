@@ -17,6 +17,16 @@
       ! `needles` can't contain missing values.
       x Location 1 contains missing values.
 
+# iv_locate_overlaps - can error on invalid relationships
+
+    Code
+      (expect_error(iv_locate_overlaps(x, y, relationship = "many-to-one")))
+    Output
+      <error/vctrs_error_matches_relationship_many_to_one>
+      Error in `iv_locate_overlaps()`:
+      ! Each value of `needles` can match at most 1 value from `haystack`.
+      x Location 1 of `needles` matches multiple values.
+
 # iv_count_overlaps - can error on missing needles
 
     Code
@@ -63,6 +73,27 @@
       ! `needles` can't contain missing values.
       x Location 1 contains missing values.
 
+# iv_locate_precedes - can error on invalid relationships
+
+    Code
+      (expect_error(iv_locate_precedes(x, y, relationship = "many-to-one")))
+    Output
+      <error/vctrs_error_matches_relationship_many_to_one>
+      Error in `iv_locate_precedes()`:
+      ! Each value of `needles` can match at most 1 value from `haystack`.
+      x Location 1 of `needles` matches multiple values.
+
+---
+
+    Code
+      (expect_error(iv_locate_precedes(x, y, relationship = "many-to-one", closest = TRUE))
+      )
+    Output
+      <error/vctrs_error_matches_relationship_many_to_one>
+      Error in `iv_locate_precedes()`:
+      ! Each value of `needles` can match at most 1 value from `haystack`.
+      x Location 1 of `needles` matches multiple values.
+
 # iv_locate_relates - takes common type
 
     Code
@@ -82,6 +113,17 @@
       Error in `iv_locate_relates()`:
       ! `needles` can't contain missing values.
       x Location 1 contains missing values.
+
+# iv_locate_relates - can error on invalid relationships
+
+    Code
+      (expect_error(iv_locate_relates(x, y, type = "overlaps", relationship = "many-to-one"))
+      )
+    Output
+      <error/vctrs_error_matches_relationship_many_to_one>
+      Error in `iv_locate_relates()`:
+      ! Each value of `needles` can match at most 1 value from `haystack`.
+      x Location 1 of `needles` matches multiple values.
 
 # iv_count_relates - can error on missing needles
 

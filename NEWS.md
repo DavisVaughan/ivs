@@ -22,6 +22,11 @@
   class. This should result in slightly better performance when combining many
   ivs together (#27).
 
+* `iv_locate_overlaps()`, `iv_locate_precedes()`, `iv_locate_follows()`,
+  `iv_locate_between()`, and `iv_locate_includes()` have all gained the
+  `relationship` argument from the underlying engine,
+  `vctrs::vec_locate_matches()` (#45).
+
 * `iv_proxy()` now returns the input unchanged if it doesn't implement an S3
   method, rather than erroring. In combination with `is_iv()`, this provides a
   way to check if an input implements a proxy method and to implement different

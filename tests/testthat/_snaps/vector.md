@@ -27,6 +27,16 @@
       ! `needles` can't contain missing values.
       x Location 1 contains missing values.
 
+# between can error on invalid relationships
+
+    Code
+      (expect_error(iv_locate_between(x, y, relationship = "many-to-one")))
+    Output
+      <error/vctrs_error_matches_relationship_many_to_one>
+      Error in `iv_locate_between()`:
+      ! Each value of `needles` can match at most 1 value from `haystack`.
+      x Location 1 of `needles` matches multiple values.
+
 # includes takes the common type
 
     Code
@@ -55,6 +65,16 @@
       Error in `iv_count_includes()`:
       ! `needles` can't contain missing values.
       x Location 1 contains missing values.
+
+# includes can error on invalid relationships
+
+    Code
+      (expect_error(iv_locate_includes(x, y, relationship = "one-to-many")))
+    Output
+      <error/vctrs_error_matches_relationship_one_to_many>
+      Error in `iv_locate_includes()`:
+      ! Each value of `haystack` can match at most 1 value from `needles`.
+      x Location 1 of `haystack` matches multiple values.
 
 # between can error on unmatched needles
 

@@ -113,7 +113,8 @@ iv_locate_between <- function(needles,
                               missing = "equals",
                               no_match = NA_integer_,
                               remaining = "drop",
-                              multiple = "all") {
+                              multiple = "all",
+                              relationship = "none") {
   check_dots_empty0(...)
 
   iv_locate_vector(
@@ -125,7 +126,8 @@ iv_locate_between <- function(needles,
     missing = missing,
     no_match = no_match,
     remaining = remaining,
-    multiple = multiple
+    multiple = multiple,
+    relationship = relationship
   )
 }
 
@@ -137,7 +139,8 @@ iv_locate_includes <- function(needles,
                                missing = "equals",
                                no_match = NA_integer_,
                                remaining = "drop",
-                               multiple = "all") {
+                               multiple = "all",
+                               relationship = "none") {
   check_dots_empty0(...)
 
   iv_locate_vector(
@@ -149,7 +152,8 @@ iv_locate_includes <- function(needles,
     missing = missing,
     no_match = no_match,
     remaining = remaining,
-    multiple = multiple
+    multiple = multiple,
+    relationship = relationship
   )
 }
 
@@ -162,6 +166,7 @@ iv_locate_vector <- function(x,
                              no_match,
                              remaining,
                              multiple,
+                             relationship,
                              ...,
                              error_call = caller_env()) {
   check_dots_empty0(...)
@@ -209,6 +214,7 @@ iv_locate_vector <- function(x,
     no_match = no_match,
     remaining = remaining,
     multiple = multiple,
+    relationship = relationship,
     needles_arg = needles_arg,
     haystack_arg = haystack_arg,
     error_call = error_call
@@ -365,6 +371,10 @@ iv_count_vector <- function(x,
   # Obviously we are trying to count all of the matches
   multiple <- "all"
 
+  # None of the "count" functions currently expose `relationship`.
+  # We could do this eventually if it seems useful.
+  relationship <- "none"
+
   locations <- iv_locate_vector(
     x = x,
     y = y,
@@ -375,6 +385,7 @@ iv_count_vector <- function(x,
     no_match = translate_count_no_match(no_match),
     remaining = remaining,
     multiple = multiple,
+    relationship = relationship,
     error_call = error_call
   )
 
