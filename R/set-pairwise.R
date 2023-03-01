@@ -18,8 +18,8 @@
 #'   gap. Use `iv_pairwise_span()` if you want to force gaps to be filled
 #'   anyways.
 #'
-#' - For `iv_pairwise_intersect()`, `x[i]` and `y[i]` must overlap, otherwise
-#'   an empty interval would be generated.
+#' - For `iv_pairwise_set_intersect()`, `x[i]` and `y[i]` must overlap,
+#'   otherwise an empty interval would be generated.
 #'
 #' - For `iv_pairwise_difference()`, `x[i]` can't be completely contained
 #'   within `y[i]`, as that would generate an empty interval. Additionally,
@@ -59,10 +59,10 @@
 #' # But you can force a union across gaps with `iv_pairwise_span()`
 #' iv_pairwise_span(x, y)
 #'
-#' iv_pairwise_intersect(x, z)
+#' iv_pairwise_set_intersect(x, z)
 #'
 #' # Can't take an intersection of non-overlapping intervals
-#' try(iv_pairwise_intersect(x, y))
+#' try(iv_pairwise_set_intersect(x, y))
 #'
 #' iv_pairwise_difference(x, z)
 #'
@@ -191,7 +191,7 @@ iv_pairwise_span <- function(x, y) {
 
 #' @rdname iv-set-pairwise
 #' @export
-iv_pairwise_intersect <- function(x, y) {
+iv_pairwise_set_intersect <- function(x, y) {
   args <- list(x = x, y = y)
   args <- vec_cast_common(!!!args)
   args <- vec_recycle_common(!!!args)

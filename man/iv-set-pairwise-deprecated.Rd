@@ -4,11 +4,14 @@
 \alias{iv-set-pairwise-deprecated}
 \alias{iv_pairwise_complement}
 \alias{iv_pairwise_union}
+\alias{iv_pairwise_intersect}
 \title{Pairwise set operations}
 \usage{
 iv_pairwise_complement(x, y)
 
 iv_pairwise_union(x, y)
+
+iv_pairwise_intersect(x, y)
 }
 \arguments{
 \item{x, y}{\verb{[iv]}

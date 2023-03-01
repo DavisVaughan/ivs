@@ -61,3 +61,12 @@
       `iv_pairwise_union()` was deprecated in ivs 0.2.0.
       i Please use `iv_pairwise_set_union()` instead.
 
+# `iv_pairwise_intersect()` works but throws a deprecation warning
+
+    Code
+      out <- iv_pairwise_intersect(x, y)
+    Condition
+      Warning:
+      `iv_pairwise_intersect()` was deprecated in ivs 0.2.0.
+      i Please use `iv_pairwise_set_intersect()` instead.
+

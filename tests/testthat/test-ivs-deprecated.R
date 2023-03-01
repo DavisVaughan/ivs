@@ -108,3 +108,19 @@ test_that("`iv_pairwise_union()` works but throws a deprecation warning", {
     iv_pairwise_set_union(x, y)
   )
 })
+
+# ------------------------------------------------------------------------------
+# iv_pairwise_intersect()
+
+test_that("`iv_pairwise_intersect()` works but throws a deprecation warning", {
+  x <- iv(1, 3)
+  y <- iv(2, 6)
+
+  expect_snapshot({
+    out <- iv_pairwise_intersect(x, y)
+  })
+  expect_identical(
+    out,
+    iv_pairwise_set_intersect(x, y)
+  )
+})

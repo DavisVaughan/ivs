@@ -127,3 +127,15 @@ iv_pairwise_union <- function(x, y) {
   )
   iv_pairwise_set_union(x, y)
 }
+
+#' @export
+#' @rdname iv-set-pairwise-deprecated
+iv_pairwise_intersect <- function(x, y) {
+  lifecycle::deprecate_warn(
+    when = "0.2.0",
+    what = "iv_pairwise_intersect()",
+    with = "iv_pairwise_set_intersect()",
+    always = TRUE
+  )
+  iv_pairwise_set_intersect(x, y)
+}

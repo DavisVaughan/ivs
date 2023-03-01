@@ -583,7 +583,7 @@ iv_set_difference(x, y)
 The set operations described above all treat `x` and `y` as two complete "sets" of intervals and operate on the intervals as a group.
 Occasionally it is useful to have pairwise equivalents of these operations that, say, take the intersection of the i-th interval of `x` and the i-th interval of `y`.
 
-One case in particular comes from combining `iv_locate_overlaps()` with `iv_pairwise_intersect()`.
+One case in particular comes from combining `iv_locate_overlaps()` with `iv_pairwise_set_intersect()`.
 Here you might want to know not only *where* two ivs overlaps, but also *what* that intersection was for each value in `x`.
 
 ```{r}
@@ -612,17 +612,17 @@ locations <- iv_locate_overlaps(x, y, no_match = "drop")
 overlaps <- iv_align(x, y, locations = locations)
 
 overlaps %>%
-  mutate(intersect = iv_pairwise_intersect(needles, haystack))
+  mutate(intersect = iv_pairwise_set_intersect(needles, haystack))
 ```
 
 Note that the pairwise set operations come with a number of restrictions that limit their usage in many cases.
-For example, `iv_pairwise_intersect()` requires that `x[i]` and `y[i]` overlap, otherwise they would result in an empty interval, which isn't allowed.
+For example, `iv_pairwise_set_intersect()` requires that `x[i]` and `y[i]` overlap, otherwise they would result in an empty interval, which isn't allowed.
 
 ```{r, error=TRUE}
-iv_pairwise_intersect(iv(1, 5), iv(6, 9))
+iv_pairwise_set_intersect(iv(1, 5), iv(6, 9))
 ```
 
-See the documentation page of `iv_pairwise_intersect()` for a complete list of restrictions for all of the pairwise set operations.
+See the documentation page of `iv_pairwise_set_intersect()` for a complete list of restrictions for all of the pairwise set operations.
 
 ## Missing intervals
 
@@ -657,5 +657,5 @@ iv_set_intersect(x, y)
 # Pairwise operations treat missing intervals as infectious
 z <- iv_pairs(c(1, 2), c(1, 4))
 
-iv_pairwise_intersect(y, z)
+iv_pairwise_set_intersect(y, z)
 ```

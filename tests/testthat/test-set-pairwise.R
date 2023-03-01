@@ -168,14 +168,14 @@ test_that("pairwise span is generic over container", {
 })
 
 # ------------------------------------------------------------------------------
-# iv_pairwise_intersect()
+# iv_pairwise_set_intersect()
 
 test_that("can take pairwise intersection", {
   x <- iv(start = 1L, end = 4L)
   y <- iv(start = 0L, end = 3L)
 
   expect_identical(
-    iv_pairwise_intersect(x, y),
+    iv_pairwise_set_intersect(x, y),
     iv(start = 1L, end = 3L)
   )
 })
@@ -185,7 +185,7 @@ test_that("can recycle inputs", {
   y <- iv(start = 0L, end = 3L)
 
   expect_identical(
-    iv_pairwise_intersect(x, y),
+    iv_pairwise_set_intersect(x, y),
     iv(start = c(1L, 2L), end = c(3L, 3L))
   )
 })
@@ -196,25 +196,25 @@ test_that("pairwise intersection between non-overlapping intervals errors", {
   y <- iv(start = 5L, end = 6L)
 
   expect_snapshot(
-    (expect_error(iv_pairwise_intersect(x, y)))
+    (expect_error(iv_pairwise_set_intersect(x, y)))
   )
 
   y <- iv(start = -1L, end = 0L)
 
   expect_snapshot(
-    (expect_error(iv_pairwise_intersect(x, y)))
+    (expect_error(iv_pairwise_set_intersect(x, y)))
   )
 
   y <- iv(start = 4L, end = 5L)
 
   expect_snapshot(
-    (expect_error(iv_pairwise_intersect(x, y)))
+    (expect_error(iv_pairwise_set_intersect(x, y)))
   )
 
   y <- iv(start = 0L, end = 1L)
 
   expect_snapshot(
-    (expect_error(iv_pairwise_intersect(x, y)))
+    (expect_error(iv_pairwise_set_intersect(x, y)))
   )
 })
 
@@ -223,11 +223,11 @@ test_that("pairwise intersection propagates NAs", {
   y <- iv(1, 4)
 
   expect_identical(
-    iv_pairwise_intersect(x, y),
+    iv_pairwise_set_intersect(x, y),
     iv(c(1, NA), c(2, NA))
   )
   expect_identical(
-    iv_pairwise_intersect(y, x),
+    iv_pairwise_set_intersect(y, x),
     iv(c(1, NA), c(2, NA))
   )
 })
@@ -235,7 +235,7 @@ test_that("pairwise intersection propagates NAs", {
 test_that("pairwise intersect is generic over container", {
   x <- nested_integer_iv(1, 3)
   y <- nested_integer_iv(2, 3)
-  expect_identical(iv_pairwise_intersect(x, y), nested_integer_iv(2, 3))
+  expect_identical(iv_pairwise_set_intersect(x, y), nested_integer_iv(2, 3))
 })
 
 # ------------------------------------------------------------------------------

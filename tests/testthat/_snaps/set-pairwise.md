@@ -97,10 +97,10 @@
 # pairwise intersection between non-overlapping intervals errors
 
     Code
-      (expect_error(iv_pairwise_intersect(x, y)))
+      (expect_error(iv_pairwise_set_intersect(x, y)))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_intersect()`:
+      Error in `iv_pairwise_set_intersect()`:
       ! Can't take the intersection of non-overlapping intervals.
       i This would result in an empty interval.
       i Location 1 contains non-overlapping intervals.
@@ -108,10 +108,10 @@
 ---
 
     Code
-      (expect_error(iv_pairwise_intersect(x, y)))
+      (expect_error(iv_pairwise_set_intersect(x, y)))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_intersect()`:
+      Error in `iv_pairwise_set_intersect()`:
       ! Can't take the intersection of non-overlapping intervals.
       i This would result in an empty interval.
       i Location 1 contains non-overlapping intervals.
@@ -119,10 +119,10 @@
 ---
 
     Code
-      (expect_error(iv_pairwise_intersect(x, y)))
+      (expect_error(iv_pairwise_set_intersect(x, y)))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_intersect()`:
+      Error in `iv_pairwise_set_intersect()`:
       ! Can't take the intersection of non-overlapping intervals.
       i This would result in an empty interval.
       i Location 1 contains non-overlapping intervals.
@@ -130,10 +130,10 @@
 ---
 
     Code
-      (expect_error(iv_pairwise_intersect(x, y)))
+      (expect_error(iv_pairwise_set_intersect(x, y)))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_intersect()`:
+      Error in `iv_pairwise_set_intersect()`:
       ! Can't take the intersection of non-overlapping intervals.
       i This would result in an empty interval.
       i Location 1 contains non-overlapping intervals.
