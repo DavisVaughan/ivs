@@ -58,7 +58,13 @@
     <loc>https://davisvaughan.github.io/ivs/dev/reference/iv-groups.html</loc>
   </url>
   <url>
+    <loc>https://davisvaughan.github.io/ivs/dev/reference/iv-set-pairwise-deprecated.html</loc>
+  </url>
+  <url>
     <loc>https://davisvaughan.github.io/ivs/dev/reference/iv-set-pairwise.html</loc>
+  </url>
+  <url>
+    <loc>https://davisvaughan.github.io/ivs/dev/reference/iv-sets-deprecated.html</loc>
   </url>
   <url>
     <loc>https://davisvaughan.github.io/ivs/dev/reference/iv-sets.html</loc>
@@ -77,6 +83,9 @@
   </url>
   <url>
     <loc>https://davisvaughan.github.io/ivs/dev/reference/iv_format.html</loc>
+  </url>
+  <url>
+    <loc>https://davisvaughan.github.io/ivs/dev/reference/iv_pairwise_span.html</loc>
   </url>
   <url>
     <loc>https://davisvaughan.github.io/ivs/dev/reference/ivs-package.html</loc>

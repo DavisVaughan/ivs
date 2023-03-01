@@ -55,7 +55,26 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0.9000" id="ivs-0109000">ivs 0.1.0.9000<a class="anchor" aria-label="anchor" href="#ivs-0109000"></a></h2>
-<ul><li><p>New family of functions that perform the inverse of <code><a href="../reference/vector-detect.html">iv_between()</a></code>, i.e. rather than detecting if <code>needles[i]</code>, a vector value, falls <em>between</em> any intervals in <code>haystack</code>, an iv, these detect if <code>needles[i]</code>, an interval, <em>includes</em> any value from <code>haystack</code>, a vector. These functions are: <code><a href="../reference/vector-detect.html">iv_includes()</a></code>, <code><a href="../reference/vector-locate.html">iv_locate_includes()</a></code>, <code><a href="../reference/vector-count.html">iv_count_includes()</a></code>, and <code><a href="../reference/vector-detect-pairwise.html">iv_pairwise_includes()</a></code> (<a href="https://github.com/DavisVaughan/ivs/issues/41" class="external-link">#41</a>).</p></li>
+<ul><li>
+<p>The family of “set” functions has been renamed to include a <code>set_</code> prefix, for example, <code><a href="../reference/iv-sets-deprecated.html">iv_union()</a></code> is now <code><a href="../reference/iv-sets.html">iv_set_union()</a></code>. This has been done to align with the new family of vctrs set functions, like <code><a href="https://vctrs.r-lib.org/reference/vec-set.html" class="external-link">vec_set_union()</a></code>, and to reduce the ambiguity between the new <code><a href="../reference/iv_diff.html">iv_diff()</a></code> helper and <code><a href="../reference/iv-sets-deprecated.html">iv_difference()</a></code> (now <code><a href="../reference/iv-sets.html">iv_set_difference()</a></code>). The old names are deprecated, and will be removed in a future release (<a href="https://github.com/DavisVaughan/ivs/issues/35" class="external-link">#35</a>).</p>
+<ul><li>
+<code><a href="../reference/iv-sets-deprecated.html">iv_complement()</a></code> -&gt; <code><a href="../reference/iv-sets.html">iv_set_complement()</a></code>
+</li>
+<li>
+<code><a href="../reference/iv-sets-deprecated.html">iv_union()</a></code> -&gt; <code><a href="../reference/iv-sets.html">iv_set_union()</a></code>
+</li>
+<li>
+<code><a href="../reference/iv-sets-deprecated.html">iv_intersect()</a></code> -&gt; <code><a href="../reference/iv-sets.html">iv_set_intersect()</a></code>
+</li>
+<li>
+<code><a href="../reference/iv-sets-deprecated.html">iv_difference()</a></code> -&gt; <code><a href="../reference/iv-sets.html">iv_set_difference()</a></code>
+</li>
+<li>
+<code><a href="../reference/iv-sets-deprecated.html">iv_symmetric_difference()</a></code> -&gt; <code><a href="../reference/iv-sets.html">iv_set_symmetric_difference()</a></code>
+</li>
+<li>The same changes have been made for the <code>iv_pairwise_*()</code> functions that share the same suffixes.</li>
+</ul></li>
+<li><p>New family of functions that perform the inverse of <code><a href="../reference/vector-detect.html">iv_between()</a></code>, i.e. rather than detecting if <code>needles[i]</code>, a vector value, falls <em>between</em> any intervals in <code>haystack</code>, an iv, these detect if <code>needles[i]</code>, an interval, <em>includes</em> any value from <code>haystack</code>, a vector. These functions are: <code><a href="../reference/vector-detect.html">iv_includes()</a></code>, <code><a href="../reference/vector-locate.html">iv_locate_includes()</a></code>, <code><a href="../reference/vector-count.html">iv_count_includes()</a></code>, and <code><a href="../reference/vector-detect-pairwise.html">iv_pairwise_includes()</a></code> (<a href="https://github.com/DavisVaughan/ivs/issues/41" class="external-link">#41</a>).</p></li>
 <li><p>New family of functions for identifying interval <em>containers</em>, which are intervals that aren’t contained within any other interval. These functions are: <code><a href="../reference/iv-containers.html">iv_containers()</a></code>, <code><a href="../reference/iv-containers.html">iv_identify_containers()</a></code>, <code><a href="../reference/iv-containers.html">iv_identify_container()</a></code>, and <code><a href="../reference/iv-containers.html">iv_locate_containers()</a></code> (<a href="https://github.com/DavisVaughan/ivs/issues/20" class="external-link">#20</a>).</p></li>
 <li><p>New <code><a href="../reference/iv_diff.html">iv_diff()</a></code> for generating an iv from an existing vector that is in strictly increasing order (<a href="https://github.com/DavisVaughan/ivs/issues/17" class="external-link">#17</a>).</p></li>
 <li><p>New Examples vignette that links out to Stack Overflow questions that were solved with ivs. View it locally with <code><a href="../articles/examples.html">vignette("examples", package = "ivs")</a></code>.</p></li>
