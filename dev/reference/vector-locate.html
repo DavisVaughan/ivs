@@ -100,7 +100,8 @@ an integer vector pointing to locations in <code>haystack</code> with a match.</
 <span>  missing <span class="op">=</span> <span class="st">"equals"</span>,</span>
 <span>  no_match <span class="op">=</span> <span class="cn">NA_integer_</span>,</span>
 <span>  remaining <span class="op">=</span> <span class="st">"drop"</span>,</span>
-<span>  multiple <span class="op">=</span> <span class="st">"all"</span></span>
+<span>  multiple <span class="op">=</span> <span class="st">"all"</span>,</span>
+<span>  relationship <span class="op">=</span> <span class="st">"none"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">iv_locate_includes</span><span class="op">(</span></span>
@@ -110,7 +111,8 @@ an integer vector pointing to locations in <code>haystack</code> with a match.</
 <span>  missing <span class="op">=</span> <span class="st">"equals"</span>,</span>
 <span>  no_match <span class="op">=</span> <span class="cn">NA_integer_</span>,</span>
 <span>  remaining <span class="op">=</span> <span class="st">"drop"</span>,</span>
-<span>  multiple <span class="op">=</span> <span class="st">"all"</span></span>
+<span>  multiple <span class="op">=</span> <span class="st">"all"</span>,</span>
+<span>  relationship <span class="op">=</span> <span class="st">"none"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -172,6 +174,34 @@ which match will be returned. It is often faster than <code>"first"</code> and
 <li><p><code>"first"</code> returns the first match detected in <code>haystack</code>.</p></li>
 <li><p><code>"last"</code> returns the last match detected in <code>haystack</code>.</p></li>
 </ul></dd>
+
+
+<dt>relationship</dt>
+<dd><p>Handling of the expected relationship between
+<code>needles</code> and <code>haystack</code>. If the expectations chosen from the list below
+are invalidated, an error is thrown.</p><ul><li><p><code>"none"</code> doesn't perform any relationship checks.</p></li>
+<li><p><code>"one-to-one"</code> expects:</p><ul><li><p>Each value in <code>needles</code> matches at most 1 value in <code>haystack</code>.</p></li>
+<li><p>Each value in <code>haystack</code> matches at most 1 value in <code>needles</code>.</p></li>
+</ul></li>
+<li><p><code>"one-to-many"</code> expects:</p><ul><li><p>Each value in <code>needles</code> matches any number of values in <code>haystack</code>.</p></li>
+<li><p>Each value in <code>haystack</code> matches at most 1 value in <code>needles</code>.</p></li>
+</ul></li>
+<li><p><code>"many-to-one"</code> expects:</p><ul><li><p>Each value in <code>needles</code> matches at most 1 value in <code>haystack</code>.</p></li>
+<li><p>Each value in <code>haystack</code> matches any number of values in <code>needles</code>.</p></li>
+</ul></li>
+<li><p><code>"many-to-many"</code> expects:</p><ul><li><p>Each value in <code>needles</code> matches any number of values in <code>haystack</code>.</p></li>
+<li><p>Each value in <code>haystack</code> matches any number of values in <code>needles</code>.</p></li>
+</ul><p>This performs no checks, and is identical to <code>"none"</code>, but is provided to
+allow you to be explicit about this relationship if you know it exists.</p></li>
+<li><p><code>"warn-many-to-many"</code> doesn't assume there is any known relationship, but
+will warn if <code>needles</code> and <code>haystack</code> have a many-to-many relationship
+(which is typically unexpected), encouraging you to either take a closer
+look at your inputs or make this relationship explicit by specifying
+<code>"many-to-many"</code>.</p></li>
+</ul><p><code>relationship</code> is applied after <code>filter</code> and <code>multiple</code> to allow potential
+multiple matches to be filtered out first.</p>
+<p><code>relationship</code> doesn't handle cases where there are zero matches. For that,
+see <code>no_match</code> and <code>remaining</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
