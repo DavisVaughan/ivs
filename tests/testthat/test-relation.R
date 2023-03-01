@@ -30,6 +30,15 @@ test_that("can error on missing needles", {
   )
 })
 
+test_that("iv_locate_overlaps - can error on invalid relationships", {
+  x <- iv(1, 5)
+  y <- iv_pairs(c(1, 3), c(4, 6))
+
+  expect_snapshot({
+    (expect_error(iv_locate_overlaps(x, y, relationship = "many-to-one")))
+  })
+})
+
 # ------------------------------------------------------------------------------
 # iv_count_overlaps()
 
@@ -308,6 +317,27 @@ test_that("iv_locate_precedes - can error on missing needles", {
   )
 })
 
+test_that("iv_locate_precedes - can error on invalid relationships", {
+  x <- iv(1, 5)
+  y <- iv_pairs(c(6, 7), c(7, 8))
+
+  expect_snapshot({
+    (expect_error(iv_locate_precedes(x, y, relationship = "many-to-one")))
+  })
+
+  # But not with `closest`
+  out <- iv_locate_precedes(x, y, relationship = "many-to-one", closest = TRUE)
+  expect_identical(out$needles, 1L)
+  expect_identical(out$haystack, 1L)
+
+  # Unless there are ties
+  y <- iv_pairs(c(6, 7), c(6, 7))
+
+  expect_snapshot({
+    (expect_error(iv_locate_precedes(x, y, relationship = "many-to-one", closest = TRUE)))
+  })
+})
+
 # ------------------------------------------------------------------------------
 # iv_count_precedes()
 
@@ -517,6 +547,15 @@ test_that("iv_locate_relates - can error on missing needles", {
   expect_snapshot(
     (expect_error(iv_locate_relates(iv(NA, NA), iv(1, 2), type = "equals", missing = "error")))
   )
+})
+
+test_that("iv_locate_relates - can error on invalid relationships", {
+  x <- iv(1, 5)
+  y <- iv_pairs(c(3, 7), c(4, 8))
+
+  expect_snapshot({
+    (expect_error(iv_locate_relates(x, y, type = "overlaps", relationship = "many-to-one")))
+  })
 })
 
 # ------------------------------------------------------------------------------

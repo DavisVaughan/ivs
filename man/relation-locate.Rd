@@ -15,7 +15,8 @@ iv_locate_overlaps(
   missing = "equals",
   no_match = NA_integer_,
   remaining = "drop",
-  multiple = "all"
+  multiple = "all",
+  relationship = "none"
 )
 
 iv_locate_precedes(
@@ -26,7 +27,8 @@ iv_locate_precedes(
   missing = "equals",
   no_match = NA_integer_,
   remaining = "drop",
-  multiple = "all"
+  multiple = "all",
+  relationship = "none"
 )
 
 iv_locate_follows(
@@ -37,7 +39,8 @@ iv_locate_follows(
   missing = "equals",
   no_match = NA_integer_,
   remaining = "drop",
-  multiple = "all"
+  multiple = "all",
+  relationship = "none"
 )
 }
 \arguments{
@@ -115,6 +118,47 @@ which match will be returned. It is often faster than \code{"first"} and
 \item \code{"first"} returns the first match detected in \code{haystack}.
 \item \code{"last"} returns the last match detected in \code{haystack}.
 }}
+
+\item{relationship}{Handling of the expected relationship between
+\code{needles} and \code{haystack}. If the expectations chosen from the list below
+are invalidated, an error is thrown.
+\itemize{
+\item \code{"none"} doesn't perform any relationship checks.
+\item \code{"one-to-one"} expects:
+\itemize{
+\item Each value in \code{needles} matches at most 1 value in \code{haystack}.
+\item Each value in \code{haystack} matches at most 1 value in \code{needles}.
+}
+\item \code{"one-to-many"} expects:
+\itemize{
+\item Each value in \code{needles} matches any number of values in \code{haystack}.
+\item Each value in \code{haystack} matches at most 1 value in \code{needles}.
+}
+\item \code{"many-to-one"} expects:
+\itemize{
+\item Each value in \code{needles} matches at most 1 value in \code{haystack}.
+\item Each value in \code{haystack} matches any number of values in \code{needles}.
+}
+\item \code{"many-to-many"} expects:
+\itemize{
+\item Each value in \code{needles} matches any number of values in \code{haystack}.
+\item Each value in \code{haystack} matches any number of values in \code{needles}.
+}
+
+This performs no checks, and is identical to \code{"none"}, but is provided to
+allow you to be explicit about this relationship if you know it exists.
+\item \code{"warn-many-to-many"} doesn't assume there is any known relationship, but
+will warn if \code{needles} and \code{haystack} have a many-to-many relationship
+(which is typically unexpected), encouraging you to either take a closer
+look at your inputs or make this relationship explicit by specifying
+\code{"many-to-many"}.
+}
+
+\code{relationship} is applied after \code{filter} and \code{multiple} to allow potential
+multiple matches to be filtered out first.
+
+\code{relationship} doesn't handle cases where there are zero matches. For that,
+see \code{no_match} and \code{remaining}.}
 
 \item{closest}{\verb{[TRUE / FALSE]}
 

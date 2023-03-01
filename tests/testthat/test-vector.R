@@ -51,6 +51,15 @@ test_that("between can error on missing needles", {
   )
 })
 
+test_that("between can error on invalid relationships", {
+  x <- 1
+  y <- iv_pairs(c(1, 3), c(0, 2))
+
+  expect_snapshot({
+    (expect_error(iv_locate_between(x, y, relationship = "many-to-one")))
+  })
+})
+
 # ------------------------------------------------------------------------------
 # iv_locate_includes()
 
@@ -102,6 +111,15 @@ test_that("includes can error on missing needles", {
   expect_snapshot(
     (expect_error(iv_locate_includes(iv(NA, NA), 1, missing = "error")))
   )
+})
+
+test_that("includes can error on invalid relationships", {
+  x <- iv_pairs(c(1, 3), c(0, 2))
+  y <- 1
+
+  expect_snapshot({
+    (expect_error(iv_locate_includes(x, y, relationship = "one-to-many")))
+  })
 })
 
 # ------------------------------------------------------------------------------

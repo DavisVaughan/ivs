@@ -436,7 +436,8 @@ iv_locate_overlaps <- function(needles,
                                missing = "equals",
                                no_match = NA_integer_,
                                remaining = "drop",
-                               multiple = "all") {
+                               multiple = "all",
+                               relationship = "none") {
   check_dots_empty0(...)
 
   args <- vec_cast_common(needles = needles, haystack = haystack)
@@ -458,6 +459,7 @@ iv_locate_overlaps <- function(needles,
     no_match = no_match,
     remaining = remaining,
     multiple = multiple,
+    relationship = relationship,
     error_call = current_env()
   )
 }
@@ -583,7 +585,8 @@ iv_locate_precedes <- function(needles,
                                missing = "equals",
                                no_match = NA_integer_,
                                remaining = "drop",
-                               multiple = "all") {
+                               multiple = "all",
+                               relationship = "none") {
   check_dots_empty0(...)
 
   iv_locate_positional(
@@ -594,7 +597,8 @@ iv_locate_precedes <- function(needles,
     missing = missing,
     no_match = no_match,
     remaining = remaining,
-    multiple = multiple
+    multiple = multiple,
+    relationship = relationship
   )
 }
 
@@ -607,7 +611,8 @@ iv_locate_follows <- function(needles,
                               missing = "equals",
                               no_match = NA_integer_,
                               remaining = "drop",
-                              multiple = "all") {
+                              multiple = "all",
+                              relationship = "none") {
   check_dots_empty0(...)
 
   iv_locate_positional(
@@ -618,7 +623,8 @@ iv_locate_follows <- function(needles,
     missing = missing,
     no_match = no_match,
     remaining = remaining,
-    multiple = multiple
+    multiple = multiple,
+    relationship = relationship
   )
 }
 
@@ -630,6 +636,7 @@ iv_locate_positional <- function(needles,
                                  no_match,
                                  remaining,
                                  multiple,
+                                 relationship,
                                  ...,
                                  error_call = caller_env()) {
   check_dots_empty0(...)
@@ -672,6 +679,7 @@ iv_locate_positional <- function(needles,
     no_match = no_match,
     remaining = remaining,
     multiple = multiple,
+    relationship = relationship,
     error_call = error_call
   )
 }
@@ -1106,7 +1114,8 @@ iv_locate_relates <- function(needles,
                               missing = "equals",
                               no_match = NA_integer_,
                               remaining = "drop",
-                              multiple = "all") {
+                              multiple = "all",
+                              relationship = "none") {
   check_dots_empty0(...)
 
   args <- vec_cast_common(needles = needles, haystack = haystack)
@@ -1129,6 +1138,7 @@ iv_locate_relates <- function(needles,
     no_match = no_match,
     remaining = remaining,
     multiple = multiple,
+    relationship = relationship,
     error_call = current_env()
   )
 }
