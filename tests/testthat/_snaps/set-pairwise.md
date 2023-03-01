@@ -1,74 +1,74 @@
 # pairwise complement of interval with itself is not allowed
 
     Code
-      (expect_error(iv_pairwise_complement(x, x)))
+      (expect_error(iv_pairwise_set_complement(x, x)))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_complement()`:
+      Error in `iv_pairwise_set_complement()`:
       ! Can't take the complement of overlapping or abutting intervals.
       i Location 1 contains overlapping or abutting intervals.
 
 # pairwise complement of abutting intervals is not allowed
 
     Code
-      (expect_error(iv_pairwise_complement(x, y)))
+      (expect_error(iv_pairwise_set_complement(x, y)))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_complement()`:
+      Error in `iv_pairwise_set_complement()`:
       ! Can't take the complement of overlapping or abutting intervals.
       i Location 1 contains overlapping or abutting intervals.
 
 ---
 
     Code
-      (expect_error(iv_pairwise_complement(x, y)))
+      (expect_error(iv_pairwise_set_complement(x, y)))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_complement()`:
+      Error in `iv_pairwise_set_complement()`:
       ! Can't take the complement of overlapping or abutting intervals.
       i Location 1 contains overlapping or abutting intervals.
 
 # pairwise complement of overlapping intervals is not allowed
 
     Code
-      (expect_error(iv_pairwise_complement(x, x)))
+      (expect_error(iv_pairwise_set_complement(x, x)))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_complement()`:
+      Error in `iv_pairwise_set_complement()`:
       ! Can't take the complement of overlapping or abutting intervals.
       i Location 1 contains overlapping or abutting intervals.
 
 ---
 
     Code
-      (expect_error(iv_pairwise_complement(x, y)))
+      (expect_error(iv_pairwise_set_complement(x, y)))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_complement()`:
+      Error in `iv_pairwise_set_complement()`:
       ! Can't take the complement of overlapping or abutting intervals.
       i Location 1 contains overlapping or abutting intervals.
     Code
-      (expect_error(iv_pairwise_complement(y, x)))
+      (expect_error(iv_pairwise_set_complement(y, x)))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_complement()`:
+      Error in `iv_pairwise_set_complement()`:
       ! Can't take the complement of overlapping or abutting intervals.
       i Location 1 contains overlapping or abutting intervals.
 
 ---
 
     Code
-      (expect_error(iv_pairwise_complement(x, y)))
+      (expect_error(iv_pairwise_set_complement(x, y)))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_complement()`:
+      Error in `iv_pairwise_set_complement()`:
       ! Can't take the complement of overlapping or abutting intervals.
       i Location 1 contains overlapping or abutting intervals.
     Code
-      (expect_error(iv_pairwise_complement(y, x)))
+      (expect_error(iv_pairwise_set_complement(y, x)))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_complement()`:
+      Error in `iv_pairwise_set_complement()`:
       ! Can't take the complement of overlapping or abutting intervals.
       i Location 1 contains overlapping or abutting intervals.
 

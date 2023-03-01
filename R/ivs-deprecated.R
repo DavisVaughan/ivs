@@ -82,3 +82,36 @@ iv_symmetric_difference <- function(x, y) {
   )
   iv_set_symmetric_difference(x, y)
 }
+
+#' Pairwise set operations
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' These functions are deprecated in favor of their `set_` prefixed equivalents.
+#'
+#' - `iv_pairwise_complement()` -> [iv_pairwise_set_complement()]
+#' - `iv_pairwise_union()` -> [iv_pairwise_set_union()]
+#' - `iv_pairwise_span()` -> [iv_pairwise_set_span()]
+#' - `iv_pairwise_intersect()` -> [iv_pairwise_set_intersect()]
+#' - `iv_pairwise_difference()` -> [iv_pairwise_set_difference()]
+#' - `iv_pairwise_symmetric_difference()` -> [iv_pairwise_set_symmetric_difference()]
+#'
+#' @inheritParams iv-set-pairwise
+#'
+#' @name iv-set-pairwise-deprecated
+#' @keywords internal
+#'
+NULL
+
+#' @export
+#' @rdname iv-set-pairwise-deprecated
+iv_pairwise_complement <- function(x, y) {
+  lifecycle::deprecate_warn(
+    when = "0.2.0",
+    what = "iv_pairwise_complement()",
+    with = "iv_pairwise_set_complement()",
+    always = TRUE
+  )
+  iv_pairwise_set_complement(x, y)
+}

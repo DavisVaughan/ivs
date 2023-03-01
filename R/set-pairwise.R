@@ -11,8 +11,8 @@
 #' counterparts, but the ones here also have a number of restrictions due to
 #' the fact that each must return an output that is the same size as its inputs:
 #'
-#' - For `iv_pairwise_complement()`, `x[i]` and `y[i]` can't overlap or abut,
-#'   as this would generate an empty complement.
+#' - For `iv_pairwise_set_complement()`, `x[i]` and `y[i]` can't overlap or
+#'   abut, as this would generate an empty complement.
 #'
 #' - For `iv_pairwise_union()`, `x[i]` and `y[i]` can't be separated by a gap.
 #'   Use `iv_pairwise_span()` if you want to force gaps to be filled anyways.
@@ -46,7 +46,7 @@
 #' x <- iv_pairs(c(1, 3), c(6, 8))
 #' y <- iv_pairs(c(5, 7), c(2, 3))
 #'
-#' iv_pairwise_complement(x, y)
+#' iv_pairwise_set_complement(x, y)
 #'
 #' z <- iv_pairs(c(2, 5), c(4, 7))
 #'
@@ -73,7 +73,7 @@ NULL
 
 #' @rdname iv-set-pairwise
 #' @export
-iv_pairwise_complement <- function(x, y) {
+iv_pairwise_set_complement <- function(x, y) {
   args <- list(x = x, y = y)
   args <- vec_cast_common(!!!args)
   args <- vec_recycle_common(!!!args)

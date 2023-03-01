@@ -43,3 +43,12 @@
       `iv_symmetric_difference()` was deprecated in ivs 0.2.0.
       i Please use `iv_set_symmetric_difference()` instead.
 
+# `iv_pairwise_complement()` works but throws a deprecation warning
+
+    Code
+      out <- iv_pairwise_complement(x, y)
+    Condition
+      Warning:
+      `iv_pairwise_complement()` was deprecated in ivs 0.2.0.
+      i Please use `iv_pairwise_set_complement()` instead.
+

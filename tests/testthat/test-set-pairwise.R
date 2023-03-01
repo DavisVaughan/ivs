@@ -1,14 +1,14 @@
 # ------------------------------------------------------------------------------
-# iv_pairwise_complement()
+# iv_pairwise_set_complement()
 
 test_that("can pairwise complement", {
   expect_identical(
-    iv_pairwise_complement(iv(1, 2), iv(5, 6)),
+    iv_pairwise_set_complement(iv(1, 2), iv(5, 6)),
     iv(2, 5)
   )
 
   expect_identical(
-    iv_pairwise_complement(iv(1, 2), iv(-1, 0)),
+    iv_pairwise_set_complement(iv(1, 2), iv(-1, 0)),
     iv(0, 1)
   )
 })
@@ -18,56 +18,56 @@ test_that("pairwise complement propagates NAs", {
   y <- iv(4, 5)
 
   expect_identical(
-    iv_pairwise_complement(x, y),
+    iv_pairwise_set_complement(x, y),
     iv(c(2, NA), c(4, NA))
   )
   expect_identical(
-    iv_pairwise_complement(y, x),
+    iv_pairwise_set_complement(y, x),
     iv(c(2, NA), c(4, NA))
   )
 })
 
 test_that("pairwise complement of interval with itself is not allowed", {
   x <- iv(1, 2)
-  expect_snapshot((expect_error(iv_pairwise_complement(x, x))))
+  expect_snapshot((expect_error(iv_pairwise_set_complement(x, x))))
 })
 
 test_that("pairwise complement of abutting intervals is not allowed", {
   x <- iv(1, 2)
 
   y <- iv(0, 1)
-  expect_snapshot((expect_error(iv_pairwise_complement(x, y))))
+  expect_snapshot((expect_error(iv_pairwise_set_complement(x, y))))
 
   y <- iv(2, 3)
-  expect_snapshot((expect_error(iv_pairwise_complement(x, y))))
+  expect_snapshot((expect_error(iv_pairwise_set_complement(x, y))))
 })
 
 test_that("pairwise complement of overlapping intervals is not allowed", {
   x <- iv(1, 3)
 
   expect_snapshot(
-    (expect_error(iv_pairwise_complement(x, x)))
+    (expect_error(iv_pairwise_set_complement(x, x)))
   )
 
   y <- iv(0, 4)
 
   expect_snapshot({
-    (expect_error(iv_pairwise_complement(x, y)))
-    (expect_error(iv_pairwise_complement(y, x)))
+    (expect_error(iv_pairwise_set_complement(x, y)))
+    (expect_error(iv_pairwise_set_complement(y, x)))
   })
 
   y <- iv(2, 4)
 
   expect_snapshot({
-    (expect_error(iv_pairwise_complement(x, y)))
-    (expect_error(iv_pairwise_complement(y, x)))
+    (expect_error(iv_pairwise_set_complement(x, y)))
+    (expect_error(iv_pairwise_set_complement(y, x)))
   })
 })
 
 test_that("pairwise complement is generic over container", {
   x <- nested_integer_iv(1, 3)
   y <- nested_integer_iv(-1, 0)
-  expect_identical(iv_pairwise_complement(x, y), nested_integer_iv(0, 1))
+  expect_identical(iv_pairwise_set_complement(x, y), nested_integer_iv(0, 1))
 })
 
 # ------------------------------------------------------------------------------

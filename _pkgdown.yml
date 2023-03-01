@@ -36,8 +36,8 @@ reference:
 
   - title: Set operations
     contents:
-    - iv_complement
-    - iv_pairwise_complement
+    - iv_set_complement
+    - iv_pairwise_set_complement
 
   - title: Allen's Interval Algebra
     contents:

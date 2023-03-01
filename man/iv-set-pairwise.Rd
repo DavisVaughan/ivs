@@ -2,7 +2,7 @@
 % Please edit documentation in R/set-pairwise.R
 \name{iv-set-pairwise}
 \alias{iv-set-pairwise}
-\alias{iv_pairwise_complement}
+\alias{iv_pairwise_set_complement}
 \alias{iv_pairwise_union}
 \alias{iv_pairwise_span}
 \alias{iv_pairwise_intersect}
@@ -10,7 +10,7 @@
 \alias{iv_pairwise_symmetric_difference}
 \title{Pairwise set operations}
 \usage{
-iv_pairwise_complement(x, y)
+iv_pairwise_set_complement(x, y)
 
 iv_pairwise_union(x, y)
 
@@ -43,8 +43,8 @@ The descriptions of these operations are the same as their non-pairwise
 counterparts, but the ones here also have a number of restrictions due to
 the fact that each must return an output that is the same size as its inputs:
 \itemize{
-\item For \code{iv_pairwise_complement()}, \code{x[i]} and \code{y[i]} can't overlap or abut,
-as this would generate an empty complement.
+\item For \code{iv_pairwise_set_complement()}, \code{x[i]} and \code{y[i]} can't overlap or
+abut, as this would generate an empty complement.
 \item For \code{iv_pairwise_union()}, \code{x[i]} and \code{y[i]} can't be separated by a gap.
 Use \code{iv_pairwise_span()} if you want to force gaps to be filled anyways.
 \item For \code{iv_pairwise_intersect()}, \code{x[i]} and \code{y[i]} must overlap, otherwise
@@ -62,7 +62,7 @@ would be generated.
 x <- iv_pairs(c(1, 3), c(6, 8))
 y <- iv_pairs(c(5, 7), c(2, 3))
 
-iv_pairwise_complement(x, y)
+iv_pairwise_set_complement(x, y)
 
 z <- iv_pairs(c(2, 5), c(4, 7))
 

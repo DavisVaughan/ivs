@@ -76,3 +76,19 @@ test_that("`iv_symmetric_difference()` works but throws a deprecation warning", 
     iv_set_symmetric_difference(x, y)
   )
 })
+
+# ------------------------------------------------------------------------------
+# iv_pairwise_complement()
+
+test_that("`iv_pairwise_complement()` works but throws a deprecation warning", {
+  x <- iv(1, 3)
+  y <- iv(5, 6)
+
+  expect_snapshot({
+    out <- iv_pairwise_complement(x, y)
+  })
+  expect_identical(
+    out,
+    iv_pairwise_set_complement(x, y)
+  )
+})
