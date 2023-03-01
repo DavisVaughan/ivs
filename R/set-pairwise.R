@@ -15,7 +15,7 @@
 #'   abut, as this would generate an empty complement.
 #'
 #' - For `iv_pairwise_set_union()`, `x[i]` and `y[i]` can't be separated by a
-#'   gap. Use `iv_pairwise_span()` if you want to force gaps to be filled
+#'   gap. Use [iv_pairwise_span()] if you want to force gaps to be filled
 #'   anyways.
 #'
 #' - For `iv_pairwise_set_intersect()`, `x[i]` and `y[i]` must overlap,
@@ -152,36 +152,6 @@ iv_pairwise_set_union <- function(x, y) {
 
   start <- vec_pairwise_min(x_start, y_start, compare = compare_start)
   end <- vec_pairwise_max(x_end, y_end, compare = compare_end)
-
-  out <- new_iv(start, end)
-  out <- iv_restore(out, x)
-
-  out
-}
-
-#' @rdname iv-set-pairwise
-#' @export
-iv_pairwise_span <- function(x, y) {
-  args <- list(x = x, y = y)
-  args <- vec_cast_common(!!!args)
-  args <- vec_recycle_common(!!!args)
-  x <- args[[1]]
-  y <- args[[2]]
-
-  x_proxy <- iv_proxy(x)
-  y_proxy <- iv_proxy(y)
-
-  check_iv(x_proxy, arg = "x")
-  check_iv(y_proxy, arg = "y")
-
-  x_start <- field_start(x_proxy)
-  y_start <- field_start(y_proxy)
-
-  x_end <- field_end(x_proxy)
-  y_end <- field_end(y_proxy)
-
-  start <- vec_pairwise_min(x_start, y_start)
-  end <- vec_pairwise_max(x_end, y_end)
 
   out <- new_iv(start, end)
   out <- iv_restore(out, x)

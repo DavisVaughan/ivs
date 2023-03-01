@@ -92,7 +92,6 @@ iv_symmetric_difference <- function(x, y) {
 #'
 #' - `iv_pairwise_complement()` -> [iv_pairwise_set_complement()]
 #' - `iv_pairwise_union()` -> [iv_pairwise_set_union()]
-#' - `iv_pairwise_span()` -> [iv_pairwise_set_span()]
 #' - `iv_pairwise_intersect()` -> [iv_pairwise_set_intersect()]
 #' - `iv_pairwise_difference()` -> [iv_pairwise_set_difference()]
 #' - `iv_pairwise_symmetric_difference()` -> [iv_pairwise_set_symmetric_difference()]

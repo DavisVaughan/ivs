@@ -33,7 +33,6 @@ These functions are deprecated in favor of their \code{set_} prefixed equivalent
 \itemize{
 \item \code{iv_pairwise_complement()} -> \code{\link[=iv_pairwise_set_complement]{iv_pairwise_set_complement()}}
 \item \code{iv_pairwise_union()} -> \code{\link[=iv_pairwise_set_union]{iv_pairwise_set_union()}}
-\item \code{iv_pairwise_span()} -> \code{\link[=iv_pairwise_set_span]{iv_pairwise_set_span()}}
 \item \code{iv_pairwise_intersect()} -> \code{\link[=iv_pairwise_set_intersect]{iv_pairwise_set_intersect()}}
 \item \code{iv_pairwise_difference()} -> \code{\link[=iv_pairwise_set_difference]{iv_pairwise_set_difference()}}
 \item \code{iv_pairwise_symmetric_difference()} -> \code{\link[=iv_pairwise_set_symmetric_difference]{iv_pairwise_set_symmetric_difference()}}

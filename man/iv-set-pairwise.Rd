@@ -4,7 +4,6 @@
 \alias{iv-set-pairwise}
 \alias{iv_pairwise_set_complement}
 \alias{iv_pairwise_set_union}
-\alias{iv_pairwise_span}
 \alias{iv_pairwise_set_intersect}
 \alias{iv_pairwise_set_difference}
 \alias{iv_pairwise_set_symmetric_difference}
@@ -13,8 +12,6 @@
 iv_pairwise_set_complement(x, y)
 
 iv_pairwise_set_union(x, y)
-
-iv_pairwise_span(x, y)
 
 iv_pairwise_set_intersect(x, y)
 
@@ -46,7 +43,7 @@ the fact that each must return an output that is the same size as its inputs:
 \item For \code{iv_pairwise_set_complement()}, \code{x[i]} and \code{y[i]} can't overlap or
 abut, as this would generate an empty complement.
 \item For \code{iv_pairwise_set_union()}, \code{x[i]} and \code{y[i]} can't be separated by a
-gap. Use \code{iv_pairwise_span()} if you want to force gaps to be filled
+gap. Use \code{\link[=iv_pairwise_span]{iv_pairwise_span()}} if you want to force gaps to be filled
 anyways.
 \item For \code{iv_pairwise_set_intersect()}, \code{x[i]} and \code{y[i]} must overlap,
 otherwise an empty interval would be generated.
