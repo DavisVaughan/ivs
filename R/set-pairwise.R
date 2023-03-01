@@ -26,7 +26,7 @@
 #'   `y[i]` can't be completely contained within `x[i]`, as that would result
 #'   in two distinct intervals for a single observation.
 #'
-#' - For `iv_pairwise_symmetric_difference()`, `x[i]` and `y[i]` must share
+#' - For `iv_pairwise_set_symmetric_difference()`, `x[i]` and `y[i]` must share
 #'   exactly one endpoint, otherwise an empty interval or two distinct intervals
 #'   would be generated.
 #'
@@ -69,7 +69,7 @@
 #' # The pairwise symmetric difference function is fairly strict,
 #' # and is only well defined when exactly one of the interval endpoints match
 #' w <- iv_pairs(c(1, 6), c(7, 8))
-#' iv_pairwise_symmetric_difference(x, w)
+#' iv_pairwise_set_symmetric_difference(x, w)
 NULL
 
 #' @rdname iv-set-pairwise
@@ -310,7 +310,7 @@ iv_pairwise_set_difference <- function(x, y) {
 
 #' @rdname iv-set-pairwise
 #' @export
-iv_pairwise_symmetric_difference <- function(x, y) {
+iv_pairwise_set_symmetric_difference <- function(x, y) {
   args <- list(x = x, y = y)
   args <- vec_recycle_common(!!!args)
   args <- vec_cast_common(!!!args)

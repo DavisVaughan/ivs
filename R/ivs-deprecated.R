@@ -151,3 +151,15 @@ iv_pairwise_difference <- function(x, y) {
   )
   iv_pairwise_set_difference(x, y)
 }
+
+#' @export
+#' @rdname iv-set-pairwise-deprecated
+iv_pairwise_symmetric_difference <- function(x, y) {
+  lifecycle::deprecate_warn(
+    when = "0.2.0",
+    what = "iv_pairwise_symmetric_difference()",
+    with = "iv_pairwise_set_symmetric_difference()",
+    always = TRUE
+  )
+  iv_pairwise_set_symmetric_difference(x, y)
+}

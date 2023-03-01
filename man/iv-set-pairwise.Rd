@@ -7,7 +7,7 @@
 \alias{iv_pairwise_span}
 \alias{iv_pairwise_set_intersect}
 \alias{iv_pairwise_set_difference}
-\alias{iv_pairwise_symmetric_difference}
+\alias{iv_pairwise_set_symmetric_difference}
 \title{Pairwise set operations}
 \usage{
 iv_pairwise_set_complement(x, y)
@@ -20,7 +20,7 @@ iv_pairwise_set_intersect(x, y)
 
 iv_pairwise_set_difference(x, y)
 
-iv_pairwise_symmetric_difference(x, y)
+iv_pairwise_set_symmetric_difference(x, y)
 }
 \arguments{
 \item{x, y}{\verb{[iv]}
@@ -54,7 +54,7 @@ otherwise an empty interval would be generated.
 within \code{y[i]}, as that would generate an empty interval. Additionally,
 \code{y[i]} can't be completely contained within \code{x[i]}, as that would result
 in two distinct intervals for a single observation.
-\item For \code{iv_pairwise_symmetric_difference()}, \code{x[i]} and \code{y[i]} must share
+\item For \code{iv_pairwise_set_symmetric_difference()}, \code{x[i]} and \code{y[i]} must share
 exactly one endpoint, otherwise an empty interval or two distinct intervals
 would be generated.
 }
@@ -85,7 +85,7 @@ iv_pairwise_set_difference(x, z)
 # The pairwise symmetric difference function is fairly strict,
 # and is only well defined when exactly one of the interval endpoints match
 w <- iv_pairs(c(1, 6), c(7, 8))
-iv_pairwise_symmetric_difference(x, w)
+iv_pairwise_set_symmetric_difference(x, w)
 }
 \seealso{
 The non-pairwise versions of these functions, such as

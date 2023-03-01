@@ -174,50 +174,50 @@
 # throws error when neither endpoint matches
 
     Code
-      (expect_error(iv_pairwise_symmetric_difference(iv(1, 2), iv(3, 4))))
+      (expect_error(iv_pairwise_set_symmetric_difference(iv(1, 2), iv(3, 4))))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_symmetric_difference()`:
+      Error in `iv_pairwise_set_symmetric_difference()`:
       ! Can't compute a symmetric difference when `x` and `y` don't share an endpoint.
       i This would result in two distinct intervals for a single observation.
       i Location 1 contains this issue.
     Code
-      (expect_error(iv_pairwise_symmetric_difference(iv(3, 4), iv(1, 2))))
+      (expect_error(iv_pairwise_set_symmetric_difference(iv(3, 4), iv(1, 2))))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_symmetric_difference()`:
+      Error in `iv_pairwise_set_symmetric_difference()`:
       ! Can't compute a symmetric difference when `x` and `y` don't share an endpoint.
       i This would result in two distinct intervals for a single observation.
       i Location 1 contains this issue.
     Code
-      (expect_error(iv_pairwise_symmetric_difference(iv(1, 3), iv(2, 4))))
+      (expect_error(iv_pairwise_set_symmetric_difference(iv(1, 3), iv(2, 4))))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_symmetric_difference()`:
+      Error in `iv_pairwise_set_symmetric_difference()`:
       ! Can't compute a symmetric difference when `x` and `y` don't share an endpoint.
       i This would result in two distinct intervals for a single observation.
       i Location 1 contains this issue.
     Code
-      (expect_error(iv_pairwise_symmetric_difference(iv(2, 4), iv(1, 3))))
+      (expect_error(iv_pairwise_set_symmetric_difference(iv(2, 4), iv(1, 3))))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_symmetric_difference()`:
+      Error in `iv_pairwise_set_symmetric_difference()`:
       ! Can't compute a symmetric difference when `x` and `y` don't share an endpoint.
       i This would result in two distinct intervals for a single observation.
       i Location 1 contains this issue.
     Code
-      (expect_error(iv_pairwise_symmetric_difference(iv(1, 4), iv(2, 3))))
+      (expect_error(iv_pairwise_set_symmetric_difference(iv(1, 4), iv(2, 3))))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_symmetric_difference()`:
+      Error in `iv_pairwise_set_symmetric_difference()`:
       ! Can't compute a symmetric difference when `x` and `y` don't share an endpoint.
       i This would result in two distinct intervals for a single observation.
       i Location 1 contains this issue.
     Code
-      (expect_error(iv_pairwise_symmetric_difference(iv(2, 3), iv(1, 4))))
+      (expect_error(iv_pairwise_set_symmetric_difference(iv(2, 3), iv(1, 4))))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_symmetric_difference()`:
+      Error in `iv_pairwise_set_symmetric_difference()`:
       ! Can't compute a symmetric difference when `x` and `y` don't share an endpoint.
       i This would result in two distinct intervals for a single observation.
       i Location 1 contains this issue.
@@ -225,10 +225,10 @@
 # throws error when both endpoints match
 
     Code
-      (expect_error(iv_pairwise_symmetric_difference(iv(1, 2), iv(1, 2))))
+      (expect_error(iv_pairwise_set_symmetric_difference(iv(1, 2), iv(1, 2))))
     Output
       <error/rlang_error>
-      Error in `iv_pairwise_symmetric_difference()`:
+      Error in `iv_pairwise_set_symmetric_difference()`:
       ! Can't compute a symmetric difference when `x` and `y` are equal.
       i This would result in an empty interval.
       i Location 1 contains this issue.

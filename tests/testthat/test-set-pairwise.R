@@ -315,28 +315,28 @@ test_that("pairwise difference propagates NAs", {
 })
 
 # ------------------------------------------------------------------------------
-# iv_pairwise_symmetric_difference()
+# iv_pairwise_set_symmetric_difference()
 
 test_that("can symmetric pairwise difference when LHS endpoint matches", {
   expect_identical(
-    iv_pairwise_symmetric_difference(iv(1, 3), iv(1, 5)),
+    iv_pairwise_set_symmetric_difference(iv(1, 3), iv(1, 5)),
     iv(3, 5)
   )
 
   expect_identical(
-    iv_pairwise_symmetric_difference(iv(1, 5), iv(1, 3)),
+    iv_pairwise_set_symmetric_difference(iv(1, 5), iv(1, 3)),
     iv(3, 5)
   )
 })
 
 test_that("can symmetric pairwise difference when RHS endpoint matches", {
   expect_identical(
-    iv_pairwise_symmetric_difference(iv(1, 5), iv(3, 5)),
+    iv_pairwise_set_symmetric_difference(iv(1, 5), iv(3, 5)),
     iv(1, 3)
   )
 
   expect_identical(
-    iv_pairwise_symmetric_difference(iv(3, 5), iv(1, 5)),
+    iv_pairwise_set_symmetric_difference(iv(3, 5), iv(1, 5)),
     iv(1, 3)
   )
 })
@@ -344,22 +344,22 @@ test_that("can symmetric pairwise difference when RHS endpoint matches", {
 test_that("throws error when neither endpoint matches", {
   expect_snapshot({
     # No overlap
-    (expect_error(iv_pairwise_symmetric_difference(iv(1, 2), iv(3, 4))))
-    (expect_error(iv_pairwise_symmetric_difference(iv(3, 4), iv(1, 2))))
+    (expect_error(iv_pairwise_set_symmetric_difference(iv(1, 2), iv(3, 4))))
+    (expect_error(iv_pairwise_set_symmetric_difference(iv(3, 4), iv(1, 2))))
 
     # Cross over
-    (expect_error(iv_pairwise_symmetric_difference(iv(1, 3), iv(2, 4))))
-    (expect_error(iv_pairwise_symmetric_difference(iv(2, 4), iv(1, 3))))
+    (expect_error(iv_pairwise_set_symmetric_difference(iv(1, 3), iv(2, 4))))
+    (expect_error(iv_pairwise_set_symmetric_difference(iv(2, 4), iv(1, 3))))
 
     # Contains / Within
-    (expect_error(iv_pairwise_symmetric_difference(iv(1, 4), iv(2, 3))))
-    (expect_error(iv_pairwise_symmetric_difference(iv(2, 3), iv(1, 4))))
+    (expect_error(iv_pairwise_set_symmetric_difference(iv(1, 4), iv(2, 3))))
+    (expect_error(iv_pairwise_set_symmetric_difference(iv(2, 3), iv(1, 4))))
   })
 })
 
 test_that("throws error when both endpoints match", {
   expect_snapshot(
-    (expect_error(iv_pairwise_symmetric_difference(iv(1, 2), iv(1, 2))))
+    (expect_error(iv_pairwise_set_symmetric_difference(iv(1, 2), iv(1, 2))))
   )
 })
 
@@ -368,11 +368,11 @@ test_that("symmetric pairwise difference propagates NAs", {
   y <- iv(1, 4)
 
   expect_identical(
-    iv_pairwise_symmetric_difference(x, y),
+    iv_pairwise_set_symmetric_difference(x, y),
     iv(c(0, NA), c(1, NA))
   )
   expect_identical(
-    iv_pairwise_symmetric_difference(y, x),
+    iv_pairwise_set_symmetric_difference(y, x),
     iv(c(0, NA), c(1, NA))
   )
 })

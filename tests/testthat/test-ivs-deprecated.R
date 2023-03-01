@@ -140,3 +140,19 @@ test_that("`iv_pairwise_difference()` works but throws a deprecation warning", {
     iv_pairwise_set_difference(x, y)
   )
 })
+
+# ------------------------------------------------------------------------------
+# iv_pairwise_symmetric_difference()
+
+test_that("`iv_pairwise_symmetric_difference()` works but throws a deprecation warning", {
+  x <- iv(1, 3)
+  y <- iv(1, 2)
+
+  expect_snapshot({
+    out <- iv_pairwise_symmetric_difference(x, y)
+  })
+  expect_identical(
+    out,
+    iv_pairwise_set_symmetric_difference(x, y)
+  )
+})
