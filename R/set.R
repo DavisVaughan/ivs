@@ -19,8 +19,8 @@
 #' - `iv_set_difference()` answers the question, "Which intervals are in `x` but
 #'   not `y`?" Note that this is an asymmetrical difference.
 #'
-#' - `iv_symmetric_difference()` answers the question, "Which intervals are in
-#'   `x` or `y` but not both?"
+#' - `iv_set_symmetric_difference()` answers the question, "Which intervals are
+#'   in `x` or `y` but not both?"
 #'
 #' @section Graphical Representation:
 #'
@@ -108,11 +108,11 @@
 #' iv_set_difference(x, iv(1, 2))
 #'
 #' # Which intervals are in x or y but not both?
-#' iv_symmetric_difference(x, y)
+#' iv_set_symmetric_difference(x, y)
 #'
 #' # Missing intervals will be kept if they only appear on one side
-#' iv_symmetric_difference(x, iv(1, 2))
-#' iv_symmetric_difference(iv(1, 2), x)
+#' iv_set_symmetric_difference(x, iv(1, 2))
+#' iv_set_symmetric_difference(iv(1, 2), x)
 NULL
 
 #' @rdname iv-sets
@@ -273,7 +273,7 @@ iv_set_difference <- function(x, y) {
 
 #' @rdname iv-sets
 #' @export
-iv_symmetric_difference <- function(x, y) {
+iv_set_symmetric_difference <- function(x, y) {
   args <- vec_cast_common(x = x, y = y)
   x <- args[[1]]
   y <- args[[2]]

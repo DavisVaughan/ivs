@@ -6,7 +6,7 @@
 \alias{iv_set_union}
 \alias{iv_set_intersect}
 \alias{iv_set_difference}
-\alias{iv_symmetric_difference}
+\alias{iv_set_symmetric_difference}
 \title{Set operations}
 \usage{
 iv_set_complement(x, ..., lower = NULL, upper = NULL)
@@ -17,7 +17,7 @@ iv_set_intersect(x, y)
 
 iv_set_difference(x, y)
 
-iv_symmetric_difference(x, y)
+iv_set_symmetric_difference(x, y)
 }
 \arguments{
 \item{x}{\verb{[iv]}
@@ -59,8 +59,8 @@ It is equivalent to combining the two vectors together and then calling
 \code{y}?"
 \item \code{iv_set_difference()} answers the question, "Which intervals are in \code{x} but
 not \code{y}?" Note that this is an asymmetrical difference.
-\item \code{iv_symmetric_difference()} answers the question, "Which intervals are in
-\code{x} or \code{y} but not both?"
+\item \code{iv_set_symmetric_difference()} answers the question, "Which intervals are
+in \code{x} or \code{y} but not both?"
 }
 }
 \section{Graphical Representation}{
@@ -123,11 +123,11 @@ iv_set_difference(y, x)
 iv_set_difference(x, iv(1, 2))
 
 # Which intervals are in x or y but not both?
-iv_symmetric_difference(x, y)
+iv_set_symmetric_difference(x, y)
 
 # Missing intervals will be kept if they only appear on one side
-iv_symmetric_difference(x, iv(1, 2))
-iv_symmetric_difference(iv(1, 2), x)
+iv_set_symmetric_difference(x, iv(1, 2))
+iv_set_symmetric_difference(iv(1, 2), x)
 }
 \seealso{
 The \emph{pairwise} versions of these functions, such as

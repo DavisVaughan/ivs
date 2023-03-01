@@ -70,3 +70,15 @@ iv_difference <- function(x, y) {
   )
   iv_set_difference(x, y)
 }
+
+#' @export
+#' @rdname iv-sets-deprecated
+iv_symmetric_difference <- function(x, y) {
+  lifecycle::deprecate_warn(
+    when = "0.2.0",
+    what = "iv_symmetric_difference()",
+    with = "iv_set_symmetric_difference()",
+    always = TRUE
+  )
+  iv_set_symmetric_difference(x, y)
+}

@@ -34,3 +34,12 @@
       `iv_difference()` was deprecated in ivs 0.2.0.
       i Please use `iv_set_difference()` instead.
 
+# `iv_symmetric_difference()` works but throws a deprecation warning
+
+    Code
+      out <- iv_symmetric_difference(x, y)
+    Condition
+      Warning:
+      `iv_symmetric_difference()` was deprecated in ivs 0.2.0.
+      i Please use `iv_set_symmetric_difference()` instead.
+

@@ -60,3 +60,19 @@ test_that("`iv_difference()` works but throws a deprecation warning", {
     iv_set_difference(x, y)
   )
 })
+
+# ------------------------------------------------------------------------------
+# iv_symmetric_difference()
+
+test_that("`iv_symmetric_difference()` works but throws a deprecation warning", {
+  x <- iv(1, 3)
+  y <- iv(2, 4)
+
+  expect_snapshot({
+    out <- iv_symmetric_difference(x, y)
+  })
+  expect_identical(
+    out,
+    iv_set_symmetric_difference(x, y)
+  )
+})

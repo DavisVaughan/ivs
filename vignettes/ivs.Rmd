@@ -530,7 +530,7 @@ These are:
 
 -   `iv_set_difference()`
 
--   `iv_symmetric_difference()`
+-   `iv_set_symmetric_difference()`
 
 `iv_set_complement()` works on a single iv, while all the others work on two intervals at a time.
 All of these functions return a *minimal* interval vector.
