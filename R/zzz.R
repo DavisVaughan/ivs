@@ -1,10 +1,13 @@
 # nocov start
 
 .onLoad <- function(libname, pkgname) {
-  ns <- ns_env(pkgname)
+  env_ns <- ns_env(pkgname)
+
+  the$env_ns <- env_ns
+  the$env_s3_methods_table <- env_ns[[".__S3MethodsTable__."]]
 
   env_bind(
-    .env = ns,
+    .env = env_ns,
     vec_interval_groups = import_vctrs("exp_vec_interval_groups"),
     vec_interval_locate_groups = import_vctrs("exp_vec_interval_locate_groups"),
     vec_interval_complement = import_vctrs("exp_vec_interval_complement"),

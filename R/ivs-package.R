@@ -8,3 +8,6 @@
 #' @importFrom glue glue_collapse
 ## usethis namespace: end
 NULL
+
+# Singletons
+the <- new_environment()
