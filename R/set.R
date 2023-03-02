@@ -182,16 +182,13 @@ iv_set_intersect <- function(x, y) {
   check_iv(x_proxy, arg = "x")
   check_iv(y_proxy, arg = "y")
 
-  # TODO: `vec_min()` and `vec_max()`
-  # https://github.com/r-lib/vctrs/issues/86
-  lower <- min(
-    min(field_start(x_proxy)),
-    min(field_start(y_proxy))
-  )
-  upper <- max(
-    max(field_end(x_proxy)),
-    max(field_end(y_proxy))
-  )
+  x_span <- iv_span(x_proxy, missing = "error", empty = "error")
+  y_span <- iv_span(y_proxy, missing = "error", empty = "error")
+
+  span <- iv_span(vec_c(x_span, y_span), missing = "error", empty = "error")
+
+  lower <- field_start(span)
+  upper <- field_end(span)
 
   x_c <- iv_set_complement(x_proxy, lower = lower, upper = upper)
   y_c <- iv_set_complement(y_proxy, lower = lower, upper = upper)
@@ -245,16 +242,13 @@ iv_set_difference <- function(x, y) {
   check_iv(x_proxy, arg = "x")
   check_iv(y_proxy, arg = "y")
 
-  # TODO: `vec_min()` and `vec_max()`
-  # https://github.com/r-lib/vctrs/issues/86
-  lower <- min(
-    min(field_start(x_proxy)),
-    min(field_start(y_proxy))
-  )
-  upper <- max(
-    max(field_end(x_proxy)),
-    max(field_end(y_proxy))
-  )
+  x_span <- iv_span(x_proxy, missing = "error", empty = "error")
+  y_span <- iv_span(y_proxy, missing = "error", empty = "error")
+
+  span <- iv_span(vec_c(x_span, y_span), missing = "error", empty = "error")
+
+  lower <- field_start(span)
+  upper <- field_end(span)
 
   x_c <- iv_set_complement(x_proxy, lower = lower, upper = upper)
 
@@ -307,16 +301,13 @@ iv_set_symmetric_difference <- function(x, y) {
   check_iv(x_proxy, arg = "x")
   check_iv(y_proxy, arg = "y")
 
-  # TODO: `vec_min()` and `vec_max()`
-  # https://github.com/r-lib/vctrs/issues/86
-  lower <- min(
-    min(field_start(x_proxy)),
-    min(field_start(y_proxy))
-  )
-  upper <- max(
-    max(field_end(x_proxy)),
-    max(field_end(y_proxy))
-  )
+  x_span <- iv_span(x_proxy, missing = "error", empty = "error")
+  y_span <- iv_span(y_proxy, missing = "error", empty = "error")
+
+  span <- iv_span(vec_c(x_span, y_span), missing = "error", empty = "error")
+
+  lower <- field_start(span)
+  upper <- field_end(span)
 
   x_c <- iv_set_complement(x_proxy, lower = lower, upper = upper)
   x_c_union_y <- iv_set_union(x_c, y_proxy)

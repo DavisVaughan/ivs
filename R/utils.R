@@ -24,3 +24,51 @@ err_locs <- function(x) {
     glue("`c({x})` and {size - 5L} more")
   }
 }
+
+obj_s3_method_exists <- function(x, generic) {
+  !is_null(obj_s3_method_lookup(x, generic))
+}
+
+obj_s3_method_lookup <- function(x, generic) {
+  if (!is.object(x)) {
+    return(NULL)
+  }
+
+  classes <- class(x)
+
+  if (!is_character(classes)) {
+    abort("`class(x)` didn't return a character vector.", .internal = TRUE)
+  }
+
+  for (class in classes) {
+    method <- paste0(generic, ".", class)
+    method <- s3_method_get(method)
+
+    if (!is_null(method)) {
+      return(method)
+    }
+  }
+
+  NULL
+}
+
+s3_method_get <- function(name) {
+  # Try global env first in case the user registered a method interactively
+  env <- global_env()
+  fn <- env_get(env, name, default = NULL)
+
+  if (is_function(fn)) {
+    return(fn)
+  }
+
+  # Then try the package S3 methods table
+  env <- the$env_s3_methods_table
+  fn <- env_get(env, name, default = NULL)
+
+  if (is_function(fn)) {
+    return(fn)
+  }
+
+  # Symbol not bound to the `env`, or it was bound to a non-function
+  NULL
+}

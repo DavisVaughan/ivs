@@ -30,6 +30,9 @@
 * New `iv_diff()` for generating an iv from an existing vector that is in
   strictly increasing order (#17).
 
+* New `iv_span()` for computing a summary interval that encompasses the entire
+  range of an existing iv (#49).
+
 * New Examples vignette that links out to Stack Overflow questions that were
   solved with ivs. View it locally with `vignette("examples", package = "ivs")`.
 

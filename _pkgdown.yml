@@ -13,14 +13,12 @@ reference:
     - iv_diff
     - iv_start
 
-  - title: Single vector operations
+  - title: Core operations
     contents:
     - iv_groups
     - iv_splits
     - iv_containers
-
-  - title: Binary vector operations
-    contents:
+    - iv_span
     - iv_pairwise_span
 
   - title: Relationships between two ivs

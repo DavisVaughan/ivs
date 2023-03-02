@@ -337,7 +337,9 @@ vec_restore.ivs_iv <- function(x, to, ...) {
 #' You typically _do_ need an `iv_restore()` method for custom iv extensions.
 #' If your class is simple, then you can generally just call your constructor,
 #' like `new_my_iv()`, to restore the class and any additional attributes that
-#' might be required.
+#' might be required. If your class doesn't use [new_iv()], then an
+#' `iv_restore()` method is mandatory, as this is one of the ways that ivs
+#' detects that your class is compatible with ivs.
 #'
 #' This system allows you to use any `iv_*()` function on your iv extension
 #' object without having to define S3 methods for all of them.
@@ -436,6 +438,15 @@ iv_restore.default <- function(x, to, ...) {
 #' @export
 iv_restore.ivs_iv <- function(x, to, ...) {
   x
+}
+
+
+is_iv_or_extension <- function(x) {
+  # If an `iv_restore()` method exists, then we assume that the object is
+  # an iv extension that has a proxy that returns an iv. This is useful when
+  # we aren't sure if the object is "iv-like" or not, like in the `missing`
+  # and `empty` arguments of `iv_span()`.
+  is_iv(x) || obj_s3_method_exists(x, "iv_restore")
 }
 
 # ------------------------------------------------------------------------------
