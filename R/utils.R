@@ -4,6 +4,16 @@ vec_paste0 <- function(...) {
   exec(paste0, !!!args)
 }
 
+vec_run_sizes_to_starts <- function(sizes) {
+  n_sizes <- length(sizes)
+
+  if (n_sizes > 0L) {
+    cumsum(c(1L, sizes[-n_sizes]))
+  } else {
+    integer()
+  }
+}
+
 err_locs <- function(x) {
   if (!is.integer(x)) {
     abort("`x` must be an integer vector of locations.", .internal = TRUE)
