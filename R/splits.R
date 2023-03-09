@@ -131,8 +131,7 @@ iv_splits <- function(x, ..., on = NULL) {
   )
 
   out <- vec_slice(needles, loc$needles)
-
-  out <- new_iv(out$start, out$end)
+  out <- new_bare_iv_from_fields(out)
   out <- iv_restore(out, x)
 
   out
@@ -164,17 +163,17 @@ iv_identify_splits <- function(x, ..., on = NULL) {
     incomplete = NA_integer_,
     error_call = current_env()
   )
-  # TODO: https://github.com/r-lib/vctrs/issues/1210
-  # vec_partition(loc$haystack, vec_identify_runs(loc$needles))
-  loc <- vec_split(loc$haystack, loc$needles)
 
-  candidates <- new_iv(candidate_start, candidate_end)
-  candidates <- iv_restore(candidates, x)
+  sizes <- vec_run_sizes(loc$needles)
+  loc <- vec_chop(loc$haystack, sizes = sizes)
 
-  ptype <- vec_ptype(candidates)
+  ptype <- vec_ptype(x)
   ptype <- vec_ptype_finalise(ptype)
 
-  out <- vec_chop(candidates, loc$val)
+  candidates <- new_bare_iv(candidate_start, candidate_end)
+  candidates <- iv_restore(candidates, x)
+
+  out <- vec_chop(candidates, indices = loc)
   out <- new_list_of(out, ptype = ptype)
 
   out
@@ -207,15 +206,17 @@ iv_locate_splits <- function(x, ..., on = NULL) {
     incomplete = "match",
     error_call = current_env()
   )
-  # TODO: https://github.com/r-lib/vctrs/issues/1210
-  # vec_partition(loc$haystack, vec_identify_runs(loc$needles))
-  loc <- vec_split(loc$haystack, loc$needles)
 
-  key <- vec_slice(needles, loc$key)
-  key <- new_iv(key$start, key$end)
+  sizes <- vec_run_sizes(loc$needles)
+
+  starts <- vec_run_sizes_to_starts(sizes)
+  starts <- vec_slice(loc$needles, starts)
+
+  loc <- vec_chop(loc$haystack, sizes = sizes)
+
+  key <- vec_slice(needles, starts)
+  key <- new_bare_iv_from_fields(key)
   key <- iv_restore(key, x)
-
-  loc <- loc$val
 
   out <- data_frame(key = key, loc = loc)
 
