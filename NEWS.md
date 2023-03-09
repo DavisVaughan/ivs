@@ -62,4 +62,7 @@
 
 * Improved on the call reported by errors thrown in ivs (#23).
 
+* Switched to using `vec_run_sizes()` and `vec_chop(sizes =)` internally, which
+  improves performance in some cases (#50).
+
 * Added a `NEWS.md` file to track changes to the package.

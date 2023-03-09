@@ -133,14 +133,14 @@ iv_identify_containers <- function(x) {
     haystack = containers,
     type = "within"
   )
-  # TODO: https://github.com/r-lib/vctrs/issues/1210
-  # vec_partition(loc$haystack, vec_identify_runs(loc$needles))
-  loc <- vec_split(loc$haystack, by = loc$needles)
+
+  sizes <- vec_run_sizes(loc$needles)
+  loc <- vec_chop(loc$haystack, sizes = sizes)
 
   ptype <- vec_ptype(containers)
   ptype <- vec_ptype_finalise(ptype)
 
-  out <- vec_chop(containers, loc$val)
+  out <- vec_chop(containers, indices = loc)
   out <- new_list_of(out, ptype = ptype)
 
   out
@@ -168,19 +168,19 @@ iv_identify_container <- function(x) {
 iv_locate_containers <- function(x) {
   containers <- iv_containers(x)
 
+  # Each `containers` value is guaranteed to match at least one `x` value,
+  # since it was generated from them, and vice-versa. This means we don't
+  # need to re-slice the `containers` after locating overlaps.
   loc <- iv_locate_overlaps(
     needles = containers,
     haystack = x,
     type = "contains"
   )
-  # TODO: https://github.com/r-lib/vctrs/issues/1210
-  # vec_partition(loc$haystack, vec_identify_runs(loc$needles))
-  loc <- vec_split(loc$haystack, by = loc$needles)
 
-  key <- vec_slice(containers, loc$key)
-  loc <- loc$val
+  sizes <- vec_run_sizes(loc$needles)
+  loc <- vec_chop(loc$haystack, sizes = sizes)
 
-  out <- data_frame(key = key, loc = loc)
+  out <- data_frame(key = containers, loc = loc)
 
   out
 }

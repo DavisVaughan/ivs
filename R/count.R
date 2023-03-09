@@ -1,29 +1,49 @@
 SIGNAL_MISSING <- 0L
 SIGNAL_NO_MATCH <- -1L
 
-# TODO: Ideally we'd be able to use `vec_count_matches()`,
-# but this doesn't exist yet. That should be more memory efficient because
-# it doesn't have to materialize `"all"` of the matches.
 iv_count_locations <- function(locations, missing, no_match) {
-  # Sort by `location` to ensure we match input order
-  res <- vec_count(locations$needles, sort = "location")
-  out <- res$count
+  # No need to worry about `NA` values in `needles` because `remaining` isn't
+  # exposed in the count functions (it doesn't make sense to do so)
+  out <- vec_run_sizes(locations$needles)
 
-  if (is_scalar_integer(missing)) {
-    detect_missing <- locations$haystack == SIGNAL_MISSING
+  value_missing <- is_scalar_integer(missing)
+  value_no_match <- is_scalar_integer(no_match)
 
-    if (any(detect_missing)) {
-      needles_missing <- locations$needles[detect_missing]
-      out[res$key %in% needles_missing] <- missing
+  if (!value_missing && !value_no_match) {
+    # Some combination of these that doesn't require special post-processing:
+    # `missing = "equals" / "error"`
+    # `no_match = "error"`
+    return(out)
+  }
+
+  ones <- out == 1L
+  any_ones <- any(ones)
+
+  if (!any_ones) {
+    # No missing or unmatched `needles` are possible
+    return(out)
+  }
+
+  ones <- which(ones)
+  starts <- vec_run_sizes_to_starts(out)
+  starts <- vec_slice(starts, ones)
+  haystack <- vec_slice(locations$haystack, starts)
+
+  if (value_missing) {
+    where_missing <- haystack == SIGNAL_MISSING
+
+    if (any(where_missing)) {
+      out_missing <- vec_slice(ones, where_missing)
+      out <- vec_assign(out, out_missing, missing)
     }
   }
 
-  if (is_scalar_integer(no_match)) {
-    detect_no_match <- locations$haystack == SIGNAL_NO_MATCH
+  if (value_no_match) {
+    where_no_match <- haystack == SIGNAL_NO_MATCH
 
-    if (any(detect_no_match)) {
-      needles_no_match <- locations$needles[detect_no_match]
-      out[res$key %in% needles_no_match] <- no_match
+    if (any(where_no_match)) {
+      out_no_match <- vec_slice(ones, where_no_match)
+      out <- vec_assign(out, out_no_match, no_match)
     }
   }
 
