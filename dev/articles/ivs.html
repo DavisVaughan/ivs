@@ -611,14 +611,14 @@ you don’t want this, use the <code>abutting</code> argument.</p>
 <span><span class="co">#&gt; &lt;iv&lt;double&gt;[3]&gt;</span></span>
 <span><span class="co">#&gt; [1] [1, 5)  [5, 7)  [9, 13)</span></span></code></pre></div>
 <div class="section level3">
-<h3 id="with-group_by">With <code>group_by()</code><a class="anchor" aria-label="anchor" href="#with-group_by"></a>
+<h3 id="with--by">With <code>.by</code><a class="anchor" aria-label="anchor" href="#with--by"></a>
 </h3>
 <p>Grouping overlapping intervals is often a useful way to create a new
-variable to group on with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">dplyr::group_by()</a></code>. For example,
-consider the following problem where you have multiple users racking up
-costs across multiple systems. The date ranges represent the range when
-the corresponding cost was accrued over, and the ranges don’t overlap
-for a given <code>(user, system)</code> pair.</p>
+variable to group on with dplyr’s <code>.by</code> argument. For
+example, consider the following problem where you have multiple users
+racking up costs across multiple systems. The date ranges represent the
+range when the corresponding cost was accrued over, and the ranges don’t
+overlap for a given <code>(user, system)</code> pair.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">costs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">user</span>, <span class="op">~</span><span class="va">system</span>, <span class="op">~</span><span class="va">from</span>, <span class="op">~</span><span class="va">to</span>, <span class="op">~</span><span class="va">cost</span>,</span>
@@ -653,15 +653,7 @@ a particular <code>user</code>. <code><a href="../reference/iv-groups.html">iv_g
 idea of what the non-overlapping ranges would be for each user:</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">costs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">user</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="../reference/iv-groups.html">iv_groups</a></span><span class="op">(</span><span class="va">range</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in</span></span>
-<span><span class="co">#&gt; dplyr 1.1.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `reframe()` instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> When switching from `summarise()` to `reframe()`, remember that `reframe()`</span></span>
-<span><span class="co">#&gt;   always returns an ungrouped data frame and adjust accordingly.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/reframe.html" class="external-link">reframe</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="../reference/iv-groups.html">iv_groups</a></span><span class="op">(</span><span class="va">range</span><span class="op">)</span>, .by <span class="op">=</span> <span class="va">user</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 2</span></span></span>
 <span><span class="co">#&gt;    user                    range</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;iv&lt;date&gt;&gt;</span></span></span>
@@ -675,13 +667,11 @@ that each <code>range</code> falls in. This will give us something to
 group on so we can sum up the costs.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">costs2</span> <span class="op">&lt;-</span> <span class="va">costs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">user</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="../reference/iv-groups.html">iv_identify_group</a></span><span class="op">(</span><span class="va">range</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="../reference/iv-groups.html">iv_identify_group</a></span><span class="op">(</span><span class="va">range</span><span class="op">)</span>, .by <span class="op">=</span> <span class="va">user</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># `range` has been updated with the corresponding group</span></span>
 <span><span class="va">costs2</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Groups:   user [2]</span></span></span>
 <span><span class="co">#&gt;    user system  cost                    range</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;iv&lt;date&gt;&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1 a      200.  [2019-01-01, 2019-01-10)</span></span>
@@ -693,8 +683,7 @@ group on so we can sum up the costs.</p>
 <span></span>
 <span><span class="co"># So now we can group on that to summarise the cost</span></span>
 <span><span class="va">costs2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">range</span>, .add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>cost <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">cost</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>cost <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">cost</span><span class="op">)</span>, .by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">user</span>, <span class="va">range</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 3</span></span></span>
 <span><span class="co">#&gt;    user                    range  cost</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;iv&lt;date&gt;&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -749,13 +738,13 @@ intervals.</p>
 <span><span class="co">#&gt; &lt;iv&lt;double&gt;[6]&gt;</span></span>
 <span><span class="co">#&gt; [1] [1, 5)   [5, 7)   [9, 10)  [10, 11) [11, 12) [12, 13)</span></span></code></pre></div>
 <div class="section level3">
-<h3 id="with-group_by-1">With <code>group_by()</code><a class="anchor" aria-label="anchor" href="#with-group_by-1"></a>
+<h3 id="with--by-1">With <code>.by</code><a class="anchor" aria-label="anchor" href="#with--by-1"></a>
 </h3>
 <p>Splitting an iv into its disjoint pieces is another operation that
-works nicely with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code>. Consider this data set
-containing details about a number of guests that arrived to your party.
-You’ve been meticulous, so you’ve got their arrival and departure times
-logged (don’t ask me why, maybe it’s for COVID-19 Contact Tracing
+works nicely with <code>.by</code>. Consider this data set containing
+details about a number of guests that arrived to your party. You’ve been
+meticulous, so you’ve got their arrival and departure times logged
+(don’t ask me why, maybe it’s for COVID-19 Contact Tracing
 purposes).</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">guests</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
@@ -851,8 +840,7 @@ single guest:</p>
 point throughout the night.</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">guests2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">iv</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>, who <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>, who <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span>, .by <span class="op">=</span> <span class="va">iv</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 3</span></span></span>
 <span><span class="co">#&gt;                                           iv     n who      </span></span>
 <span><span class="co">#&gt;                                   <span style="color: #949494; font-style: italic;">&lt;iv&lt;dttm&gt;&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   </span></span>
