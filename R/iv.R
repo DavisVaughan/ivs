@@ -440,13 +440,12 @@ iv_restore.ivs_iv <- function(x, to, ...) {
   x
 }
 
-
-is_iv_or_extension <- function(x) {
+is_iv_extension <- function(x) {
   # If an `iv_restore()` method exists, then we assume that the object is
   # an iv extension that has a proxy that returns an iv. This is useful when
   # we aren't sure if the object is "iv-like" or not, like in the `missing`
   # and `empty` arguments of `iv_span()`.
-  is_iv(x) || obj_s3_method_exists(x, "iv_restore")
+  obj_s3_method_exists(x, "iv_restore")
 }
 
 # ------------------------------------------------------------------------------

@@ -155,7 +155,7 @@ check_span_missing <- function(missing, x, ..., error_call = caller_env()) {
     return(out)
   }
 
-  if (is_iv_or_extension(missing)) {
+  if (is_iv(missing) || is_iv_extension(missing)) {
     vec_check_size(missing, size = 1L, call = error_call)
 
     missing <- vec_cast(
@@ -193,7 +193,7 @@ check_span_empty <- function(empty, x, ..., error_call = caller_env()) {
     return(out)
   }
 
-  if (is_iv_or_extension(empty)) {
+  if (is_iv(empty) || is_iv_extension(empty)) {
     vec_check_size(empty, size = 1L, call = error_call)
 
     empty <- vec_cast(
