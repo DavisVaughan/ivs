@@ -8,6 +8,7 @@
 [![Codecov test
 coverage](https://codecov.io/gh/DavisVaughan/ivs/branch/main/graph/badge.svg)](https://app.codecov.io/gh/DavisVaughan/ivs?branch=main)
 [![R-CMD-check](https://github.com/DavisVaughan/ivs/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DavisVaughan/ivs/actions/workflows/R-CMD-check.yaml)
+
 <!-- badges: end -->
 
 ivs (said, “eye-vees”) is a package dedicated to working with intervals
