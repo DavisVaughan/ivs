@@ -71,8 +71,8 @@ You can install the development version of ivs from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("DavisVaughan/ivs")
+# install.packages("pak")
+pak::pak("DavisVaughan/ivs")
 ```
 
 ## Inspiration
