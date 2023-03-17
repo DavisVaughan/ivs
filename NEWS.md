@@ -1,4 +1,4 @@
-# ivs 0.1.0.9000
+# ivs 0.2.0
 
 * The family of "set" functions has been renamed to include a `set_` prefix,
   for example, `iv_union()` is now `iv_set_union()`. This has been done to
