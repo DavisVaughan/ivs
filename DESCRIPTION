@@ -3,7 +3,7 @@ Title: Interval Vectors
 Version: 0.1.0.9000
 Authors@R: c(
     person("Davis", "Vaughan", , "davis@posit.co", role = c("aut", "cre")),
-    person(given = "Posit Software, PBC", role = c("cph", "fnd"))
+    person("Posit Software, PBC", role = c("cph", "fnd"))
   )
 Description: Provides a library for generic interval manipulations using a
     new interval vector class. Capabilities include: locating various
