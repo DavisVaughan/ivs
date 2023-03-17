@@ -28,7 +28,7 @@ Suggests:
     bit64 (>= 4.0.5),
     clock (>= 0.6.0),
     covr,
-    dplyr (>= 1.0.7),
+    dplyr (>= 1.1.0),
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),

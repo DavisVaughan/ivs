@@ -89,8 +89,7 @@
 #'
 #' # Tabulate who was there at any given time
 #' guests %>%
-#'   group_by(splits) %>%
-#'   summarise(n = n(), who = list(name))
+#'   summarise(n = n(), who = list(name), .by = splits)
 #'
 #' # ---------------------------------------------------------------------------
 #'

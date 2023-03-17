@@ -359,9 +359,9 @@ If you don't want this, use the `abutting` argument.
 iv_groups(x, abutting = FALSE)
 ```
 
-### With `group_by()`
+### With `.by`
 
-Grouping overlapping intervals is often a useful way to create a new variable to group on with `dplyr::group_by()`.
+Grouping overlapping intervals is often a useful way to create a new variable to group on with dplyr's `.by` argument.
 For example, consider the following problem where you have multiple users racking up costs across multiple systems.
 The date ranges represent the range when the corresponding cost was accrued over, and the ranges don't overlap for a given `(user, system)` pair.
 
@@ -391,8 +391,7 @@ Now let's say you don't care about the `system` anymore, and instead want to sum
 
 ```{r}
 costs %>%
-  group_by(user) %>%
-  summarise(range = iv_groups(range), .groups = "drop")
+  reframe(range = iv_groups(range), .by = user)
 ```
 
 But how can we sum up the costs?
@@ -401,16 +400,14 @@ This will give us something to group on so we can sum up the costs.
 
 ```{r}
 costs2 <- costs %>%
-  group_by(user) %>%
-  mutate(range = iv_identify_group(range))
+  mutate(range = iv_identify_group(range), .by = user)
 
 # `range` has been updated with the corresponding group
 costs2
 
 # So now we can group on that to summarise the cost
 costs2 %>%
-  group_by(range, .add = TRUE) %>%
-  summarise(cost = sum(cost), .groups = "drop")
+  summarise(cost = sum(cost), .by = c(user, range))
 ```
 
 ### Minimal ivs
@@ -448,9 +445,9 @@ If we looked at the sorted unique values of the endpoints (i.e. `c(9, 10, 11, 12
 iv_splits(x)
 ```
 
-### With `group_by()`
+### With `.by`
 
-Splitting an iv into its disjoint pieces is another operation that works nicely with `group_by()`.
+Splitting an iv into its disjoint pieces is another operation that works nicely with `.by`.
 Consider this data set containing details about a number of guests that arrived to your party.
 You've been meticulous, so you've got their arrival and departure times logged (don't ask me why, maybe it's for COVID-19 Contact Tracing purposes).
 
@@ -513,8 +510,7 @@ Now that we have the splits for each guest, we can group by `iv` and summarize t
 
 ```{r}
 guests2 %>%
-  group_by(iv) %>%
-  summarise(n = n(), who = list(name), .groups = "drop")
+  summarise(n = n(), who = list(name), .by = iv)
 ```
 
 ## Set operations
