@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">ivs</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.1.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,7 +54,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.1.0.9000" id="ivs-0109000">ivs 0.1.0.9000<a class="anchor" aria-label="anchor" href="#ivs-0109000"></a></h2>
+<h2 class="pkg-version" data-toc-text="development version" id="ivs-development-version">ivs (development version)<a class="anchor" aria-label="anchor" href="#ivs-development-version"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.2.0" id="ivs-020">ivs 0.2.0<a class="anchor" aria-label="anchor" href="#ivs-020"></a></h2><p class="text-muted">CRAN release: 2023-03-17</p>
 <ul><li>
 <p>The family of “set” functions has been renamed to include a <code>set_</code> prefix, for example, <code><a href="../reference/iv-sets-deprecated.html">iv_union()</a></code> is now <code><a href="../reference/iv-sets.html">iv_set_union()</a></code>. This has been done to align with the new family of vctrs set functions, like <code><a href="https://vctrs.r-lib.org/reference/vec-set.html" class="external-link">vec_set_union()</a></code>, and to reduce the ambiguity between the new <code><a href="../reference/iv_diff.html">iv_diff()</a></code> helper and <code><a href="../reference/iv-sets-deprecated.html">iv_difference()</a></code> (now <code><a href="../reference/iv-sets.html">iv_set_difference()</a></code>). The old names are deprecated, and will be removed in a future release (<a href="https://github.com/DavisVaughan/ivs/issues/35" class="external-link">#35</a>).</p>
 <ul><li>
@@ -89,7 +92,8 @@
 <li><p>Switched to using <code><a href="https://vctrs.r-lib.org/reference/runs.html" class="external-link">vec_run_sizes()</a></code> and <code>vec_chop(sizes =)</code> internally, which improves performance in some cases (<a href="https://github.com/DavisVaughan/ivs/issues/50" class="external-link">#50</a>).</p></li>
 <li><p>Added a <code>NEWS.md</code> file to track changes to the package.</p></li>
 </ul></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
