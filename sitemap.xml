@@ -13,6 +13,9 @@
     <loc>https://davisvaughan.github.io/ivs/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://davisvaughan.github.io/ivs/articles/examples.html</loc>
+  </url>
+  <url>
     <loc>https://davisvaughan.github.io/ivs/articles/index.html</loc>
   </url>
   <url>
@@ -23,6 +26,9 @@
   </url>
   <url>
     <loc>https://davisvaughan.github.io/ivs/index.html</loc>
+  </url>
+  <url>
+    <loc>https://davisvaughan.github.io/ivs/news/index.html</loc>
   </url>
   <url>
     <loc>https://davisvaughan.github.io/ivs/reference/allen-relation-count.html</loc>
@@ -46,13 +52,22 @@
     <loc>https://davisvaughan.github.io/ivs/reference/iv-accessors.html</loc>
   </url>
   <url>
+    <loc>https://davisvaughan.github.io/ivs/reference/iv-containers.html</loc>
+  </url>
+  <url>
     <loc>https://davisvaughan.github.io/ivs/reference/iv-genericity.html</loc>
   </url>
   <url>
     <loc>https://davisvaughan.github.io/ivs/reference/iv-groups.html</loc>
   </url>
   <url>
+    <loc>https://davisvaughan.github.io/ivs/reference/iv-set-pairwise-deprecated.html</loc>
+  </url>
+  <url>
     <loc>https://davisvaughan.github.io/ivs/reference/iv-set-pairwise.html</loc>
+  </url>
+  <url>
+    <loc>https://davisvaughan.github.io/ivs/reference/iv-sets-deprecated.html</loc>
   </url>
   <url>
     <loc>https://davisvaughan.github.io/ivs/reference/iv-sets.html</loc>
@@ -67,19 +82,16 @@
     <loc>https://davisvaughan.github.io/ivs/reference/iv_align.html</loc>
   </url>
   <url>
-    <loc>https://davisvaughan.github.io/ivs/reference/iv_between.html</loc>
-  </url>
-  <url>
-    <loc>https://davisvaughan.github.io/ivs/reference/iv_count_between.html</loc>
+    <loc>https://davisvaughan.github.io/ivs/reference/iv_diff.html</loc>
   </url>
   <url>
     <loc>https://davisvaughan.github.io/ivs/reference/iv_format.html</loc>
   </url>
   <url>
-    <loc>https://davisvaughan.github.io/ivs/reference/iv_locate_between.html</loc>
+    <loc>https://davisvaughan.github.io/ivs/reference/iv_pairwise_span.html</loc>
   </url>
   <url>
-    <loc>https://davisvaughan.github.io/ivs/reference/iv_pairwise_between.html</loc>
+    <loc>https://davisvaughan.github.io/ivs/reference/iv_span.html</loc>
   </url>
   <url>
     <loc>https://davisvaughan.github.io/ivs/reference/ivs-package.html</loc>
@@ -98,5 +110,17 @@
   </url>
   <url>
     <loc>https://davisvaughan.github.io/ivs/reference/relation-locate.html</loc>
+  </url>
+  <url>
+    <loc>https://davisvaughan.github.io/ivs/reference/vector-count.html</loc>
+  </url>
+  <url>
+    <loc>https://davisvaughan.github.io/ivs/reference/vector-detect-pairwise.html</loc>
+  </url>
+  <url>
+    <loc>https://davisvaughan.github.io/ivs/reference/vector-detect.html</loc>
+  </url>
+  <url>
+    <loc>https://davisvaughan.github.io/ivs/reference/vector-locate.html</loc>
   </url>
 </urlset>
